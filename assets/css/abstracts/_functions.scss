@@ -1,0 +1,12 @@
+@use 'sass:map';
+@use 'sass:math';
+
+/*=================================
+=            Functions            =
+=================================*/
+
+$browser-context: 16px;
+@function rem($size) {
+  $rem-size: $size / $browser-context;
+  @return #{$rem-size}rem;
+}
