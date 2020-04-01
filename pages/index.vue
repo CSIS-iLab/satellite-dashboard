@@ -1,12 +1,16 @@
 <template>
   <div class="container">
     <div>
-      <logo />
-      <h1 class="title">satellite-dashboard</h1>
-      <h2 class="subtitle">Website for The Satellite Dashboard.</h2>
+      <Logo />
+      <h1 class="title">
+        satellite-dashboard
+      </h1>
+      <h2 class="subtitle">
+        Website for The Satellite Dashboard.
+      </h2>
       <div class="links">
-        <a href="https://nuxtjs.org/" target="_blank" class="button--green"
-          >Documentation</a
+        <a href="https://nuxtjs.org/" target="_blank" class="button--green">
+          Documentation</a
         >
         <a
           href="https://github.com/nuxt/nuxt.js"
@@ -37,7 +41,6 @@ export default {
   min-height: 100vh;
   margin: rem(24px) auto;
   text-align: center;
-  background: $color__red;
 }
 
 .title {
