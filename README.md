@@ -11,6 +11,7 @@
 - [Usage](#usage)
   - [Local Development](#local-development)
   - [Build for Production](#build-for-production)
+  - [Generate Static Project](#generate-static-project)
   - [See More Commands](#see-more-commands)
   - [Nuxt](#nuxt)
 
@@ -40,10 +41,12 @@ This will give you file watching, browser synchronisation, auto-rebuild, CSS inj
 $ yarn dev
 ```
 
-#### Build for production and launch server
+### Build for Production
 
 ```bash
 $ yarn build
+
+# Optionally start server to view built site.
 $ yarn start
 ```
 
@@ -95,6 +98,6 @@ Write clear and concise commit messages describing the changes you are making an
 ## Copyright / License Info
 
 This work is licensed under a [Creative Commons Attribution-ShareAlike 4.0
-International License][http://creativecommons.org/licenses/by-sa/4.0/].
+International License](http://creativecommons.org/licenses/by-sa/4.0/).
 
 [![CC BY-SA 4.0](https://licensebuttons.net/l/by-sa/4.0/88x31.png)](http://creativecommons.org/licenses/by-sa/4.0/)
