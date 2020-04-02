@@ -48,9 +48,13 @@ const getFiles = (dir) => {
 const writeAnalysis = async () => {
   const fileArray = await getFiles('content/analysis/')
 
-  fs.writeFile('content/analysis.json', JSON.stringify(fileArray), (err) => {
-    if (err) throw new Error(err)
-  })
+  fs.writeFile(
+    'content/data/analysis.json',
+    JSON.stringify(fileArray),
+    (err) => {
+      if (err) throw new Error(err)
+    }
+  )
 }
 
 writeAnalysis()

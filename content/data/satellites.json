@@ -1,0 +1,8 @@
+{
+  "satellites": [
+    {
+      "id": 1,
+      "name": "test satellite"
+    }
+  ]
+}

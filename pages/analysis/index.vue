@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import Posts from '~/content/analysis.json'
+import Posts from '~/content/data/analysis.json'
 import PostBlock from '~/components/global/PostBlock.vue'
 
 export default {

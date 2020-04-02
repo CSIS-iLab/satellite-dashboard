@@ -1,5 +1,5 @@
 const path = require('path')
-import Posts from './content/analysis.json'
+import Posts from './content/data/analysis.json'
 
 const dynamicRoutes = Posts.map((post) => post.slug)
 
