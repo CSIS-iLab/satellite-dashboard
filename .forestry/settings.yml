@@ -9,7 +9,19 @@ sections:
   label: Analysis
   create: documents
   match: "**/*.md"
-  new_doc_ext: ".md"
+  new_doc_ext: md
+- type: document
+  path: content/data/authors.json
+  label: Authors
+  match: "**/*"
+- type: document
+  path: content/data/tags.json
+  label: Tags
+  match: "**/*"
+- type: document
+  path: content/data/event_types.json
+  label: Event Types
+  match: "**/*"
 upload_dir: uploads
 public_path: https://res.cloudinary.com/satellitedashboard/image/upload
 front_matter_path: https://res.cloudinary.com/satellitedashboard/image/upload
