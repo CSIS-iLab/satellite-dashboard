@@ -78,7 +78,7 @@ Branches should use the following naming conventions:
 
 | Branch type               | Name                                                      | Example                     |
 | ------------------------- | --------------------------------------------------------- | --------------------------- |
-| New Feature               | `feature/<short description of feature>`                  | `feature/header-navigation` |
+| New Feature               | `feat/<short description of feature>`                     | `feat/header-navigation` |
 | Bug Fixes                 | `bug/<short description of bug>`                          | `bug/mobile-navigation`     |
 | Documentation             | `docs/<short description of documentation being updated>` | `docs/readme`               |
 | Code clean-up/refactoring | `refactor/<short description>`                            | `refactor/apply-linting`    |
