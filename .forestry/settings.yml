@@ -1,13 +1,13 @@
 ---
 new_page_extension: md
 auto_deploy: false
-admin_path:
-webhook_url:
-sections:
+admin_path: 
+webhook_url: 
+sections: 
 upload_dir: uploads
-public_path: "/uploads"
-front_matter_path: ""
-use_front_matter_path: false
+public_path: https://res.cloudinary.com/satellitedashboard/image/upload
+front_matter_path: https://res.cloudinary.com/satellitedashboard/image/upload
+use_front_matter_path: true
 file_template: ":filename:"
 build:
   preview_output_directory: ".nuxt"
