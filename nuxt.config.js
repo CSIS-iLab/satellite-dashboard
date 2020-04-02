@@ -1,10 +1,16 @@
+const path = require('path')
+import Mode from 'frontmatter-markdown-loader/mode'
+import Posts from './content/analysis.json'
+
+const dynamicRoutes = Posts.map((post) => post.slug)
+
 export default {
   mode: 'universal',
   /*
    ** Headers of the page
    */
   head: {
-    title: process.env.npm_package_name || '',
+    titleTemplate: '%s | Satellite Dashboard',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -92,6 +98,19 @@ export default {
           exclude: /(node_modules)/
         })
       }
+
+      // add frontmatter-markdown-loader
+      config.module.rules.push({
+        test: /\.md$/,
+        include: path.resolve(__dirname, 'content'),
+        loader: 'frontmatter-markdown-loader',
+        options: {
+          mode: [Mode.VUE_COMPONENT, Mode.META]
+        }
+      })
     }
+  },
+  generate: {
+    routes: [...dynamicRoutes]
   }
 }
