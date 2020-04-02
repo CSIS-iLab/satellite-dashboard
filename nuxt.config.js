@@ -1,5 +1,4 @@
 const path = require('path')
-import Mode from 'frontmatter-markdown-loader/mode'
 import Posts from './content/analysis.json'
 
 const dynamicRoutes = Posts.map((post) => post.slug)
@@ -102,11 +101,8 @@ export default {
       // add frontmatter-markdown-loader
       config.module.rules.push({
         test: /\.md$/,
-        include: path.resolve(__dirname, 'content'),
-        loader: 'frontmatter-markdown-loader',
-        options: {
-          mode: [Mode.VUE_COMPONENT, Mode.META]
-        }
+        include: path.resolve(__dirname, 'content/analysis'),
+        loader: 'frontmatter-markdown-loader'
       })
     }
   },

@@ -1,7 +1,8 @@
 <template>
   <article>
     <h1>{{ title }}</h1>
-    <component :is="singlePostComponent" />
+    <!-- eslint-disable-next-line -->
+    <div v-html="content"></div>
   </article>
 </template>
 <script>
@@ -14,7 +15,7 @@ export default {
       return {
         title,
         date,
-        singlePostComponent: post.vue.component
+        content: post.html
       }
     } catch (error) {
       return false
