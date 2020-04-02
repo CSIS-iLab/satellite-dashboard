@@ -1,0 +1,53 @@
+// @use 'variables' as *;
+// @use 'sass:map';
+
+/*=================================
+=            Mixins            =
+=================================*/
+
+// Breakpoints
+// $break: Breakpoint to use
+// $dir: 'min-width' or 'max-width'
+// $until: Maximum width
+// @include breakpoint('medium');
+// @include breakpoint($break: 'medium', $until: 'large');
+// @include breakpoint($break: 'medium', $dir: 'max-width');
+@mixin breakpoint(
+  $break,
+  $dir: 'min-width',
+  $until: null,
+  $breakpoints-map: $breakpoints
+) {
+  @if not map-has-key($breakpoints-map, $break) {
+    $break: $break;
+  } @else {
+    $break: map-get($breakpoints-map, $break);
+  }
+
+  @if $break and $until {
+    @if not map-has-key($breakpoints-map, $until) {
+      $until: $until;
+    } @else {
+      $until: map-get($breakpoints-map, $until);
+    }
+
+    @media screen and (min-width: $break) and (max-width: $until) {
+      @content;
+    }
+  } @else {
+    @media screen and ($dir: $break) {
+      @content;
+    }
+  }
+}
+
+// Rem output with px fallback
+@mixin font-size($size) {
+  font-size: $size; //Fallback in px
+  font-size: rem($size);
+}
+
+@mixin vw100() {
+  width: 100vw; // Fallback for old browsers
+  width: calc(100vw - var(--scrollbar));
+}
