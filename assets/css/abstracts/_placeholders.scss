@@ -2,170 +2,150 @@
 =          Placeholders        =
 ==============================*/
 
-@mixin font-ui-heading-section-bold {
-  font-family: $font__good;
-  font-weight: medium;
-  @include font-size(24px);
-}
-@mixin font-ui-heading-section-lg {
-  font-family: $font__good;
-  font-weight: normal;
-  @include font-size(24px);
-  line-height: 1.3;
-}
-
-@mixin font-ui-heading-section-md {
-  font-family: $font__good;
-  font-weight: normal;
-  @include font-size(20px);
-}
-@mixin font-ui-heading-section-sm {
-  font-family: $font__good;
-  font-weight: normal;
-  @include font-size(18px);
-  line-height: 1.1;
-}
-@mixin font-ui-text-sm-oxygen {
-  font-family: $font__oxygen;
-  font-weight: normal;
-  @include font-size(12px);
-  line-height: 1.3;
-}
-
-@mixin font-ui-text-base-oxygen {
-  font-family: $font__oxygen;
-  font-weight: normal;
-  @include font-size(14px);
-  line-height: 1.4;
-}
-
-@mixin font-ui-text-lg-oxygen {
-  font-family: $font__oxygen;
-  font-weight: normal;
-  @include font-size(16px);
-  line-height: 1.25;
-}
-
-@mixin font-ui-text-sm-good {
-  font-family: $font__good;
-  font-weight: normal;
-  @include font-size(12px);
-  line-height: 1.3;
-}
-@mixin font-ui-text-base-good {
-  font-family: $font__good;
-  font-weight: normal;
-  @include font-size(14px);
-  line-height: 1.29;
-}
-@mixin font-ui-text-lg-good {
-  font-family: $font__good;
-  font-weight: normal;
-  @include font-size(16px);
-  line-height: 1.25;
-}
-@mixin font-post-text-xsm {
-  font-family: $font__oxygen;
-  font-weight: normal;
-  @include font-size(14px);
-  line-height: 1.4;
-}
-@mixin font-post-text-sm {
-  font-family: $font__oxygen;
-  font-weight: normal;
-  @include font-size(15px);
-  line-height: 1.4;
-}
-@mixin font-post-text-md {
-  font-family: $font__oxygen;
-  font-weight: normal;
-  @include font-size(17px);
-  line-height: 1.4;
-}
-@mixin font-post-text-lg {
-  font-family: $font__oxygen;
-  font-weight: normal;
-  @include font-size(18px);
-  line-height: 1.8;
-}
-@mixin font-post-heading-h-2 {
-  font-family: $font__good;
-  font-weight: medium;
-  @include font-size(40px);
-  line-height: 1.2;
-}
-@mixin font-post-heading-h-3 {
-  font-family: $font__good;
-  font-weight: medium;
-  @include font-size(32px);
-  line-height: 1.1875;
-}
-@mixin font-post-heading-h-4 {
-  font-family: $font__good;
-  font-weight: medium;
-  @include font-size(26px);
-  line-height: 1.2;
-}
-@mixin font-post-heading-table-title {
-  font-family: $font__good;
-  font-weight: medium;
-  @include font-size(22px);
-  line-height: 1.2;
-}
-@mixin font-ui-heading-page-title-base {
+%font-ui-heading-page-title-base {
   font-family: $font__good;
   font-weight: medium;
   @include font-size(72px);
   line-height: 1.2;
 }
-@mixin font-ui-heading-page-title-post {
+
+%font-ui-heading-page-title-post {
   font-family: $font__good;
   font-weight: medium;
   @include font-size(48px);
   line-height: 1.2;
 }
-@mixin font-ui-text-xsm-oxygen {
-  font-family: $font__oxygen;
-  font-weight: normal;
+
+%font-ui-heading-post-block-title {
+  font-family: $font__good;
+  font-weight: medium;
+  @include font-size(28px);
+  line-height: 1.4;
+}
+
+%font-ui-heading-section-lg {
+  font-family: $font__good;
+  @include font-size(24px);
+  line-height: 1.3;
+}
+
+%font-ui-heading-section-md {
+  font-family: $font__good;
+  @include font-size(20px);
+  line-height: 1.2;
+}
+
+%font-ui-heading-section-sm {
+  font-family: $font__good;
+  @include font-size(18px);
+  line-height: 1.1;
+}
+
+%font-ui-text-xsm-oxygen {
   @include font-size(10px);
   line-height: 1.4;
 }
-@mixin font-ui-heading-post-block-title {
-  font-family: $font__good;
-  font-weight: medium;
-  @include font-size(28px);
+
+%font-ui-text-sm-oxygen {
+  @include font-size(12px);
+  line-height: 1.3;
+}
+
+%font-ui-text-base-oxygen {
+  @include font-size(14px);
   line-height: 1.4;
 }
 
-@mixin font-post-text-blockquote {
+%font-ui-text-lg-oxygen {
+  @include font-size(16px);
+  line-height: 1.25;
+}
+
+%font-ui-text-sm-good {
+  font-family: $font__good;
+  @include font-size(12px);
+  line-height: 1.3;
+}
+
+%font-ui-text-base-good {
+  font-family: $font__good;
+  @include font-size(14px);
+  line-height: 1.29;
+}
+
+%font-ui-text-lg-good {
+  font-family: $font__good;
+  @include font-size(16px);
+  line-height: 1.25;
+}
+
+%font-post-text-xsm {
+  @include font-size(14px);
+  line-height: 1.4;
+}
+
+%font-post-text-sm {
+  @include font-size(15px);
+  line-height: 1.4;
+}
+
+%font-post-text-md {
+  @include font-size(17px);
+  line-height: 1.4;
+}
+
+%font-post-text-lg {
+  @include font-size(18px);
+  line-height: 1.8;
+}
+
+%font-post-heading-h2 {
+  font-family: $font__good;
+  font-weight: medium;
+  @include font-size(40px);
+  line-height: 1.2;
+}
+
+%font-post-heading-h3 {
+  font-family: $font__good;
+  font-weight: medium;
+  @include font-size(32px);
+  line-height: 1.1875;
+}
+
+%font-post-heading-h4 {
+  font-family: $font__good;
+  font-weight: medium;
+  @include font-size(26px);
+  line-height: 1.2;
+}
+
+%font-post-heading-table-title {
+  font-family: $font__good;
+  font-weight: medium;
+  @include font-size(22px);
+  line-height: 1.2;
+}
+
+%font-post-text-lg-list {
+  @include font-size(18px);
+  line-height: 1.5;
+}
+
+%font-post-text-blockquote {
   font-family: $font__good;
   font-weight: medium;
   @include font-size(28px);
 }
 
-@mixin font-post-text-footnote-superscript {
+%font-post-text-footnote-superscript {
   font-family: $font__good;
   font-weight: medium;
   @include font-size(20px);
   line-height: 1.6;
 }
 
-@mixin font-post-text-footnote-list {
-  font-family: $font__oxygen;
-  font-weight: normal;
+%font-post-text-footnote-list {
   @include font-size(15px);
   line-height: 1.4;
-}
-
-@mixin font-ui-heading-section-lg-bold {
-  font-family: $font__good;
-  font-weight: medium;
-  @include font-size(24px);
-  line-height: 1.3;
-}
-@mixin font-post-text-lg-list {
-  font-family: $font__oxygen;
-  font-weight: normal;
-  @include font-size(18px);
-  line-height: 1.5;
 }

@@ -33,34 +33,4 @@ export default {
 }
 </script>
 
-<style lang="scss">
-.container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  margin: rem(24px) auto;
-  text-align: center;
-}
-
-.title {
-  display: block;
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  font-weight: 300;
-  font-size: 100px;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  padding-bottom: 15px;
-  color: #526488;
-  font-weight: 300;
-  font-size: 42px;
-  word-spacing: 5px;
-}
-
-.links {
-  padding-top: 15px;
-}
-</style>
+<style lang="scss"></style>
