@@ -1,7 +1,19 @@
 const path = require('path')
+import Fiber from 'fibers'
+import Sass from 'sass'
+
 import Posts from './content/data/analysis.json'
 
 const dynamicRoutes = Posts.map((post) => post.slug)
+
+const customSass = {
+  implementation: Sass,
+  webpackImporter: false,
+  sassOptions: {
+    fiber: Fiber,
+    includePaths: ['node_modules']
+  }
+}
 
 export default {
   mode: 'universal',
@@ -19,7 +31,14 @@ export default {
         content: process.env.npm_package_description || ''
       }
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
+    link: [
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      {
+        rel: 'stylesheet',
+        type: 'text/css',
+        href: 'https://use.typekit.net/gyv1vhd.css'
+      }
+    ]
   },
   /*
    ** Customize the progress-bar color
@@ -28,7 +47,7 @@ export default {
   /*
    ** Global CSS
    */
-  css: [],
+  css: [{ src: '~/assets/css/main.scss', lang: 'scss' }],
   /*
    ** Plugins to load before mounting the App
    */
@@ -47,16 +66,20 @@ export default {
    */
   modules: ['@nuxtjs/pwa', '@nuxtjs/style-resources'],
   styleResources: {
-    scss: ['./assets/css/abstracts/_index.scss']
+    scss: [
+      './assets/css/abstracts/index.scss'
+      // './assets/css/abstracts/_variables.scss',
+      // './assets/css/abstracts/_functions.scss',
+      // './assets/css/abstracts/_mixins.scss',
+      // './assets/css/abstracts/_placeholders.scss'
+    ]
   },
   /*
    ** Build configuration
    */
   build: {
     loaders: {
-      scss: {
-        implementation: require('sass')
-      }
+      scss: customSass
     },
     postcss: {
       // Add plugin names as key and arguments as value

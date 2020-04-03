@@ -1,0 +1,79 @@
+/*=================================
+=            Variables            =
+=================================*/
+
+/*----------  Colors  ----------*/
+$color-black: rgba(0, 0, 0, 1);
+$color-black-120: rgba(0, 0, 0, 0.2);
+$color-black-160: rgba(0, 0, 0, 0.6);
+$color-black-190: rgba(0, 0, 0, 0.9);
+
+$color-white-100: rgba(255, 255, 255, 1);
+$color-white-108: rgba(255, 255, 255, 0.08);
+$color-white-110: rgba(255, 255, 255, 0.1);
+$color-white-115: rgba(255, 255, 255, 0.2);
+$color-white-125: rgba(255, 255, 255, 0.25);
+$color-white-130: rgba(255, 255, 255, 0.3);
+$color-white-140: rgba(255, 255, 255, 0.4);
+$color-white-150: rgba(255, 255, 255, 0.5);
+$color-white-160: rgba(255, 255, 255, 0.6);
+$color-white-170: rgba(255, 255, 255, 0.7);
+$color-white-180: rgba(255, 255, 255, 0.8);
+$color-white-190: rgba(255, 255, 255, 0.9);
+
+$color-offwhite: rgba(209, 209, 209, 1);
+
+$color-slate-100: rgba(53, 66, 74, 1);
+$color-slate-200: rgba(44, 50, 55, 1);
+$color-slate-300: rgba(33, 38, 43, 1);
+$color-slate-385: rgba(33, 38, 43, 0.85);
+$color-slate-400: rgba(28, 32, 36, 1);
+$color-slate-478: rgba(28, 32, 36, 0.78);
+$color-slate-495: rgba(28, 32, 36, 0.95);
+$color-slate-490: rgba(22, 25, 28, 0.9);
+$color-slate-500: rgba(24, 27, 31, 1);
+$color-slate-600: rgba(22, 25, 28, 1);
+$color-slate-695: rgba(22, 25, 28, 0.95);
+$color-slate-700: rgba(16, 20, 23, 1);
+$color-slate-800: rgba(12, 16, 19, 1);
+$color-slate-900: rgba(5, 8, 10, 1);
+
+$color-orange-100: rgba(254, 116, 20, 1);
+$color-orange-140: rgba(254, 116, 20, 0.4);
+$color-orange-180: rgba(254, 116, 20, 0.8);
+$color-orangedull-100: rgba(195, 116, 44, 1);
+$color-orangedull-150: rgba(195, 116, 44, 0.5);
+$color-orangedark-100: rgba(208, 49, 16, 1);
+
+$color-ltblue-100: rgba(148, 159, 168, 1);
+$color-ltblue-115: rgba(148, 159, 168, 0.15);
+$color-ltblue-130: rgba(148, 159, 168, 0.3);
+$color-ltblue-175: rgba(148, 159, 168, 0.75);
+
+$color-blue-100: rgba(67, 85, 96, 1);
+$color-blue-170: rgba(67, 85, 96, 0.7);
+
+$color-focus: rgba(82, 175, 225, 1);
+
+$objects: (
+  active: rgba(233, 131, 40, 1),
+  inactive: rgba(200, 56, 16, 1),
+  rocketbody: rgba(226, 212, 135, 1),
+  debris: rgba(56, 183, 252, 1),
+  uncategorized: rgba(44, 92, 125, 1)
+);
+
+/*----------  Fonts  ----------*/
+$font__good: ff-good-web-pro, sans-serif;
+$font__oxygen: oxygen, sans-serif;
+
+/*----------  Structure  ----------*/
+$breakpoints: (
+  'small': 30em,
+  'medium': 48em,
+  'large': 62.5em,
+  'xlarge': 75em
+);
+
+$size__container-max-width: 1000px;
+$size__content-max-width: 680px;
