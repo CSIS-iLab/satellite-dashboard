@@ -4,21 +4,21 @@
 
 %font-ui-heading-page-title-base {
   font-family: $font__good;
-  font-weight: medium;
+  font-weight: 600;
   @include font-size(72px);
   line-height: 1.2;
 }
 
 %font-ui-heading-page-title-post {
   font-family: $font__good;
-  font-weight: medium;
+  font-weight: 600;
   @include font-size(48px);
   line-height: 1.2;
 }
 
 %font-ui-heading-post-block-title {
   font-family: $font__good;
-  font-weight: medium;
+  font-weight: 600;
   @include font-size(28px);
   line-height: 1.4;
 }
@@ -101,28 +101,28 @@
 
 %font-post-heading-h2 {
   font-family: $font__good;
-  font-weight: medium;
+  font-weight: 600;
   @include font-size(40px);
   line-height: 1.2;
 }
 
 %font-post-heading-h3 {
   font-family: $font__good;
-  font-weight: medium;
+  font-weight: 600;
   @include font-size(32px);
   line-height: 1.1875;
 }
 
 %font-post-heading-h4 {
   font-family: $font__good;
-  font-weight: medium;
+  font-weight: 600;
   @include font-size(26px);
   line-height: 1.2;
 }
 
 %font-post-heading-table-title {
   font-family: $font__good;
-  font-weight: medium;
+  font-weight: 600;
   @include font-size(22px);
   line-height: 1.2;
 }
@@ -134,13 +134,13 @@
 
 %font-post-text-blockquote {
   font-family: $font__good;
-  font-weight: medium;
+  font-weight: 600;
   @include font-size(28px);
 }
 
 %font-post-text-footnote-superscript {
   font-family: $font__good;
-  font-weight: medium;
+  font-weight: 600;
   @include font-size(20px);
   line-height: 1.6;
 }
