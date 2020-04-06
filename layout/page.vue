@@ -21,6 +21,11 @@ export default {
       type: Boolean,
       default: false
     }
+  },
+  head: {
+    bodyAttrs: {
+      class: 'page-layout'
+    }
   }
 }
 </script>

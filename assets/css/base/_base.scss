@@ -1,6 +1,11 @@
 body {
   font-family: $font__oxygen;
-  background: $color-slate-800;
+}
+
+.page-layout {
+  background-color: $color-slate-800;
+  background-image: url('~assets/img/page-bg.jpg');
+  background-repeat: no-repeat;
 }
 
 a {
