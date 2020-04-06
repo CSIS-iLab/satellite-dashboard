@@ -51,3 +51,55 @@
   width: 100vw; // Fallback for old browsers
   width: calc(100vw - var(--scrollbar));
 }
+
+// Extend Background to full width of window
+@mixin full-width-background(
+  $background,
+  $direction: '',
+  $includeMargins: true
+) {
+  $width_forumula: calc((100vw - 100%) / 2);
+  position: relative;
+
+  @if $includeMargins {
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    display: block;
+    width: $width_forumula;
+    height: 100%;
+    background-color: $background;
+  }
+
+  &::before {
+    right: 100%;
+  }
+
+  &::after {
+    left: 100%;
+  }
+
+  @if $direction == left {
+    &::before {
+      width: calc(#{$width_forumula} - 50%);
+    }
+
+    &::after {
+      display: none;
+    }
+  } @else if $direction == right {
+    &::after {
+      width: calc(#{$width_forumula} - 50%);
+    }
+
+    &::before {
+      display: none;
+    }
+  }
+}
