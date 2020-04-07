@@ -7,11 +7,16 @@
 
 <style lang="scss">
 .container {
+  --container-padding: #{rem(16px)};
   max-width: $size__container-max-width;
   margin-right: auto;
   margin-left: auto;
-  padding-right: rem(16px);
-  padding-left: rem(16px);
+  padding-right: var(--container-padding);
+  padding-left: var(--container-padding);
+
+  @include breakpoint('medium') {
+    --container-padding: #{rem(32px)};
+  }
 }
 
 .content-wrapper {

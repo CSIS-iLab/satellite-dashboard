@@ -1,8 +1,10 @@
 <template>
-  <article>
-    <h1>{{ title }}</h1>
+  <article class="post container">
+    <header class="post__header">
+      <h1>{{ title }}</h1>
+    </header>
     <!-- eslint-disable-next-line -->
-    <div v-html="content"></div>
+    <section class="post__content" v-html="content"></section>
   </article>
 </template>
 <script>
@@ -23,8 +25,30 @@ export default {
   },
   head() {
     return {
-      title: this.title
+      title: this.title,
+      bodyAttrs: {
+        class: 'page-layout'
+      }
     }
   }
 }
 </script>
+
+<style lang="scss">
+@import '../assets/css/components/post-component';
+
+.post {
+  &__header {
+    @extend %page-header;
+  }
+
+  &__content {
+    @extend %page-content;
+    @extend %page-content-bg;
+
+    > *:not([class]) {
+      padding: 0 calc(50% - #{$size__content-max-width} / 2);
+    }
+  }
+}
+</style>
