@@ -1,5 +1,5 @@
 <template>
-  <article>
+  <article class="post-component post-component--wide">
     <header>
       <h2>
         <nuxt-link :to="data.slug">{{ data.title }}</nuxt-link>
@@ -27,3 +27,7 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+@import '../assets/css/components/post-component';
+</style>

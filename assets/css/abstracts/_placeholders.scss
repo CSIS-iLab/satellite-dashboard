@@ -149,3 +149,55 @@
   @include font-size(15px);
   line-height: 1.4;
 }
+
+%page-header {
+  margin-top: rem(32px);
+  margin-bottom: rem(24px);
+
+  @include breakpoint('medium') {
+    margin-top: rem(48px);
+    margin-bottom: rem(32px);
+  }
+
+  @include breakpoint('large') {
+    margin-top: rem(54px);
+  }
+}
+
+%page-content {
+  padding-top: rem(32px);
+  padding-bottom: rem(48px);
+
+  @include breakpoint('medium') {
+    padding-top: rem(64px);
+    padding-bottom: rem(64px);
+  }
+
+  @include breakpoint('large') {
+    padding-top: rem(80px);
+    padding-bottom: rem(80px);
+  }
+}
+
+%page-content-bg {
+  color: $color-black-190;
+  background: $color-white-100;
+
+  // Ensures that background extends to edges on mobile devices
+  @include breakpoint($break: 'medium', $dir: 'max-width') {
+    @include full-width-background(
+      $background: $color-white-100,
+      $includeMargins: true
+    );
+
+    &::before,
+    &::after {
+      z-index: -1;
+    }
+  }
+}
+
+%full-bleed {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+}
