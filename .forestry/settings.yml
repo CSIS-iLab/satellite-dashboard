@@ -4,11 +4,6 @@ auto_deploy: false
 admin_path: 
 webhook_url: 
 sections:
-- type: document
-  path: test.md
-  label: Test Table
-  match: "**/*"
-  read_only: true
 - type: directory
   path: content/analysis
   label: Analysis
