@@ -4,11 +4,8 @@ This is a test of the table in Forestry's read only docs.
 
 <div class="container">
   <div id="vue-table">
-    
     <input type="text" v-model="search" class="form-control" />
-    
     <table class="table table-striped">
-      
       <thead>
         <tr>
           <th v-repeat="column: columns">
@@ -21,7 +18,6 @@ This is a test of the table in Forestry's read only docs.
           </th>
         </tr>
       </thead>
-      
       <tbody>
         <tr v-repeat="people
                       | filterBy search
@@ -34,7 +30,8 @@ This is a test of the table in Forestry's read only docs.
   </div>
 </div>
 
-<style>#vue-table {
+<style>
+  #vue-table {
   margin: 2em 0;
   
   a {
