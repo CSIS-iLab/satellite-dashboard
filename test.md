@@ -49,6 +49,7 @@ This is a test of the table in Forestry's read only docs.
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/0.11.10/vue.min.js"></script>
 
 <script>
+console.log('hello Jacque!')
 new Vue({
   el: '#vue-table',
   
