@@ -2,23 +2,28 @@
   <article class="post container">
     <header class="post__header">
       <h1>{{ title }}</h1>
+      <h2>Author: {{ authors.items[0].author.name }}</h2>
     </header>
     <!-- eslint-disable-next-line -->
     <section class="post__content" v-html="content"></section>
   </article>
 </template>
 <script>
+import { API, graphqlOperation } from 'aws-amplify'
+import * as queries from '@/src/graphql/queries'
+
 export default {
   async asyncData({ params }) {
     try {
-      const post = await import(`~/content/analysis/${params.slug}.md`)
-      const { title, date } = post.attributes
-
-      return {
-        title,
-        date,
-        content: post.html
-      }
+      const data = await API.graphql(
+        graphqlOperation(queries.postsBySlug, { slug: params.slug })
+      )
+      /*
+        because of API requirements around key and unique value, we get a list
+        back, but we can be pretty sure it will be the only item, so grab 0 index
+        otherwise, on failure, this is a bad slug
+      */
+      return data.data.postsBySlug.items[0]
     } catch (error) {
       return false
     }
