@@ -14,8 +14,10 @@
 
 <script>
 import Page from '~/layout/page'
-import Posts from '~/content/data/analysis.json'
+// import Posts from '~/content/data/analysis.json'
 import PostBlock from '~/components/global/PostBlock.vue'
+import { API, graphqlOperation } from 'aws-amplify'
+import * as queries from '@/src/graphql/queries'
 
 export default {
   layout: 'layout',
@@ -23,9 +25,12 @@ export default {
     Page,
     PostBlock
   },
-  computed: {
-    posts() {
-      return Posts
+  async asyncData() {
+    const data = await API.graphql(
+      graphqlOperation(queries.listPosts, { limit: 1000 })
+    )
+    return {
+      posts: data.data.listPosts.items
     }
   }
 }

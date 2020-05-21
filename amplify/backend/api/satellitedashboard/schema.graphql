@@ -1,0 +1,178 @@
+type OverrideableString {
+	value: String
+	override: String
+}
+
+type Post
+	@model
+	@key(name: "BySlug", fields: ["slug"], queryField: "postsBySlug")
+	@auth(
+		rules: [
+	      {allow: public, operations: [read]},
+	      {allow: private,  operations: [create, read, update, delete] },
+	      {allow: private, provider: iam,  operations: [create, read, update, delete] }
+	    ]
+	)
+{
+	id: ID!
+	slug: String!
+	title: String
+	postDate: AWSDate
+	updatedAt: AWSDateTime
+	excerpt: String
+	featureImage: S3Object
+	featureImageCaption: String
+	eventTypeIDs: [String]
+	tagIDs: [String]
+	relatedSatelliteIDs: [String]
+	relatedPostIDs: [String]
+	furtherReadings: [FurtherReading]
+	content: String
+	authors: [PostAuthor] @connection(keyName: "byPost", fields: ["id"])
+}
+
+
+type PostAuthor
+	@model(queries: null)
+	@key(name: "byPost", fields: ["postID", "authorID"])
+	@key(name: "byAuthor", fields: ["authorID", "postID"])
+{
+	id: ID!
+	postID: ID!
+	authorID: ID!
+	post: Post! @connection(fields: ["postID"])
+	author: Author! @connection(fields: ["authorID"])
+}
+
+type FurtherReading {
+	name: String
+	author: String
+	url: String
+}
+
+# S3Object minimum type
+type S3Object {
+  key: String!
+  identityId: String
+  level: String
+}
+
+type Author 
+	@model
+	@auth(
+		rules: [
+	      {allow: public, operations: [read]},
+	      {allow: private,  operations: [create, read, update, delete] },
+	      {allow: private, provider: iam,  operations: [create, read, update, delete] }
+	    ]
+	)
+{
+	id: ID!
+	name: String
+	biography: String
+	posts: [PostAuthor] @connection(keyName: "byAuthor", fields: ["id"])
+}
+
+type OrbitalData
+	@model
+	@auth(
+		rules: [
+	      {allow: public, operations: [read]},
+	      {allow: private,  operations: [create, read, update, delete] },
+	      {allow: private, provider: iam,  operations: [create, read, update, delete] }
+	    ]
+	)
+{
+	apogee: SourcedData
+	argumentOfPerigee: SourcedData
+	perigree: SourcedData
+	eccentricity: SourcedData
+	inclination: SourcedData
+	longitude: SourcedData
+	meanMotion: SourcedData
+	orbitalPeriod: SourcedData
+	semiMajorAxis: SourcedData
+	driftRate: SourcedData
+}
+
+type Satellite
+	@model
+	@auth(
+		rules: [
+	      {allow: public, operations: [read]},
+	      {allow: private,  operations: [create, read, update, delete] },
+	      {allow: private, provider: iam,  operations: [create, read, update, delete] }
+	    ]
+	)
+{
+	id: ID!
+	name: OverrideableString
+	launchDate: AWSDate
+	launchVehicle: String
+	launchSite: String
+	countryOfLaunchSite: OverrideableString
+	countryOfJurisdiction: String
+	contractor: String
+	operator: String
+	purpose: OverrideableString
+	satelliteType: OverrideableString
+	lifetime: String
+	status: OverrideableString
+	orbitalDatum: [OrbitalData]
+	relatedPostIDs: [String]
+}
+
+type SourcedData
+{
+	datasource: Datasource!
+	value: String
+}
+
+type Datasource
+	@model
+	@auth(
+		rules: [
+	      {allow: public, operations: [read]},
+	      {allow: private,  operations: [create, read, update, delete] },
+	      {allow: private, provider: iam,  operations: [create, read, update, delete] }
+	    ]
+	)
+{
+	id: ID!
+	name: String
+}
+
+enum TAG_TYPE {
+	COUNTRY
+	USER
+}
+
+type EventType
+	@model
+	@auth(
+		rules: [
+	      {allow: public, operations: [read]},
+	      {allow: private,  operations: [create, read, update, delete] },
+	      {allow: private, provider: iam,  operations: [create, read, update, delete] }
+	    ]
+	)
+{
+	id: ID!
+	name: String
+}
+
+type Tag
+	@model
+	@auth(
+		rules: [
+	      {allow: public, operations: [read]},
+	      {allow: private,  operations: [create, read, update, delete] },
+	      {allow: private, provider: iam,  operations: [create, read, update, delete] }
+	    ]
+	)
+{
+	id: ID!
+	name: String
+	tagType: TAG_TYPE
+}
+

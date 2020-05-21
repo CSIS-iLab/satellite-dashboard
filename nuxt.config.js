@@ -1,10 +1,21 @@
 const path = require('path')
 import Fiber from 'fibers'
 import Sass from 'sass'
+import Amplify from 'aws-amplify'
+import awsconfig from './src/aws-exports'
+import { API, graphqlOperation } from 'aws-amplify'
+import * as queries from './src/graphql/queries'
 
-import Posts from './content/data/analysis.json'
+Amplify.configure(awsconfig)
 
-const dynamicRoutes = Posts.map((post) => post.slug)
+const dynamicRoutes = () => {
+  return API.graphql(graphqlOperation(queries.listPosts, { limit: 1000 })).then(
+    (data) => {
+      const Posts = data.data.listPosts.items
+      return Posts.map((post) => `analysis/${post.slug}`)
+    }
+  )
+}
 
 const customSass = {
   implementation: Sass,
@@ -51,7 +62,7 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: ['@/plugins/amplify.js'],
   /*
    ** Nuxt.js dev-modules
    */
@@ -130,6 +141,6 @@ export default {
     }
   },
   generate: {
-    routes: [...dynamicRoutes]
+    routes: dynamicRoutes
   }
 }

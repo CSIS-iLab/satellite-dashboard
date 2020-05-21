@@ -2,9 +2,9 @@
   <article class="post-component post-component--wide">
     <header>
       <h2>
-        <nuxt-link :to="data.slug">{{ data.title }}</nuxt-link>
+        <nuxt-link :to="nestedSlug">{{ data.title }}</nuxt-link>
       </h2>
-      {{ data.date }}
+      {{ data.postDate }}
     </header>
     {{ data.excerpt }}
   </article>
@@ -23,6 +23,11 @@ export default {
           slug: ''
         }
       }
+    }
+  },
+  computed: {
+    nestedSlug() {
+      return `analysis/${this.data.slug}`
     }
   }
 }
