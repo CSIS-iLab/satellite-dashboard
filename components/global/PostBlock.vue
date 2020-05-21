@@ -18,7 +18,7 @@ export default {
       default() {
         return {
           title: '',
-          date: '',
+          postDate: '',
           excerpt: '',
           slug: ''
         }

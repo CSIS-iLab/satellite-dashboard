@@ -6,6 +6,7 @@
   &__content {
     @extend %page-content;
     @extend %page-content-bg;
+    @extend %font-post-text-lg;
 
     > *:not([class]) {
       padding: 0 calc(50% - #{$size__content-max-width} / 2);

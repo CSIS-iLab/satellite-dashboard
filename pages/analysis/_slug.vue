@@ -2,6 +2,7 @@
   <article class="post container">
     <header class="post__header">
       <h1>{{ title }}</h1>
+      {{ excerpt }}
       <h2>Author: {{ authors.items[0].author.name }}</h2>
     </header>
     <!-- eslint-disable-next-line -->
