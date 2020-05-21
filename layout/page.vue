@@ -31,23 +31,5 @@ export default {
 </script>
 
 <style lang="scss">
-.page {
-  &__header {
-    @extend %page-header;
-  }
-
-  &__title {
-    color: $color-white-100;
-    @extend %font-ui-heading-page-title-base;
-    text-align: center;
-  }
-
-  &__content {
-    @extend %page-content;
-
-    &.page__content--bg {
-      @extend %page-content-bg;
-    }
-  }
-}
+@import '../assets/css/pages/page';
 </style>

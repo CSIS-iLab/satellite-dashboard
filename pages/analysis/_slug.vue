@@ -41,19 +41,5 @@ export default {
 
 <style lang="scss">
 @import '../assets/css/components/post-component';
-
-.post {
-  &__header {
-    @extend %page-header;
-  }
-
-  &__content {
-    @extend %page-content;
-    @extend %page-content-bg;
-
-    > *:not([class]) {
-      padding: 0 calc(50% - #{$size__content-max-width} / 2);
-    }
-  }
-}
+@import '../assets/css/pages/post';
 </style>

@@ -1,36 +1,24 @@
 <template>
   <div class="container">
     <div>
-      <Logo />
-      <h1 class="title">
-        satellite-dashboard
-      </h1>
-      <h2 class="subtitle">
-        Website for The Satellite Dashboard.
-      </h2>
+      <h1 class="title">satellite-dashboard</h1>
       <div class="links">
-        <a href="https://nuxtjs.org/" target="_blank" class="button--green">
-          Documentation</a
-        >
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey"
-          >GitHub</a
-        >
+        <a href="https://nuxtjs.org/" target="_blank">
+          Nuxt Documentation
+        </a>
+        <br />
+        <a href="https://github.com/nuxt/nuxt.js" target="_blank">
+          GitHub
+        </a>
+        <br />
+        <nuxt-link to="/about">About Page</nuxt-link>
+        <br />
+        <nuxt-link to="/analysis">Analysis</nuxt-link>
       </div>
     </div>
   </div>
 </template>
 
-<script>
-import Logo from '~/components/Logo.vue'
-
-export default {
-  components: {
-    Logo
-  }
-}
-</script>
+<script></script>
 
 <style lang="scss"></style>
