@@ -13,6 +13,11 @@
   - [Generate Static Project](#generate-static-project)
   - [See More Commands](#see-more-commands)
   - [Nuxt](#nuxt)
+- [Contributing](#contributing)
+  - [Branching](#branching)
+  - [Commit Messages](#commit-messages)
+  - [Naming Conventions](#naming-conventions)
+  - [Recommended Extensions](#recommended-extensions)
 
 ## Quick-start Instructions
 
@@ -89,10 +94,18 @@ When ready to merge, submit a Pull Request into `master`. All code will be revie
 
 Write clear and concise commit messages describing the changes you are making and why. If there are any issues associated with the commit, include the issue # in the commit title.
 
-### CSS Styles
+### Naming Conventions
 
 - This project uses the [BEM](http://getbem.com/introduction/) naming convention.
 - This project uses [Stylelint](https://stylelint.io) to maintain a consistent code style. Errors are flagged in the console during development and can be automatically fixed by running `yarn run lint:styles-fix`.
+
+### Recommended Extensions
+
+It is recommended to use the following extensions when working on this project to assist with code formatting:
+
+- [Veuter](https://marketplace.visualstudio.com/items?itemName=octref.vetur)
+- [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+- [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
 
 ## Copyright / License Info
 
