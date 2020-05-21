@@ -1,6 +1,5 @@
 [![CC BY-SA 4.0](https://img.shields.io/badge/license-cc%20by--sa%204.0-lightgrey.svg)](http://creativecommons.org/licenses/by-sa/4.0/)
 
-
 # satellite-dashboard
 
 > The Satellite Dashboard is a joint project between the CSIS Aerospace Security Program, Secure World Foundation, and University of Texas Austin. It tracks the locations of objects in orbit in GEO and provides analysis on key events.
@@ -25,10 +24,10 @@ $ git clone git@github.com:CSIS-iLab/satellite-dashboard.git
 $ cd satellite-dashboard
 
 # install dependencies
-$ yarn install
+$ npm install
 
 # serve with hot reload at localhost:3000
-$ yarn dev
+$ npm dev
 ```
 
 ## Usage
@@ -38,22 +37,22 @@ $ yarn dev
 This will give you file watching, browser synchronisation, auto-rebuild, CSS injecting, etc.
 
 ```bash
-$ yarn dev
+$ npm dev
 ```
 
 ### Build for Production
 
 ```bash
-$ yarn build
+$ npm build
 
 # Optionally start server to view built site.
-$ yarn start
+$ npm start
 ```
 
 ### Generate static project
 
 ```bash
-$ yarn generate
+$ npm generate
 ```
 
 ### See More Commands
@@ -61,7 +60,7 @@ $ yarn generate
 This will display all available commands, such as running eslint or stylelint independently.
 
 ```shell
-$ yarn run
+$ npm run
 ```
 
 ### Nuxt
@@ -76,13 +75,13 @@ When modifying the code base, always make a new branch. Unless it's necessary to
 
 Branches should use the following naming conventions:
 
-| Branch type               | Name                                                      | Example                     |
-| ------------------------- | --------------------------------------------------------- | --------------------------- |
+| Branch type               | Name                                                      | Example                  |
+| ------------------------- | --------------------------------------------------------- | ------------------------ |
 | New Feature               | `feat/<short description of feature>`                     | `feat/header-navigation` |
-| Bug Fixes                 | `bug/<short description of bug>`                          | `bug/mobile-navigation`     |
-| Documentation             | `docs/<short description of documentation being updated>` | `docs/readme`               |
-| Code clean-up/refactoring | `refactor/<short description>`                            | `refactor/apply-linting`    |
-| Content Updates           | `content/<short description of content>`                  | `content/add-new-posts`     |
+| Bug Fixes                 | `bug/<short description of bug>`                          | `bug/mobile-navigation`  |
+| Documentation             | `docs/<short description of documentation being updated>` | `docs/readme`            |
+| Code clean-up/refactoring | `refactor/<short description>`                            | `refactor/apply-linting` |
+| Content Updates           | `content/<short description of content>`                  | `content/add-new-posts`  |
 
 When ready to merge, submit a Pull Request into `master`. All code will be reviewed by the lead developer on the project before being merged into `master`.
 
