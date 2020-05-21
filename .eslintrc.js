@@ -7,6 +7,9 @@ module.exports = {
   parserOptions: {
     parser: 'babel-eslint'
   },
+  globals: {
+    $nuxt: true
+  },
   extends: [
     'plugin:vue/recommended',
     'eslint:recommended',

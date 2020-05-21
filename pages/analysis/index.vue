@@ -14,7 +14,6 @@
 
 <script>
 import Page from '~/layout/page'
-// import Posts from '~/content/data/analysis.json'
 import PostBlock from '~/components/global/PostBlock.vue'
 import { API, graphqlOperation } from 'aws-amplify'
 import * as queries from '@/src/graphql/queries'
@@ -37,11 +36,5 @@ export default {
 </script>
 
 <style lang="scss">
-.page__desc {
-  max-width: $size__content-max-width;
-  margin-right: auto;
-  margin-left: auto;
-  color: $color-white-180;
-  @extend %font-ui-text-lg-oxygen;
-}
+@import '../assets/css/pages/analysis';
 </style>

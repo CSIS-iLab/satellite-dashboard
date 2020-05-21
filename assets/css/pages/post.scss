@@ -1,0 +1,14 @@
+.post {
+  &__header {
+    @extend %page-header;
+  }
+
+  &__content {
+    @extend %page-content;
+    @extend %page-content-bg;
+
+    > *:not([class]) {
+      padding: 0 calc(50% - #{$size__content-max-width} / 2);
+    }
+  }
+}

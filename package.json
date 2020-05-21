@@ -8,14 +8,14 @@
     "dev": "nuxt -H 0.0.0.0",
     "build": "nuxt build",
     "start": "nuxt start",
-    "generate": "node content/compileAnalysis.js && nuxt generate",
+    "generate": "nuxt generate",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "lint:scripts-fix": "eslint --ext .js,.vue --ignore-path .gitignore . --fix",
     "lint:styles-fix": "stylelint \"./**/*.(scss|vue)\" --fix",
     "forestry-preview": "nuxt -p 8080 -H 0.0.0.0"
   },
   "lint-staged": {
-    "*.{js,vue}": "yarn lint",
+    "*.{js,vue}": "npm run lint",
     "*.{css,vue}": "stylelint"
   },
   "husky": {
