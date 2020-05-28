@@ -3,6 +3,7 @@
   width: 100%;
   margin: rem(24px) auto;
   margin: var(--margin) auto;
+  background-color: $color-white-100;
 
   @include breakpoint('small') {
     --margin: #{rem(32px)};
