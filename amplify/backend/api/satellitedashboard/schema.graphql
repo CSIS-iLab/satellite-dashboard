@@ -22,13 +22,51 @@ type Post
 	excerpt: String
 	featureImage: S3Object
 	featureImageCaption: String
-	eventTypeIDs: [String]
-	tagIDs: [String]
-	relatedSatelliteIDs: [String]
+	eventTypes: [PostEventType] @connection(keyName: "byPost", fields: ["id"])
+	tags: [PostTag] @connection(keyName: "byPost", fields: ["id"])
+	satellites: [PostSatellite] @connection(keyName: "byPost", fields: ["id"])
 	relatedPostIDs: [String]
 	furtherReadings: [FurtherReading]
 	content: String
 	authors: [PostAuthor] @connection(keyName: "byPost", fields: ["id"])
+}
+
+
+type PostSatellite
+	@model(queries: null)
+	@key(name: "byPost", fields: ["postID", "satelliteID"])
+	@key(name: "bySatellite", fields: ["satelliteID", "postID"])
+{
+	id: ID!
+	postID: ID!
+	satelliteID: ID!
+	post: Post! @connection(fields: ["postID"])
+	satellite: Satellite! @connection(fields: ["satelliteID"])
+}
+
+type PostTag
+	@model(queries: null)
+	@key(name: "byPost", fields: ["postID", "tagID"])
+	@key(name: "byTag", fields: ["tagID", "postID"])
+{
+	id: ID!
+	postID: ID!
+	tagID: ID!
+	post: Post! @connection(fields: ["postID"])
+	tag: Tag! @connection(fields: ["tagID"])
+}
+
+
+type PostEventType
+	@model(queries: null)
+	@key(name: "byPost", fields: ["postID", "eventTypeID"])
+	@key(name: "byEventType", fields: ["eventTypeID", "postID"])
+{
+	id: ID!
+	postID: ID!
+	eventTypeID: ID!
+	post: Post! @connection(fields: ["postID"])
+	eventType: EventType! @connection(fields: ["eventTypeID"])
 }
 
 
@@ -119,7 +157,7 @@ type Satellite
 	lifetime: String
 	status: OverrideableString
 	orbitalDatum: [OrbitalData]
-	relatedPostIDs: [String]
+	posts: [PostSatellite] @connection(keyName: "bySatellite", fields: ["id"])
 }
 
 type SourcedData
@@ -159,6 +197,7 @@ type EventType
 {
 	id: ID!
 	name: String
+	posts: [PostEventType] @connection(keyName: "byEventType", fields: ["id"])
 }
 
 type Tag
@@ -174,5 +213,6 @@ type Tag
 	id: ID!
 	name: String
 	tagType: TAG_TYPE
+	posts: [PostTag] @connection(keyName: "byTag", fields: ["id"])
 }
 

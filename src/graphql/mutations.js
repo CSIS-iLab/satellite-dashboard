@@ -1,6 +1,1764 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const createPostSatellite = /* GraphQL */ `
+  mutation CreatePostSatellite(
+    $input: CreatePostSatelliteInput!
+    $condition: ModelPostSatelliteConditionInput
+  ) {
+    createPostSatellite(input: $input, condition: $condition) {
+      id
+      postID
+      satelliteID
+      post {
+        id
+        slug
+        title
+        postDate
+        updatedAt
+        excerpt
+        featureImage {
+          key
+          identityId
+          level
+        }
+        featureImageCaption
+        eventTypes {
+          items {
+            id
+            postID
+            eventTypeID
+            post {
+              id
+              slug
+              title
+              postDate
+              updatedAt
+              excerpt
+              featureImageCaption
+              relatedPostIDs
+              content
+            }
+            eventType {
+              id
+              name
+            }
+          }
+          nextToken
+        }
+        tags {
+          items {
+            id
+            postID
+            tagID
+            post {
+              id
+              slug
+              title
+              postDate
+              updatedAt
+              excerpt
+              featureImageCaption
+              relatedPostIDs
+              content
+            }
+            tag {
+              id
+              name
+              tagType
+            }
+          }
+          nextToken
+        }
+        satellites {
+          items {
+            id
+            postID
+            satelliteID
+            post {
+              id
+              slug
+              title
+              postDate
+              updatedAt
+              excerpt
+              featureImageCaption
+              relatedPostIDs
+              content
+            }
+            satellite {
+              id
+              launchDate
+              launchVehicle
+              launchSite
+              countryOfJurisdiction
+              contractor
+              operator
+              lifetime
+            }
+          }
+          nextToken
+        }
+        relatedPostIDs
+        furtherReadings {
+          name
+          author
+          url
+        }
+        content
+        authors {
+          items {
+            id
+            postID
+            authorID
+            post {
+              id
+              slug
+              title
+              postDate
+              updatedAt
+              excerpt
+              featureImageCaption
+              relatedPostIDs
+              content
+            }
+            author {
+              id
+              name
+              biography
+            }
+          }
+          nextToken
+        }
+      }
+      satellite {
+        id
+        name {
+          value
+          override
+        }
+        launchDate
+        launchVehicle
+        launchSite
+        countryOfLaunchSite {
+          value
+          override
+        }
+        countryOfJurisdiction
+        contractor
+        operator
+        purpose {
+          value
+          override
+        }
+        satelliteType {
+          value
+          override
+        }
+        lifetime
+        status {
+          value
+          override
+        }
+        orbitalDatum {
+          apogee {
+            datasource {
+              id
+              name
+            }
+            value
+          }
+          argumentOfPerigee {
+            datasource {
+              id
+              name
+            }
+            value
+          }
+          perigree {
+            datasource {
+              id
+              name
+            }
+            value
+          }
+          eccentricity {
+            datasource {
+              id
+              name
+            }
+            value
+          }
+          inclination {
+            datasource {
+              id
+              name
+            }
+            value
+          }
+          longitude {
+            datasource {
+              id
+              name
+            }
+            value
+          }
+          meanMotion {
+            datasource {
+              id
+              name
+            }
+            value
+          }
+          orbitalPeriod {
+            datasource {
+              id
+              name
+            }
+            value
+          }
+          semiMajorAxis {
+            datasource {
+              id
+              name
+            }
+            value
+          }
+          driftRate {
+            datasource {
+              id
+              name
+            }
+            value
+          }
+        }
+        posts {
+          items {
+            id
+            postID
+            satelliteID
+            post {
+              id
+              slug
+              title
+              postDate
+              updatedAt
+              excerpt
+              featureImageCaption
+              relatedPostIDs
+              content
+            }
+            satellite {
+              id
+              launchDate
+              launchVehicle
+              launchSite
+              countryOfJurisdiction
+              contractor
+              operator
+              lifetime
+            }
+          }
+          nextToken
+        }
+      }
+    }
+  }
+`;
+export const updatePostSatellite = /* GraphQL */ `
+  mutation UpdatePostSatellite(
+    $input: UpdatePostSatelliteInput!
+    $condition: ModelPostSatelliteConditionInput
+  ) {
+    updatePostSatellite(input: $input, condition: $condition) {
+      id
+      postID
+      satelliteID
+      post {
+        id
+        slug
+        title
+        postDate
+        updatedAt
+        excerpt
+        featureImage {
+          key
+          identityId
+          level
+        }
+        featureImageCaption
+        eventTypes {
+          items {
+            id
+            postID
+            eventTypeID
+            post {
+              id
+              slug
+              title
+              postDate
+              updatedAt
+              excerpt
+              featureImageCaption
+              relatedPostIDs
+              content
+            }
+            eventType {
+              id
+              name
+            }
+          }
+          nextToken
+        }
+        tags {
+          items {
+            id
+            postID
+            tagID
+            post {
+              id
+              slug
+              title
+              postDate
+              updatedAt
+              excerpt
+              featureImageCaption
+              relatedPostIDs
+              content
+            }
+            tag {
+              id
+              name
+              tagType
+            }
+          }
+          nextToken
+        }
+        satellites {
+          items {
+            id
+            postID
+            satelliteID
+            post {
+              id
+              slug
+              title
+              postDate
+              updatedAt
+              excerpt
+              featureImageCaption
+              relatedPostIDs
+              content
+            }
+            satellite {
+              id
+              launchDate
+              launchVehicle
+              launchSite
+              countryOfJurisdiction
+              contractor
+              operator
+              lifetime
+            }
+          }
+          nextToken
+        }
+        relatedPostIDs
+        furtherReadings {
+          name
+          author
+          url
+        }
+        content
+        authors {
+          items {
+            id
+            postID
+            authorID
+            post {
+              id
+              slug
+              title
+              postDate
+              updatedAt
+              excerpt
+              featureImageCaption
+              relatedPostIDs
+              content
+            }
+            author {
+              id
+              name
+              biography
+            }
+          }
+          nextToken
+        }
+      }
+      satellite {
+        id
+        name {
+          value
+          override
+        }
+        launchDate
+        launchVehicle
+        launchSite
+        countryOfLaunchSite {
+          value
+          override
+        }
+        countryOfJurisdiction
+        contractor
+        operator
+        purpose {
+          value
+          override
+        }
+        satelliteType {
+          value
+          override
+        }
+        lifetime
+        status {
+          value
+          override
+        }
+        orbitalDatum {
+          apogee {
+            datasource {
+              id
+              name
+            }
+            value
+          }
+          argumentOfPerigee {
+            datasource {
+              id
+              name
+            }
+            value
+          }
+          perigree {
+            datasource {
+              id
+              name
+            }
+            value
+          }
+          eccentricity {
+            datasource {
+              id
+              name
+            }
+            value
+          }
+          inclination {
+            datasource {
+              id
+              name
+            }
+            value
+          }
+          longitude {
+            datasource {
+              id
+              name
+            }
+            value
+          }
+          meanMotion {
+            datasource {
+              id
+              name
+            }
+            value
+          }
+          orbitalPeriod {
+            datasource {
+              id
+              name
+            }
+            value
+          }
+          semiMajorAxis {
+            datasource {
+              id
+              name
+            }
+            value
+          }
+          driftRate {
+            datasource {
+              id
+              name
+            }
+            value
+          }
+        }
+        posts {
+          items {
+            id
+            postID
+            satelliteID
+            post {
+              id
+              slug
+              title
+              postDate
+              updatedAt
+              excerpt
+              featureImageCaption
+              relatedPostIDs
+              content
+            }
+            satellite {
+              id
+              launchDate
+              launchVehicle
+              launchSite
+              countryOfJurisdiction
+              contractor
+              operator
+              lifetime
+            }
+          }
+          nextToken
+        }
+      }
+    }
+  }
+`;
+export const deletePostSatellite = /* GraphQL */ `
+  mutation DeletePostSatellite(
+    $input: DeletePostSatelliteInput!
+    $condition: ModelPostSatelliteConditionInput
+  ) {
+    deletePostSatellite(input: $input, condition: $condition) {
+      id
+      postID
+      satelliteID
+      post {
+        id
+        slug
+        title
+        postDate
+        updatedAt
+        excerpt
+        featureImage {
+          key
+          identityId
+          level
+        }
+        featureImageCaption
+        eventTypes {
+          items {
+            id
+            postID
+            eventTypeID
+            post {
+              id
+              slug
+              title
+              postDate
+              updatedAt
+              excerpt
+              featureImageCaption
+              relatedPostIDs
+              content
+            }
+            eventType {
+              id
+              name
+            }
+          }
+          nextToken
+        }
+        tags {
+          items {
+            id
+            postID
+            tagID
+            post {
+              id
+              slug
+              title
+              postDate
+              updatedAt
+              excerpt
+              featureImageCaption
+              relatedPostIDs
+              content
+            }
+            tag {
+              id
+              name
+              tagType
+            }
+          }
+          nextToken
+        }
+        satellites {
+          items {
+            id
+            postID
+            satelliteID
+            post {
+              id
+              slug
+              title
+              postDate
+              updatedAt
+              excerpt
+              featureImageCaption
+              relatedPostIDs
+              content
+            }
+            satellite {
+              id
+              launchDate
+              launchVehicle
+              launchSite
+              countryOfJurisdiction
+              contractor
+              operator
+              lifetime
+            }
+          }
+          nextToken
+        }
+        relatedPostIDs
+        furtherReadings {
+          name
+          author
+          url
+        }
+        content
+        authors {
+          items {
+            id
+            postID
+            authorID
+            post {
+              id
+              slug
+              title
+              postDate
+              updatedAt
+              excerpt
+              featureImageCaption
+              relatedPostIDs
+              content
+            }
+            author {
+              id
+              name
+              biography
+            }
+          }
+          nextToken
+        }
+      }
+      satellite {
+        id
+        name {
+          value
+          override
+        }
+        launchDate
+        launchVehicle
+        launchSite
+        countryOfLaunchSite {
+          value
+          override
+        }
+        countryOfJurisdiction
+        contractor
+        operator
+        purpose {
+          value
+          override
+        }
+        satelliteType {
+          value
+          override
+        }
+        lifetime
+        status {
+          value
+          override
+        }
+        orbitalDatum {
+          apogee {
+            datasource {
+              id
+              name
+            }
+            value
+          }
+          argumentOfPerigee {
+            datasource {
+              id
+              name
+            }
+            value
+          }
+          perigree {
+            datasource {
+              id
+              name
+            }
+            value
+          }
+          eccentricity {
+            datasource {
+              id
+              name
+            }
+            value
+          }
+          inclination {
+            datasource {
+              id
+              name
+            }
+            value
+          }
+          longitude {
+            datasource {
+              id
+              name
+            }
+            value
+          }
+          meanMotion {
+            datasource {
+              id
+              name
+            }
+            value
+          }
+          orbitalPeriod {
+            datasource {
+              id
+              name
+            }
+            value
+          }
+          semiMajorAxis {
+            datasource {
+              id
+              name
+            }
+            value
+          }
+          driftRate {
+            datasource {
+              id
+              name
+            }
+            value
+          }
+        }
+        posts {
+          items {
+            id
+            postID
+            satelliteID
+            post {
+              id
+              slug
+              title
+              postDate
+              updatedAt
+              excerpt
+              featureImageCaption
+              relatedPostIDs
+              content
+            }
+            satellite {
+              id
+              launchDate
+              launchVehicle
+              launchSite
+              countryOfJurisdiction
+              contractor
+              operator
+              lifetime
+            }
+          }
+          nextToken
+        }
+      }
+    }
+  }
+`;
+export const createPostTag = /* GraphQL */ `
+  mutation CreatePostTag(
+    $input: CreatePostTagInput!
+    $condition: ModelPostTagConditionInput
+  ) {
+    createPostTag(input: $input, condition: $condition) {
+      id
+      postID
+      tagID
+      post {
+        id
+        slug
+        title
+        postDate
+        updatedAt
+        excerpt
+        featureImage {
+          key
+          identityId
+          level
+        }
+        featureImageCaption
+        eventTypes {
+          items {
+            id
+            postID
+            eventTypeID
+            post {
+              id
+              slug
+              title
+              postDate
+              updatedAt
+              excerpt
+              featureImageCaption
+              relatedPostIDs
+              content
+            }
+            eventType {
+              id
+              name
+            }
+          }
+          nextToken
+        }
+        tags {
+          items {
+            id
+            postID
+            tagID
+            post {
+              id
+              slug
+              title
+              postDate
+              updatedAt
+              excerpt
+              featureImageCaption
+              relatedPostIDs
+              content
+            }
+            tag {
+              id
+              name
+              tagType
+            }
+          }
+          nextToken
+        }
+        satellites {
+          items {
+            id
+            postID
+            satelliteID
+            post {
+              id
+              slug
+              title
+              postDate
+              updatedAt
+              excerpt
+              featureImageCaption
+              relatedPostIDs
+              content
+            }
+            satellite {
+              id
+              launchDate
+              launchVehicle
+              launchSite
+              countryOfJurisdiction
+              contractor
+              operator
+              lifetime
+            }
+          }
+          nextToken
+        }
+        relatedPostIDs
+        furtherReadings {
+          name
+          author
+          url
+        }
+        content
+        authors {
+          items {
+            id
+            postID
+            authorID
+            post {
+              id
+              slug
+              title
+              postDate
+              updatedAt
+              excerpt
+              featureImageCaption
+              relatedPostIDs
+              content
+            }
+            author {
+              id
+              name
+              biography
+            }
+          }
+          nextToken
+        }
+      }
+      tag {
+        id
+        name
+        tagType
+        posts {
+          items {
+            id
+            postID
+            tagID
+            post {
+              id
+              slug
+              title
+              postDate
+              updatedAt
+              excerpt
+              featureImageCaption
+              relatedPostIDs
+              content
+            }
+            tag {
+              id
+              name
+              tagType
+            }
+          }
+          nextToken
+        }
+      }
+    }
+  }
+`;
+export const updatePostTag = /* GraphQL */ `
+  mutation UpdatePostTag(
+    $input: UpdatePostTagInput!
+    $condition: ModelPostTagConditionInput
+  ) {
+    updatePostTag(input: $input, condition: $condition) {
+      id
+      postID
+      tagID
+      post {
+        id
+        slug
+        title
+        postDate
+        updatedAt
+        excerpt
+        featureImage {
+          key
+          identityId
+          level
+        }
+        featureImageCaption
+        eventTypes {
+          items {
+            id
+            postID
+            eventTypeID
+            post {
+              id
+              slug
+              title
+              postDate
+              updatedAt
+              excerpt
+              featureImageCaption
+              relatedPostIDs
+              content
+            }
+            eventType {
+              id
+              name
+            }
+          }
+          nextToken
+        }
+        tags {
+          items {
+            id
+            postID
+            tagID
+            post {
+              id
+              slug
+              title
+              postDate
+              updatedAt
+              excerpt
+              featureImageCaption
+              relatedPostIDs
+              content
+            }
+            tag {
+              id
+              name
+              tagType
+            }
+          }
+          nextToken
+        }
+        satellites {
+          items {
+            id
+            postID
+            satelliteID
+            post {
+              id
+              slug
+              title
+              postDate
+              updatedAt
+              excerpt
+              featureImageCaption
+              relatedPostIDs
+              content
+            }
+            satellite {
+              id
+              launchDate
+              launchVehicle
+              launchSite
+              countryOfJurisdiction
+              contractor
+              operator
+              lifetime
+            }
+          }
+          nextToken
+        }
+        relatedPostIDs
+        furtherReadings {
+          name
+          author
+          url
+        }
+        content
+        authors {
+          items {
+            id
+            postID
+            authorID
+            post {
+              id
+              slug
+              title
+              postDate
+              updatedAt
+              excerpt
+              featureImageCaption
+              relatedPostIDs
+              content
+            }
+            author {
+              id
+              name
+              biography
+            }
+          }
+          nextToken
+        }
+      }
+      tag {
+        id
+        name
+        tagType
+        posts {
+          items {
+            id
+            postID
+            tagID
+            post {
+              id
+              slug
+              title
+              postDate
+              updatedAt
+              excerpt
+              featureImageCaption
+              relatedPostIDs
+              content
+            }
+            tag {
+              id
+              name
+              tagType
+            }
+          }
+          nextToken
+        }
+      }
+    }
+  }
+`;
+export const deletePostTag = /* GraphQL */ `
+  mutation DeletePostTag(
+    $input: DeletePostTagInput!
+    $condition: ModelPostTagConditionInput
+  ) {
+    deletePostTag(input: $input, condition: $condition) {
+      id
+      postID
+      tagID
+      post {
+        id
+        slug
+        title
+        postDate
+        updatedAt
+        excerpt
+        featureImage {
+          key
+          identityId
+          level
+        }
+        featureImageCaption
+        eventTypes {
+          items {
+            id
+            postID
+            eventTypeID
+            post {
+              id
+              slug
+              title
+              postDate
+              updatedAt
+              excerpt
+              featureImageCaption
+              relatedPostIDs
+              content
+            }
+            eventType {
+              id
+              name
+            }
+          }
+          nextToken
+        }
+        tags {
+          items {
+            id
+            postID
+            tagID
+            post {
+              id
+              slug
+              title
+              postDate
+              updatedAt
+              excerpt
+              featureImageCaption
+              relatedPostIDs
+              content
+            }
+            tag {
+              id
+              name
+              tagType
+            }
+          }
+          nextToken
+        }
+        satellites {
+          items {
+            id
+            postID
+            satelliteID
+            post {
+              id
+              slug
+              title
+              postDate
+              updatedAt
+              excerpt
+              featureImageCaption
+              relatedPostIDs
+              content
+            }
+            satellite {
+              id
+              launchDate
+              launchVehicle
+              launchSite
+              countryOfJurisdiction
+              contractor
+              operator
+              lifetime
+            }
+          }
+          nextToken
+        }
+        relatedPostIDs
+        furtherReadings {
+          name
+          author
+          url
+        }
+        content
+        authors {
+          items {
+            id
+            postID
+            authorID
+            post {
+              id
+              slug
+              title
+              postDate
+              updatedAt
+              excerpt
+              featureImageCaption
+              relatedPostIDs
+              content
+            }
+            author {
+              id
+              name
+              biography
+            }
+          }
+          nextToken
+        }
+      }
+      tag {
+        id
+        name
+        tagType
+        posts {
+          items {
+            id
+            postID
+            tagID
+            post {
+              id
+              slug
+              title
+              postDate
+              updatedAt
+              excerpt
+              featureImageCaption
+              relatedPostIDs
+              content
+            }
+            tag {
+              id
+              name
+              tagType
+            }
+          }
+          nextToken
+        }
+      }
+    }
+  }
+`;
+export const createPostEventType = /* GraphQL */ `
+  mutation CreatePostEventType(
+    $input: CreatePostEventTypeInput!
+    $condition: ModelPostEventTypeConditionInput
+  ) {
+    createPostEventType(input: $input, condition: $condition) {
+      id
+      postID
+      eventTypeID
+      post {
+        id
+        slug
+        title
+        postDate
+        updatedAt
+        excerpt
+        featureImage {
+          key
+          identityId
+          level
+        }
+        featureImageCaption
+        eventTypes {
+          items {
+            id
+            postID
+            eventTypeID
+            post {
+              id
+              slug
+              title
+              postDate
+              updatedAt
+              excerpt
+              featureImageCaption
+              relatedPostIDs
+              content
+            }
+            eventType {
+              id
+              name
+            }
+          }
+          nextToken
+        }
+        tags {
+          items {
+            id
+            postID
+            tagID
+            post {
+              id
+              slug
+              title
+              postDate
+              updatedAt
+              excerpt
+              featureImageCaption
+              relatedPostIDs
+              content
+            }
+            tag {
+              id
+              name
+              tagType
+            }
+          }
+          nextToken
+        }
+        satellites {
+          items {
+            id
+            postID
+            satelliteID
+            post {
+              id
+              slug
+              title
+              postDate
+              updatedAt
+              excerpt
+              featureImageCaption
+              relatedPostIDs
+              content
+            }
+            satellite {
+              id
+              launchDate
+              launchVehicle
+              launchSite
+              countryOfJurisdiction
+              contractor
+              operator
+              lifetime
+            }
+          }
+          nextToken
+        }
+        relatedPostIDs
+        furtherReadings {
+          name
+          author
+          url
+        }
+        content
+        authors {
+          items {
+            id
+            postID
+            authorID
+            post {
+              id
+              slug
+              title
+              postDate
+              updatedAt
+              excerpt
+              featureImageCaption
+              relatedPostIDs
+              content
+            }
+            author {
+              id
+              name
+              biography
+            }
+          }
+          nextToken
+        }
+      }
+      eventType {
+        id
+        name
+        posts {
+          items {
+            id
+            postID
+            eventTypeID
+            post {
+              id
+              slug
+              title
+              postDate
+              updatedAt
+              excerpt
+              featureImageCaption
+              relatedPostIDs
+              content
+            }
+            eventType {
+              id
+              name
+            }
+          }
+          nextToken
+        }
+      }
+    }
+  }
+`;
+export const updatePostEventType = /* GraphQL */ `
+  mutation UpdatePostEventType(
+    $input: UpdatePostEventTypeInput!
+    $condition: ModelPostEventTypeConditionInput
+  ) {
+    updatePostEventType(input: $input, condition: $condition) {
+      id
+      postID
+      eventTypeID
+      post {
+        id
+        slug
+        title
+        postDate
+        updatedAt
+        excerpt
+        featureImage {
+          key
+          identityId
+          level
+        }
+        featureImageCaption
+        eventTypes {
+          items {
+            id
+            postID
+            eventTypeID
+            post {
+              id
+              slug
+              title
+              postDate
+              updatedAt
+              excerpt
+              featureImageCaption
+              relatedPostIDs
+              content
+            }
+            eventType {
+              id
+              name
+            }
+          }
+          nextToken
+        }
+        tags {
+          items {
+            id
+            postID
+            tagID
+            post {
+              id
+              slug
+              title
+              postDate
+              updatedAt
+              excerpt
+              featureImageCaption
+              relatedPostIDs
+              content
+            }
+            tag {
+              id
+              name
+              tagType
+            }
+          }
+          nextToken
+        }
+        satellites {
+          items {
+            id
+            postID
+            satelliteID
+            post {
+              id
+              slug
+              title
+              postDate
+              updatedAt
+              excerpt
+              featureImageCaption
+              relatedPostIDs
+              content
+            }
+            satellite {
+              id
+              launchDate
+              launchVehicle
+              launchSite
+              countryOfJurisdiction
+              contractor
+              operator
+              lifetime
+            }
+          }
+          nextToken
+        }
+        relatedPostIDs
+        furtherReadings {
+          name
+          author
+          url
+        }
+        content
+        authors {
+          items {
+            id
+            postID
+            authorID
+            post {
+              id
+              slug
+              title
+              postDate
+              updatedAt
+              excerpt
+              featureImageCaption
+              relatedPostIDs
+              content
+            }
+            author {
+              id
+              name
+              biography
+            }
+          }
+          nextToken
+        }
+      }
+      eventType {
+        id
+        name
+        posts {
+          items {
+            id
+            postID
+            eventTypeID
+            post {
+              id
+              slug
+              title
+              postDate
+              updatedAt
+              excerpt
+              featureImageCaption
+              relatedPostIDs
+              content
+            }
+            eventType {
+              id
+              name
+            }
+          }
+          nextToken
+        }
+      }
+    }
+  }
+`;
+export const deletePostEventType = /* GraphQL */ `
+  mutation DeletePostEventType(
+    $input: DeletePostEventTypeInput!
+    $condition: ModelPostEventTypeConditionInput
+  ) {
+    deletePostEventType(input: $input, condition: $condition) {
+      id
+      postID
+      eventTypeID
+      post {
+        id
+        slug
+        title
+        postDate
+        updatedAt
+        excerpt
+        featureImage {
+          key
+          identityId
+          level
+        }
+        featureImageCaption
+        eventTypes {
+          items {
+            id
+            postID
+            eventTypeID
+            post {
+              id
+              slug
+              title
+              postDate
+              updatedAt
+              excerpt
+              featureImageCaption
+              relatedPostIDs
+              content
+            }
+            eventType {
+              id
+              name
+            }
+          }
+          nextToken
+        }
+        tags {
+          items {
+            id
+            postID
+            tagID
+            post {
+              id
+              slug
+              title
+              postDate
+              updatedAt
+              excerpt
+              featureImageCaption
+              relatedPostIDs
+              content
+            }
+            tag {
+              id
+              name
+              tagType
+            }
+          }
+          nextToken
+        }
+        satellites {
+          items {
+            id
+            postID
+            satelliteID
+            post {
+              id
+              slug
+              title
+              postDate
+              updatedAt
+              excerpt
+              featureImageCaption
+              relatedPostIDs
+              content
+            }
+            satellite {
+              id
+              launchDate
+              launchVehicle
+              launchSite
+              countryOfJurisdiction
+              contractor
+              operator
+              lifetime
+            }
+          }
+          nextToken
+        }
+        relatedPostIDs
+        furtherReadings {
+          name
+          author
+          url
+        }
+        content
+        authors {
+          items {
+            id
+            postID
+            authorID
+            post {
+              id
+              slug
+              title
+              postDate
+              updatedAt
+              excerpt
+              featureImageCaption
+              relatedPostIDs
+              content
+            }
+            author {
+              id
+              name
+              biography
+            }
+          }
+          nextToken
+        }
+      }
+      eventType {
+        id
+        name
+        posts {
+          items {
+            id
+            postID
+            eventTypeID
+            post {
+              id
+              slug
+              title
+              postDate
+              updatedAt
+              excerpt
+              featureImageCaption
+              relatedPostIDs
+              content
+            }
+            eventType {
+              id
+              name
+            }
+          }
+          nextToken
+        }
+      }
+    }
+  }
+`;
 export const createPostAuthor = /* GraphQL */ `
   mutation CreatePostAuthor(
     $input: CreatePostAuthorInput!
@@ -23,9 +1781,82 @@ export const createPostAuthor = /* GraphQL */ `
           level
         }
         featureImageCaption
-        eventTypeIDs
-        tagIDs
-        relatedSatelliteIDs
+        eventTypes {
+          items {
+            id
+            postID
+            eventTypeID
+            post {
+              id
+              slug
+              title
+              postDate
+              updatedAt
+              excerpt
+              featureImageCaption
+              relatedPostIDs
+              content
+            }
+            eventType {
+              id
+              name
+            }
+          }
+          nextToken
+        }
+        tags {
+          items {
+            id
+            postID
+            tagID
+            post {
+              id
+              slug
+              title
+              postDate
+              updatedAt
+              excerpt
+              featureImageCaption
+              relatedPostIDs
+              content
+            }
+            tag {
+              id
+              name
+              tagType
+            }
+          }
+          nextToken
+        }
+        satellites {
+          items {
+            id
+            postID
+            satelliteID
+            post {
+              id
+              slug
+              title
+              postDate
+              updatedAt
+              excerpt
+              featureImageCaption
+              relatedPostIDs
+              content
+            }
+            satellite {
+              id
+              launchDate
+              launchVehicle
+              launchSite
+              countryOfJurisdiction
+              contractor
+              operator
+              lifetime
+            }
+          }
+          nextToken
+        }
         relatedPostIDs
         furtherReadings {
           name
@@ -46,9 +1877,6 @@ export const createPostAuthor = /* GraphQL */ `
               updatedAt
               excerpt
               featureImageCaption
-              eventTypeIDs
-              tagIDs
-              relatedSatelliteIDs
               relatedPostIDs
               content
             }
@@ -78,9 +1906,6 @@ export const createPostAuthor = /* GraphQL */ `
               updatedAt
               excerpt
               featureImageCaption
-              eventTypeIDs
-              tagIDs
-              relatedSatelliteIDs
               relatedPostIDs
               content
             }
@@ -118,9 +1943,82 @@ export const updatePostAuthor = /* GraphQL */ `
           level
         }
         featureImageCaption
-        eventTypeIDs
-        tagIDs
-        relatedSatelliteIDs
+        eventTypes {
+          items {
+            id
+            postID
+            eventTypeID
+            post {
+              id
+              slug
+              title
+              postDate
+              updatedAt
+              excerpt
+              featureImageCaption
+              relatedPostIDs
+              content
+            }
+            eventType {
+              id
+              name
+            }
+          }
+          nextToken
+        }
+        tags {
+          items {
+            id
+            postID
+            tagID
+            post {
+              id
+              slug
+              title
+              postDate
+              updatedAt
+              excerpt
+              featureImageCaption
+              relatedPostIDs
+              content
+            }
+            tag {
+              id
+              name
+              tagType
+            }
+          }
+          nextToken
+        }
+        satellites {
+          items {
+            id
+            postID
+            satelliteID
+            post {
+              id
+              slug
+              title
+              postDate
+              updatedAt
+              excerpt
+              featureImageCaption
+              relatedPostIDs
+              content
+            }
+            satellite {
+              id
+              launchDate
+              launchVehicle
+              launchSite
+              countryOfJurisdiction
+              contractor
+              operator
+              lifetime
+            }
+          }
+          nextToken
+        }
         relatedPostIDs
         furtherReadings {
           name
@@ -141,9 +2039,6 @@ export const updatePostAuthor = /* GraphQL */ `
               updatedAt
               excerpt
               featureImageCaption
-              eventTypeIDs
-              tagIDs
-              relatedSatelliteIDs
               relatedPostIDs
               content
             }
@@ -173,9 +2068,6 @@ export const updatePostAuthor = /* GraphQL */ `
               updatedAt
               excerpt
               featureImageCaption
-              eventTypeIDs
-              tagIDs
-              relatedSatelliteIDs
               relatedPostIDs
               content
             }
@@ -213,9 +2105,82 @@ export const deletePostAuthor = /* GraphQL */ `
           level
         }
         featureImageCaption
-        eventTypeIDs
-        tagIDs
-        relatedSatelliteIDs
+        eventTypes {
+          items {
+            id
+            postID
+            eventTypeID
+            post {
+              id
+              slug
+              title
+              postDate
+              updatedAt
+              excerpt
+              featureImageCaption
+              relatedPostIDs
+              content
+            }
+            eventType {
+              id
+              name
+            }
+          }
+          nextToken
+        }
+        tags {
+          items {
+            id
+            postID
+            tagID
+            post {
+              id
+              slug
+              title
+              postDate
+              updatedAt
+              excerpt
+              featureImageCaption
+              relatedPostIDs
+              content
+            }
+            tag {
+              id
+              name
+              tagType
+            }
+          }
+          nextToken
+        }
+        satellites {
+          items {
+            id
+            postID
+            satelliteID
+            post {
+              id
+              slug
+              title
+              postDate
+              updatedAt
+              excerpt
+              featureImageCaption
+              relatedPostIDs
+              content
+            }
+            satellite {
+              id
+              launchDate
+              launchVehicle
+              launchSite
+              countryOfJurisdiction
+              contractor
+              operator
+              lifetime
+            }
+          }
+          nextToken
+        }
         relatedPostIDs
         furtherReadings {
           name
@@ -236,9 +2201,6 @@ export const deletePostAuthor = /* GraphQL */ `
               updatedAt
               excerpt
               featureImageCaption
-              eventTypeIDs
-              tagIDs
-              relatedSatelliteIDs
               relatedPostIDs
               content
             }
@@ -268,9 +2230,6 @@ export const deletePostAuthor = /* GraphQL */ `
               updatedAt
               excerpt
               featureImageCaption
-              eventTypeIDs
-              tagIDs
-              relatedSatelliteIDs
               relatedPostIDs
               content
             }
@@ -304,9 +2263,177 @@ export const createPost = /* GraphQL */ `
         level
       }
       featureImageCaption
-      eventTypeIDs
-      tagIDs
-      relatedSatelliteIDs
+      eventTypes {
+        items {
+          id
+          postID
+          eventTypeID
+          post {
+            id
+            slug
+            title
+            postDate
+            updatedAt
+            excerpt
+            featureImage {
+              key
+              identityId
+              level
+            }
+            featureImageCaption
+            eventTypes {
+              nextToken
+            }
+            tags {
+              nextToken
+            }
+            satellites {
+              nextToken
+            }
+            relatedPostIDs
+            furtherReadings {
+              name
+              author
+              url
+            }
+            content
+            authors {
+              nextToken
+            }
+          }
+          eventType {
+            id
+            name
+            posts {
+              nextToken
+            }
+          }
+        }
+        nextToken
+      }
+      tags {
+        items {
+          id
+          postID
+          tagID
+          post {
+            id
+            slug
+            title
+            postDate
+            updatedAt
+            excerpt
+            featureImage {
+              key
+              identityId
+              level
+            }
+            featureImageCaption
+            eventTypes {
+              nextToken
+            }
+            tags {
+              nextToken
+            }
+            satellites {
+              nextToken
+            }
+            relatedPostIDs
+            furtherReadings {
+              name
+              author
+              url
+            }
+            content
+            authors {
+              nextToken
+            }
+          }
+          tag {
+            id
+            name
+            tagType
+            posts {
+              nextToken
+            }
+          }
+        }
+        nextToken
+      }
+      satellites {
+        items {
+          id
+          postID
+          satelliteID
+          post {
+            id
+            slug
+            title
+            postDate
+            updatedAt
+            excerpt
+            featureImage {
+              key
+              identityId
+              level
+            }
+            featureImageCaption
+            eventTypes {
+              nextToken
+            }
+            tags {
+              nextToken
+            }
+            satellites {
+              nextToken
+            }
+            relatedPostIDs
+            furtherReadings {
+              name
+              author
+              url
+            }
+            content
+            authors {
+              nextToken
+            }
+          }
+          satellite {
+            id
+            name {
+              value
+              override
+            }
+            launchDate
+            launchVehicle
+            launchSite
+            countryOfLaunchSite {
+              value
+              override
+            }
+            countryOfJurisdiction
+            contractor
+            operator
+            purpose {
+              value
+              override
+            }
+            satelliteType {
+              value
+              override
+            }
+            lifetime
+            status {
+              value
+              override
+            }
+            posts {
+              nextToken
+            }
+          }
+        }
+        nextToken
+      }
       relatedPostIDs
       furtherReadings {
         name
@@ -332,9 +2459,15 @@ export const createPost = /* GraphQL */ `
               level
             }
             featureImageCaption
-            eventTypeIDs
-            tagIDs
-            relatedSatelliteIDs
+            eventTypes {
+              nextToken
+            }
+            tags {
+              nextToken
+            }
+            satellites {
+              nextToken
+            }
             relatedPostIDs
             furtherReadings {
               name
@@ -378,9 +2511,177 @@ export const updatePost = /* GraphQL */ `
         level
       }
       featureImageCaption
-      eventTypeIDs
-      tagIDs
-      relatedSatelliteIDs
+      eventTypes {
+        items {
+          id
+          postID
+          eventTypeID
+          post {
+            id
+            slug
+            title
+            postDate
+            updatedAt
+            excerpt
+            featureImage {
+              key
+              identityId
+              level
+            }
+            featureImageCaption
+            eventTypes {
+              nextToken
+            }
+            tags {
+              nextToken
+            }
+            satellites {
+              nextToken
+            }
+            relatedPostIDs
+            furtherReadings {
+              name
+              author
+              url
+            }
+            content
+            authors {
+              nextToken
+            }
+          }
+          eventType {
+            id
+            name
+            posts {
+              nextToken
+            }
+          }
+        }
+        nextToken
+      }
+      tags {
+        items {
+          id
+          postID
+          tagID
+          post {
+            id
+            slug
+            title
+            postDate
+            updatedAt
+            excerpt
+            featureImage {
+              key
+              identityId
+              level
+            }
+            featureImageCaption
+            eventTypes {
+              nextToken
+            }
+            tags {
+              nextToken
+            }
+            satellites {
+              nextToken
+            }
+            relatedPostIDs
+            furtherReadings {
+              name
+              author
+              url
+            }
+            content
+            authors {
+              nextToken
+            }
+          }
+          tag {
+            id
+            name
+            tagType
+            posts {
+              nextToken
+            }
+          }
+        }
+        nextToken
+      }
+      satellites {
+        items {
+          id
+          postID
+          satelliteID
+          post {
+            id
+            slug
+            title
+            postDate
+            updatedAt
+            excerpt
+            featureImage {
+              key
+              identityId
+              level
+            }
+            featureImageCaption
+            eventTypes {
+              nextToken
+            }
+            tags {
+              nextToken
+            }
+            satellites {
+              nextToken
+            }
+            relatedPostIDs
+            furtherReadings {
+              name
+              author
+              url
+            }
+            content
+            authors {
+              nextToken
+            }
+          }
+          satellite {
+            id
+            name {
+              value
+              override
+            }
+            launchDate
+            launchVehicle
+            launchSite
+            countryOfLaunchSite {
+              value
+              override
+            }
+            countryOfJurisdiction
+            contractor
+            operator
+            purpose {
+              value
+              override
+            }
+            satelliteType {
+              value
+              override
+            }
+            lifetime
+            status {
+              value
+              override
+            }
+            posts {
+              nextToken
+            }
+          }
+        }
+        nextToken
+      }
       relatedPostIDs
       furtherReadings {
         name
@@ -406,9 +2707,15 @@ export const updatePost = /* GraphQL */ `
               level
             }
             featureImageCaption
-            eventTypeIDs
-            tagIDs
-            relatedSatelliteIDs
+            eventTypes {
+              nextToken
+            }
+            tags {
+              nextToken
+            }
+            satellites {
+              nextToken
+            }
             relatedPostIDs
             furtherReadings {
               name
@@ -452,9 +2759,177 @@ export const deletePost = /* GraphQL */ `
         level
       }
       featureImageCaption
-      eventTypeIDs
-      tagIDs
-      relatedSatelliteIDs
+      eventTypes {
+        items {
+          id
+          postID
+          eventTypeID
+          post {
+            id
+            slug
+            title
+            postDate
+            updatedAt
+            excerpt
+            featureImage {
+              key
+              identityId
+              level
+            }
+            featureImageCaption
+            eventTypes {
+              nextToken
+            }
+            tags {
+              nextToken
+            }
+            satellites {
+              nextToken
+            }
+            relatedPostIDs
+            furtherReadings {
+              name
+              author
+              url
+            }
+            content
+            authors {
+              nextToken
+            }
+          }
+          eventType {
+            id
+            name
+            posts {
+              nextToken
+            }
+          }
+        }
+        nextToken
+      }
+      tags {
+        items {
+          id
+          postID
+          tagID
+          post {
+            id
+            slug
+            title
+            postDate
+            updatedAt
+            excerpt
+            featureImage {
+              key
+              identityId
+              level
+            }
+            featureImageCaption
+            eventTypes {
+              nextToken
+            }
+            tags {
+              nextToken
+            }
+            satellites {
+              nextToken
+            }
+            relatedPostIDs
+            furtherReadings {
+              name
+              author
+              url
+            }
+            content
+            authors {
+              nextToken
+            }
+          }
+          tag {
+            id
+            name
+            tagType
+            posts {
+              nextToken
+            }
+          }
+        }
+        nextToken
+      }
+      satellites {
+        items {
+          id
+          postID
+          satelliteID
+          post {
+            id
+            slug
+            title
+            postDate
+            updatedAt
+            excerpt
+            featureImage {
+              key
+              identityId
+              level
+            }
+            featureImageCaption
+            eventTypes {
+              nextToken
+            }
+            tags {
+              nextToken
+            }
+            satellites {
+              nextToken
+            }
+            relatedPostIDs
+            furtherReadings {
+              name
+              author
+              url
+            }
+            content
+            authors {
+              nextToken
+            }
+          }
+          satellite {
+            id
+            name {
+              value
+              override
+            }
+            launchDate
+            launchVehicle
+            launchSite
+            countryOfLaunchSite {
+              value
+              override
+            }
+            countryOfJurisdiction
+            contractor
+            operator
+            purpose {
+              value
+              override
+            }
+            satelliteType {
+              value
+              override
+            }
+            lifetime
+            status {
+              value
+              override
+            }
+            posts {
+              nextToken
+            }
+          }
+        }
+        nextToken
+      }
       relatedPostIDs
       furtherReadings {
         name
@@ -480,9 +2955,15 @@ export const deletePost = /* GraphQL */ `
               level
             }
             featureImageCaption
-            eventTypeIDs
-            tagIDs
-            relatedSatelliteIDs
+            eventTypes {
+              nextToken
+            }
+            tags {
+              nextToken
+            }
+            satellites {
+              nextToken
+            }
             relatedPostIDs
             furtherReadings {
               name
@@ -535,9 +3016,15 @@ export const createAuthor = /* GraphQL */ `
               level
             }
             featureImageCaption
-            eventTypeIDs
-            tagIDs
-            relatedSatelliteIDs
+            eventTypes {
+              nextToken
+            }
+            tags {
+              nextToken
+            }
+            satellites {
+              nextToken
+            }
             relatedPostIDs
             furtherReadings {
               name
@@ -590,9 +3077,15 @@ export const updateAuthor = /* GraphQL */ `
               level
             }
             featureImageCaption
-            eventTypeIDs
-            tagIDs
-            relatedSatelliteIDs
+            eventTypes {
+              nextToken
+            }
+            tags {
+              nextToken
+            }
+            satellites {
+              nextToken
+            }
             relatedPostIDs
             furtherReadings {
               name
@@ -645,9 +3138,15 @@ export const deleteAuthor = /* GraphQL */ `
               level
             }
             featureImageCaption
-            eventTypeIDs
-            tagIDs
-            relatedSatelliteIDs
+            eventTypes {
+              nextToken
+            }
+            tags {
+              nextToken
+            }
+            satellites {
+              nextToken
+            }
             relatedPostIDs
             furtherReadings {
               name
@@ -1016,7 +3515,80 @@ export const createSatellite = /* GraphQL */ `
           value
         }
       }
-      relatedPostIDs
+      posts {
+        items {
+          id
+          postID
+          satelliteID
+          post {
+            id
+            slug
+            title
+            postDate
+            updatedAt
+            excerpt
+            featureImage {
+              key
+              identityId
+              level
+            }
+            featureImageCaption
+            eventTypes {
+              nextToken
+            }
+            tags {
+              nextToken
+            }
+            satellites {
+              nextToken
+            }
+            relatedPostIDs
+            furtherReadings {
+              name
+              author
+              url
+            }
+            content
+            authors {
+              nextToken
+            }
+          }
+          satellite {
+            id
+            name {
+              value
+              override
+            }
+            launchDate
+            launchVehicle
+            launchSite
+            countryOfLaunchSite {
+              value
+              override
+            }
+            countryOfJurisdiction
+            contractor
+            operator
+            purpose {
+              value
+              override
+            }
+            satelliteType {
+              value
+              override
+            }
+            lifetime
+            status {
+              value
+              override
+            }
+            posts {
+              nextToken
+            }
+          }
+        }
+        nextToken
+      }
     }
   }
 `;
@@ -1126,7 +3698,80 @@ export const updateSatellite = /* GraphQL */ `
           value
         }
       }
-      relatedPostIDs
+      posts {
+        items {
+          id
+          postID
+          satelliteID
+          post {
+            id
+            slug
+            title
+            postDate
+            updatedAt
+            excerpt
+            featureImage {
+              key
+              identityId
+              level
+            }
+            featureImageCaption
+            eventTypes {
+              nextToken
+            }
+            tags {
+              nextToken
+            }
+            satellites {
+              nextToken
+            }
+            relatedPostIDs
+            furtherReadings {
+              name
+              author
+              url
+            }
+            content
+            authors {
+              nextToken
+            }
+          }
+          satellite {
+            id
+            name {
+              value
+              override
+            }
+            launchDate
+            launchVehicle
+            launchSite
+            countryOfLaunchSite {
+              value
+              override
+            }
+            countryOfJurisdiction
+            contractor
+            operator
+            purpose {
+              value
+              override
+            }
+            satelliteType {
+              value
+              override
+            }
+            lifetime
+            status {
+              value
+              override
+            }
+            posts {
+              nextToken
+            }
+          }
+        }
+        nextToken
+      }
     }
   }
 `;
@@ -1236,7 +3881,80 @@ export const deleteSatellite = /* GraphQL */ `
           value
         }
       }
-      relatedPostIDs
+      posts {
+        items {
+          id
+          postID
+          satelliteID
+          post {
+            id
+            slug
+            title
+            postDate
+            updatedAt
+            excerpt
+            featureImage {
+              key
+              identityId
+              level
+            }
+            featureImageCaption
+            eventTypes {
+              nextToken
+            }
+            tags {
+              nextToken
+            }
+            satellites {
+              nextToken
+            }
+            relatedPostIDs
+            furtherReadings {
+              name
+              author
+              url
+            }
+            content
+            authors {
+              nextToken
+            }
+          }
+          satellite {
+            id
+            name {
+              value
+              override
+            }
+            launchDate
+            launchVehicle
+            launchSite
+            countryOfLaunchSite {
+              value
+              override
+            }
+            countryOfJurisdiction
+            contractor
+            operator
+            purpose {
+              value
+              override
+            }
+            satelliteType {
+              value
+              override
+            }
+            lifetime
+            status {
+              value
+              override
+            }
+            posts {
+              nextToken
+            }
+          }
+        }
+        nextToken
+      }
     }
   }
 `;
@@ -1281,6 +3999,54 @@ export const createEventType = /* GraphQL */ `
     createEventType(input: $input, condition: $condition) {
       id
       name
+      posts {
+        items {
+          id
+          postID
+          eventTypeID
+          post {
+            id
+            slug
+            title
+            postDate
+            updatedAt
+            excerpt
+            featureImage {
+              key
+              identityId
+              level
+            }
+            featureImageCaption
+            eventTypes {
+              nextToken
+            }
+            tags {
+              nextToken
+            }
+            satellites {
+              nextToken
+            }
+            relatedPostIDs
+            furtherReadings {
+              name
+              author
+              url
+            }
+            content
+            authors {
+              nextToken
+            }
+          }
+          eventType {
+            id
+            name
+            posts {
+              nextToken
+            }
+          }
+        }
+        nextToken
+      }
     }
   }
 `;
@@ -1292,6 +4058,54 @@ export const updateEventType = /* GraphQL */ `
     updateEventType(input: $input, condition: $condition) {
       id
       name
+      posts {
+        items {
+          id
+          postID
+          eventTypeID
+          post {
+            id
+            slug
+            title
+            postDate
+            updatedAt
+            excerpt
+            featureImage {
+              key
+              identityId
+              level
+            }
+            featureImageCaption
+            eventTypes {
+              nextToken
+            }
+            tags {
+              nextToken
+            }
+            satellites {
+              nextToken
+            }
+            relatedPostIDs
+            furtherReadings {
+              name
+              author
+              url
+            }
+            content
+            authors {
+              nextToken
+            }
+          }
+          eventType {
+            id
+            name
+            posts {
+              nextToken
+            }
+          }
+        }
+        nextToken
+      }
     }
   }
 `;
@@ -1303,6 +4117,54 @@ export const deleteEventType = /* GraphQL */ `
     deleteEventType(input: $input, condition: $condition) {
       id
       name
+      posts {
+        items {
+          id
+          postID
+          eventTypeID
+          post {
+            id
+            slug
+            title
+            postDate
+            updatedAt
+            excerpt
+            featureImage {
+              key
+              identityId
+              level
+            }
+            featureImageCaption
+            eventTypes {
+              nextToken
+            }
+            tags {
+              nextToken
+            }
+            satellites {
+              nextToken
+            }
+            relatedPostIDs
+            furtherReadings {
+              name
+              author
+              url
+            }
+            content
+            authors {
+              nextToken
+            }
+          }
+          eventType {
+            id
+            name
+            posts {
+              nextToken
+            }
+          }
+        }
+        nextToken
+      }
     }
   }
 `;
@@ -1315,6 +4177,55 @@ export const createTag = /* GraphQL */ `
       id
       name
       tagType
+      posts {
+        items {
+          id
+          postID
+          tagID
+          post {
+            id
+            slug
+            title
+            postDate
+            updatedAt
+            excerpt
+            featureImage {
+              key
+              identityId
+              level
+            }
+            featureImageCaption
+            eventTypes {
+              nextToken
+            }
+            tags {
+              nextToken
+            }
+            satellites {
+              nextToken
+            }
+            relatedPostIDs
+            furtherReadings {
+              name
+              author
+              url
+            }
+            content
+            authors {
+              nextToken
+            }
+          }
+          tag {
+            id
+            name
+            tagType
+            posts {
+              nextToken
+            }
+          }
+        }
+        nextToken
+      }
     }
   }
 `;
@@ -1327,6 +4238,55 @@ export const updateTag = /* GraphQL */ `
       id
       name
       tagType
+      posts {
+        items {
+          id
+          postID
+          tagID
+          post {
+            id
+            slug
+            title
+            postDate
+            updatedAt
+            excerpt
+            featureImage {
+              key
+              identityId
+              level
+            }
+            featureImageCaption
+            eventTypes {
+              nextToken
+            }
+            tags {
+              nextToken
+            }
+            satellites {
+              nextToken
+            }
+            relatedPostIDs
+            furtherReadings {
+              name
+              author
+              url
+            }
+            content
+            authors {
+              nextToken
+            }
+          }
+          tag {
+            id
+            name
+            tagType
+            posts {
+              nextToken
+            }
+          }
+        }
+        nextToken
+      }
     }
   }
 `;
@@ -1339,6 +4299,55 @@ export const deleteTag = /* GraphQL */ `
       id
       name
       tagType
+      posts {
+        items {
+          id
+          postID
+          tagID
+          post {
+            id
+            slug
+            title
+            postDate
+            updatedAt
+            excerpt
+            featureImage {
+              key
+              identityId
+              level
+            }
+            featureImageCaption
+            eventTypes {
+              nextToken
+            }
+            tags {
+              nextToken
+            }
+            satellites {
+              nextToken
+            }
+            relatedPostIDs
+            furtherReadings {
+              name
+              author
+              url
+            }
+            content
+            authors {
+              nextToken
+            }
+          }
+          tag {
+            id
+            name
+            tagType
+            posts {
+              nextToken
+            }
+          }
+        }
+        nextToken
+      }
     }
   }
 `;
