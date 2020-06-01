@@ -1,14 +1,22 @@
 <template>
   <article class="post-component post-component--wide">
     <header>
+      {{ data.eventTypeIDs[0] }}
+      <img :src="'./' + data.featureImage.key" alt="" />
+      {{ data.featureImage.key }}
       <h2>
-        <img :src="'./' + data.featureImage.key" alt="" />
-        {{ data.featureImage.key }}
         <nuxt-link :to="nestedSlug">{{ data.title }}</nuxt-link>
       </h2>
-      {{ data.authors.items[0].author.name }}
-      {{ data.tagIDs }}
-      {{ data.postDate }}
+      <div class="post-component post-component-meta">
+        <div class="post-component post-component-meta__date">
+          <p>Published</p>
+          {{ data.postDate }}
+        </div>
+        <div class="post-component post-component-meta__author">
+          <p>Written By</p>
+          {{ data.authors.items[0].author.name }}
+        </div>
+      </div>
     </header>
     {{ data.excerpt }}
   </article>
@@ -21,7 +29,7 @@ export default {
       type: Object,
       default() {
         return {
-          tagIDs: '',
+          eventTypeIDs: '',
           title: '',
           postDate: '',
           authors: '',
