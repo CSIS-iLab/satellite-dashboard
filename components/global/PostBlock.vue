@@ -1,7 +1,8 @@
 <template>
   <article class="post-component post-component--wide">
     <header>
-      {{ data.eventTypeIDs[0] }}
+      {{ data.eventTypes }}
+      {{ data.tags }}
       <img :src="'./' + data.featureImage.key" alt="" />
       {{ data.featureImage.key }}
       <h2>
@@ -29,7 +30,8 @@ export default {
       type: Object,
       default() {
         return {
-          eventTypeIDs: '',
+          tags: '',
+          eventTypes: '',
           title: '',
           postDate: '',
           authors: '',
