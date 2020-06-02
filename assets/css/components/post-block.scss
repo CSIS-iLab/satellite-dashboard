@@ -21,7 +21,11 @@
     top: 0;
     right: 0;
     left: 0;
+    flex: none;
+    align-self: center;
+    order: 0;
     height: rem(39px);
+    margin: 0 rem(2px);
     color: $color-white-190;
     font-family: Good Pro;
     font-weight: 500;
