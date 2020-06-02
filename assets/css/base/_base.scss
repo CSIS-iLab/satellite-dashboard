@@ -45,7 +45,7 @@ a {
   }
 
   &:focus {
-    outline: thin dotted;
+    outline: thin solid $color-focus;
   }
 
   &:hover,
