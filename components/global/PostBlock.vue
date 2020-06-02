@@ -1,25 +1,30 @@
 <template>
-  <article class="post-component post-component--wide">
+  <article class="post-component post-component--wide post-block">
     <header>
-      {{ data.eventTypes }}
-      {{ data.tags }}
-      <img :src="'./' + data.featureImage.key" alt="" />
-      {{ data.featureImage.key }}
-      <h2>
+      <div class="post-block__category">
+        {{ getCategory }}
+      </div>
+      <img :src="'./' + getImage" alt="" />
+      <img src="http://placekitten.com/200/300" />
+      <h2 class="post-block__title">
         <nuxt-link :to="nestedSlug">{{ data.title }}</nuxt-link>
       </h2>
-      <div class="post-component post-component-meta">
-        <div class="post-component post-component-meta__date">
-          <p>Published</p>
+    </header>
+    <section class="post-block__content">
+      <div class="post-block__meta">
+        <div class="post-block__date">
+          <p class="post-block__date-label">Published</p>
           {{ data.postDate }}
         </div>
-        <div class="post-component post-component-meta__author">
-          <p>Written By</p>
-          {{ data.authors.items[0].author.name }}
+        <div class=" post-block__author">
+          <p class="post-block__author-label">Written By</p>
+          {{ getAuthor }}
         </div>
       </div>
-    </header>
-    {{ data.excerpt }}
+      <div class="post-block__excerpt">
+        {{ data.excerpt }}
+      </div>
+    </section>
   </article>
 </template>
 
@@ -30,7 +35,6 @@ export default {
       type: Object,
       default() {
         return {
-          tags: '',
           eventTypes: '',
           title: '',
           postDate: '',
@@ -46,6 +50,27 @@ export default {
   computed: {
     nestedSlug() {
       return `analysis/${this.data.slug}`
+    },
+    getCategory() {
+      if (!this.data.eventTypes.items[0]) {
+        return
+      } else {
+        return this.data.eventTypes.items[0].eventType.name
+      }
+    },
+    getAuthor() {
+      if (!this.data.authors.items[0]) {
+        return
+      } else {
+        return this.data.authors.items[0].author.name
+      }
+    },
+    getImage() {
+      if (!this.data.featureImage.key) {
+        return
+      } else {
+        return this.data.featureImage.key
+      }
     }
   }
 }
@@ -53,4 +78,5 @@ export default {
 
 <style lang="scss">
 @import '../assets/css/components/post-component';
+@import '../assets/css/components/post-block';
 </style>

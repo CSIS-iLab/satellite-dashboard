@@ -1,0 +1,32 @@
+.post-block {
+  position: relative;
+
+  &__category {
+    position: absolute;
+    top: 12.17%;
+    bottom: 80.99%;
+    left: rem(64px);
+    width: rem(90px);
+    color: $color-orange-100;
+    font-family: Oxygen;
+    font-weight: bold;
+    font-size: rem(14px);
+    font-style: normal;
+    line-height: rem(18px);
+    letter-spacing: 0.03em;
+  }
+
+  &__title {
+    position: static;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: rem(39px);
+    color: $color-white-190;
+    font-family: Good Pro;
+    font-weight: 500;
+    font-size: rem(28px);
+    font-style: normal;
+    line-height: 140%;
+  }
+}
