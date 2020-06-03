@@ -1,30 +1,30 @@
 <template>
   <article class="post-component post-component--wide post-block">
-    <header>
-      <div class="post-block__category">
-        {{ getCategory }}
+    <!-- <header> -->
+    <div class="post-block__category">
+      {{ getCategory }}
+    </div>
+    <!-- <img class="post-block__image" :src="'./' + getImage" alt="" /> -->
+    <img class="post-block__image" src="http://placekitten.com/200/138" />
+    <h2 class="post-block__title">
+      <nuxt-link :to="nestedSlug">{{ data.title }}</nuxt-link>
+    </h2>
+    <!-- </header> -->
+    <!-- <section class="post-block__content"> -->
+    <div class="post-block__meta">
+      <div class="post-block__date">
+        <p class="post-block__date-label">Published</p>
+        {{ data.postDate }}
       </div>
-      <img class="post-block__image" :src="'./' + getImage" alt="" />
-      <img class="post-block__image" src="http://placekitten.com/200/300" />
-      <h2 class="post-block__title">
-        <nuxt-link :to="nestedSlug">{{ data.title }}</nuxt-link>
-      </h2>
-    </header>
-    <section class="post-block__content">
-      <div class="post-block__meta">
-        <div class="post-block__date">
-          <p class="post-block__date-label">Published</p>
-          {{ data.postDate }}
-        </div>
-        <div class=" post-block__author">
-          <p class="post-block__author-label">Written By</p>
-          {{ getAuthor }}
-        </div>
+      <div class=" post-block__author">
+        <p class="post-block__author-label">Written By</p>
+        {{ getAuthor }}
       </div>
-      <div class="post-block__excerpt">
-        {{ data.excerpt }}
-      </div>
-    </section>
+    </div>
+    <div class="post-block__excerpt">
+      {{ data.excerpt }}
+    </div>
+    <!-- </section> -->
   </article>
 </template>
 

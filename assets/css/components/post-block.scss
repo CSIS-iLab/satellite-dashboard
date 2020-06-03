@@ -1,12 +1,22 @@
 .post-block {
   position: relative;
+  display: grid;
+  grid-template-columns: 70% 30%;
+  grid-template-rows: repeat(3, 1fr) 2fr;
+
+  // header {
+  //   display: flex;
+  // }
 
   &__category {
     position: absolute;
     top: 12.17%;
     bottom: 80.99%;
     left: rem(64px);
-    width: rem(90px);
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 1;
+    order: 1;
+    // width: rem(90px);
     color: $color-orange-100;
     font-family: Oxygen;
     font-weight: bold;
@@ -17,14 +27,16 @@
   }
 
   &__title {
-    position: static;
-    top: 0;
-    right: 0;
-    left: 0;
-    flex: none;
-    align-self: center;
-    order: 0;
-    height: rem(39px);
+    // position: static;
+    // top: 0;
+    // right: 0;
+    // left: 0;
+    // flex: none;
+    // align-self: center;
+    // order: 0;
+    // height: rem(39px);
+    grid-column: 1 / span 1;
+    grid-row: 2 / span 1;
     margin: 0 rem(2px);
     color: $color-white-190;
     font-family: Good Pro;
@@ -32,5 +44,54 @@
     font-size: rem(28px);
     font-style: normal;
     line-height: 140%;
+  }
+
+  &__meta {
+    grid-column: 1 / span 1;
+    grid-row: 3 / span 1;
+    // position: static;
+    // top: 50%;
+    // right: 0%;
+    // bottom: 0%;
+    // left: 0%;
+    // flex: none;
+    // align-self: flex-start;
+    // order: 1;
+    margin: 0;
+    color: $color-white-180;
+    font-family: Oxygen;
+    font-weight: normal;
+    font-size: rem(16px);
+    font-style: normal;
+    line-height: rem(20px);
+  }
+
+  &__excerpt {
+    grid-column: 1 / span 1;
+    grid-row: 4 / span 1;
+    // position: absolute;
+    // top: 60.46%;
+    // right: 304px;
+    // bottom: 12.17%;
+    // left: rem(64px);
+    color: $color-white-180;
+    font-family: Oxygen;
+    font-weight: normal;
+    font-size: rem(16px);
+    font-style: normal;
+    line-height: 150%;
+  }
+
+  &__image {
+    // position: static;
+    // top: rem(32px);
+    // right: rem(64px);
+    // display: flex;
+    // flex-direction: row;
+    // width: 200px;
+    // height: 138px;
+    grid-column: 2 / span 1;
+    grid-row: 1 / span 4;
+    padding: 10px;
   }
 }
