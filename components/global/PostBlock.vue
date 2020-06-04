@@ -1,6 +1,5 @@
 <template>
   <article class="post-component post-component--wide post-block">
-    <!-- <header> -->
     <div class="post-block__category">
       {{ getCategory }}
     </div>
@@ -9,12 +8,10 @@
     <h2 class="post-block__title">
       <nuxt-link :to="nestedSlug">{{ data.title }}</nuxt-link>
     </h2>
-    <!-- </header> -->
-    <!-- <section class="post-block__content"> -->
     <div class="post-block__meta">
       <div class="post-block__date">
         <p class="post-block__date-label">Published</p>
-        {{ data.postDate }}
+        {{ formatDate }}
       </div>
       <div class=" post-block__author">
         <p class="post-block__author-label">Written By</p>
@@ -24,7 +21,6 @@
     <div class="post-block__excerpt">
       {{ data.excerpt }}
     </div>
-    <!-- </section> -->
   </article>
 </template>
 
@@ -71,6 +67,27 @@ export default {
       } else {
         return this.data.featureImage.key
       }
+    },
+    formatDate() {
+      let date = new Date(this.data.postDate)
+      let months = [
+        'Jan',
+        'Feb',
+        'Mar',
+        'Apr',
+        'May',
+        'Jun',
+        'Jul',
+        'Aug',
+        'Sep',
+        'Oct',
+        'Nov',
+        'Dec'
+      ]
+      let month = months[date.getMonth()]
+      let day = date.getDate()
+      let year = date.getFullYear()
+      return month + ' ' + day + ', ' + year
     }
   }
 }

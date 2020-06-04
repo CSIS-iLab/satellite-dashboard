@@ -2,21 +2,19 @@
   position: relative;
   display: grid;
   grid-template-columns: 70% 30%;
-  grid-template-rows: repeat(3, 1fr) 2fr;
+  // grid-template-rows: repeat(3, 1fr) 2fr;
+  grid-template-rows: repeat(4, auto);
+  align-items: center;
+  column-gap: rem(40px);
 
   // header {
   //   display: flex;
   // }
 
   &__category {
-    position: absolute;
-    top: 12.17%;
-    bottom: 80.99%;
-    left: rem(64px);
     grid-column: 1 / span 1;
     grid-row: 1 / span 1;
-    order: 1;
-    // width: rem(90px);
+    margin-top: rem(32px);
     color: $color-orange-100;
     font-family: Oxygen;
     font-weight: bold;
@@ -24,56 +22,47 @@
     font-style: normal;
     line-height: rem(18px);
     letter-spacing: 0.03em;
+    text-transform: uppercase;
   }
 
   &__title {
-    // position: static;
-    // top: 0;
-    // right: 0;
-    // left: 0;
-    // flex: none;
-    // align-self: center;
-    // order: 0;
-    // height: rem(39px);
     grid-column: 1 / span 1;
     grid-row: 2 / span 1;
-    margin: 0 rem(2px);
+    margin-top: rem(4px);
     color: $color-white-190;
     font-family: Good Pro;
     font-weight: 500;
     font-size: rem(28px);
     font-style: normal;
-    line-height: 140%;
   }
 
   &__meta {
+    display: flex;
     grid-column: 1 / span 1;
     grid-row: 3 / span 1;
-    // position: static;
-    // top: 50%;
-    // right: 0%;
-    // bottom: 0%;
-    // left: 0%;
-    // flex: none;
-    // align-self: flex-start;
-    // order: 1;
-    margin: 0;
+    margin: rem(9px) 0 0 0;
     color: $color-white-180;
     font-family: Oxygen;
     font-weight: normal;
     font-size: rem(16px);
     font-style: normal;
     line-height: rem(20px);
+
+    p {
+      color: $color-white-150;
+      font-size: 14px;
+      line-height: 140%;
+    }
+  }
+
+  &__author {
+    margin-left: rem(40px);
   }
 
   &__excerpt {
     grid-column: 1 / span 1;
     grid-row: 4 / span 1;
-    // position: absolute;
-    // top: 60.46%;
-    // right: 304px;
-    // bottom: 12.17%;
-    // left: rem(64px);
+    margin: rem(17px) 0 rem(32px) 0;
     color: $color-white-180;
     font-family: Oxygen;
     font-weight: normal;
@@ -83,15 +72,11 @@
   }
 
   &__image {
-    // position: static;
-    // top: rem(32px);
-    // right: rem(64px);
-    // display: flex;
-    // flex-direction: row;
-    // width: 200px;
-    // height: 138px;
     grid-column: 2 / span 1;
     grid-row: 1 / span 4;
+    align-self: start;
+    margin-top: rem(32px);
     padding: 10px;
+    justify-self: center;
   }
 }
