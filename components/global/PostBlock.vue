@@ -50,44 +50,29 @@ export default {
     getCategory() {
       if (!this.data.eventTypes.items[0]) {
         return
-      } else {
-        return this.data.eventTypes.items[0].eventType.name
       }
+      return this.data.eventTypes.items[0].eventType.name
     },
     getAuthor() {
       if (!this.data.authors.items[0]) {
         return
-      } else {
-        return this.data.authors.items[0].author.name
       }
+      return this.data.authors.items[0].author.name
     },
     getImage() {
       if (!this.data.featureImage.key) {
         return
-      } else {
-        return this.data.featureImage.key
       }
+      return this.data.featureImage.key
     },
     formatDate() {
       let date = new Date(this.data.postDate)
-      let months = [
-        'Jan',
-        'Feb',
-        'Mar',
-        'Apr',
-        'May',
-        'Jun',
-        'Jul',
-        'Aug',
-        'Sep',
-        'Oct',
-        'Nov',
-        'Dec'
-      ]
-      let month = months[date.getMonth()]
-      let day = date.getDate()
-      let year = date.getFullYear()
-      return month + ' ' + day + ', ' + year
+      const options = {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+      }
+      return date.toLocaleDateString('en', options)
     }
   }
 }
