@@ -2,25 +2,17 @@
   position: relative;
   display: grid;
   grid-template-columns: 70% 30%;
-  // grid-template-rows: repeat(3, 1fr) 2fr;
   grid-template-rows: repeat(4, auto);
   align-items: center;
   column-gap: rem(40px);
-
-  // header {
-  //   display: flex;
-  // }
 
   &__category {
     grid-column: 1 / span 1;
     grid-row: 1 / span 1;
     margin-top: rem(32px);
     color: $color-orange-100;
-    font-family: Oxygen;
+    @extend %font-ui-text-base-oxygen;
     font-weight: bold;
-    font-size: rem(14px);
-    font-style: normal;
-    line-height: rem(18px);
     letter-spacing: 0.03em;
     text-transform: uppercase;
   }
@@ -30,10 +22,7 @@
     grid-row: 2 / span 1;
     margin-top: rem(4px);
     color: $color-white-190;
-    font-family: Good Pro;
-    font-weight: 500;
-    font-size: rem(28px);
-    font-style: normal;
+    @extend %font-ui-heading-post-block-title;
   }
 
   &__meta {
@@ -42,16 +31,11 @@
     grid-row: 3 / span 1;
     margin: rem(9px) 0 0 0;
     color: $color-white-180;
-    font-family: Oxygen;
-    font-weight: normal;
-    font-size: rem(16px);
-    font-style: normal;
-    line-height: rem(20px);
+    @extend %font-ui-text-lg-oxygen;
 
     p {
       color: $color-white-150;
-      font-size: 14px;
-      line-height: 140%;
+      @extend %font-ui-text-base-oxygen;
     }
   }
 
@@ -64,10 +48,7 @@
     grid-row: 4 / span 1;
     margin: rem(17px) 0 rem(32px) 0;
     color: $color-white-180;
-    font-family: Oxygen;
-    font-weight: normal;
-    font-size: rem(16px);
-    font-style: normal;
+    @extend %font-ui-text-lg-oxygen;
     line-height: 150%;
   }
 
