@@ -8,13 +8,13 @@
     <h2 class="post-block__title">
       <nuxt-link :to="nestedSlug">{{ data.title }}</nuxt-link>
     </h2>
-    <div class="post-block__meta">
-      <div class="post-block__date">
-        <p class="post-block__date-label">Published</p>
+    <div class="post-meta">
+      <div class="post-meta__block post-block__date">
+        <span class="post-meta__label">Published</span>
         {{ formatDate }}
       </div>
-      <div class=" post-block__author">
-        <p class="post-block__author-label">Written By</p>
+      <div class="post-meta__block post-block__author">
+        <span class="post-meta__label">Written By</span>
         {{ getAuthor }}
       </div>
     </div>

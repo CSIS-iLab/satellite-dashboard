@@ -25,20 +25,6 @@
     @extend %font-ui-heading-post-block-title;
   }
 
-  &__meta {
-    display: flex;
-    grid-column: 1 / span 1;
-    grid-row: 3 / span 1;
-    margin: rem(9px) 0 0 0;
-    color: $color-white-180;
-    @extend %font-ui-text-lg-oxygen;
-
-    p {
-      color: $color-white-150;
-      @extend %font-ui-text-base-oxygen;
-    }
-  }
-
   &__author {
     margin-left: rem(40px);
   }
@@ -59,5 +45,20 @@
     margin-top: rem(32px);
     padding: 10px;
     justify-self: center;
+  }
+}
+
+.post-meta {
+  display: flex;
+  grid-column: 1 / span 1;
+  grid-row: 3 / span 1;
+  margin: rem(9px) 0 0 0;
+  color: $color-white-180;
+  @extend %font-ui-text-lg-oxygen;
+
+  &__label {
+    display: table;
+    color: $color-white-150;
+    @extend %font-ui-text-base-oxygen;
   }
 }
