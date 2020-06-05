@@ -103,3 +103,14 @@
     }
   }
 }
+
+// Box shadow underline for links
+@mixin link-underline($color, $thickness: -1px, $hideOnHover: true) {
+  box-shadow: inset 0 $thickness 0 0 $color;
+
+  @if $hideOnHover {
+    &:hover {
+      box-shadow: none;
+    }
+  }
+}
