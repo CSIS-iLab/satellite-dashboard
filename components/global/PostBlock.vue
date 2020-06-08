@@ -83,4 +83,5 @@ export default {
 <style lang="scss">
 @import '../assets/css/components/post-component';
 @import '../assets/css/components/post-block';
+@import '../assets/css/components/post-meta';
 </style>
