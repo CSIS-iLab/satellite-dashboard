@@ -34,6 +34,10 @@
     @extend %font-ui-heading-post-block-title;
     font-weight: 500;
 
+    &:hover {
+      color: $color-white-100;
+    }
+
     @include breakpoint($break: 'small', $dir: 'max-width') {
       grid-column: 1 / span 2;
     }
