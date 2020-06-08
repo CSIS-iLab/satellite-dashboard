@@ -17,4 +17,11 @@
     color: $color-white-150;
     @extend %font-ui-text-base-oxygen;
   }
+
+  .visualizer {
+    @extend %font-ui-text-sm-oxygen;
+    margin-top: rem(4px);
+    color: $color-white-170;
+    letter-spacing: 0.025em;
+  }
 }
