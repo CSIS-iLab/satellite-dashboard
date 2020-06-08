@@ -3,8 +3,10 @@
     <div class="post-block__category">
       {{ getCategory }}
     </div>
-    <!-- <img class="post-block__image" :src="'./' + getImage" alt="" /> -->
-    <img class="post-block__image" src="http://placekitten.com/200/138" />
+    <nuxt-link class="post-block__image" :to="nestedSlug">
+      <!-- <img class="post-block__image" :src="'./' + getImage" alt="" /> -->
+      <img src="http://placekitten.com/200/138" />
+    </nuxt-link>
     <h2 class="post-block__title">
       <nuxt-link :to="nestedSlug">{{ data.title }}</nuxt-link>
     </h2>
