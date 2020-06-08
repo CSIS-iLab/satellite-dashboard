@@ -1,10 +1,17 @@
 <template>
   <article class="post container">
     <header class="post__header">
+      <span class="post__category">{{
+        eventTypes.items[0].eventType.name
+      }}</span>
       <h1>{{ title }}</h1>
       {{ excerpt }}
-      <h2>Author: {{ authors.items[0].author.name }}</h2>
     </header>
+    <aside>
+      <p>Written by {{ authors.items[0].author.name }}</p>
+      <p>Published {{ postDate }}</p>
+      <p>Last updated {{ updatedAt }}</p>
+    </aside>
     <!-- eslint-disable-next-line -->
     <section class="post__content" v-html="content"></section>
   </article>
@@ -24,6 +31,7 @@ export default {
         back, but we can be pretty sure it will be the only item, so grab 0 index
         otherwise, on failure, this is a bad slug
       */
+      console.log(data.data.postsBySlug.items[0])
       return data.data.postsBySlug.items[0]
     } catch (error) {
       return false
