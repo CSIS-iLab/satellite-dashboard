@@ -1,33 +1,33 @@
 .post-block {
   position: relative;
   display: grid;
-  grid-template-columns: 70% 30%;
+  grid-template-columns: rem(150px) auto;
   align-items: center;
-  column-gap: rem(40px);
+  column-gap: rem(16px);
 
-  @include breakpoint($break: 'small', $dir: 'max-width') {
-    grid-template-columns: rem(150px) auto;
-    column-gap: rem(16px);
+  @include breakpoint('medium') {
+    grid-template-columns: 70% 30%;
+    column-gap: rem(40px);
   }
 
   &__category {
-    grid-column: 1 / span 1;
+    grid-column: 1 / span 2;
     grid-row: 1 / span 1;
-    margin-top: rem(32px);
+    margin-top: 0;
     color: $color-orange-180;
     @extend %font-ui-text-base-oxygen;
     font-weight: bold;
     letter-spacing: 0.03em;
     text-transform: uppercase;
 
-    @include breakpoint($break: 'small', $dir: 'max-width') {
-      grid-column: 1 / span 2;
-      margin-top: 0;
+    @include breakpoint('medium') {
+      grid-column: 1 / span 1;
+      margin-top: rem(32px);
     }
   }
 
   &__title {
-    grid-column: 1 / span 1;
+    grid-column: 1 / span 2;
     grid-row: 2 / span 1;
     margin-top: rem(4px);
     color: $color-white-190;
@@ -38,46 +38,44 @@
       color: $color-white-100;
     }
 
-    @include breakpoint($break: 'small', $dir: 'max-width') {
-      grid-column: 1 / span 2;
+    @include breakpoint('medium') {
+      grid-column: 1 / span 1;
     }
   }
 
   &__author {
-    margin-left: rem(40px);
+    margin-top: rem(16px);
 
-    @include breakpoint($break: 'small', $dir: 'max-width') {
-      margin-top: rem(16px);
-      margin-left: 0;
+    @include breakpoint('medium') {
+      margin: 0 0 0 rem(40px);
     }
   }
 
   &__excerpt {
-    grid-column: 1 / span 1;
+    grid-column: 1 / span 2;
     grid-row: 4 / span 1;
-    margin: rem(17px) 0 rem(32px) 0;
+    margin: 0 0 rem(24px) 0;
     color: $color-white-180;
     @extend %font-ui-text-lg-oxygen;
     line-height: 150%;
 
-    @include breakpoint($break: 'small', $dir: 'max-width') {
-      grid-column: 1 / span 2;
-      margin-top: rem(16px);
-      margin-bottom: rem(24px);
+    @include breakpoint('medium') {
+      grid-column: 1 / span 1;
+      margin: rem(17px) 0 rem(32px) 0;
     }
   }
 
   &__image {
-    grid-column: 2 / span 1;
-    grid-row: 1 / span 4;
+    grid-column: 1 / span 1;
+    grid-row: 3 / span 1;
     align-self: start;
-    margin-top: rem(32px);
+    margin: rem(16px) 0;
     justify-self: left;
 
-    @include breakpoint($break: 'small', $dir: 'max-width') {
-      grid-column: 1 / span 1;
-      grid-row: 3 / span 1;
-      margin-top: rem(16px);
+    @include breakpoint('medium') {
+      grid-column: 2 / span 1;
+      grid-row: 1 / span 4;
+      margin-top: rem(32px);
     }
   }
 
@@ -118,18 +116,17 @@
 }
 
 .post-meta {
-  display: flex;
-  grid-column: 1 / span 1;
+  grid-column: 2 / span 1;
   grid-row: 3 / span 1;
-  margin: rem(9px) 0 0 0;
+  align-items: center;
+  margin: 0;
   color: $color-white-180;
   @extend %font-ui-text-lg-oxygen;
 
-  @include breakpoint($break: 'small', $dir: 'max-width') {
-    display: inline-block;
-    grid-column: 2 / span 1;
-    align-self: center;
-    margin: 0;
+  @include breakpoint('medium') {
+    display: flex;
+    grid-column: 1 / span 1;
+    margin-top: rem(9px);
   }
 
   &__label {
