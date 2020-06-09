@@ -18,7 +18,7 @@
     @extend %font-ui-text-base-oxygen;
   }
 
-  .visualizer {
+  .visualizer & {
     @extend %font-ui-text-sm-oxygen;
     margin-top: rem(4px);
     color: $color-white-170;

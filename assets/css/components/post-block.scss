@@ -23,7 +23,7 @@
       grid-column: 1 / span 1;
     }
 
-    .visualizer {
+    .visualizer & {
       display: none;
     }
   }
@@ -44,7 +44,7 @@
       margin: 0;
     }
 
-    .visualizer {
+    .visualizer & {
       @extend %font-ui-heading-section-md;
       padding-bottom: rem(2px);
       color: $color-white-190;
@@ -75,7 +75,7 @@
       margin-bottom: rem(32px);
     }
 
-    .visualizer {
+    .visualizer & {
       @extend %font-ui-text-base-oxygen;
       margin: rem(16px) 0;
       padding-bottom: rem(32px);
@@ -98,7 +98,7 @@
       grid-row: 1 / span 4;
     }
 
-    .visualizer {
+    .visualizer & {
       display: none;
     }
   }
