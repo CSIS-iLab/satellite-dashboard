@@ -9,7 +9,7 @@
   @include breakpoint('medium') {
     display: flex;
     grid-column: 1 / span 1;
-    margin-top: rem(9px);
+    margin-top: rem(8px);
   }
 
   &__label {
