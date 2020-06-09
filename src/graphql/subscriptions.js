@@ -157,78 +157,6 @@ export const onCreatePostSatellite = /* GraphQL */ `
           value
           override
         }
-        orbitalDatum {
-          apogee {
-            datasource {
-              id
-              name
-            }
-            value
-          }
-          argumentOfPerigee {
-            datasource {
-              id
-              name
-            }
-            value
-          }
-          perigree {
-            datasource {
-              id
-              name
-            }
-            value
-          }
-          eccentricity {
-            datasource {
-              id
-              name
-            }
-            value
-          }
-          inclination {
-            datasource {
-              id
-              name
-            }
-            value
-          }
-          longitude {
-            datasource {
-              id
-              name
-            }
-            value
-          }
-          meanMotion {
-            datasource {
-              id
-              name
-            }
-            value
-          }
-          orbitalPeriod {
-            datasource {
-              id
-              name
-            }
-            value
-          }
-          semiMajorAxis {
-            datasource {
-              id
-              name
-            }
-            value
-          }
-          driftRate {
-            datasource {
-              id
-              name
-            }
-            value
-          }
-        }
         posts {
           items {
             id
@@ -254,6 +182,41 @@ export const onCreatePostSatellite = /* GraphQL */ `
               contractor
               operator
               lifetime
+            }
+          }
+          nextToken
+        }
+        orbitalDatum {
+          items {
+            satelliteID
+            createdAt
+            argP {
+              datasourceID
+              value
+            }
+            ecc {
+              datasourceID
+              value
+            }
+            inc {
+              datasourceID
+              value
+            }
+            meanAnom {
+              datasourceID
+              value
+            }
+            SMA {
+              datasourceID
+              value
+            }
+            RAAN {
+              datasourceID
+              value
+            }
+            epoch {
+              datasourceID
+              value
             }
           }
           nextToken
@@ -418,78 +381,6 @@ export const onUpdatePostSatellite = /* GraphQL */ `
           value
           override
         }
-        orbitalDatum {
-          apogee {
-            datasource {
-              id
-              name
-            }
-            value
-          }
-          argumentOfPerigee {
-            datasource {
-              id
-              name
-            }
-            value
-          }
-          perigree {
-            datasource {
-              id
-              name
-            }
-            value
-          }
-          eccentricity {
-            datasource {
-              id
-              name
-            }
-            value
-          }
-          inclination {
-            datasource {
-              id
-              name
-            }
-            value
-          }
-          longitude {
-            datasource {
-              id
-              name
-            }
-            value
-          }
-          meanMotion {
-            datasource {
-              id
-              name
-            }
-            value
-          }
-          orbitalPeriod {
-            datasource {
-              id
-              name
-            }
-            value
-          }
-          semiMajorAxis {
-            datasource {
-              id
-              name
-            }
-            value
-          }
-          driftRate {
-            datasource {
-              id
-              name
-            }
-            value
-          }
-        }
         posts {
           items {
             id
@@ -515,6 +406,41 @@ export const onUpdatePostSatellite = /* GraphQL */ `
               contractor
               operator
               lifetime
+            }
+          }
+          nextToken
+        }
+        orbitalDatum {
+          items {
+            satelliteID
+            createdAt
+            argP {
+              datasourceID
+              value
+            }
+            ecc {
+              datasourceID
+              value
+            }
+            inc {
+              datasourceID
+              value
+            }
+            meanAnom {
+              datasourceID
+              value
+            }
+            SMA {
+              datasourceID
+              value
+            }
+            RAAN {
+              datasourceID
+              value
+            }
+            epoch {
+              datasourceID
+              value
             }
           }
           nextToken
@@ -679,78 +605,6 @@ export const onDeletePostSatellite = /* GraphQL */ `
           value
           override
         }
-        orbitalDatum {
-          apogee {
-            datasource {
-              id
-              name
-            }
-            value
-          }
-          argumentOfPerigee {
-            datasource {
-              id
-              name
-            }
-            value
-          }
-          perigree {
-            datasource {
-              id
-              name
-            }
-            value
-          }
-          eccentricity {
-            datasource {
-              id
-              name
-            }
-            value
-          }
-          inclination {
-            datasource {
-              id
-              name
-            }
-            value
-          }
-          longitude {
-            datasource {
-              id
-              name
-            }
-            value
-          }
-          meanMotion {
-            datasource {
-              id
-              name
-            }
-            value
-          }
-          orbitalPeriod {
-            datasource {
-              id
-              name
-            }
-            value
-          }
-          semiMajorAxis {
-            datasource {
-              id
-              name
-            }
-            value
-          }
-          driftRate {
-            datasource {
-              id
-              name
-            }
-            value
-          }
-        }
         posts {
           items {
             id
@@ -776,6 +630,41 @@ export const onDeletePostSatellite = /* GraphQL */ `
               contractor
               operator
               lifetime
+            }
+          }
+          nextToken
+        }
+        orbitalDatum {
+          items {
+            satelliteID
+            createdAt
+            argP {
+              datasourceID
+              value
+            }
+            ecc {
+              datasourceID
+              value
+            }
+            inc {
+              datasourceID
+              value
+            }
+            meanAnom {
+              datasourceID
+              value
+            }
+            SMA {
+              datasourceID
+              value
+            }
+            RAAN {
+              datasourceID
+              value
+            }
+            epoch {
+              datasourceID
+              value
             }
           }
           nextToken
@@ -2391,6 +2280,9 @@ export const onCreatePost = /* GraphQL */ `
             posts {
               nextToken
             }
+            orbitalDatum {
+              nextToken
+            }
           }
         }
         nextToken
@@ -2634,6 +2526,9 @@ export const onUpdatePost = /* GraphQL */ `
               override
             }
             posts {
+              nextToken
+            }
+            orbitalDatum {
               nextToken
             }
           }
@@ -2881,6 +2776,9 @@ export const onDeletePost = /* GraphQL */ `
             posts {
               nextToken
             }
+            orbitalDatum {
+              nextToken
+            }
           }
         }
         nextToken
@@ -3121,74 +3019,34 @@ export const onDeleteAuthor = /* GraphQL */ `
 export const onCreateOrbitalData = /* GraphQL */ `
   subscription OnCreateOrbitalData {
     onCreateOrbitalData {
-      apogee {
-        datasource {
-          id
-          name
-        }
+      satelliteID
+      createdAt
+      argP {
+        datasourceID
         value
       }
-      argumentOfPerigee {
-        datasource {
-          id
-          name
-        }
+      ecc {
+        datasourceID
         value
       }
-      perigree {
-        datasource {
-          id
-          name
-        }
+      inc {
+        datasourceID
         value
       }
-      eccentricity {
-        datasource {
-          id
-          name
-        }
+      meanAnom {
+        datasourceID
         value
       }
-      inclination {
-        datasource {
-          id
-          name
-        }
+      SMA {
+        datasourceID
         value
       }
-      longitude {
-        datasource {
-          id
-          name
-        }
+      RAAN {
+        datasourceID
         value
       }
-      meanMotion {
-        datasource {
-          id
-          name
-        }
-        value
-      }
-      orbitalPeriod {
-        datasource {
-          id
-          name
-        }
-        value
-      }
-      semiMajorAxis {
-        datasource {
-          id
-          name
-        }
-        value
-      }
-      driftRate {
-        datasource {
-          id
-          name
-        }
+      epoch {
+        datasourceID
         value
       }
     }
@@ -3197,74 +3055,34 @@ export const onCreateOrbitalData = /* GraphQL */ `
 export const onUpdateOrbitalData = /* GraphQL */ `
   subscription OnUpdateOrbitalData {
     onUpdateOrbitalData {
-      apogee {
-        datasource {
-          id
-          name
-        }
+      satelliteID
+      createdAt
+      argP {
+        datasourceID
         value
       }
-      argumentOfPerigee {
-        datasource {
-          id
-          name
-        }
+      ecc {
+        datasourceID
         value
       }
-      perigree {
-        datasource {
-          id
-          name
-        }
+      inc {
+        datasourceID
         value
       }
-      eccentricity {
-        datasource {
-          id
-          name
-        }
+      meanAnom {
+        datasourceID
         value
       }
-      inclination {
-        datasource {
-          id
-          name
-        }
+      SMA {
+        datasourceID
         value
       }
-      longitude {
-        datasource {
-          id
-          name
-        }
+      RAAN {
+        datasourceID
         value
       }
-      meanMotion {
-        datasource {
-          id
-          name
-        }
-        value
-      }
-      orbitalPeriod {
-        datasource {
-          id
-          name
-        }
-        value
-      }
-      semiMajorAxis {
-        datasource {
-          id
-          name
-        }
-        value
-      }
-      driftRate {
-        datasource {
-          id
-          name
-        }
+      epoch {
+        datasourceID
         value
       }
     }
@@ -3273,74 +3091,34 @@ export const onUpdateOrbitalData = /* GraphQL */ `
 export const onDeleteOrbitalData = /* GraphQL */ `
   subscription OnDeleteOrbitalData {
     onDeleteOrbitalData {
-      apogee {
-        datasource {
-          id
-          name
-        }
+      satelliteID
+      createdAt
+      argP {
+        datasourceID
         value
       }
-      argumentOfPerigee {
-        datasource {
-          id
-          name
-        }
+      ecc {
+        datasourceID
         value
       }
-      perigree {
-        datasource {
-          id
-          name
-        }
+      inc {
+        datasourceID
         value
       }
-      eccentricity {
-        datasource {
-          id
-          name
-        }
+      meanAnom {
+        datasourceID
         value
       }
-      inclination {
-        datasource {
-          id
-          name
-        }
+      SMA {
+        datasourceID
         value
       }
-      longitude {
-        datasource {
-          id
-          name
-        }
+      RAAN {
+        datasourceID
         value
       }
-      meanMotion {
-        datasource {
-          id
-          name
-        }
-        value
-      }
-      orbitalPeriod {
-        datasource {
-          id
-          name
-        }
-        value
-      }
-      semiMajorAxis {
-        datasource {
-          id
-          name
-        }
-        value
-      }
-      driftRate {
-        datasource {
-          id
-          name
-        }
+      epoch {
+        datasourceID
         value
       }
     }
@@ -3376,78 +3154,6 @@ export const onCreateSatellite = /* GraphQL */ `
       status {
         value
         override
-      }
-      orbitalDatum {
-        apogee {
-          datasource {
-            id
-            name
-          }
-          value
-        }
-        argumentOfPerigee {
-          datasource {
-            id
-            name
-          }
-          value
-        }
-        perigree {
-          datasource {
-            id
-            name
-          }
-          value
-        }
-        eccentricity {
-          datasource {
-            id
-            name
-          }
-          value
-        }
-        inclination {
-          datasource {
-            id
-            name
-          }
-          value
-        }
-        longitude {
-          datasource {
-            id
-            name
-          }
-          value
-        }
-        meanMotion {
-          datasource {
-            id
-            name
-          }
-          value
-        }
-        orbitalPeriod {
-          datasource {
-            id
-            name
-          }
-          value
-        }
-        semiMajorAxis {
-          datasource {
-            id
-            name
-          }
-          value
-        }
-        driftRate {
-          datasource {
-            id
-            name
-          }
-          value
-        }
       }
       posts {
         items {
@@ -3519,6 +3225,44 @@ export const onCreateSatellite = /* GraphQL */ `
             posts {
               nextToken
             }
+            orbitalDatum {
+              nextToken
+            }
+          }
+        }
+        nextToken
+      }
+      orbitalDatum {
+        items {
+          satelliteID
+          createdAt
+          argP {
+            datasourceID
+            value
+          }
+          ecc {
+            datasourceID
+            value
+          }
+          inc {
+            datasourceID
+            value
+          }
+          meanAnom {
+            datasourceID
+            value
+          }
+          SMA {
+            datasourceID
+            value
+          }
+          RAAN {
+            datasourceID
+            value
+          }
+          epoch {
+            datasourceID
+            value
           }
         }
         nextToken
@@ -3557,78 +3301,6 @@ export const onUpdateSatellite = /* GraphQL */ `
         value
         override
       }
-      orbitalDatum {
-        apogee {
-          datasource {
-            id
-            name
-          }
-          value
-        }
-        argumentOfPerigee {
-          datasource {
-            id
-            name
-          }
-          value
-        }
-        perigree {
-          datasource {
-            id
-            name
-          }
-          value
-        }
-        eccentricity {
-          datasource {
-            id
-            name
-          }
-          value
-        }
-        inclination {
-          datasource {
-            id
-            name
-          }
-          value
-        }
-        longitude {
-          datasource {
-            id
-            name
-          }
-          value
-        }
-        meanMotion {
-          datasource {
-            id
-            name
-          }
-          value
-        }
-        orbitalPeriod {
-          datasource {
-            id
-            name
-          }
-          value
-        }
-        semiMajorAxis {
-          datasource {
-            id
-            name
-          }
-          value
-        }
-        driftRate {
-          datasource {
-            id
-            name
-          }
-          value
-        }
-      }
       posts {
         items {
           id
@@ -3699,6 +3371,44 @@ export const onUpdateSatellite = /* GraphQL */ `
             posts {
               nextToken
             }
+            orbitalDatum {
+              nextToken
+            }
+          }
+        }
+        nextToken
+      }
+      orbitalDatum {
+        items {
+          satelliteID
+          createdAt
+          argP {
+            datasourceID
+            value
+          }
+          ecc {
+            datasourceID
+            value
+          }
+          inc {
+            datasourceID
+            value
+          }
+          meanAnom {
+            datasourceID
+            value
+          }
+          SMA {
+            datasourceID
+            value
+          }
+          RAAN {
+            datasourceID
+            value
+          }
+          epoch {
+            datasourceID
+            value
           }
         }
         nextToken
@@ -3737,78 +3447,6 @@ export const onDeleteSatellite = /* GraphQL */ `
         value
         override
       }
-      orbitalDatum {
-        apogee {
-          datasource {
-            id
-            name
-          }
-          value
-        }
-        argumentOfPerigee {
-          datasource {
-            id
-            name
-          }
-          value
-        }
-        perigree {
-          datasource {
-            id
-            name
-          }
-          value
-        }
-        eccentricity {
-          datasource {
-            id
-            name
-          }
-          value
-        }
-        inclination {
-          datasource {
-            id
-            name
-          }
-          value
-        }
-        longitude {
-          datasource {
-            id
-            name
-          }
-          value
-        }
-        meanMotion {
-          datasource {
-            id
-            name
-          }
-          value
-        }
-        orbitalPeriod {
-          datasource {
-            id
-            name
-          }
-          value
-        }
-        semiMajorAxis {
-          datasource {
-            id
-            name
-          }
-          value
-        }
-        driftRate {
-          datasource {
-            id
-            name
-          }
-          value
-        }
-      }
       posts {
         items {
           id
@@ -3879,6 +3517,44 @@ export const onDeleteSatellite = /* GraphQL */ `
             posts {
               nextToken
             }
+            orbitalDatum {
+              nextToken
+            }
+          }
+        }
+        nextToken
+      }
+      orbitalDatum {
+        items {
+          satelliteID
+          createdAt
+          argP {
+            datasourceID
+            value
+          }
+          ecc {
+            datasourceID
+            value
+          }
+          inc {
+            datasourceID
+            value
+          }
+          meanAnom {
+            datasourceID
+            value
+          }
+          SMA {
+            datasourceID
+            value
+          }
+          RAAN {
+            datasourceID
+            value
+          }
+          epoch {
+            datasourceID
+            value
           }
         }
         nextToken
