@@ -68,7 +68,7 @@
     margin: rem(16px) 0 rem(24px) 0;
     color: $color-white-180;
     @extend %font-ui-text-lg-oxygen;
-    line-height: 150%;
+    line-height: 1.5;
 
     @include breakpoint('medium') {
       grid-column: 1 / span 1;
