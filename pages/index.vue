@@ -14,7 +14,9 @@
       </template>
 
       <template v-else>
+        <CesiumViewer />
         <table border="1" borderColor="#fff" cellSpacing="0">
+        <table>
           <thead>
             <tr>
               <td>Catalog Id</td>
@@ -34,12 +36,14 @@
 </template>
 
 <script>
+import CesiumViewer from '~/components/CesiumViewer'
 import Page from '~/layout/page'
 
 export default {
-  layout: 'layout',
+  layout: 'visualizer',
   components: {
-    Page
+    Page,
+    CesiumViewer
   },
   data() {
     return {
