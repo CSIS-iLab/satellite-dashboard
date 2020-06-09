@@ -15,9 +15,12 @@
         <span class="post-meta__label">Published</span>
         {{ formatDate }}
       </div>
-      <div class="post-meta__block post-block__author">
+      <div
+        v-if="data.authors.items[0]"
+        class="post-meta__block post-block__author"
+      >
         <span class="post-meta__label">Written By</span>
-        {{ getAuthor }}
+        {{ data.authors.items[0].author.name }}
       </div>
     </div>
     <div class="post-block__excerpt">
@@ -48,12 +51,6 @@ export default {
   computed: {
     nestedSlug() {
       return `analysis/${this.data.slug}`
-    },
-    getAuthor() {
-      if (!this.data.authors.items[0]) {
-        return
-      }
-      return this.data.authors.items[0].author.name
     },
     getImage() {
       if (!this.data.featureImage.key) {
