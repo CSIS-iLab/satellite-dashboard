@@ -113,6 +113,7 @@ type Author
 
 type OrbitalData
 	@model
+	@key(name: "bySatellite", fields: ["satelliteID", "createdAt"])
 	@auth(
 		rules: [
 	      {allow: public, operations: [read]},
@@ -121,16 +122,15 @@ type OrbitalData
 	    ]
 	)
 {
-	apogee: SourcedData
-	argumentOfPerigee: SourcedData
-	perigree: SourcedData
-	eccentricity: SourcedData
-	inclination: SourcedData
-	longitude: SourcedData
-	meanMotion: SourcedData
-	orbitalPeriod: SourcedData
-	semiMajorAxis: SourcedData
-	driftRate: SourcedData
+	satelliteID: ID!
+	createdAt: AWSDateTime!
+	argP: SourcedData
+	ecc: SourcedData
+	inc: SourcedData
+	meanAnom: SourcedData
+	SMA: SourcedData
+	RAAN: SourcedData
+	epoch: SourcedData
 }
 
 type Satellite
@@ -156,13 +156,13 @@ type Satellite
 	satelliteType: OverrideableString
 	lifetime: String
 	status: OverrideableString
-	orbitalDatum: [OrbitalData]
+	orbitalDatum: [OrbitalData] @connection(keyName: "bySatellite", fields: ["id"])
 	posts: [PostSatellite] @connection(keyName: "bySatellite", fields: ["id"])
 }
 
 type SourcedData
 {
-	datasource: Datasource!
+	datasourceID: ID!
 	value: String
 }
 
