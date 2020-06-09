@@ -3,8 +3,6 @@
   color: $color-white-170;
   @extend %font-ui-text-sm-oxygen;
 
-
-
   a {
     position: static;
     color: $color-white-140;
@@ -12,5 +10,13 @@
 
   .footer & {
     margin: rem(32px) 0;
+  }
+
+  .icon {
+    margin-right: rem(8.82px);
+  }
+
+  #email {
+    margin-left: rem(17.97px);
   }
 }

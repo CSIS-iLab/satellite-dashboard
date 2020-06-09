@@ -1,6 +1,10 @@
 <template>
   <div class="social-media">
-    <a href="https://twitter.com/satdashboard">@satdashboard</a>
+    <Icon class="icon" name="twitter" /><a
+      href="https://twitter.com/satdashboard"
+      >@satdashboard</a
+    >
+    <Icon id="email" class="icon" name="email" />
     <a href="mailto: spacetranspraencyproject@gmail.com"
       >spacetransparencyproject@gmail.com</a
     >
@@ -8,8 +12,13 @@
 </template>
 
 <script>
+import Icon from '~/components/global/Icon.vue'
+
 export default {
-  name: 'Social'
+  name: 'Social',
+  components: {
+    Icon
+  }
 }
 </script>
 
