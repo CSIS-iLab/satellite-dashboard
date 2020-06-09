@@ -1,6 +1,7 @@
 <template>
   <div class="social-media">
-    <Icon class="icon" name="twitter" /><a
+    <Icon class="icon" id="twitter" name="twitter" /><a
+      id="twitter-link"
       href="https://twitter.com/satdashboard"
       >@satdashboard</a
     >
