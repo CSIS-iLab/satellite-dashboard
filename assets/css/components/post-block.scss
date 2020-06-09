@@ -34,7 +34,6 @@
     margin-top: rem(4px);
     color: $color-white-190;
     @extend %font-ui-heading-post-block-title;
-    font-weight: 500;
 
     &:hover {
       color: $color-white-100;
