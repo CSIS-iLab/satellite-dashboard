@@ -13,7 +13,6 @@
   &__category {
     grid-column: 1 / span 2;
     grid-row: 1 / span 1;
-    margin-top: 0;
     color: $color-orange-180;
     @extend %font-ui-text-base-oxygen;
     font-weight: bold;
@@ -22,7 +21,6 @@
 
     @include breakpoint('medium') {
       grid-column: 1 / span 1;
-      margin-top: rem(32px);
     }
 
     .visualizer {
@@ -44,6 +42,7 @@
 
     @include breakpoint('medium') {
       grid-column: 1 / span 1;
+      margin: 0;
     }
 
     .visualizer {
@@ -67,7 +66,7 @@
   &__excerpt {
     grid-column: 1 / span 2;
     grid-row: 4 / span 1;
-    margin: 0 0 rem(24px) 0;
+    margin: rem(16px) 0 rem(24px) 0;
     color: $color-white-180;
     @extend %font-ui-text-lg-oxygen;
     line-height: 150%;
@@ -94,13 +93,11 @@
     grid-column: 1 / span 1;
     grid-row: 3 / span 1;
     align-self: start;
-    margin: rem(16px) 0;
     justify-self: left;
 
     @include breakpoint('medium') {
       grid-column: 2 / span 1;
       grid-row: 1 / span 4;
-      margin-top: rem(32px);
     }
 
     .visualizer {

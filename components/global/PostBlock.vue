@@ -1,7 +1,7 @@
 <template>
   <article class="post-component post-component--wide post-block">
-    <div class="post-block__category">
-      {{ getCategory }}
+    <div v-if="data.eventTypes.items[0]" class="post-block__category">
+      {{ data.eventTypes.items[0].eventType.name }}
     </div>
     <nuxt-link class="post-block__image" :to="nestedSlug">
       <!-- <img class="post-block__image" :src="'./' + getImage" alt="" /> -->
@@ -48,12 +48,6 @@ export default {
   computed: {
     nestedSlug() {
       return `analysis/${this.data.slug}`
-    },
-    getCategory() {
-      if (!this.data.eventTypes.items[0]) {
-        return
-      }
-      return this.data.eventTypes.items[0].eventType.name
     },
     getAuthor() {
       if (!this.data.authors.items[0]) {
