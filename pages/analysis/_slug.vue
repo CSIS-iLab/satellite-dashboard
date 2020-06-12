@@ -9,7 +9,10 @@
     </header>
     <aside>
       <p v-if="authors.items[0]">
-        Written by <span>{{ authors.items[0].author.name }}</span>
+        Written by
+        <span v-for="auth in authors.items" :key="auth.author.name">{{
+          auth.author.name
+        }}</span>
       </p>
       <p>
         Published <span>{{ formatDate(postDate) }}</span>
@@ -48,6 +51,11 @@
         <span class="post__related-article-pub">PUBLICATION</span>
       </p>
     </section>
+    <footer class="post__footer">
+      <div class="post__author-wrapper">
+        <p class="post__author-bio"><span class="post__author-name"></span></p>
+      </div>
+    </footer>
   </article>
 </template>
 <script>
