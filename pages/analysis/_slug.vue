@@ -21,7 +21,7 @@
         Last updated <span>{{ formatDate(updatedAt) }}</span>
       </p>
     </aside>
-    <table>
+    <table v-if="satellites.items[0]">
       <tr>
         <th>Object Name</th>
         <th>Country</th>
@@ -29,8 +29,13 @@
         <th>Operator</th>
         <th></th>
       </tr>
-      <!-- eslint-disable-next-line -->
-      <tr v-if="satellites.items[0]" v-html="satellite"></tr>
+      <tr v-for="sat in satellites.items" :key="sat">
+        <td>{{ sat.satellite.launchVehicle }}</td>
+        <td>{{ sat.satellite.countryOfJurisdiction }}</td>
+        <td>NEED DATA FOR USER(IE GOV'T OR COMMERCIAL)</td>
+        <td>{{ operator }}</td>
+        <td>NEED SATELLITE URL</td>
+      </tr>
     </table>
 
     <!-- eslint-disable-next-line -->
@@ -85,26 +90,6 @@ export default {
         return 'N/A'
       } else {
         return this.satellites.items[0].satellite.operator
-      }
-    },
-    satellite() {
-      if (!this.satellites.items[0]) {
-        return
-      } else {
-        let satellites = this.satellites.items
-        let row = ''
-        satellites.forEach((sat) => {
-          let satName = sat.satellite.launchVehicle
-          let satCountry = sat.satellite.countryOfJurisdiction
-
-          row += '<td>' + satName + '</td>'
-          row += '<td>' + satCountry + '</td>'
-          row += "<td>NEED DATA FOR USER(IE GOV'T OR COMMERCIAL)</td>"
-          row += '<td>' + this.operator + '</td>'
-          row += '<td>NEED SATELLITE URL</td>'
-          return row
-        })
-        return row
       }
     }
   },
