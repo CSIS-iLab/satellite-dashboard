@@ -31,7 +31,23 @@
     </table>
 
     <!-- eslint-disable-next-line -->
-    <section class="post__content" v-html="content"></section>
+    <section class="post__content entry-content" v-html="content"></section>
+    <section class="post__related">
+      <p class="post__related-footnote">FOOTNOTES GO HERE</p>
+      <h2 class="post__related-header">Further Reading</h2>
+      <p class="post__related-article">
+        LINK FURTHER READING TITLE |
+        <span class="post__related-article-pub">PUBLICATION</span>
+      </p>
+      <p class="post__related-article">
+        LINK FURTHER READING TITLE |
+        <span class="post__related-article-pub">PUBLICATION</span>
+      </p>
+      <p class="post__related-article">
+        LINK FURTHER READING TITLE |
+        <span class="post__related-article-pub">PUBLICATION</span>
+      </p>
+    </section>
   </article>
 </template>
 <script>
@@ -49,7 +65,6 @@ export default {
         back, but we can be pretty sure it will be the only item, so grab 0 index
         otherwise, on failure, this is a bad slug
       */
-      console.log(data.data.postsBySlug.items[0])
       return data.data.postsBySlug.items[0]
     } catch (error) {
       return false
@@ -57,6 +72,7 @@ export default {
   },
   computed: {
     operator() {
+      console.log(this)
       if (this.satellites.items[0].satellite.operator === null) {
         return 'N/A'
       } else {
