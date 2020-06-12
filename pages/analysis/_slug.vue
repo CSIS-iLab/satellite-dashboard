@@ -10,7 +10,7 @@
     <aside>
       <p v-if="authors.items[0]">
         Written by
-        <span v-for="auth in authors.items" :key="auth.author.name">{{
+        <span v-for="auth in authors.items" :key="auth">{{
           auth.author.name
         }}</span>
       </p>
@@ -57,8 +57,16 @@
       </p>
     </section>
     <footer class="post__footer">
-      <div class="post__author-wrapper">
-        <p class="post__author-bio"><span class="post__author-name"></span></p>
+      <div v-if="authors.items[0]" class="post__author-wrapper">
+        <p v-for="auth in authors.items" :key="auth" class="post__author-bio">
+          <span class="post__author-name">{{ auth.author.name }}</span>
+          HOW DO I ACCESS AUTHOR BIOS BASED ON THE AUTHOR ID?
+        </p>
+      </div>
+      <div v-if="tags.items[0]">
+        <p>
+          tags <span v-for="t in tags.items" :key="t">{{ t.tag.name }}</span>
+        </p>
       </div>
     </footer>
   </article>
