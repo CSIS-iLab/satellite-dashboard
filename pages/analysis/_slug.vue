@@ -9,10 +9,14 @@
     </header>
     <aside>
       <p v-if="authors.items[0]">
-        Written by {{ authors.items[0].author.name }}
+        Written by <span>{{ authors.items[0].author.name }}</span>
       </p>
-      <p>Published {{ postDate }}</p>
-      <p>Last updated {{ updatedAt }}</p>
+      <p>
+        Published <span>{{ formatDate(postDate) }}</span>
+      </p>
+      <p>
+        Last updated <span>{{ formatDate(updatedAt) }}</span>
+      </p>
     </aside>
     <table>
       <tr>
@@ -60,7 +64,6 @@ export default {
       }
     },
     satellite() {
-      console.log(this.satellites)
       if (!this.satellites.items[0]) {
         return
       } else {
@@ -69,7 +72,6 @@ export default {
         satellites.forEach((sat) => {
           let satName = sat.satellite.launchVehicle
           let satCountry = sat.satellite.countryOfJurisdiction
-          row = '<tr>'
 
           row += '<td>' + satName + '</td>'
           row += '<td>' + satCountry + '</td>'
@@ -80,6 +82,21 @@ export default {
         })
         return row
       }
+    }
+  },
+  methods: {
+    formatDate(d) {
+      let formattedDate = d
+      if (d === this.postDate) {
+        formattedDate = d.replace('-', '/')
+      }
+      let date = new Date(formattedDate)
+      const options = {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+      }
+      return date.toLocaleDateString('en', options)
     }
   },
   head() {
