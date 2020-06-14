@@ -10,7 +10,7 @@
     <aside>
       <p v-if="authors.items[0]">
         Written by
-        <span v-for="auth in authors.items" :key="auth">{{
+        <span v-for="auth in authors.items" :key="auth.id">{{
           auth.author.name
         }}</span>
       </p>
@@ -29,7 +29,7 @@
         <th>Operator</th>
         <th></th>
       </tr>
-      <tr v-for="sat in satellites.items" :key="sat">
+      <tr v-for="sat in satellites.items" :key="sat.id">
         <td>{{ sat.satellite.launchVehicle }}</td>
         <td>{{ sat.satellite.countryOfJurisdiction }}</td>
         <td>NEED DATA FOR USER(IE GOV'T OR COMMERCIAL)</td>
@@ -58,14 +58,18 @@
     </section>
     <footer class="post__footer">
       <div v-if="authors.items[0]" class="post__author-wrapper">
-        <p v-for="auth in authors.items" :key="auth" class="post__author-bio">
+        <p
+          v-for="auth in authors.items"
+          :key="auth.id"
+          class="post__author-bio"
+        >
           <span class="post__author-name">{{ auth.author.name }}</span>
           HOW DO I ACCESS AUTHOR BIOS BASED ON THE AUTHOR ID?
         </p>
       </div>
       <div v-if="tags.items[0]">
         <p>
-          tags <span v-for="t in tags.items" :key="t">{{ t.tag.name }}</span>
+          tags <span v-for="t in tags.items" :key="t.id">{{ t.tag.name }}</span>
         </p>
       </div>
     </footer>
