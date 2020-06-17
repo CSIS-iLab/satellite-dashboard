@@ -17,22 +17,79 @@
 
   &__related {
     &-wrapper {
-      display: flex;
+      width: 100vw;
+      @include breakpoint('medium') {
+        display: flex;
+      }
     }
 
     &-block {
       position: relative;
-      width: 50vw;
+      display: flex;
       height: rem(240px);
       overflow: hidden;
+      text-align: center;
+
+      @include breakpoint('medium') {
+        width: 50vw;
+      }
+    }
+
+    &-link {
+      position: relative;
+      z-index: 2;
+      display: inline-block;
+      align-self: center;
+      // max-width: rem(440px);
+      margin: 0 auto;
+      padding: rem(24px) rem(32px);
+
+      &::after {
+        content: '';
+        position: absolute;
+        top: rem(-40px);
+        left: 0;
+        width: 50vw;
+        height: rem(240px);
+      }
+
+      &:hover + img {
+        opacity: 0.3;
+      }
+
+      &:hover .post__related-title {
+        padding-bottom: rem(12px);
+        color: $color-white-100;
+      }
+    }
+
+    &-title {
+      @extend %font-ui-heading-section-lg;
+      color: $color-white-190;
+    }
+
+    &-title,
+    &-author {
+      padding-bottom: rem(8px);
+    }
+
+    &-author,
+    &-date {
+      @extend %font-ui-text-lg-oxygen;
+      color: $color-white-180;
     }
 
     &-img {
       position: absolute;
-      z-index: -1;
-      width: 50vw;
+      top: 0;
+      left: 0;
       height: rem(240px);
       opacity: 0.5;
+      object-fit: cover;
+
+      @include breakpoint('medium') {
+        width: 50vw;
+      }
     }
   }
 }

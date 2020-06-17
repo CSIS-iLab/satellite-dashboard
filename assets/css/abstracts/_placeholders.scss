@@ -25,6 +25,7 @@
 
 %font-ui-heading-section-lg {
   font-family: $font__good;
+  font-weight: 500;
   @include font-size(24px);
   line-height: 1.3;
 }
