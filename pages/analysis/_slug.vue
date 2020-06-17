@@ -1,62 +1,62 @@
 <template>
-  <article class="post container">
-    <header class="post__header">
-      <span v-if="eventTypes.items[0]" class="post__category">{{
-        eventTypes.items[0].eventType.name
-      }}</span>
-      <h1 class="post__title">{{ title }}</h1>
-      <p class="post__excerpt">{{ excerpt }}</p>
-    </header>
-    <aside>
-      <p v-if="authors.items[0]">
-        Written by
-        <span v-for="auth in authors.items" :key="auth.id">{{
-          auth.author.name
+  <article class="post">
+    <div class="container">
+      <header class="post__header">
+        <span v-if="eventTypes.items[0]" class="post__category">{{
+          eventTypes.items[0].eventType.name
         }}</span>
-      </p>
-      <p>
-        Published <span>{{ formatDate(postDate) }}</span>
-      </p>
-      <p>
-        Last updated <span>{{ formatDate(updatedAt) }}</span>
-      </p>
-    </aside>
-    <table v-if="satellites.items[0]">
-      <tr>
-        <th>Object Name</th>
-        <th>Country</th>
-        <th>User</th>
-        <th>Operator</th>
-        <th></th>
-      </tr>
-      <tr v-for="sat in satellites.items" :key="sat.id">
-        <td>{{ sat.satellite.launchVehicle }}</td>
-        <td>{{ sat.satellite.countryOfJurisdiction }}</td>
-        <td>NEED DATA FOR USER(IE GOV'T OR COMMERCIAL)</td>
-        <td>{{ operator }}</td>
-        <td>NEED SATELLITE URL</td>
-      </tr>
-    </table>
+        <h1 class="post__title">{{ title }}</h1>
+        <p class="post__excerpt">{{ excerpt }}</p>
+      </header>
+      <aside>
+        <p v-if="authors.items[0]">
+          Written by
+          <span v-for="auth in authors.items" :key="auth.id">{{
+            auth.author.name
+          }}</span>
+        </p>
+        <p>
+          Published <span>{{ formatDate(postDate) }}</span>
+        </p>
+        <p>
+          Last updated <span>{{ formatDate(updatedAt) }}</span>
+        </p>
+      </aside>
+      <table v-if="satellites.items[0]">
+        <tr>
+          <th>Object Name</th>
+          <th>Country</th>
+          <th>User</th>
+          <th>Operator</th>
+          <th></th>
+        </tr>
+        <tr v-for="sat in satellites.items" :key="sat.id">
+          <td>{{ sat.satellite.launchVehicle }}</td>
+          <td>{{ sat.satellite.countryOfJurisdiction }}</td>
+          <td>NEED DATA FOR USER(IE GOV'T OR COMMERCIAL)</td>
+          <td>{{ operator }}</td>
+          <td>NEED SATELLITE URL</td>
+        </tr>
+      </table>
 
-    <!-- eslint-disable-next-line -->
-    <section class="post__content entry-content" v-html="content"></section>
-    <section class="post__further">
-      <p class="post__further-footnote">FOOTNOTES GO HERE</p>
-      <h2 class="post__further-header">Further Reading</h2>
-      <p class="post__further-article">
-        LINK FURTHER READING TITLE |
-        <span class="post__further-article-source">SOURCE NAME</span>
-      </p>
-      <p class="post__further-article">
-        LINK FURTHER READING TITLE |
-        <span class="post__further-article-source">SOURCE NAME</span>
-      </p>
-      <p class="post__further-article">
-        LINK FURTHER READING TITLE |
-        <span class="post__further-article-source">SOURCE NAME</span>
-      </p>
-    </section>
-    <footer>
+      <!-- eslint-disable-next-line -->
+      <section class="post__content entry-content" v-html="content"></section>
+      <section class="post__further">
+        <p class="post__further-footnote">FOOTNOTES GO HERE</p>
+        <h2 class="post__further-header">Further Reading</h2>
+        <p class="post__further-article">
+          LINK FURTHER READING TITLE |
+          <span class="post__further-article-source">SOURCE NAME</span>
+        </p>
+        <p class="post__further-article">
+          LINK FURTHER READING TITLE |
+          <span class="post__further-article-source">SOURCE NAME</span>
+        </p>
+        <p class="post__further-article">
+          LINK FURTHER READING TITLE |
+          <span class="post__further-article-source">SOURCE NAME</span>
+        </p>
+      </section>
       <div class="post__footer">
         <div v-if="authors.items[0]" class="post__author-wrapper">
           <p
@@ -75,30 +75,42 @@
           </p>
         </div>
       </div>
+    </div>
+    <footer>
       <div class="post__related-wrapper">
         <div class="post__related-block">
+          <a href="#" class="post__related-link">
+            <h2 class="post__related-title">
+              HOW DO I ACCESS THE POST TITLE AND FEATURED IMG FROM
+              RELATEDPOSTIDS?
+            </h2>
+            <p class="post__related-author">
+              Written By NEED TO ACCESS AUTHOR
+            </p>
+            <p class="post__related-date">Published NEED TO ACCESS DATE</p>
+          </a>
           <img
             class="post__related-img"
             src="http://placekitten.com/200/138"
             alt=""
           />
-          <h2 class="post__related-title">
-            HOW DO I ACCESS THE POST TITLE FROM RELATEDPOSTIDS?
-          </h2>
-          <p class="post__related-author">Written By NEED ACCESS TO AUTHOR</p>
-          <p class="post__related-date">Published NEED ACCESS TO DATE</p>
         </div>
         <div class="post__related-block">
+          <a href="#" class="post__related-link">
+            <h2 class="post__related-title">
+              HOW DO I ACCESS THE POST TITLE AND FEATURED IMG FROM
+              RELATEDPOSTIDS?
+            </h2>
+            <p class="post__related-author">
+              Written By NEED TO ACCESS AUTHOR
+            </p>
+            <p class="post__related-date">Published NEED TO ACCESS DATE</p>
+          </a>
           <img
             class="post__related-img"
             src="http://placekitten.com/200/138"
             alt=""
           />
-          <h2 class="post__related-title">
-            HOW DO I ACCESS THE POST TITLE FROM RELATEDPOSTIDS?
-          </h2>
-          <p class="post__related-author">Written By NEED ACCESS TO AUTHOR</p>
-          <p class="post__related-date">Published NEED ACCESS TO DATE</p>
         </div>
       </div>
     </footer>
