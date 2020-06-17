@@ -14,4 +14,25 @@
       padding: 0 calc(50% - #{$size__content-max-width} / 2);
     }
   }
+
+  &__related {
+    &-wrapper {
+      display: flex;
+    }
+
+    &-block {
+      position: relative;
+      width: 50vw;
+      height: rem(240px);
+      overflow: hidden;
+    }
+
+    &-img {
+      position: absolute;
+      z-index: -1;
+      width: 50vw;
+      height: rem(240px);
+      opacity: 0.5;
+    }
+  }
 }
