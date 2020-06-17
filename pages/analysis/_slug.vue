@@ -40,37 +40,66 @@
 
     <!-- eslint-disable-next-line -->
     <section class="post__content entry-content" v-html="content"></section>
-    <section class="post__related">
-      <p class="post__related-footnote">FOOTNOTES GO HERE</p>
-      <h2 class="post__related-header">Further Reading</h2>
-      <p class="post__related-article">
+    <section class="post__further">
+      <p class="post__further-footnote">FOOTNOTES GO HERE</p>
+      <h2 class="post__further-header">Further Reading</h2>
+      <p class="post__further-article">
         LINK FURTHER READING TITLE |
-        <span class="post__related-article-pub">PUBLICATION</span>
+        <span class="post__further-article-source">SOURCE NAME</span>
       </p>
-      <p class="post__related-article">
+      <p class="post__further-article">
         LINK FURTHER READING TITLE |
-        <span class="post__related-article-pub">PUBLICATION</span>
+        <span class="post__further-article-source">SOURCE NAME</span>
       </p>
-      <p class="post__related-article">
+      <p class="post__further-article">
         LINK FURTHER READING TITLE |
-        <span class="post__related-article-pub">PUBLICATION</span>
+        <span class="post__further-article-source">SOURCE NAME</span>
       </p>
     </section>
-    <footer class="post__footer">
-      <div v-if="authors.items[0]" class="post__author-wrapper">
-        <p
-          v-for="auth in authors.items"
-          :key="auth.id"
-          class="post__author-bio"
-        >
-          <span class="post__author-name">{{ auth.author.name }}</span>
-          HOW DO I ACCESS AUTHOR BIOS BASED ON THE AUTHOR ID?
-        </p>
+    <footer>
+      <div class="post__footer">
+        <div v-if="authors.items[0]" class="post__author-wrapper">
+          <p
+            v-for="auth in authors.items"
+            :key="auth.id"
+            class="post__author-bio"
+          >
+            <span class="post__author-name">{{ auth.author.name }}</span>
+            HOW DO I ACCESS AUTHOR BIOS BASED ON THE AUTHOR ID?
+          </p>
+        </div>
+        <div v-if="tags.items[0]">
+          <p>
+            tags
+            <span v-for="t in tags.items" :key="t.id">{{ t.tag.name }}</span>
+          </p>
+        </div>
       </div>
-      <div v-if="tags.items[0]">
-        <p>
-          tags <span v-for="t in tags.items" :key="t.id">{{ t.tag.name }}</span>
-        </p>
+      <div class="post__related-wrapper">
+        <div class="post__related-block">
+          <img
+            class="post__related-img"
+            src="http://placekitten.com/200/138"
+            alt=""
+          />
+          <h2 class="post__related-title">
+            HOW DO I ACCESS THE POST TITLE FROM RELATEDPOSTIDS?
+          </h2>
+          <p class="post__related-author">Written By NEED ACCESS TO AUTHOR</p>
+          <p class="post__related-date">Published NEED ACCESS TO DATE</p>
+        </div>
+        <div class="post__related-block">
+          <img
+            class="post__related-img"
+            src="http://placekitten.com/200/138"
+            alt=""
+          />
+          <h2 class="post__related-title">
+            HOW DO I ACCESS THE POST TITLE FROM RELATEDPOSTIDS?
+          </h2>
+          <p class="post__related-author">Written By NEED ACCESS TO AUTHOR</p>
+          <p class="post__related-date">Published NEED ACCESS TO DATE</p>
+        </div>
       </div>
     </footer>
   </article>
