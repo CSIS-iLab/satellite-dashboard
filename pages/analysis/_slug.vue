@@ -65,15 +65,27 @@
             class="post__author-bio"
           >
             <span class="post__author-name">{{ auth.author.name }}</span>
-            HOW DO I ACCESS AUTHOR BIOS BASED ON THE AUTHOR ID?
+            HOW DO I ACCESS AUTHOR BIOS BASED ON THE AUTHOR ID? Lorem ipsum
+            dolor sit amet, consectetur adipiscing elit. Phasellus eu augue eu
+            turpis pellentesque luctus. Nulla vel nunc mi.
           </p>
         </div>
-        <div v-if="tags.items[0]">
+        <!-- Section below is for styling purposes -->
+        <div class="post__tag-list">
+          <p class="post__tag-title">tags</p>
+          <a href="#" class="post__tag">TAG</a>
+          <a href="#" class="post__tag">communication</a>
+          <a href="#" class="post__tag">TAG</a>
+          <a href="#" class="post__tag">luch</a>
+          <a href="#" class="post__tag">russia</a>
+          <a href="#" class="post__tag">space</a>
+        </div>
+        <!-- <div v-if="tags.items[0]" class="post__tag-list">
           <p>
             tags
-            <span v-for="t in tags.items" :key="t.id">{{ t.tag.name }}</span>
+            <a class="post__tag" v-for="t in tags.items" :key="t.id" href="#">{{ t.tag.name }}</a>
           </p>
-        </div>
+        </div> -->
       </div>
     </div>
     <footer>
@@ -91,7 +103,7 @@
           </a>
           <img
             class="post__related-img"
-            src="http://placekitten.com/200/138"
+            src="http://placekitten.com/600/240"
             alt=""
           />
         </div>
@@ -108,7 +120,7 @@
           </a>
           <img
             class="post__related-img"
-            src="http://placekitten.com/200/138"
+            src="http://placekitten.com/600/240"
             alt=""
           />
         </div>
