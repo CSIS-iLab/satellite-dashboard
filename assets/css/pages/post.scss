@@ -15,6 +15,51 @@
     }
   }
 
+  // Post footer
+
+  &__footer {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    margin: rem(56px) 0 rem(48px) 0;
+    column-gap: rem(40px);
+  }
+
+  &__author {
+    &-bio {
+      @extend %font-post-text-md;
+      margin-bottom: rem(32px);
+      color: $color-white-180;
+    }
+
+    &-name {
+      font-weight: bold;
+    }
+  }
+
+  &__tag {
+    @extend %font-post-text-md;
+    color: $color-white-190;
+    font-weight: bold;
+    text-transform: uppercase;
+
+    &:hover {
+      color: $color-orange-100;
+    }
+
+    &-list {
+      margin-left: rem(32px);
+      line-height: 1.4;
+    }
+
+    &-title {
+      @extend %font-ui-text-base-oxygen;
+      color: $color-white-150;
+      text-transform: capitalize;
+    }
+  }
+
+  // Related posts
+
   &__related {
     &-wrapper {
       width: 100vw;
