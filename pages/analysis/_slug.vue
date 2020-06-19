@@ -44,18 +44,28 @@
       <section class="post__further">
         <p class="post__further-footnote">FOOTNOTES GO HERE</p>
         <h2 class="post__further-header">Further Reading</h2>
-        <p class="post__further-article">
-          LINK FURTHER READING TITLE |
-          <span class="post__further-article-source">SOURCE NAME</span>
-        </p>
-        <p class="post__further-article">
-          LINK FURTHER READING TITLE |
-          <span class="post__further-article-source">SOURCE NAME</span>
-        </p>
-        <p class="post__further-article">
-          LINK FURTHER READING TITLE |
-          <span class="post__further-article-source">SOURCE NAME</span>
-        </p>
+        <div class="post__further-article">
+          <a href="#" class="post__further-link">
+            LINK FURTHER READING TITLE
+            <span class="post__further-source">SOURCE NAME</span>
+          </a>
+          <div class="post__further-icon"></div>
+        </div>
+        <div class="post__further-article">
+          <a href="#" class="post__further-link">
+            LINK FURTHER READING TITLE
+            <span class="post__further-source">SOURCE NAME</span>
+          </a>
+          <div class="post__further-icon"></div>
+        </div>
+        <div class="post__further-article">
+          <a href="#" class="post__further-link">
+            LINK FURTHER READING TITLE Lorem ipsum dolor sit amet, consectetur
+            adipiscing elit.
+            <span class="post__further-source">SOURCE NAME</span>
+          </a>
+          <div class="post__further-icon"></div>
+        </div>
       </section>
       <div class="post__footer">
         <div v-if="authors.items[0]" class="post__author-wrapper">
