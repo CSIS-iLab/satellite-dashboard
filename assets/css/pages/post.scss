@@ -15,6 +15,63 @@
     }
   }
 
+  // Further reading section
+
+  &__further {
+    padding: 0 calc(50% - #{$size__content-max-width} / 2);
+    background-color: rgba(245, 245, 245, 0.9);
+
+    &-footnote {
+      @extend %font-post-text-footnote-list;
+      padding: rem(64px) 0 rem(56px) 0;
+      color: $color-black-160;
+      border-bottom: rem(1px) solid $color-black-120;
+    }
+
+    &-header {
+      @extend %font-ui-heading-section-lg;
+      margin: rem(32px) 0 rem(16px) 0;
+      color: #0c1013;
+    }
+
+    &-article {
+      @extend %font-post-text-lg-list;
+      display: flex;
+      justify-content: space-between;
+      padding-bottom: rem(8px);
+      color: $color-black-190;
+    }
+
+    &-link {
+      align-self: center;
+      max-width: rem(624px);
+
+      &:hover + .post__further-icon {
+        background-image: url('~assets/img/link-icon-hover.png');
+      }
+
+      &:focus + .post__further-icon {
+        background-image: url('~assets/img/link-icon-focus.png');
+      }
+    }
+
+    &-source {
+      color: $color-black-160;
+
+      &::before {
+        content: '|';
+        margin: 0 rem(8px);
+      }
+    }
+
+    &-icon {
+      width: rem(40px);
+      height: rem(40px);
+      margin-left: rem(24px);
+      background-image: url('~assets/img/link-icon.png');
+    }
+  }
+
   // Post footer
 
   &__footer {
