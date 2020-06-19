@@ -15,29 +15,6 @@
   //   }
   // }
 
-  .entry-content {
-    @extend %page-content;
-    @extend %page-content-bg;
-    @extend %font-post-text-lg;
-    position: relative;
-    box-shadow: 0 0 1px rgba(0, 0, 0, 0.14), 0 2px 6px rgba(0, 0, 0, 0.04),
-      0 2px 12px rgba(0, 0, 0, 0.34);
-
-    > *:not([class]) {
-      padding: 0 calc(50% - #{$size__content-max-width} / 2);
-    }
-
-    img {
-      float: right;
-    }
-
-    figcaption {
-      @extend %font-post-text-sm;
-      padding-top: rem(8px);
-      color: $color-black-160;
-    }
-  }
-
   // Further reading section
 
   &__further {
@@ -215,6 +192,41 @@
       @include breakpoint('medium') {
         width: 50vw;
       }
+    }
+  }
+}
+
+.entry-content {
+  @extend %page-content;
+  @extend %page-content-bg;
+  @extend %font-post-text-lg;
+  position: relative;
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.14), 0 2px 6px rgba(0, 0, 0, 0.04),
+    0 2px 12px rgba(0, 0, 0, 0.34);
+
+  > *:not([class]) {
+    padding: 0 calc(50% - #{$size__content-max-width} / 2);
+  }
+
+  figure {
+    float: right;
+  }
+
+  figcaption {
+    @extend %font-post-text-sm;
+    padding-top: rem(8px);
+    color: $color-black-160;
+  }
+
+  blockquote p {
+    @extend %font-post-text-blockquote;
+    float: right;
+    max-width: rem(304px);
+    margin-left: rem(48px);
+
+    &::before {
+      content: url('~assets/img/quote-icon.png');
+      padding-right: rem(8px);
     }
   }
 }
