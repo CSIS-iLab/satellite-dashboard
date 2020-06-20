@@ -102,21 +102,21 @@
 
 %font-post-heading-h2 {
   font-family: $font__good;
-  font-weight: 600;
+  font-weight: 500;
   @include font-size(40px);
   line-height: 1.2;
 }
 
 %font-post-heading-h3 {
   font-family: $font__good;
-  font-weight: 600;
+  font-weight: 500;
   @include font-size(32px);
   line-height: 1.1875;
 }
 
 %font-post-heading-h4 {
   font-family: $font__good;
-  font-weight: 600;
+  font-weight: 500;
   @include font-size(26px);
   line-height: 1.2;
 }
