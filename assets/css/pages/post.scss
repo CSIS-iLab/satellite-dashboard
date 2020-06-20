@@ -229,4 +229,25 @@
       padding-right: rem(8px);
     }
   }
+
+  h2 {
+    @extend %font-post-heading-h2;
+    margin-top: rem(56px);
+    margin-bottom: rem(16px);
+  }
+
+  h3 {
+    @extend %font-post-heading-h3;
+    margin-top: rem(40px);
+    margin-bottom: rem(16px);
+  }
+
+  h4 {
+    @extend %font-post-heading-h4;
+    margin-bottom: rem(8px);
+  }
+
+  p {
+    margin-bottom: rem(32px);
+  }
 }
