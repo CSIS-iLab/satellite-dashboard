@@ -282,4 +282,13 @@
       color: $color-black-190;
     }
   }
+
+  sup {
+    @extend %font-post-text-footnote-superscript;
+    color: $color-orangedull-100;
+
+    &:hover {
+      color: $color-orange-100;
+    }
+  }
 }
