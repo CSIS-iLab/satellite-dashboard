@@ -250,4 +250,36 @@
   p {
     margin-bottom: rem(32px);
   }
+
+  table {
+    @extend %font-post-text-md;
+    display: flex;
+    align-items: center;
+    padding: rem(32px) rem(4px);
+
+    caption {
+      @extend %font-post-heading-table-title;
+      color: #14171a;
+      text-align: center;
+    }
+
+    tr:first-child {
+      border: 1px solid $color-black-120;
+    }
+
+    tr:nth-child(odd) {
+      background-color: $color-ltblue-115;
+    }
+
+    th {
+      @extend %font-ui-text-base-oxygen;
+      font-weight: bold;
+    }
+
+    th,
+    td {
+      margin: rem(12px) rem(20px);
+      color: $color-black-190;
+    }
+  }
 }
