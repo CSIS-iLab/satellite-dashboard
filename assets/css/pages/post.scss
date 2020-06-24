@@ -1,6 +1,8 @@
 .post {
   color: $color-white-100;
 
+  // Post header section
+
   &__header {
     @extend %page-header;
 
@@ -170,17 +172,26 @@
   // Post footer
 
   &__footer {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    margin: rem(56px) 0 rem(48px) 0;
-    column-gap: rem(40px);
+    margin: rem(24px) 0;
+
+    @include breakpoint('medium') {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      margin: rem(56px) 0 rem(48px) 0;
+      column-gap: rem(40px);
+      // display: flex;
+    }
   }
 
   &__author {
     &-bio {
       @extend %font-post-text-md;
-      margin-bottom: rem(32px);
+      margin-bottom: rem(24px);
       color: $color-white-180;
+
+      @include breakpoint('medium') {
+        margin-bottom: rem(32px);
+      }
     }
 
     &-name {
@@ -199,8 +210,11 @@
     }
 
     &-list {
-      margin-left: rem(32px);
       line-height: 1.4;
+
+      @include breakpoint('medium') {
+        margin-left: rem(32px);
+      }
     }
 
     &-title {
@@ -215,6 +229,7 @@
   &__related {
     &-wrapper {
       width: 100vw;
+
       @include breakpoint('medium') {
         display: flex;
       }
@@ -237,7 +252,6 @@
       z-index: 2;
       display: inline-block;
       align-self: center;
-      // max-width: rem(440px);
       margin: 0 auto;
       padding: rem(24px) rem(32px);
 
@@ -291,6 +305,8 @@
   }
 }
 
+// Post content
+
 .entry-content {
   @extend %page-content;
   @extend %page-content-bg;
@@ -343,7 +359,11 @@
   }
 
   p {
-    margin-bottom: rem(32px);
+    margin-bottom: rem(24px);
+
+    @include breakpoint('medium') {
+      margin-bottom: rem(32px);
+    }
   }
 
   table {
