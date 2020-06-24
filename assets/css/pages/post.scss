@@ -1,6 +1,21 @@
 .post {
   color: $color-white-100;
 
+  // Dark sidebar
+
+  @include breakpoint('medium') {
+    &__side {
+      position: fixed;
+      top: 0;
+      right: 0;
+      z-index: -1;
+      width: 37.3vw;
+      height: 100%;
+      background: rgba(35, 39, 43, 0.27);
+      backdrop-filter: blur(20px);
+    }
+  }
+
   // Post header section
 
   &__header {

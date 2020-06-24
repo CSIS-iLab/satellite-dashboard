@@ -78,6 +78,7 @@
         </div>
       </div>
     </div>
+    <div class="post__side"></div>
     <footer>
       <div class="post__related-wrapper">
         <template v-for="relatedPost in relatedPosts">
