@@ -341,6 +341,36 @@
     padding: 0 calc(50% - #{$size__content-max-width} / 2);
   }
 
+  a {
+    color: $color-slate-490;
+
+    @include link-underline(
+      $color: $color-ltblue-175,
+      $thickness: 1px,
+      $hideOnHover: true
+    );
+
+    &:hover {
+      color: $color-orange-100;
+
+      @include link-underline(
+        $color: $color-orange-140,
+        $thickness: 1px,
+        $hideOnHover: false
+      );
+    }
+
+    &:focus {
+      color: $color-black;
+
+      @include link-underline();
+    }
+
+    &:visited {
+      color: $color-black-160;
+    }
+  }
+
   figure {
     float: right;
   }
