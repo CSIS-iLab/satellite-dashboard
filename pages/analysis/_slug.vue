@@ -65,14 +65,16 @@
             {{ author.author.biography }}
           </p>
         </div>
-        <!-- Section below is for styling purposes -->
         <div class="post__tag-list">
-          <p class="post__tag-title">
-            tags
-            <a v-for="t in tags.items" :key="t.id" href="#" class="post__tag">
-              {{ t.tag.name }}
-            </a>
-          </p>
+          <p>tags</p>
+          <a
+            v-for="t in tags.items"
+            :key="t.id"
+            href="#"
+            class="post__tag-name"
+          >
+            {{ t.tag.name }}
+          </a>
         </div>
       </div>
     </div>
@@ -129,7 +131,6 @@ export default {
         relatedPosts.push(relatedPostData.data.getPost)
       }
       post.relatedPosts = relatedPosts
-      console.log(post)
       return post
     } catch (error) {
       return false

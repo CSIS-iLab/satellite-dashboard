@@ -99,6 +99,7 @@
     a {
       @extend %font-ui-text-base-good;
       color: $color-white-150;
+      text-transform: uppercase;
     }
   }
 
@@ -200,27 +201,32 @@
   }
 
   &__tag {
-    @extend %font-post-text-md;
-    color: $color-white-190;
-    font-weight: bold;
-    text-transform: uppercase;
-
-    &:hover {
-      color: $color-orange-100;
-    }
-
     &-list {
+      @extend %font-ui-text-base-oxygen;
+      display: inline;
+      color: $color-white-150;
       line-height: 1.4;
+      text-transform: capitalize;
 
       @include breakpoint('medium') {
         margin-left: rem(32px);
       }
     }
 
-    &-title {
-      @extend %font-ui-text-base-oxygen;
-      color: $color-white-150;
-      text-transform: capitalize;
+    &-name {
+      @extend %font-post-text-md;
+      color: $color-white-190;
+      font-weight: bold;
+      text-transform: uppercase;
+
+      &:hover {
+        color: $color-orange-100;
+      }
+
+      &:not(:last-child)::after {
+        content: ',';
+        padding-right: rem(4px);
+      }
     }
   }
 
@@ -294,6 +300,7 @@
       position: absolute;
       top: 0;
       left: 0;
+      width: 100vw;
       height: rem(240px);
       opacity: 0.5;
       object-fit: cover;
