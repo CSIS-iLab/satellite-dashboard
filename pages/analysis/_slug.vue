@@ -44,96 +44,63 @@
       <section class="post__further">
         <p class="post__further-footnote">FOOTNOTES GO HERE</p>
         <h2 class="post__further-header">Further Reading</h2>
-        <div class="post__further-article">
-          <a href="#" class="post__further-link">
-            LINK FURTHER READING TITLE
-            <span class="post__further-source">SOURCE NAME</span>
-          </a>
-          <div class="post__further-icon"></div>
-        </div>
-        <div class="post__further-article">
-          <a href="#" class="post__further-link">
-            LINK FURTHER READING TITLE
-            <span class="post__further-source">SOURCE NAME</span>
-          </a>
-          <div class="post__further-icon"></div>
-        </div>
-        <div class="post__further-article">
-          <a href="#" class="post__further-link">
-            LINK FURTHER READING TITLE Lorem ipsum dolor sit amet, consectetur
-            adipiscing elit.
-            <span class="post__further-source">SOURCE NAME</span>
-          </a>
-          <div class="post__further-icon"></div>
-        </div>
+        <template v-for="reading in furtherReadings">
+          <div :key="reading.url" class="post__further-article">
+            <a :href="reading.url" class="post__further-link">
+              {{ reading.name }}
+              <span class="post__further-source">{{ reading.author }}</span>
+            </a>
+            <div class="post__further-icon"></div>
+          </div>
+        </template>
       </section>
       <div class="post__footer">
         <div v-if="authors.items[0]" class="post__author-wrapper">
           <p
-            v-for="auth in authors.items"
-            :key="auth.id"
+            v-for="author in authors.items"
+            :key="author.id"
             class="post__author-bio"
           >
-            <span class="post__author-name">{{ auth.author.name }}</span>
-            HOW DO I ACCESS AUTHOR BIOS BASED ON THE AUTHOR ID? Lorem ipsum
-            dolor sit amet, consectetur adipiscing elit. Phasellus eu augue eu
-            turpis pellentesque luctus. Nulla vel nunc mi.
+            <span class="post__author-name">{{ author.author.name }}</span>
+            {{ author.author.biography }}
           </p>
         </div>
         <!-- Section below is for styling purposes -->
         <div class="post__tag-list">
-          <p class="post__tag-title">tags</p>
-          <a href="#" class="post__tag">TAG</a>
-          <a href="#" class="post__tag">communication</a>
-          <a href="#" class="post__tag">TAG</a>
-          <a href="#" class="post__tag">luch</a>
-          <a href="#" class="post__tag">russia</a>
-          <a href="#" class="post__tag">space</a>
-        </div>
-        <!-- <div v-if="tags.items[0]" class="post__tag-list">
-          <p>
+          <p class="post__tag-title">
             tags
-            <a class="post__tag" v-for="t in tags.items" :key="t.id" href="#">{{ t.tag.name }}</a>
+            <a v-for="t in tags.items" :key="t.id" href="#" class="post__tag">
+              {{ t.tag.name }}
+            </a>
           </p>
-        </div> -->
+        </div>
       </div>
     </div>
     <footer>
       <div class="post__related-wrapper">
-        <div class="post__related-block">
-          <a href="#" class="post__related-link">
-            <h2 class="post__related-title">
-              HOW DO I ACCESS THE POST TITLE AND FEATURED IMG FROM
-              RELATEDPOSTIDS?
-            </h2>
-            <p class="post__related-author">
-              Written By NEED TO ACCESS AUTHOR
-            </p>
-            <p class="post__related-date">Published NEED TO ACCESS DATE</p>
-          </a>
-          <img
-            class="post__related-img"
-            src="http://placekitten.com/600/240"
-            alt=""
-          />
-        </div>
-        <div class="post__related-block">
-          <a href="#" class="post__related-link">
-            <h2 class="post__related-title">
-              HOW DO I ACCESS THE POST TITLE AND FEATURED IMG FROM
-              RELATEDPOSTIDS?
-            </h2>
-            <p class="post__related-author">
-              Written By NEED TO ACCESS AUTHOR
-            </p>
-            <p class="post__related-date">Published NEED TO ACCESS DATE</p>
-          </a>
-          <img
-            class="post__related-img"
-            src="http://placekitten.com/600/240"
-            alt=""
-          />
-        </div>
+        <template v-for="relatedPost in relatedPosts">
+          <div :key="relatedPost.id" class="post__related-block">
+            <nuxt-link
+              :to="'/analysis/' + relatedPost.slug"
+              class="post__related-link"
+            >
+              <h2 class="post__related-title">
+                {{ relatedPost.title }}
+              </h2>
+              <p class="post__related-author">
+                Written By {{ relatedPost.authors.items[0].author.name }}
+              </p>
+              <p class="post__related-date">
+                Published {{ formatDate(relatedPost.postDate) }}
+              </p>
+            </nuxt-link>
+            <img
+              class="post__related-img"
+              src="http://placekitten.com/600/240"
+              alt=""
+            />
+          </div>
+        </template>
       </div>
     </footer>
   </article>
@@ -153,14 +120,23 @@ export default {
         back, but we can be pretty sure it will be the only item, so grab 0 index
         otherwise, on failure, this is a bad slug
       */
-      return data.data.postsBySlug.items[0]
+      const post = data.data.postsBySlug.items[0]
+      const relatedPosts = []
+      for (const index in post.relatedPostIDs) {
+        const relatedPostData = await API.graphql(
+          graphqlOperation(queries.getPost, { id: post.relatedPostIDs[index] })
+        )
+        relatedPosts.push(relatedPostData.data.getPost)
+      }
+      post.relatedPosts = relatedPosts
+      console.log(post)
+      return post
     } catch (error) {
       return false
     }
   },
   computed: {
     operator() {
-      console.log(this)
       if (this.satellites.items[0].satellite.operator === null) {
         return 'N/A'
       } else {
