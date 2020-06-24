@@ -3,6 +3,101 @@
 
   &__header {
     @extend %page-header;
+
+    @include breakpoint('medium') {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      column-gap: rem(42px);
+    }
+  }
+
+  &__category {
+    @extend %font-ui-text-base-oxygen;
+    color: $color-orange-100;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-shadow: 0 rem(4px) rem(4px) rgba(0, 0, 0, 0.25);
+  }
+
+  &__title {
+    @extend %font-ui-heading-page-title-post;
+    color: $color-white-190;
+  }
+
+  &__meta {
+    @extend %font-ui-text-base-oxygen;
+    display: grid;
+    color: $color-white-150;
+
+    @include breakpoint('medium') {
+      display: block;
+      grid-column: 2;
+      grid-row: 1 / span 4;
+      padding-left: rem(32px);
+    }
+
+    span {
+      @extend %font-ui-text-lg-oxygen;
+      display: table;
+      color: $color-white-180;
+    }
+
+    p {
+      margin-bottom: rem(16px);
+    }
+
+    &-author {
+      grid-row: 1;
+    }
+
+    &-date {
+      grid-column: 1;
+      grid-row: 2;
+    }
+
+    &-updated {
+      grid-column: 2;
+      grid-row: 2;
+    }
+  }
+
+  &__excerpt {
+    @extend %font-ui-text-lg-oxygen;
+    margin-top: rem(8px);
+    color: $color-white-180;
+  }
+
+  &__sat-table {
+    @extend %font-ui-text-base-oxygen;
+    margin-top: rem(24px);
+    border-collapse: collapse;
+
+    tr:first-child {
+      background-color: #181b1f;
+    }
+
+    th,
+    td {
+      padding: rem(16px) rem(24px) rem(16px) 0;
+
+      &:first-child {
+        padding-left: rem(24px);
+      }
+    }
+
+    th {
+      @extend %font-ui-text-sm-oxygen;
+      color: $color-white-170;
+      font-weight: bold;
+      white-space: nowrap;
+      text-align: left;
+      text-transform: uppercase;
+    }
+
+    a {
+      @extend %font-ui-text-base-good;
+      color: $color-white-150;
+    }
   }
 
   // &__content {
