@@ -362,8 +362,7 @@
 
     &:focus {
       color: $color-black;
-
-      @include link-underline();
+      box-shadow: none;
     }
 
     &:visited {
