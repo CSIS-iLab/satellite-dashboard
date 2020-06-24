@@ -6,38 +6,38 @@
           eventTypes.items[0].eventType.name
         }}</span>
         <h1 class="post__title">{{ title }}</h1>
+        <div class="post__meta">
+          <p v-if="authors.items[0]" class="post__meta-author">
+            Written by
+            <span v-for="auth in authors.items" :key="auth.id">{{
+              auth.author.name
+            }}</span>
+          </p>
+          <p class="post__meta-date">
+            Published <span>{{ formatDate(postDate) }}</span>
+          </p>
+          <p class="post__meta-updated">
+            Last updated <span>{{ formatDate(updatedAt) }}</span>
+          </p>
+        </div>
         <p class="post__excerpt">{{ excerpt }}</p>
+        <table v-if="satellites.items[0]" class="post__sat-table">
+          <tr>
+            <th>Object Name</th>
+            <th>Country</th>
+            <th>User</th>
+            <th>Operator</th>
+            <th></th>
+          </tr>
+          <tr v-for="sat in satellites.items" :key="sat.id">
+            <td>{{ sat.satellite.launchVehicle }}</td>
+            <td>{{ sat.satellite.countryOfJurisdiction }}</td>
+            <td>NEED DATA FOR USER(IE GOV'T OR COMMERCIAL)</td>
+            <td>{{ operator }}</td>
+            <td><a href="#">NEED URL</a></td>
+          </tr>
+        </table>
       </header>
-      <aside>
-        <p v-if="authors.items[0]">
-          Written by
-          <span v-for="auth in authors.items" :key="auth.id">{{
-            auth.author.name
-          }}</span>
-        </p>
-        <p>
-          Published <span>{{ formatDate(postDate) }}</span>
-        </p>
-        <p>
-          Last updated <span>{{ formatDate(updatedAt) }}</span>
-        </p>
-      </aside>
-      <table v-if="satellites.items[0]">
-        <tr>
-          <th>Object Name</th>
-          <th>Country</th>
-          <th>User</th>
-          <th>Operator</th>
-          <th></th>
-        </tr>
-        <tr v-for="sat in satellites.items" :key="sat.id">
-          <td>{{ sat.satellite.launchVehicle }}</td>
-          <td>{{ sat.satellite.countryOfJurisdiction }}</td>
-          <td>NEED DATA FOR USER(IE GOV'T OR COMMERCIAL)</td>
-          <td>{{ operator }}</td>
-          <td>NEED SATELLITE URL</td>
-        </tr>
-      </table>
 
       <!-- eslint-disable-next-line -->
       <section class="post__content entry-content" v-html="content"></section>
