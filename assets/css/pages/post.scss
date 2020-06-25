@@ -344,9 +344,13 @@
   a {
     color: $color-slate-490;
 
+    &:visited {
+      color: $color-black-160;
+    }
+
     @include link-underline(
       $color: $color-ltblue-175,
-      $thickness: 1px,
+      $thickness: -1px,
       $hideOnHover: true
     );
 
@@ -355,7 +359,7 @@
 
       @include link-underline(
         $color: $color-orange-140,
-        $thickness: 1px,
+        $thickness: -1px,
         $hideOnHover: false
       );
     }
@@ -363,10 +367,6 @@
     &:focus {
       color: $color-black;
       box-shadow: none;
-    }
-
-    &:visited {
-      color: $color-black-160;
     }
   }
 
