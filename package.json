@@ -29,6 +29,7 @@
     "fibers": "^4.0.2",
     "frontmatter-markdown-loader": "^3.3.0",
     "nuxt": "^2.12.2",
+    "satellite.js": "^4.0.0",
     "vue-cesium": "^2.1.4"
   },
   "devDependencies": {
