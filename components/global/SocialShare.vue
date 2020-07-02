@@ -1,19 +1,55 @@
 <template>
   <ul class="social-share">
+    <div id="share">SHARE</div>
     <li class="list-items">
-      <Icon id="facebook" class="icon" name="facebook" />
+      <a
+        id="facebook-link"
+        href=""
+        rel="nofollow"
+        target="_blank"
+        aria-label="Share on Facebook"
+        ><Icon id="facebook" class="icon" name="facebook"
+      /></a>
     </li>
     <li>
-      <Icon id="twitter" class="icon" name="twitter" />
+      <a
+        id="twitter-link"
+        href=""
+        rel="nofollow"
+        target="_blank"
+        aria-label="Share on Twitter"
+        ><Icon id="twitter" class="icon" name="twitter"
+      /></a>
     </li>
     <li>
-      <Icon id="linkedin" class="icon" name="linkedin" />
+      <a
+        id="linkedin-link"
+        href=""
+        rel="nofollow"
+        target="_blank"
+        aria-label="Share on LinkedIn"
+        ><Icon id="linkedin" class="icon" name="linkedin"
+      /></a>
     </li>
     <li>
-      <Icon id="email" class="icon" name="email" />
+      <a
+        id="email-link"
+        href=""
+        rel="nofollow"
+        target="_blank"
+        aria-label="Share by Email"
+        ><Icon id="email" class="icon" name="email"
+      /></a>
     </li>
     <li>
-      <Icon id="link" class="icon" name="link" />
+      <a
+        id="link-link"
+        href=""
+        rel="nofollow"
+        target="_blank"
+        aria-label="Share Link"
+        ><Icon id="link" class="icon" name="link"
+      /></a>
     </li>
   </ul>
 </template>
