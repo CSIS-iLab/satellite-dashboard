@@ -7,7 +7,7 @@
       <Icon id="twitter" class="icon" name="twitter" />
     </li>
     <li>
-      <Icon id="linked-in" class="icon" name="linked-in" />
+      <Icon id="linkedIn" class="icon" name="linkedIn" />
     </li>
     <li>
       <Icon id="email" class="icon" name="email" />
