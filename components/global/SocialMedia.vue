@@ -1,15 +1,19 @@
 <template>
-  <div class="social-media">
-    <Icon class="icon" id="twitter" name="twitter" /><a
-      id="twitter-link"
-      href="https://twitter.com/satdashboard"
-      >@satdashboard</a
-    >
-    <Icon id="email" class="icon" name="email" />
-    <a href="mailto: spacetranspraencyproject@gmail.com"
-      >spacetransparencyproject@gmail.com</a
-    >
-  </div>
+  <ul class="social-media">
+    <li>
+      <Icon id="twitter" class="icon" name="twitter" /><a
+        id="twitter-link"
+        href="https://twitter.com/satdashboard"
+        >@satdashboard</a
+      >
+    </li>
+    <li>
+      <Icon id="email" class="icon" name="email" />
+      <a href="mailto: spacetranspraencyproject@gmail.com"
+        >spacetransparencyproject@gmail.com</a
+      >
+    </li>
+  </ul>
 </template>
 
 <script>
