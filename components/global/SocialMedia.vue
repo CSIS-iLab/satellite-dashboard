@@ -1,13 +1,13 @@
 <template>
   <ul class="social-media">
-    <li>
+    <li class="list-items">
       <Icon id="twitter" class="icon" name="twitter" /><a
         id="twitter-link"
         href="https://twitter.com/satdashboard"
         >@satdashboard</a
       >
     </li>
-    <li>
+    <li class="list-items">
       <Icon id="email" class="icon" name="email" />
       <a href="mailto: spacetranspraencyproject@gmail.com"
         >spacetransparencyproject@gmail.com</a
