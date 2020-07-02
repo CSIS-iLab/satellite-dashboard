@@ -5,23 +5,9 @@
   color: $color-white-170;
   @extend %font-ui-text-sm-oxygen;
 
-
-  a {
-    color: $color-white-140;
-  }
-
-  .footer & {
-    margin: rem(32px) 0;
-  }
-
   .icon {
     margin-right: rem(8px);
     margin-left: rem(8px);
-  }
-
-  .list-items {
-    display: flex;
-    align-items: center;
   }
 
   .share {
