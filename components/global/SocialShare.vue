@@ -1,6 +1,6 @@
 <template>
   <ul class="social-share">
-    <div id="share">SHARE</div>
+    <div class="share">SHARE</div>
     <li class="list-items">
       <a
         id="facebook-link"
