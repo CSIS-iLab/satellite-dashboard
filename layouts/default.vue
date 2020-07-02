@@ -1,6 +1,7 @@
 <template>
   <div>
     Site Header
+    <SocialShare />
     <nuxt />
     <Footer />
   </div>
@@ -8,10 +9,12 @@
 
 <script>
 import Footer from '~/components/global/Footer.vue'
+import SocialShare from '~/components/global/SocialShare.vue'
 
 export default {
   components: {
-    Footer
+    Footer,
+    SocialShare
   }
 }
 </script>
