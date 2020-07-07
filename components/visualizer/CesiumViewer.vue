@@ -25,6 +25,17 @@
 <script>
 import * as satellite from 'satellite.js'
 
+var J2000Epoch = 2451545.0
+var JulYear = 365.25
+var JulCent = JulYear * 100
+
+var EGM96_mu = 3.986004415e14 // m^3/s^2
+var EGM96_REarth = 6378136.3 // m
+
+var TwoPi = 2 * Math.PI
+var RadDeg = 180 / Math.PI
+var DegRad = Math.PI / 180
+
 export default {
   props: {
     satellites: {
@@ -41,7 +52,10 @@ export default {
       infoBox: true,
       alpha: 1,
       brightness: 1,
-      contrast: 1
+      contrast: 1,
+      SimInt: 90 * 60,
+      SimStart: null,
+      SimStop: null
     }
   },
   mounted() {
@@ -65,120 +79,193 @@ export default {
         show: false
       })
 
-      // console.log(this.satellites)
-      const time = new Date()
+      this.SimStart = Cesium.JulianDate.now()
+      this.SimStop = Cesium.JulianDate.addSeconds(
+        this.SimStart,
+        this.SimInt,
+        new Cesium.JulianDate()
+      )
 
-      console.log(this.satellites)
-
-      const sat = this.satellites[0]
-      // const tle = this.calcTLE(sat)
-      // console.log(tle)
-
-      // // const coordinates = getLatLngObj(tle)
-
-      // const satrec = satellite.twoline2satrec(tle[0], tle[1])
-
-      // var positionAndVelocity = satellite.propagate(satrec, time)
-      // var positionEci = positionAndVelocity.position
-      // var gmst = satellite.gstime(time)
-      // var positionGd = satellite.eciToGeodetic(positionEci, gmst)
-      // console.log(positionGd)
-      // const { longitude, latitude, height } = positionGd
-
-      // let orbit = []
-      // const newTime = time
-      // for (let i = 0; i <= 150; i++) {
-      //   // figure out the time
-      //   newTime.setMinutes(newTime.getMinutes() + i * 10)
-      //   // get the coordinates at the new time
-      //   let positionAndVelocity = satellite.propagate(satrec, newTime)
-      //   let positionEci = positionAndVelocity.position
-      //   let gmst = satellite.gstime(newTime)
-      //   let positionGd = satellite.eciToGeodetic(positionEci, gmst)
-      //   const { longitude, latitude, height } = positionGd
-      //   // update the orbit
-      //   orbit = orbit.concat([longitude, latitude, height])
-      // }
-
-      const heightDefault = 404.8 * 1000
+      Cesium.Transforms.preloadIcrfFixed(
+        new Cesium.TimeInterval({
+          start: new Cesium.JulianDate(J2000Epoch - JulCent),
+          stop: new Cesium.JulianDate(J2000Epoch + JulCent)
+        })
+      ).then(() => {
+        this.displayPoints(Cesium, viewer)
+      })
+    },
+    displayPoints(Cesium, viewer) {
+      let epjd = new Cesium.JulianDate()
+      let CRFtoTRF = Cesium.Transforms.computeIcrfToFixedMatrix(this.SimStart)
 
       for (let i = 0; i < this.satellites.length; i++) {
         const sat = this.satellites[i]
-        const tle = this.calcTLE(sat)
-
-        if (!tle) {
+        const { id, orbitalDatum, name } = sat
+        const items = orbitalDatum.items
+        if (items.length <= 0) {
           continue
         }
+        const datum = items[0]
+        const elemsNames = Object.keys(datum)
 
-        const satrec = satellite.twoline2satrec(tle[0], tle[1])
+        let elems = {}
 
-        var positionAndVelocity = satellite.propagate(satrec, time)
-        var positionEci = positionAndVelocity.position
-        // var gmst = satellite.gstime(time)
-        // var positionGd = satellite.eciToGeodetic(positionEci, gmst)
-        // const { longitude, latitude, height } = positionGd
-        const { x, y, z } = positionEci
-
-        let orbit = []
-        const newTime = time
-
-        if (i === 0) {
-          for (let i = 0; i <= 150; i++) {
-            // figure out the time
-            newTime.setMinutes(newTime.getMinutes() + i * 10)
-            // get the coordinates at the new time
-            let positionAndVelocity = satellite.propagate(satrec, newTime)
-            let positionEci = positionAndVelocity.position
-            const { x, y, z } = positionEci
-            // update the orbit
-            orbit = orbit.concat([x * 1000, y * 1000, z * 1000])
+        for (let i = 0; i < elemsNames.length; i++) {
+          const name = elemsNames[i]
+          let value = datum[name].value
+          if (name !== 'epoch') {
+            value = +value
           }
-          console.log(tle)
-          console.log({ x, y, z, orbit })
+          elems[name] = value
+        }
+
+        // TODO: Use actual epoch date
+        Cesium.JulianDate.fromIso8601('2020-06-13T22:00:02.000000Z', epjd)
+        // console.log(elems.epoch)
+        // Cesium.JulianDate.fromIso8601(elems.epoch, epjd)
+        let t = Cesium.JulianDate.daysDifference(this.SimStop, epjd)
+        elems.mmo = Math.sqrt(EGM96_mu / (elems.SMA * elems.SMA * elems.SMA))
+        elems.meanAnom = (elems.meanAnom + elems.mmo * t * 86400) % TwoPi
+
+        // Calculate Orbit
+        let orbit = []
+        if (i === 0) {
+          orbit = this.calcOrbit(Cesium, viewer, CRFtoTRF, elems)
         }
 
         viewer.entities.add({
-          id: sat.id,
-          position: Cesium.Cartesian3.fromElements(
-            x * 1000,
-            y * 1000,
-            z * 1000
-          ),
+          id: id,
+          name: name.value,
+          // availability: new Cesium.TimeIntervalCollection([
+          //   new Cesium.TimeInterval({
+          //     start: this.SimStart,
+          //     stop: this.SimStop
+          //   })
+          // ]),
+          // position: new Cesium.CallbackProperty(
+          //   this.updatePosition(Cesium, viewer, CRFtoTRF, elems),
+          //   false
+          // ),
+          position: this.updatePosition(Cesium, viewer, CRFtoTRF, elems),
           point: {
-            pixelSize: 5,
+            pixelSize: 7,
             color: Cesium.Color.RED,
             outlineColor: Cesium.Color.WHITE,
-            outlineWiddth: 2
+            outlineWidth: 1
           },
           polyline: {
-            positions: Cesium.Cartesian3.fromArray(orbit),
-            width: 5,
-            followSurface: true,
+            positions: Cesium.Cartesian3.fromRadiansArrayHeights(orbit),
+            width: 1,
             material: Cesium.Color.BLUE
           }
         })
       }
+    },
+    updatePosition(Cesium, CsView, CRFtoTRF, elems) {
+      // return function UpdateHelper() {
+      var t = Cesium.JulianDate.secondsDifference(
+        CsView.clock.currentTime,
+        this.SimStart
+      )
+      var u = Object.assign({}, elems)
+      u.meanAnom = (u.meanAnom + u.mmo * t) % TwoPi
+      var eff = new Cesium.Cartesian3()
+      var eci = this.eltocart(Cesium, u, true, 1e-3)
+      Cesium.Matrix3.multiplyByVector(CRFtoTRF, eci, eff)
+      return eff
+      // }
+    },
+    eltocart(Cesium, ele, posonly = false, tol = 1e-6, MAXITER = 20) {
+      var ecan = this.ecceanom(ele.meanAnom, ele.ecc, tol, MAXITER)
+      var tran =
+        2 *
+        Math.atan2(
+          Math.sqrt((1 + ele.ecc) / (1 - ele.ecc)) * Math.sin(ecan / 2),
+          Math.cos(ecan / 2)
+        )
 
-      // viewer.entities.add({
-      //   id: 'test',
-      //   position: Cesium.Cartesian3.fromRadians(longitude, latitude, height),
-      //   point: {
-      //     pixelSize: 5,
-      //     color: Cesium.Color.RED,
-      //     outlineColor: Cesium.Color.WHITE,
-      //     outlineWiddth: 2
-      //   }
-      // })
+      var p = ele.SMA * (1 - ele.ecc * ele.ecc)
+      var r = p / (1 + ele.ecc * Math.cos(tran))
+      var h = Math.sqrt(EGM96_mu * p)
 
-      // viewer.entities.add({
-      //   id: 'test orbit',
-      //   polyline: {
-      //     positions: Cesium.Cartesian3.fromRadiansArrayHeights(orbit),
-      //     width: 5,
-      //     followSurface: true,
-      //     material: Cesium.Color.RED
-      //   }
-      // })
+      var ci = Math.cos(ele.inc)
+      var si = Math.sin(ele.inc)
+      var cr = Math.cos(ele.RAAN)
+      var sr = Math.sin(ele.RAAN)
+      var cw = Math.cos(ele.argP + tran)
+      var sw = Math.sin(ele.argP + tran)
+
+      var pos = new Cesium.Cartesian3(
+        cr * cw - sr * sw * ci,
+        sr * cw + cr * sw * ci,
+        si * sw
+      )
+      var pos2 = new Cesium.Cartesian3()
+      Cesium.Cartesian3.multiplyByScalar(pos, r, pos2)
+      if (posonly) return pos2
+
+      var vel = new Cesium.Cartesian3()
+      var vel1 = new Cesium.Cartesian3()
+      var vel2 = new Cesium.Cartesian3()
+      Cesium.Cartesian3.subtract(
+        Cesium.Cartesian3.multiplyByScalar(
+          pos2,
+          (h * ele.ecc * Math.sin(tran)) / (r * p),
+          vel1
+        ),
+        Cesium.Cartesian3.multiplyByScalar(
+          new Cesium.Cartesian3(
+            cr * sw + sr * cw * ci,
+            sr * sw - cr * cw * ci,
+            -si * cw
+          ),
+          h / r,
+          vel2
+        ),
+        vel
+      )
+
+      return { pos: pos2, vel: vel }
+    },
+    ecceanom(mean, ecc, tol, MAXITER) {
+      var prev = mean
+      for (let i = 1; i <= MAXITER; i++) {
+        var curr =
+          prev -
+          (prev - ecc * Math.sin(prev) - mean) / (1 - ecc * Math.cos(prev))
+        if (Math.abs(curr - prev) <= tol) return curr % TwoPi
+        prev = curr
+      }
+
+      return NaN
+    },
+    calcOrbit(Cesium, viewer, CRFtoTRF, elems) {
+      let car = new Cesium.Cartographic()
+      let Y = new Cesium.Cartesian3()
+      let sta = []
+      let arr = []
+      let u = Object.assign({}, elems)
+      for (u.meanAnom = 0; u.meanAnom <= 6.29; u.meanAnom += 0.01) {
+        if (u.meanAnom === 0) {
+          sta = this.eltocart(Cesium, u, false, 1e-6, 100)
+          Cesium.Matrix3.multiplyByVector(CRFtoTRF, sta.pos, Y)
+        } else {
+          // do other stuff
+          sta = this.eltocart(Cesium, u, true, 1e-6, 100)
+          Cesium.Matrix3.multiplyByVector(CRFtoTRF, sta, Y)
+        }
+
+        viewer.scene.mapProjection.ellipsoid.cartesianToCartographic(Y, car)
+        if (
+          Number.isNaN(car.longitude) ||
+          Number.isNaN(car.latitude) ||
+          Number.isNaN(car.height)
+        )
+          continue
+        arr.push(car.longitude, car.latitude, car.height)
+      }
+      return arr
     },
     calcTLE(sat) {
       const { id, orbitalDatum } = sat
@@ -284,6 +371,15 @@ export default {
         Math.round(ecc * Math.pow(10, 7))
       ).toString()
       return value.padStart(7, '0')
+    },
+    arrayToCartesianArray(array, Cesium) {
+      let newArray = []
+      for (let i = 0; i < array.length; i += 3) {
+        let p = new Cesium.Cartesian3(array[i], array[i + 1], array[i + 2])
+        newArray.push(p)
+      }
+
+      return newArray
     }
   }
 }
