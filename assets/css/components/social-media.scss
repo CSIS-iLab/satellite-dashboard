@@ -1,4 +1,8 @@
 .social-media {
+  >li+li {
+    margin-left: rem(16px);
+  }
+
   display: flex;
   align-items: center;
   margin: 0 rem(8px);
@@ -6,24 +10,24 @@
   @extend %font-ui-text-sm-oxygen;
 
 
-  a {
-    color: $color-white-140;
-  }
-
-  .footer & {
-    margin: rem(32px) 0;
+  .social-media__item {
+    display: flex;
+    align-items: center;
   }
 
   .icon {
     margin-right: rem(8px);
   }
 
-  #twitter-link {
-    margin-right: rem(16px);
+  a {
+    color: $color-white-140;
   }
 
-  .list-items {
-    display: flex;
-    align-items: center;
+  a:hover {
+    background-color: $color-orangedull-100
+  }
+
+  .footer & {
+    margin: rem(32px) 0;
   }
 }

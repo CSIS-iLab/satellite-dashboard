@@ -1,17 +1,16 @@
 <template>
   <ul class="social-media">
-    <li class="list-items">
-      <Icon id="twitter" class="icon" name="twitter" /><a
-        id="twitter-link"
-        href="https://twitter.com/satdashboard"
-        >@satdashboard</a
-      >
+    <li class="social-media__item">
+      <a id="twitter-link" href="https://twitter.com/satdashboard">
+        <Icon id="twitter" class="icon" name="twitter" />
+        @satdashboard
+      </a>
     </li>
-    <li class="list-items">
-      <Icon id="email" class="icon" name="email" />
-      <a href="mailto: spacetranspraencyproject@gmail.com"
-        >spacetransparencyproject@gmail.com</a
-      >
+    <li class="social-media__item">
+      <a href="mailto: spacetranspraencyproject@gmail.com">
+        <Icon id="email" class="icon" name="email" />
+        spacetransparencyproject@gmail.com
+      </a>
     </li>
   </ul>
 </template>
