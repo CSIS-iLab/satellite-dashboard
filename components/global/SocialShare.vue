@@ -4,7 +4,7 @@
     <li class="list-items">
       <a
         id="facebook-link"
-        href=""
+        href="https://www.facebook.com/sharer.php?u={{ url }}"
         rel="nofollow"
         target="_blank"
         aria-label="Share on Facebook"
@@ -14,7 +14,7 @@
     <li>
       <a
         id="twitter-link"
-        href=""
+        href="https://twitter.com/intent/tweet?text={{ pageTitle | escape }}&url={{ url }}&via=CSIS&related=CSIS"
         rel="nofollow"
         target="_blank"
         aria-label="Share on Twitter"
@@ -24,7 +24,7 @@
     <li>
       <a
         id="linkedin-link"
-        href=""
+        href="https://www.linkedin.com/shareArticle?mini=true&url={{ url }}&summary={{ pageTitle | escape }}&source=CSIS"
         rel="nofollow"
         target="_blank"
         aria-label="Share on LinkedIn"
@@ -34,7 +34,7 @@
     <li>
       <a
         id="email-link"
-        href=""
+        href="mailto:?subject={{ siteTitle | escape }}: {{ pageTitle | escape }}&amp;body={{ url }}"
         rel="nofollow"
         target="_blank"
         aria-label="Share by Email"
@@ -42,12 +42,7 @@
       /></a>
     </li>
     <li>
-      <a
-        id="link-link"
-        href=""
-        rel="nofollow"
-        target="_blank"
-        aria-label="Share Link"
+      <a id="link-link" aria-label="Share Link"
         ><Icon id="link" class="icon" name="link"
       /></a>
     </li>
@@ -59,8 +54,18 @@ import Icon from '~/components/global/Icon.vue'
 
 export default {
   name: 'SocialShare',
-  components: {
-    Icon
+  components: { Icon },
+  props: {
+    data: {
+      type: Object,
+      default() {
+        return {
+          url: 'https://twitter.com',
+          pageTitle: 'Satellite Page',
+          siteTitle: 'Satellite Dashboard'
+        }
+      }
+    }
   }
 }
 </script>
