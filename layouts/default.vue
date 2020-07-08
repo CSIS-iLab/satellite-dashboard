@@ -1,7 +1,7 @@
 <template>
   <div>
     Site Header
-    <SocialShare />
+    <SocialShare page-title="Foobar" />
     <nuxt />
     <Footer />
   </div>

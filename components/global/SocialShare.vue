@@ -1,27 +1,27 @@
 <template>
-  <ul class="social-share">
+  <div>
     <div class="share">SHARE</div>
-    <li class="list-items">
-      <a
-        id="facebook-link"
-        href="https://www.facebook.com/sharer.php?u={{ url }}"
-        rel="nofollow"
-        target="_blank"
-        aria-label="Share on Facebook"
-        ><Icon id="facebook" class="icon" name="facebook"
-      /></a>
-    </li>
-    <li>
-      <a
-        id="twitter-link"
-        href="https://twitter.com/intent/tweet?text={{ pageTitle | escape }}&url={{ url }}&via=CSIS&related=CSIS"
-        rel="nofollow"
-        target="_blank"
-        aria-label="Share on Twitter"
-        ><Icon id="twitter" class="icon" name="twitter"
-      /></a>
-    </li>
-    <li>
+    <ul class="social-share">
+      <li class="list-items">
+        <a
+          :href="facebookURL"
+          rel="noopener"
+          target="_blank"
+          aria-label="Share on Facebook"
+          ><Icon id="facebook" class="icon" name="facebook"
+        /></a>
+      </li>
+      <li>
+        <a
+          id="twitter-link"
+          :href="twitterURL"
+          rel="nofollow"
+          target="_blank"
+          aria-label="Share on Twitter"
+          ><Icon id="twitter" class="icon" name="twitter"
+        /></a>
+      </li>
+      <!-- <li>
       <a
         id="linkedin-link"
         href="https://www.linkedin.com/shareArticle?mini=true&url={{ url }}&summary={{ pageTitle | escape }}&source=CSIS"
@@ -45,8 +45,9 @@
       <a id="link-link" aria-label="Share Link"
         ><Icon id="link" class="icon" name="link"
       /></a>
-    </li>
-  </ul>
+    </li> -->
+    </ul>
+  </div>
 </template>
 
 <script>
@@ -56,15 +57,24 @@ export default {
   name: 'SocialShare',
   components: { Icon },
   props: {
-    data: {
-      type: Object,
-      default() {
-        return {
-          url: 'https://twitter.com',
-          pageTitle: 'Satellite Page',
-          siteTitle: 'Satellite Dashboard'
-        }
-      }
+    pageTitle: {
+      type: String,
+      default: ''
+    }
+  },
+  data: function() {
+    return {
+      siteURL: 'https://satellitedashboard.com',
+      siteTitle: 'Satellite Dashboard'
+    }
+  },
+  computed: {
+    facebookURL() {
+      return `https://www.facebook.com/sharer.php?u=${this.siteURL}${this.$route.path}`
+    },
+    twitterURL() {
+      console.log(this)
+      return `https://twitter.com/intent/tweet?text=${this.pageTitle}&url=${this.siteURL}${this.$route.path}&via=CSIS&related=CSIS`
     }
   }
 }
