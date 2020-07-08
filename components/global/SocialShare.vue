@@ -62,7 +62,7 @@ export default {
       default: ''
     }
   },
-  data: function() {
+  data() {
     return {
       siteURL: 'https://satellitedashboard.com',
       siteTitle: 'Satellite Dashboard'
@@ -73,7 +73,6 @@ export default {
       return `https://www.facebook.com/sharer.php?u=${this.siteURL}${this.$route.path}`
     },
     twitterURL() {
-      console.log(this)
       return `https://twitter.com/intent/tweet?text=${this.pageTitle}&url=${this.siteURL}${this.$route.path}&via=CSIS&related=CSIS`
     }
   }
