@@ -1,18 +1,17 @@
 .social-media {
-  >li+li {
-    margin-left: rem(16px);
-  }
-
   display: flex;
   align-items: center;
   margin: 0 rem(8px);
   color: $color-white-170;
   @extend %font-ui-text-sm-oxygen;
 
-
-  .social-media__item {
+  &__item {
     display: flex;
     align-items: center;
+  }
+
+  >li+li {
+    margin-left: rem(16px);
   }
 
   .icon {
@@ -21,10 +20,10 @@
 
   a {
     color: $color-white-140;
-  }
 
-  a:hover {
-    background-color: $color-orangedull-100
+    &:hover {
+      color: $color-orangedull-100;
+    }
   }
 
   .footer & {
