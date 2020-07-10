@@ -1,17 +1,17 @@
 <template>
-  <div>
-    <div class="share">SHARE</div>
-    <ul class="social-share">
-      <li class="list-items">
+  <div class="social-share">
+    <div class="social-share__text">SHARE</div>
+    <ul class="social-share__list">
+      <li class="social-share__item">
         <a
           :href="facebookURL"
-          rel="noopener"
+          rel="nofollow"
           target="_blank"
           aria-label="Share on Facebook"
           ><Icon id="facebook" class="icon" name="facebook"
         /></a>
       </li>
-      <li>
+      <li class="social-share__item">
         <a
           id="twitter-link"
           :href="twitterURL"
@@ -21,31 +21,34 @@
           ><Icon id="twitter" class="icon" name="twitter"
         /></a>
       </li>
-      <!-- <li>
-      <a
-        id="linkedin-link"
-        href="https://www.linkedin.com/shareArticle?mini=true&url={{ url }}&summary={{ pageTitle | escape }}&source=CSIS"
-        rel="nofollow"
-        target="_blank"
-        aria-label="Share on LinkedIn"
-        ><Icon id="linkedin" class="icon" name="linkedin"
-      /></a>
-    </li>
-    <li>
-      <a
-        id="email-link"
-        href="mailto:?subject={{ siteTitle | escape }}: {{ pageTitle | escape }}&amp;body={{ url }}"
-        rel="nofollow"
-        target="_blank"
-        aria-label="Share by Email"
-        ><Icon id="email" class="icon" name="email"
-      /></a>
-    </li>
-    <li>
-      <a id="link-link" aria-label="Share Link"
-        ><Icon id="link" class="icon" name="link"
-      /></a>
-    </li> -->
+      <li class="social-share__item">
+        <a
+          :href="linkedInURL"
+          rel="nofollow"
+          target="_blank"
+          aria-label="Share on LinkedIn"
+          ><Icon id="linkedin" class="icon" name="linkedin"
+        /></a>
+      </li>
+      <li class="social-share__item">
+        <a
+          :href="emailURL"
+          rel="nofollow"
+          target="_blank"
+          aria-label="Share by Email"
+          ><Icon id="email" class="icon" name="email"
+        /></a>
+      </li>
+      <li class="social-share__item">
+        <button
+          id="copyText"
+          :href="linkURL"
+          aria-label="Share Link"
+          @click.stop.prevent="copy"
+        >
+          <Icon id="link" class="icon" name="link" />
+        </button>
+      </li>
     </ul>
   </div>
 </template>
@@ -73,9 +76,37 @@ export default {
       return `https://www.facebook.com/sharer.php?u=${this.siteURL}${this.$route.path}`
     },
     twitterURL() {
-      return `https://twitter.com/intent/tweet?text=${this.pageTitle}&url=${this.siteURL}${this.$route.path}&via=CSIS&related=CSIS`
+      return `https://twitter.com/intent/tweet?text=${this.pageTitle}&url=${this.siteURL}${this.$route.path}&via=satdashboard&related=satdashboard`
+    },
+    linkedInURL() {
+      return `https://www.linkedin.com/shareArticle?mini=true&url=${this.siteURL}&summary=${this.pageTitle}&source=CSIS`
+    },
+    emailURL() {
+      return `mailto:?subject=${this.siteTitle}: ${this.pageTitle}&amp;body=${this.siteURL}`
+    },
+    linkURL() {
+      return `${this.siteURL}`
     }
   }
+  /*methods: {
+    copy:
+    function copy() {
+      let copyText = document.querySelector('#copyText')
+
+      copyText.setAttribute('type', 'text')
+      copyText.select()
+
+      try {
+        var successful = document.execCommand('copy')
+        var msg = successful ? 'successful' : 'unsuccessful'
+        alert('Link copied!' + msg)
+      } catch (err) {
+        alert('Oops, unable to copy')
+      }
+
+      copyText.setAttribute('type', 'hidden')
+      window.getSelection().removeAllRanges()
+    }*/
 }
 </script>
 
