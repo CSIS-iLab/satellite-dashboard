@@ -50,7 +50,10 @@
               {{ reading.name }}
               <span class="post__further-source">{{ reading.author }}</span>
             </a>
-            <div class="post__further-icon"></div>
+            <!-- <div class="post__further-icon"></div> -->
+            <a :href="reading.url" class="post__link-circle">
+              <Icon class="post__link-icon" name="external-link" />
+            </a>
           </div>
         </template>
       </section>
@@ -111,8 +114,12 @@
 <script>
 import { API, graphqlOperation } from 'aws-amplify'
 import * as queries from '@/src/graphql/queries'
+import Icon from '~/components/global/Icon.vue'
 
 export default {
+  components: {
+    Icon
+  },
   async asyncData({ params }) {
     try {
       const data = await API.graphql(
