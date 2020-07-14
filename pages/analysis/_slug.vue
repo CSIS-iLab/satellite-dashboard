@@ -72,11 +72,11 @@
             {{ author.author.biography }}
           </p>
         </div>
-        <div class="post__tag-list">
+        <div class="post__tag">
           <h2 class="post__tag-header">tags</h2>
-          <ul>
-            <li v-for="t in tags.items" :key="t.id">
-              <a href="#" class="post__tag-name">
+          <ul class="post__tag-list">
+            <li v-for="t in tags.items" :key="t.id" class="post__tag-name">
+              <a href="#">
                 {{ t.tag.name }}
               </a>
             </li>

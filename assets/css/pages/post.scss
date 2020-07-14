@@ -260,23 +260,23 @@
   }
 
   &__tag {
-    &-list {
-      @extend %font-ui-text-base-oxygen;
-      display: inline;
-      color: $color-white-150;
-      line-height: 1.4;
-      text-transform: capitalize;
+    @include breakpoint('medium') {
+      margin-left: rem(32px);
+    }
 
-      @include breakpoint('medium') {
-        margin-left: rem(32px);
-      }
+    &-header {
+      @extend %font-ui-text-base-oxygen;
+      color: $color-white-150;
+      text-transform: capitalize;
     }
 
     &-name {
       @extend %font-post-text-md;
+      display: inline-block;
       color: $color-white-190;
       font-weight: bold;
       text-transform: uppercase;
+      text-decoration: none;
 
       &:hover {
         color: $color-orange-100;
