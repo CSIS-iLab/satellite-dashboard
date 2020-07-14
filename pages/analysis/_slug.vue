@@ -22,20 +22,24 @@
         </div>
         <p class="post__excerpt">{{ excerpt }}</p>
         <table v-if="satellites.items[0]" class="post__sat-table">
-          <tr>
-            <th>Object Name</th>
-            <th>Country</th>
-            <th>User</th>
-            <th>Operator</th>
-            <th></th>
-          </tr>
-          <tr v-for="sat in satellites.items" :key="sat.id">
-            <td>{{ sat.satellite.launchVehicle }}</td>
-            <td>{{ sat.satellite.countryOfJurisdiction }}</td>
-            <td>NEED DATA FOR USER(IE GOV'T OR COMMERCIAL)</td>
-            <td>{{ operator }}</td>
-            <td><a href="#">NEED URL</a></td>
-          </tr>
+          <thead>
+            <tr>
+              <th>Object Name</th>
+              <th>Country</th>
+              <th>User</th>
+              <th>Operator</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="sat in satellites.items" :key="sat.id">
+              <td>{{ sat.satellite.launchVehicle }}</td>
+              <td>{{ sat.satellite.countryOfJurisdiction }}</td>
+              <td>NEED DATA FOR USER(IE GOV'T OR COMMERCIAL)</td>
+              <td>{{ operator }}</td>
+              <td><a href="#">NEED URL</a></td>
+            </tr>
+          </tbody>
         </table>
       </header>
 
@@ -57,7 +61,7 @@
           </div>
         </template>
       </section>
-      <div class="post__footer">
+      <footer class="post__footer">
         <div v-if="authors.items[0]" class="post__author-wrapper">
           <p
             v-for="author in authors.items"
@@ -69,20 +73,19 @@
           </p>
         </div>
         <div class="post__tag-list">
-          <p>tags</p>
-          <a
-            v-for="t in tags.items"
-            :key="t.id"
-            href="#"
-            class="post__tag-name"
-          >
-            {{ t.tag.name }}
-          </a>
+          <h2 class="post__tag-header">tags</h2>
+          <ul>
+            <li v-for="t in tags.items" :key="t.id">
+              <a href="#" class="post__tag-name">
+                {{ t.tag.name }}
+              </a>
+            </li>
+          </ul>
         </div>
-      </div>
+      </footer>
     </div>
     <div class="post__side"></div>
-    <footer>
+    <section>
       <div class="post__related-wrapper">
         <template v-for="relatedPost in relatedPosts">
           <div :key="relatedPost.id" class="post__related-block">
@@ -108,7 +111,7 @@
           </div>
         </template>
       </div>
-    </footer>
+    </section>
   </article>
 </template>
 <script>
