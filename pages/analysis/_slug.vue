@@ -105,11 +105,6 @@
                 Published {{ formatDate(relatedPost.postDate) }}
               </p>
             </nuxt-link>
-            <img
-              class="post__related-img"
-              src="http://placekitten.com/600/240"
-              alt=""
-            />
           </div>
         </template>
       </div>

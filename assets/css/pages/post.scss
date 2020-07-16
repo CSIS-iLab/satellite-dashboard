@@ -301,37 +301,26 @@
     }
 
     &-block {
-      position: relative;
-      display: flex;
+      display: table;
       height: rem(240px);
       overflow: hidden;
       text-align: center;
+      background-color: $color-slate-200;
 
       @include breakpoint('medium') {
         width: 50vw;
       }
+
+      &:hover {
+        background-color: $color-slate-300;
+      }
     }
 
     &-link {
-      position: relative;
       z-index: 2;
-      display: inline-block;
-      align-self: center;
-      margin: 0 auto;
+      display: table-cell;
       padding: rem(24px) rem(32px);
-
-      &::after {
-        content: '';
-        position: absolute;
-        top: rem(-40px);
-        left: 0;
-        width: 50vw;
-        height: rem(240px);
-      }
-
-      &:hover + img {
-        opacity: 0.3;
-      }
+      vertical-align: middle;
 
       &:hover .post__related-title {
         padding-bottom: rem(12px);
@@ -353,20 +342,6 @@
     &-date {
       @extend %font-ui-text-lg-oxygen;
       color: $color-white-180;
-    }
-
-    &-img {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: rem(240px);
-      opacity: 0.5;
-      object-fit: cover;
-
-      @include breakpoint('medium') {
-        width: 50vw;
-      }
     }
   }
 }
