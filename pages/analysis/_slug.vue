@@ -7,18 +7,20 @@
         }}</span>
         <h1 class="post__title">{{ title }}</h1>
         <div class="post__meta">
-          <p v-if="authors.items[0]" class="post__meta-author">
-            Written by
-            <span v-for="auth in authors.items" :key="auth.id">{{
-              auth.author.name
-            }}</span>
-          </p>
-          <p class="post__meta-date">
-            Published <span>{{ formatDate(postDate) }}</span>
-          </p>
-          <p class="post__meta-updated">
-            Last updated <span>{{ formatDate(updatedAt) }}</span>
-          </p>
+          <ul class="post__meta-list">
+            <li v-if="authors.items[0]" class="post__meta-author">
+              Written by
+              <span v-for="auth in authors.items" :key="auth.id">{{
+                auth.author.name
+              }}</span>
+            </li>
+            <li class="post__meta-date">
+              Published <span>{{ formatDate(postDate) }}</span>
+            </li>
+            <li class="post__meta-updated">
+              Last updated <span>{{ formatDate(updatedAt) }}</span>
+            </li>
+          </ul>
         </div>
         <p class="post__excerpt">{{ excerpt }}</p>
         <table v-if="satellites.items[0]" class="post__sat-table">

@@ -86,14 +86,14 @@
       padding-left: rem(32px);
     }
 
+    li {
+      margin-bottom: rem(16px);
+    }
+
     span {
       @extend %font-ui-text-lg-oxygen;
       display: table;
       color: $color-white-180;
-    }
-
-    p {
-      margin-bottom: rem(16px);
     }
 
     &-author {
