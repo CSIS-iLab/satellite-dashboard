@@ -1,14 +1,15 @@
-// body {
-//   &::after {
-//     content: '';
-//     position: absolute;
-//     top: 0;
-//     right: 0;
-//     bottom: 0;
-//     width: 33vw;
-//     background: #f00;
-//   }
-// }
+body {
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    width: 33vw;
+    background: #f00;
+  }
+}
 
 .post {
   color: $color-white-100;
@@ -151,7 +152,7 @@
     }
   }
 
-  // Structure of content section
+  // Structure of post content
 
   &__content {
     @extend %page-content;
@@ -305,6 +306,7 @@
 
     &-block {
       display: table;
+      width: 100vw;
       height: rem(240px);
       overflow: hidden;
       text-align: center;
