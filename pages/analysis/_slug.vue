@@ -182,4 +182,5 @@ export default {
 <style lang="scss">
 @import '../assets/css/components/post-component';
 @import '../assets/css/pages/post';
+@import '../assets/css/pages/post-content';
 </style>
