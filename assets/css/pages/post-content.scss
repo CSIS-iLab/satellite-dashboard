@@ -47,15 +47,20 @@
     color: $color-black-160;
   }
 
-  blockquote p {
-    @extend %font-post-text-blockquote;
+  blockquote {
     float: right;
     max-width: rem(304px);
     margin-left: rem(48px);
+    padding: 0 !important;
 
-    &::before {
-      content: url('~assets/img/quote-icon.png');
-      padding-right: rem(8px);
+    p {
+      @extend %font-post-text-blockquote;
+      width: 100%;
+
+      &::before {
+        content: url('~assets/img/quote-icon.png');
+        padding-right: rem(8px);
+      }
     }
   }
 
