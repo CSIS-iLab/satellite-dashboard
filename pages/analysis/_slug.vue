@@ -2,9 +2,9 @@
   <article class="post">
     <div class="container">
       <header class="post__header">
-        <span v-if="eventTypes.items[0]" class="post__category">{{
-          eventTypes.items[0].eventType.name
-        }}</span>
+        <span v-if="eventTypes.items[0]" class="post__category"
+          ><a href="#">{{ eventTypes.items[0].eventType.name }}</a></span
+        >
         <h1 class="post__title">{{ title }}</h1>
         <div class="post__meta">
           <ul class="post__meta-list">
