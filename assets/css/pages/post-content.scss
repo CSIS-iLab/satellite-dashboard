@@ -37,7 +37,7 @@
     }
   }
 
-  figure {
+  figure:not(.table) {
     float: right;
   }
 
@@ -91,9 +91,10 @@
 
   table {
     @extend %font-post-text-md;
-    display: flex;
-    align-items: center;
-    padding: rem(32px) rem(4px);
+    width: 100%;
+    margin: rem(32px) 0;
+    text-align: left;
+    border-collapse: collapse;
 
     caption {
       @extend %font-post-heading-table-title;
@@ -101,23 +102,25 @@
       text-align: center;
     }
 
-    tr:first-child {
-      border: 1px solid $color-black-120;
-    }
-
-    tr:nth-child(odd) {
-      background-color: $color-ltblue-115;
-    }
-
-    th {
+    thead {
       @extend %font-ui-text-base-oxygen;
       font-weight: bold;
+      border-bottom: 1px solid $color-black-120;
     }
+    /* stylelint-disable */
+    tbody tr:nth-child(odd) {
+      background-color: $color-ltblue-115;
+    }
+    /* stylelint-enable */
 
     th,
     td {
-      margin: rem(12px) rem(20px);
+      padding: rem(12px) 0 rem(12px) rem(24px);
       color: $color-black-190;
+    }
+
+    p {
+      margin-bottom: 0;
     }
   }
 
