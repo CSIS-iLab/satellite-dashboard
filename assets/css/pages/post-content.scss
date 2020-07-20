@@ -39,6 +39,14 @@
 
   figure:not(.table) {
     float: right;
+    clear: both;
+    margin-bottom: rem(32px);
+  }
+
+  .image {
+    // width: 33%;
+    max-width: rem(304px);
+    margin-left: rem(48px);
   }
 
   figcaption {
@@ -49,6 +57,7 @@
 
   blockquote {
     float: right;
+    clear: both;
     max-width: rem(304px);
     margin-left: rem(48px);
     padding: 0 !important;
@@ -87,6 +96,10 @@
     @include breakpoint('medium') {
       margin-bottom: rem(32px);
     }
+  }
+
+  .table {
+    margin: 0 rem(80px);
   }
 
   table {
