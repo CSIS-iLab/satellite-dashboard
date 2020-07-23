@@ -10,7 +10,7 @@
     margin-left: rem(8px);
   }
 
-  .share {
+  &__list {
     display: flex;
     align-items: center;
     color: $color-ltblue-175;
@@ -19,10 +19,13 @@
     letter-spacing: 0.025em;
   }
 
-  #copyText {
-    margin: 0;
-    padding: 0;
-    background: none;
+  .btn--copy {
+    background: transparent;
     border: 0;
+    border-radius: 0;
+  }
+
+  #copyText {
+    display: none;
   }
 }

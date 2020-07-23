@@ -40,14 +40,10 @@
         /></a>
       </li>
       <li class="social-share__item">
-        <button
-          id="copyText"
-          :href="linkURL"
-          aria-label="Share Link"
-          @click.stop.prevent="copy"
-        >
+        <button class="btn--copy" aria-label="Share Link" @click="copy">
           <Icon id="link" class="icon" name="link" />
         </button>
+        <input id="copyText" type="hidden" :value="linkURL" />
       </li>
     </ul>
   </div>
@@ -87,10 +83,9 @@ export default {
     linkURL() {
       return `${this.siteURL}`
     }
-  }
-  /*methods: {
-    copy:
-    function copy() {
+  },
+  methods: {
+    copy: function copy() {
       let copyText = document.querySelector('#copyText')
 
       copyText.setAttribute('type', 'text')
@@ -106,7 +101,8 @@ export default {
 
       copyText.setAttribute('type', 'hidden')
       window.getSelection().removeAllRanges()
-    }*/
+    }
+  }
 }
 </script>
 
