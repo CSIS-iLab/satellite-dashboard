@@ -1,18 +1,18 @@
 <template>
   <footer class="footer">
+    <Social />
     <Copyright />
-    <Icon name="twitter" />
   </footer>
 </template>
 
 <script>
 import Copyright from '~/components/global/Copyright.vue'
-import Icon from '~/components/global/Icon.vue'
+import Social from '~/components/global/SocialMedia.vue'
 
 export default {
   components: {
     Copyright,
-    Icon
+    Social
   }
 }
 </script>

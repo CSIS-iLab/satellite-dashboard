@@ -1,0 +1,30 @@
+.social-media {
+  display: flex;
+  align-items: center;
+  margin: 0 rem(8px);
+  color: $color-white-170;
+  @extend %font-ui-text-sm-oxygen;
+  letter-spacing: 0.025em;
+
+  > li + li {
+    margin-left: rem(16px);
+  }
+
+  .icon {
+    margin-right: rem(8px);
+    font-size: 1.4em;
+  }
+
+  a {
+    display: flex;
+    align-items: center;
+
+    &:hover {
+      color: $color-orangedull-100;
+    }
+  }
+
+  .footer & {
+    margin: rem(32px) 0;
+  }
+}
