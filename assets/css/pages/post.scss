@@ -1,52 +1,28 @@
-body {
-  &::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    z-index: -1;
-    width: 33vw;
-    background: #f00;
-  }
-}
-
 .post {
   color: $color-white-100;
 
-  // Dark sidebar
-  @include breakpoint('medium') {
-    &__side {
-      position: fixed;
-      top: 0;
-      right: 0;
-      z-index: -1;
-      width: 37.3vw;
-      height: 100%;
-      background: rgba(35, 39, 43, 0.27);
-      backdrop-filter: blur(20px);
-    }
-  }
-
   .container {
-    @include full-width-background(#f00, right, true);
+    @include full-width-background(rgba(35, 39, 43, 0.27), right, true);
 
-    /* Create the gray background behind 1/3 of the article. Extend it beyond the top of the article to ensure it goes all the way to the top of the page. The width is 1/3 of the article + (100% of the screen width - 100% of the width of the article). */
-    &:right {
-      // Make sure it covers the header
-      top: -50vh;
-      // Adjust starting position so it overlaps the article by the required amount.
-      left: calc(100% - var(--container-padding) - 33% + 40px);
-      z-index: -1;
-      // Because we adjusted the starting position, increase the width by that same amount to ensure it extends all the way to the edge of the screen.
-      /* stylelint-disable */
-      width: calc(
-        ((100vw - var(--scrollbar)) - 100%) / 2 + var(--container-padding) + 33% -
-          40px
-      );
-      /* stylelint-enable */
-      // Adjust the height in the same way since we adjusted the top point.
-      height: calc(100% + 50vh);
+    @include breakpoint('medium') {
+      /* Create the gray background behind 1/3 of the article. Extend it beyond the top of the article to ensure it goes all the way to the top of the page. The width is 1/3 of the article + (100% of the screen width - 100% of the width of the article). */
+      &::after {
+        // Make sure it covers the header
+        top: -50vh;
+        // Adjust starting position so it overlaps the article by the required amount.
+        left: calc(100% - var(--container-padding) - 33% + 40px);
+        z-index: -1;
+        backdrop-filter: blur(20px);
+        // Because we adjusted the starting position, increase the width by that same amount to ensure it extends all the way to the edge of the screen.
+        /* stylelint-disable */
+        width: calc(
+          ((100vw - var(--scrollbar)) - 100%) / 2 + var(--container-padding) +
+            33% - 40px
+        );
+        /* stylelint-enable */
+        // Adjust the height in the same way since we adjusted the top point.
+        height: calc(100% + 50vh);
+      }
     }
   }
 
@@ -120,6 +96,7 @@ body {
 
   &__sat-table {
     @extend %font-ui-text-base-oxygen;
+    width: 100%;
     margin-top: rem(24px);
     border-collapse: collapse;
 
@@ -150,6 +127,14 @@ body {
       color: $color-white-150;
       text-transform: uppercase;
     }
+
+    .desktop {
+      display: none;
+
+      @include breakpoint('medium') {
+        display: table-cell;
+      }
+    }
   }
 
   // Structure of post content
@@ -157,6 +142,7 @@ body {
   &__content {
     @extend %page-content;
     position: relative;
+    z-index: 1;
 
     > *:not([class]) {
       padding: 0 calc(50% - #{$size__content-max-width} / 2);
@@ -174,6 +160,13 @@ body {
     @include full-width-background(rgba(245, 245, 245, 0.9), true);
     padding: 0 calc(50% - #{$size__content-max-width} / 2);
     background-color: rgba(245, 245, 245, 0.9);
+
+    @include breakpoint('medium') {
+      &::before,
+      &::after {
+        display: none;
+      }
+    }
 
     &-footnote {
       @extend %font-post-text-footnote-list;
@@ -196,6 +189,10 @@ body {
       height: 100%;
       padding-bottom: rem(8px);
       color: $color-black-190;
+
+      &:last-child {
+        padding-bottom: rem(64px);
+      }
     }
 
     &-source {
@@ -240,14 +237,13 @@ body {
   // Post footer
 
   &__footer {
-    margin: rem(24px) 0;
+    padding: rem(24px) 0;
 
     @include breakpoint('medium') {
       display: grid;
       grid-template-columns: 2fr 1fr;
-      margin: rem(56px) 0 rem(48px) 0;
+      padding: rem(56px) 0 rem(48px) 0;
       column-gap: rem(40px);
-      // display: flex;
     }
   }
 
@@ -317,6 +313,7 @@ body {
       background-color: $color-slate-200;
 
       @include breakpoint('medium') {
+        flex: 1 1 50%;
         width: 50vw;
       }
 

@@ -56,27 +56,24 @@
   }
 
   blockquote {
-    position: relative;
-    float: right;
-    clear: both;
     max-width: rem(304px);
-    margin-left: rem(48px);
+    margin: 0 auto;
     padding: 0 !important;
+
+    @include breakpoint('medium') {
+      position: relative;
+      float: right;
+      clear: both;
+      margin-left: rem(48px);
+    }
 
     p {
       @extend %font-post-text-blockquote;
       width: 100%;
 
       &::before {
-        // content: url('~assets/img/quote-icon.png');
-        content: '';
-        display: inline-block;
-        width: 100px;
-        height: 100px;
+        content: url('~assets/img/icon-quotes.svg');
         padding-right: rem(8px);
-        background: url('~static/symbols.svg#icon-quotes');
-        background-position: center;
-        background-size: cover;
       }
     }
   }

@@ -28,8 +28,8 @@
             <tr>
               <th>Object Name</th>
               <th>Country</th>
-              <th>User</th>
-              <th>Operator</th>
+              <th class="desktop">User</th>
+              <th class="desktop">Operator</th>
               <th></th>
             </tr>
           </thead>
@@ -37,8 +37,10 @@
             <tr v-for="sat in satellites.items" :key="sat.id">
               <td>{{ sat.satellite.launchVehicle }}</td>
               <td>{{ sat.satellite.countryOfJurisdiction }}</td>
-              <td>NEED DATA FOR USER(IE GOV'T OR COMMERCIAL)</td>
-              <td>{{ operator }}</td>
+              <td class="desktop">
+                NEED DATA FOR USER(IE GOV'T OR COMMERCIAL)
+              </td>
+              <td class="desktop">{{ operator }}</td>
               <td><a href="#">NEED URL</a></td>
             </tr>
           </tbody>
@@ -86,7 +88,6 @@
         </div>
       </footer>
     </div>
-    <div class="post__side"></div>
     <section>
       <div class="post__related-wrapper">
         <template v-for="relatedPost in relatedPosts">
