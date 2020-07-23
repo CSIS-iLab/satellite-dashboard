@@ -1,27 +1,13 @@
 .post-block {
   position: relative;
-  display: grid;
-  grid-template-columns: rem(150px) auto;
-  align-items: center;
-  column-gap: rem(16px);
-
-  @include breakpoint('medium') {
-    grid-template-columns: 2fr 1fr;
-    column-gap: rem(40px);
-  }
+  margin: rem(32px) auto rem(64px) auto;
 
   &__category {
-    grid-column: 1 / span 2;
-    grid-row: 1 / span 1;
     color: $color-orange-180;
     @extend %font-ui-text-base-oxygen;
     font-weight: bold;
     letter-spacing: 0.03em;
     text-transform: uppercase;
-
-    @include breakpoint('medium') {
-      grid-column: 1 / span 1;
-    }
 
     .visualizer & {
       display: none;
@@ -29,8 +15,6 @@
   }
 
   &__title {
-    grid-column: 1 / span 2;
-    grid-row: 2 / span 1;
     margin-top: rem(4px);
     color: $color-white-190;
     @extend %font-ui-heading-post-block-title;
@@ -40,7 +24,6 @@
     }
 
     @include breakpoint('medium') {
-      grid-column: 1 / span 1;
       margin: 0;
     }
 
@@ -62,15 +45,12 @@
   }
 
   &__excerpt {
-    grid-column: 1 / span 2;
-    grid-row: 4 / span 1;
     margin: rem(16px) 0 rem(24px) 0;
     color: $color-white-180;
     @extend %font-ui-text-lg-oxygen;
     line-height: 1.5;
 
     @include breakpoint('medium') {
-      grid-column: 1 / span 1;
       margin-bottom: rem(32px);
     }
 
@@ -84,21 +64,6 @@
       &:last-child {
         border-bottom: hidden;
       }
-    }
-  }
-
-  &__image {
-    grid-column: 1 / span 1;
-    grid-row: 3 / span 1;
-    align-self: start;
-
-    @include breakpoint('medium') {
-      grid-column: 2 / span 1;
-      grid-row: 1 / span 4;
-    }
-
-    .visualizer & {
-      display: none;
     }
   }
 }

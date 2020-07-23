@@ -3,10 +3,6 @@
     <div v-if="data.eventTypes.items[0]" class="post-block__category">
       {{ data.eventTypes.items[0].eventType.name }}
     </div>
-    <nuxt-link class="post-block__image" :to="nestedSlug">
-      <!-- <img class="post-block__image" :src="'./' + getImage" alt="" /> -->
-      <img src="http://placekitten.com/200/138" />
-    </nuxt-link>
     <h2 class="post-block__title">
       <nuxt-link :to="nestedSlug">{{ data.title }}</nuxt-link>
     </h2>
