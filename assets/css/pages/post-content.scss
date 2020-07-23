@@ -56,6 +56,7 @@
   }
 
   blockquote {
+    position: relative;
     float: right;
     clear: both;
     max-width: rem(304px);
@@ -67,8 +68,15 @@
       width: 100%;
 
       &::before {
-        content: url('~assets/img/quote-icon.png');
+        // content: url('~assets/img/quote-icon.png');
+        content: '';
+        display: inline-block;
+        width: 100px;
+        height: 100px;
         padding-right: rem(8px);
+        background: url('~static/symbols.svg#icon-quotes');
+        background-position: center;
+        background-size: cover;
       }
     }
   }

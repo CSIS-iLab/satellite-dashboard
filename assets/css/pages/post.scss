@@ -171,6 +171,7 @@ body {
   // Further reading section
 
   &__further {
+    @include full-width-background(rgba(245, 245, 245, 0.9), true);
     padding: 0 calc(50% - #{$size__content-max-width} / 2);
     background-color: rgba(245, 245, 245, 0.9);
 
