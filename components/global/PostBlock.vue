@@ -55,7 +55,9 @@ export default {
       return this.data.featureImage.key
     },
     formatDate() {
-      let date = new Date(this.data.postDate)
+      console.log(this.data.postDate)
+      let formattedDate = this.data.postDate.replace('-', '/')
+      let date = new Date(formattedDate)
       const options = {
         year: 'numeric',
         month: 'short',
