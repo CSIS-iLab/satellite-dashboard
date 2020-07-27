@@ -88,27 +88,25 @@
         </div>
       </footer>
     </div>
-    <section>
-      <div class="post__related-wrapper">
-        <template v-for="relatedPost in relatedPosts">
-          <div :key="relatedPost.id" class="post__related-block">
-            <nuxt-link
-              :to="'/analysis/' + relatedPost.slug"
-              class="post__related-link"
-            >
-              <h2 class="post__related-title">
-                {{ relatedPost.title }}
-              </h2>
-              <p class="post__related-author">
-                Written By {{ relatedPost.authors.items[0].author.name }}
-              </p>
-              <p class="post__related-date">
-                Published {{ formatDate(relatedPost.postDate) }}
-              </p>
-            </nuxt-link>
-          </div>
-        </template>
-      </div>
+    <section class="post__related-wrapper">
+      <template v-for="relatedPost in relatedPosts">
+        <div :key="relatedPost.id" class="post__related-block">
+          <nuxt-link
+            :to="'/analysis/' + relatedPost.slug"
+            class="post__related-link"
+          >
+            <h2 class="post__related-title">
+              {{ relatedPost.title }}
+            </h2>
+            <p class="post__related-author">
+              Written By {{ relatedPost.authors.items[0].author.name }}
+            </p>
+            <p class="post__related-date">
+              Published {{ formatDate(relatedPost.postDate) }}
+            </p>
+          </nuxt-link>
+        </div>
+      </template>
     </section>
   </article>
 </template>
