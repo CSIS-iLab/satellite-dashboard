@@ -1,0 +1,27 @@
+.post-meta {
+  grid-column: 2 / span 1;
+  grid-row: 3 / span 1;
+  align-items: center;
+  margin: 0;
+  color: $color-white-180;
+  @extend %font-ui-text-lg-oxygen;
+
+  @include breakpoint('medium') {
+    display: flex;
+    grid-column: 1 / span 1;
+    margin-top: rem(8px);
+  }
+
+  &__label {
+    display: table;
+    color: $color-white-150;
+    @extend %font-ui-text-base-oxygen;
+  }
+
+  .visualizer & {
+    @extend %font-ui-text-sm-oxygen;
+    margin-top: rem(4px);
+    color: $color-white-170;
+    letter-spacing: 0.025em;
+  }
+}
