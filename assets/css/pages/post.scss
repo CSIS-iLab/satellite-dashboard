@@ -208,9 +208,7 @@
         margin: 0 rem(8px);
       }
     }
-  }
 
-  &__link {
     &-circle {
       --color3: #{$color-blue-170};
       display: flex;
@@ -221,21 +219,19 @@
       font-size: 1.2em;
       border: 1px solid $color-ltblue-175;
       border-radius: 50%;
-
-      &:hover {
-        --color3: #{$color-blue-100};
-        background-color: $color-ltblue-130;
-        border-color: $color-ltblue-130;
-        transition: all 0.3s ease-in-out;
-      }
+      transition: all 0.3s ease-in-out;
 
       &:focus {
         border: 1px solid #52afe1;
       }
     }
 
-    &-icon {
-      transition: all 0.3s ease-in-out;
+    &-link:hover + &-circle,
+    &-circle:hover {
+      --color3: #{$color-blue-100};
+      background-color: $color-ltblue-130;
+      border: hidden;
+      border-color: $color-ltblue-130;
     }
   }
 

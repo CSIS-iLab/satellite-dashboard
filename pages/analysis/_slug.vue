@@ -59,8 +59,8 @@
               <span class="post__further-source">{{ reading.author }}</span>
             </a>
             <!-- <div class="post__further-icon"></div> -->
-            <a :href="reading.url" class="post__link-circle">
-              <Icon class="post__link-icon" name="external-link" />
+            <a :href="reading.url" class="post__further-circle">
+              <Icon class="post__further-icon" name="external-link" />
             </a>
           </div>
         </template>
