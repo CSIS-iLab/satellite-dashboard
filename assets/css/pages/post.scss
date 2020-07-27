@@ -101,7 +101,12 @@
     border-collapse: collapse;
 
     thead {
-      background-color: #181b1f;
+      background-color: $color-slate-500;
+      border-bottom: 1px solid $color-white-115;
+    }
+
+    tbody tr:not(:last-child) {
+      border-bottom: 1px solid $color-white-110;
     }
 
     th,
