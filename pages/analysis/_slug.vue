@@ -51,8 +51,10 @@
       <section class="post__content entry-content" v-html="content"></section>
       <section class="post__further">
         <p class="post__further-footnote">FOOTNOTES GO HERE</p>
-        <h2 class="post__further-header">Further Reading</h2>
         <template v-for="reading in furtherReadings">
+          <h2 :key="reading.url" class="post__further-header">
+            Further Reading
+          </h2>
           <div :key="reading.url" class="post__further-article">
             <a :href="reading.url" class="post__further-link">
               {{ reading.name }}
