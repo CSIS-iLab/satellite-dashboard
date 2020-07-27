@@ -183,7 +183,7 @@
     &-header {
       @extend %font-ui-heading-section-lg;
       margin: rem(32px) 0 rem(16px) 0;
-      color: #0c1013;
+      color: $color-slate-800;
     }
 
     &-article {
