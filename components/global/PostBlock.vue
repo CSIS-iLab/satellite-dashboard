@@ -4,7 +4,7 @@
       {{ data.eventTypes.items[0].eventType.name }}
     </div>
     <h2 class="post-block__title">
-      <nuxt-link :to="nestedSlug" no-prefetch>{{ data.title }}</nuxt-link>
+      <nuxt-link :to="nestedSlug" append>{{ data.title }}</nuxt-link>
     </h2>
     <div class="post-meta">
       <div class="post-meta__block post-block__date">
@@ -44,7 +44,7 @@ export default {
   },
   computed: {
     nestedSlug() {
-      return `analysis/${this.data.slug}`
+      return `${this.data.slug}`
     },
     formatDate() {
       let formattedDate = this.data.postDate.replace('-', '/')
