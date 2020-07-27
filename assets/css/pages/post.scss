@@ -221,12 +221,12 @@
       font-size: 1.2em;
       border: 1px solid $color-ltblue-175;
       border-radius: 50%;
-      transition: all 1.5s;
 
       &:hover {
         --color3: #{$color-blue-100};
         background-color: $color-ltblue-130;
         border-color: $color-ltblue-130;
+        transition: all 0.3s ease-in-out;
       }
 
       &:focus {
@@ -235,7 +235,7 @@
     }
 
     &-icon {
-      transition: all 1.5s;
+      transition: all 0.3s ease-in-out;
     }
   }
 
