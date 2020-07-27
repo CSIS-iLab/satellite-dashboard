@@ -324,6 +324,7 @@
 
       &:hover {
         background-color: $color-slate-300;
+        transition: all 0.3s ease-in-out;
       }
     }
 
