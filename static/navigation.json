@@ -1,0 +1,27 @@
+{
+  "home": {
+    "title": "home",
+    "url": "localhost:3000",
+    "id": "home"
+  },
+  "key-events": {
+    "title": "key-events",
+    "url": "localhost:3000/key-events",
+    "id": "key-events"
+  },
+  "analysis": {
+    "title": "analysis",
+    "url": "localhost:3000/analysis",
+    "id": "analysis"
+  },
+  "about": {
+    "title": "about",
+    "url": "localhost:3000/about",
+    "id": "about"
+  },
+  "glossary": {
+    "title": "glossary",
+    "url": "localhost:3000/glossary",
+    "id": "glossary"
+  }
+}
