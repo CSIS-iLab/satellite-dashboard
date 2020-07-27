@@ -334,8 +334,9 @@
       vertical-align: middle;
 
       &:hover .post__related-title {
-        padding-bottom: rem(12px);
         color: $color-white-100;
+        transform: translate(0, rem(-4px));
+        transition: all 0.3s ease-in-out;
       }
     }
 
