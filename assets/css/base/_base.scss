@@ -1,5 +1,6 @@
 body {
-  --scrollbar: 0;
+  /* stylelint-disable-next-line */
+  --scrollbar: 0px;
   font-family: $font__oxygen;
 }
 

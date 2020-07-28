@@ -1,15 +1,356 @@
 .post {
+  color: $color-white-100;
+
+  .container {
+    @include full-width-background(rgba(35, 39, 43, 0.27), right, true);
+
+    @include breakpoint('medium') {
+      /* Create the gray background behind 1/3 of the article. Extend it beyond the top of the article to ensure it goes all the way to the top of the page. The width is 1/3 of the article + (100% of the screen width - 100% of the width of the article). */
+      &::after {
+        // Make sure it covers the header
+        top: -50vh;
+        // Adjust starting position so it overlaps the article by the required amount.
+        left: calc(100% - var(--container-padding) - 33% + 40px);
+        z-index: -1;
+        backdrop-filter: blur(20px);
+        // Because we adjusted the starting position, increase the width by that same amount to ensure it extends all the way to the edge of the screen.
+        /* stylelint-disable */
+        width: calc(
+          ((100vw - var(--scrollbar)) - 100%) / 2 + var(--container-padding) +
+            33% - 40px
+        );
+        /* stylelint-enable */
+        // Adjust the height in the same way since we adjusted the top point.
+        height: calc(100% + 50vh);
+      }
+    }
+  }
+
+  // Post header section
+
   &__header {
     @extend %page-header;
+
+    @include breakpoint('medium') {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      column-gap: rem(42px);
+    }
   }
+
+  &__category {
+    @extend %font-ui-text-base-oxygen;
+    color: $color-orange-100;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-shadow: 0 rem(4px) rem(4px) rgba(0, 0, 0, 0.25);
+  }
+
+  &__title {
+    @extend %font-ui-heading-page-title-post;
+    color: $color-white-190;
+  }
+
+  &__meta {
+    @extend %font-ui-text-base-oxygen;
+    display: grid;
+    color: $color-white-150;
+
+    @include breakpoint('medium') {
+      display: block;
+      grid-column: 2;
+      grid-row: 1 / span 4;
+      padding-left: rem(32px);
+    }
+
+    li {
+      margin-bottom: rem(16px);
+    }
+
+    span {
+      @extend %font-ui-text-lg-oxygen;
+      display: table;
+      color: $color-white-180;
+    }
+
+    &-author {
+      grid-row: 1;
+    }
+
+    &-date {
+      grid-column: 1;
+      grid-row: 2;
+    }
+
+    &-updated {
+      grid-column: 2;
+      grid-row: 2;
+    }
+  }
+
+  &__excerpt {
+    @extend %font-ui-text-lg-oxygen;
+    margin-top: rem(8px);
+    color: $color-white-180;
+  }
+
+  &__sat-table {
+    @extend %font-ui-text-base-oxygen;
+    width: 100%;
+    margin-top: rem(24px);
+    border-collapse: collapse;
+
+    thead {
+      background-color: $color-slate-500;
+      border-bottom: 1px solid $color-white-115;
+    }
+
+    tbody tr:not(:last-child) {
+      border-bottom: 1px solid $color-white-110;
+    }
+
+    th,
+    td {
+      padding: rem(16px) rem(24px) rem(16px) 0;
+
+      &:first-child {
+        padding-left: rem(24px);
+      }
+    }
+
+    th {
+      @extend %font-ui-text-sm-oxygen;
+      color: $color-white-170;
+      font-weight: bold;
+      white-space: nowrap;
+      text-align: left;
+      text-transform: uppercase;
+    }
+
+    a {
+      @extend %font-ui-text-base-good;
+      color: $color-white-150;
+      text-transform: uppercase;
+    }
+
+    .desktop {
+      display: none;
+
+      @include breakpoint('medium') {
+        display: table-cell;
+      }
+    }
+  }
+
+  // Structure of post content
 
   &__content {
     @extend %page-content;
-    @extend %page-content-bg;
-    @extend %font-post-text-lg;
+    position: relative;
+    z-index: 1;
 
     > *:not([class]) {
       padding: 0 calc(50% - #{$size__content-max-width} / 2);
+    }
+
+    @include breakpoint('medium') {
+      box-shadow: 0 0 1px rgba(0, 0, 0, 0.14), 0 2px 6px rgba(0, 0, 0, 0.04),
+        0 2px 12px rgba(0, 0, 0, 0.34);
+    }
+  }
+
+  // Further reading section
+
+  &__further {
+    @include full-width-background(rgba(245, 245, 245, 0.9), true);
+    padding: 0 calc(50% - #{$size__content-max-width} / 2);
+    background-color: rgba(245, 245, 245, 0.9);
+
+    @include breakpoint('medium') {
+      &::before,
+      &::after {
+        display: none;
+      }
+    }
+
+    &-footnote {
+      @extend %font-post-text-footnote-list;
+      padding: rem(64px) 0 rem(56px) 0;
+      color: $color-black-160;
+      border-bottom: rem(1px) solid $color-black-120;
+    }
+
+    &-header {
+      @extend %font-ui-heading-section-lg;
+      margin: rem(32px) 0 rem(16px) 0;
+      color: $color-slate-800;
+    }
+
+    &-article {
+      @extend %font-post-text-lg-list;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 100%;
+      padding-bottom: rem(8px);
+      color: $color-black-190;
+
+      &:last-child {
+        padding-bottom: rem(64px);
+      }
+    }
+
+    &-source {
+      color: $color-black-160;
+
+      &::before {
+        content: '|';
+        margin: 0 rem(8px);
+      }
+    }
+
+    &-circle {
+      --color3: #{$color-blue-170};
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: rem(40px);
+      height: rem(40px);
+      font-size: 1.2em;
+      border: 1px solid $color-ltblue-175;
+      border-radius: 50%;
+      transition: all 0.3s ease-in-out;
+
+      &:focus {
+        border: 1px solid #52afe1;
+      }
+    }
+
+    &-link:hover + &-circle,
+    &-circle:hover {
+      --color3: #{$color-blue-100};
+      background-color: $color-ltblue-130;
+      border: hidden;
+      border-color: $color-ltblue-130;
+    }
+  }
+
+  // Post footer
+
+  &__footer {
+    padding: rem(24px) 0;
+
+    @include breakpoint('medium') {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      padding: rem(56px) 0 rem(48px) 0;
+      column-gap: rem(40px);
+    }
+  }
+
+  &__author {
+    &-bio {
+      @extend %font-post-text-md;
+      margin-bottom: rem(24px);
+      color: $color-white-180;
+
+      @include breakpoint('medium') {
+        margin-bottom: rem(32px);
+      }
+    }
+
+    &-name {
+      font-weight: bold;
+    }
+  }
+
+  &__tag {
+    @include breakpoint('medium') {
+      margin-left: rem(32px);
+    }
+
+    &-header {
+      @extend %font-ui-text-base-oxygen;
+      color: $color-white-150;
+      text-transform: capitalize;
+    }
+
+    &-name {
+      @extend %font-post-text-md;
+      display: inline-block;
+      color: $color-white-190;
+      font-weight: bold;
+      text-transform: uppercase;
+      text-decoration: none;
+
+      &:hover {
+        color: $color-orange-100;
+      }
+
+      &:not(:last-child)::after {
+        content: ',';
+        padding-right: rem(4px);
+      }
+    }
+  }
+
+  // Related posts
+
+  &__related {
+    &-wrapper {
+      width: 100vw;
+
+      @include breakpoint('medium') {
+        display: flex;
+      }
+    }
+
+    &-block {
+      display: table;
+      width: 100vw;
+      height: rem(240px);
+      overflow: hidden;
+      text-align: center;
+      background-color: $color-slate-200;
+
+      @include breakpoint('medium') {
+        flex: 1 1 50%;
+        width: 50vw;
+      }
+
+      &:hover {
+        background-color: $color-slate-300;
+        transition: all 0.3s ease-in-out;
+      }
+    }
+
+    &-link {
+      z-index: 2;
+      display: table-cell;
+      padding: rem(24px) rem(32px);
+      vertical-align: middle;
+
+      &:hover .post__related-title {
+        color: $color-white-100;
+        transform: translate(0, rem(-4px));
+        transition: all 0.3s ease-in-out;
+      }
+    }
+
+    &-title {
+      @extend %font-ui-heading-section-lg;
+      color: $color-white-190;
+    }
+
+    &-title,
+    &-author {
+      padding-bottom: rem(8px);
+    }
+
+    &-author,
+    &-date {
+      @extend %font-ui-text-lg-oxygen;
+      color: $color-white-180;
     }
   }
 }
