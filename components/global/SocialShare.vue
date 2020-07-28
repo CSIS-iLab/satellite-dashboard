@@ -1,6 +1,6 @@
 <template>
   <div class="social-share">
-    <div class="social-share__text">SHARE</div>
+    <div class="social-share__text">Share</div>
     <ul class="social-share__list">
       <li class="social-share__item">
         <a
@@ -90,14 +90,6 @@ export default {
 
       copyText.setAttribute('type', 'text')
       copyText.select()
-
-      try {
-        var successful = document.execCommand('copy')
-        var msg = successful ? 'successful' : 'unsuccessful'
-        alert('Link copied!' + msg)
-      } catch (err) {
-        alert('Oops, unable to copy')
-      }
 
       copyText.setAttribute('type', 'hidden')
       window.getSelection().removeAllRanges()
