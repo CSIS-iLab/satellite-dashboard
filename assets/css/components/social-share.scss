@@ -10,13 +10,21 @@
     margin-left: rem(8px);
   }
 
+  a:hover {
+    color: $color-orange-100
+  }
+
   &__list {
     display: flex;
     align-items: center;
     color: $color-ltblue-175;
     font-weight: bold;
-    font-size: rem(12px);
+    @include font-size(12px);
     letter-spacing: 0.025em;
+  }
+
+  &__text {
+    text-transform: uppercase;
   }
 
   .btn--copy {
