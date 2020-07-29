@@ -1,0 +1,39 @@
+.social-share {
+  display: flex;
+  align-items: center;
+  margin: 0 rem(8px);
+  color: $color-white-170;
+  @extend %font-ui-text-sm-oxygen;
+
+  .icon {
+    margin-right: rem(8px);
+    margin-left: rem(8px);
+  }
+
+  a:hover {
+    color: $color-orange-100;
+  }
+
+  &__list {
+    display: flex;
+    align-items: center;
+    color: $color-ltblue-175;
+    font-weight: bold;
+    @include font-size(12px);
+    letter-spacing: 0.025em;
+  }
+
+  &__text {
+    text-transform: uppercase;
+  }
+
+  .btn--copy {
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+  }
+
+  #copyText {
+    display: none;
+  }
+}
