@@ -1,27 +1,27 @@
-{
-  "visualizer": {
-    "title": "visualizer",
+[
+  {
+    "title": "Visualizer",
     "url": "/",
     "id": "visualizer"
   },
-  "key-events": {
-    "title": "key-events",
+  {
+    "title": "Key Events",
     "url": "/key-events",
     "id": "key-events"
   },
-  "analysis": {
-    "title": "analysis",
+  {
+    "title": "Analysis",
     "url": "/analysis",
     "id": "analysis"
   },
-  "about": {
-    "title": "about",
+  {
+    "title": "About",
     "url": "/about",
     "id": "about"
   },
-  "glossary": {
-    "title": "glossary",
+  {
+    "title": "Glossary",
     "url": "/glossary",
     "id": "glossary"
   }
-}
+]

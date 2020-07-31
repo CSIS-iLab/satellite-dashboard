@@ -1,10 +1,16 @@
 <template>
-  <ol :class="parentClass">
-    <li class="visualizer">
-      <nuxt-link :to="nestedSlug" append>Visualizer</nuxt-link>
-    </li>
-    <li>Visualizer</li>
-  </ol>
+  <div :class="parentClass">
+    <p class="is-footer">Navigate</p>
+    <ol :class="parentClass + '__list'">
+      <li
+        v-for="page in data"
+        :key="page.id"
+        :class="[parentClass + '__' + page.id, parentClass + '__item']"
+      >
+        <nuxt-link :to="page.url">{{ page.title }}</nuxt-link>
+      </li>
+    </ol>
+  </div>
 </template>
 
 <script>
@@ -23,10 +29,6 @@ export default {
   computed: {
     parentClass() {
       return `nav-${this.name}`
-    },
-    nestedSlug() {
-      console.log(this.data)
-      return `${this.data.visualizer.url}`
     }
   }
 }
