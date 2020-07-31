@@ -1,5 +1,5 @@
 <template>
-  <div :class="parentClass">
+  <div class="nav" :class="parentClass">
     <p class="is-footer">Navigate</p>
     <ol :class="parentClass + '__list'">
       <li
