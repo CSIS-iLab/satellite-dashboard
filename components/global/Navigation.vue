@@ -3,18 +3,18 @@
     <p class="is-footer">Navigate</p>
     <ol :class="parentClass + '__list'">
       <li
-        v-for="page in data"
-        :key="page.id"
-        :class="[parentClass + '__' + page.id, parentClass + '__item']"
+        v-for="item in items"
+        :key="item.id"
+        :class="[parentClass + '__' + item.id, parentClass + '__item']"
       >
-        <nuxt-link :to="page.url">{{ page.title }}</nuxt-link>
+        <nuxt-link :to="item.url">{{ item.title }}</nuxt-link>
       </li>
     </ol>
   </div>
 </template>
 
 <script>
-import json from 'static/navigation.json'
+// import json from 'static/navigation.json'
 export default {
   name: 'Navigation',
   props: {
@@ -24,7 +24,35 @@ export default {
     }
   },
   data() {
-    return { data: json }
+    return {
+      items: [
+        {
+          title: 'Visualizer',
+          url: '/',
+          id: 'visualizer'
+        },
+        {
+          title: 'Key Events',
+          url: '/key-events',
+          id: 'key-events'
+        },
+        {
+          title: 'Analysis',
+          url: '/analysis',
+          id: 'analysis'
+        },
+        {
+          title: 'About',
+          url: '/about',
+          id: 'about'
+        },
+        {
+          title: 'Glossary',
+          url: '/glossary',
+          id: 'glossary'
+        }
+      ]
+    }
   },
   computed: {
     parentClass() {
