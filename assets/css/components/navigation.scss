@@ -19,7 +19,7 @@
   }
 
   &-footer {
-    .is-footer {
+    &__title {
       @extend %font-ui-text-sm-oxygen;
       margin-bottom: rem(4px);
       color: $color-ltblue-175;

@@ -1,7 +1,9 @@
 <template>
   <div class="nav" :class="parentClass">
-    <p class="is-footer">Navigate</p>
-    <ol :class="parentClass + '__list'">
+    <p v-if="parentClass == 'nav-footer'" :class="parentClass + '__title'">
+      Navigate
+    </p>
+    <ul :class="parentClass + '__list'">
       <li
         v-for="item in items"
         :key="item.id"
@@ -9,7 +11,7 @@
       >
         <nuxt-link :to="item.url">{{ item.title }}</nuxt-link>
       </li>
-    </ol>
+    </ul>
   </div>
 </template>
 
