@@ -9,7 +9,7 @@
     }
   }
 
-  &-header {
+  &--header {
     &__item:not(:last-child) {
       margin-bottom: rem(16px);
     }
