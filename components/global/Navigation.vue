@@ -1,6 +1,6 @@
 <template>
   <div class="nav" :class="parentClass">
-    <p v-if="parentClass == 'nav-footer'" :class="parentClass + '__title'">
+    <p v-if="parentClass == 'nav--footer'" :class="parentClass + '__title'">
       Navigate
     </p>
     <ul :class="parentClass + '__list'">
@@ -58,7 +58,7 @@ export default {
   },
   computed: {
     parentClass() {
-      return `nav-${this.name}`
+      return `nav--${this.name}`
     }
   }
 }
