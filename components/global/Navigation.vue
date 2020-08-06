@@ -8,6 +8,7 @@
         v-for="item in items"
         :key="item.id"
         :class="[parentClass + '__' + item.id, parentClass + '__item']"
+        class="nav__item"
       >
         <nuxt-link :to="item.url">{{ item.title }}</nuxt-link>
       </li>

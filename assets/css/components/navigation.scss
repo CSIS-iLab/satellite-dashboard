@@ -3,6 +3,12 @@
   color: $color-white-170;
   text-transform: capitalize;
 
+  &__item {
+    &:hover {
+      color: $color-white-180;
+    }
+  }
+
   &-header {
     &__item:not(:last-child) {
       margin-bottom: rem(16px);
@@ -25,15 +31,6 @@
 
     &__item:not(:last-child) {
       margin-bottom: rem(8px);
-    }
-  }
-
-  &--header,
-  &-footer {
-    &__item {
-      &:hover {
-        color: $color-white-180;
-      }
     }
   }
 }
