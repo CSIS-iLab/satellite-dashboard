@@ -1,0 +1,8 @@
+.footer {
+  margin-top: 4em;
+  margin-right: 2.5em;
+  margin-bottom: 2em;
+  margin-left: 2.5em;
+  color: $color-white-180;
+  @extend %font-ui-text-base-oxygen;
+}
