@@ -9,8 +9,8 @@
     </p>
     <Social />
     <Navigation name="footer" />
-    <h2 class="footer__learnAboutMoreHeader">Learn More About</h2>
-    <ul class="footer__learnAboutMore">
+    <h2 class="footer__learnMoreAboutHeader">Learn More About</h2>
+    <ul class="footer__learnMoreAbout">
       <li>
         <p><a href="">CSIS</a></p>
       </li>
