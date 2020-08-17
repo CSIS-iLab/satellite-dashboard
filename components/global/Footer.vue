@@ -9,18 +9,7 @@
     </p>
     <Social />
     <Navigation name="footer" />
-    <h2 class="footer__learnMoreAboutHeader">Learn More About</h2>
-    <ul class="footer__learnMoreAbout">
-      <li>
-        <p><a href="">CSIS</a></p>
-      </li>
-      <li>
-        <p><a href="#">Secure World Foundation</a></p>
-      </li>
-      <li>
-        <p><a href="#">University of Texas at Austin</a></p>
-      </li>
-    </ul>
+    <LearnMoreAbout name="footer" />
     <Copyright />
   </footer>
 </template>
@@ -30,13 +19,15 @@ import SiteLogo from '~/components/global/SiteLogo.vue'
 import Copyright from '~/components/global/Copyright.vue'
 import Social from '~/components/global/SocialMedia.vue'
 import Navigation from '~/components/global/Navigation.vue'
+import LearnMoreAbout from '~/components/global/LearnMoreAbout.vue'
 
 export default {
   components: {
     SiteLogo,
     Copyright,
     Social,
-    Navigation
+    Navigation,
+    LearnMoreAbout
   }
 }
 </script>

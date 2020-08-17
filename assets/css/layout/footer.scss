@@ -10,21 +10,3 @@
 .footer__description {
   width: 37.5em;
 }
-
-.footer__learnMoreAboutHeader {
-  @extend %font-ui-text-sm-oxygen;
-  margin-bottom: rem(4px);
-  color: $color-ltblue-175;
-  font-weight: bold;
-  text-transform: uppercase;
-}
-
-.footer__learnMoreAbout {
-  @extend %font-ui-text-lg-oxygen;
-  color: $color-white-170;
-  text-decoration: underline;
-  
-  p {
-    margin-bottom: rem(8px);
-  }
-}

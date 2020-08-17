@@ -1,0 +1,36 @@
+.footer__learnMoreAbout {
+  @extend %font-ui-text-lg-oxygen;
+  color: $color-white-170;
+
+  &__item {
+    &:hover {
+      color: $color-white-180;
+    }
+  }
+
+  &--header {
+    &__item:not(:last-child) {
+      margin-bottom: rem(16px);
+    }
+
+    &__glossary {
+      @extend %font-ui-text-base-oxygen;
+      color: $color-white-150;
+    }
+  }
+
+  &--footer {
+    &__title {
+      @extend %font-ui-text-sm-oxygen;
+      margin-bottom: rem(4px);
+      color: $color-ltblue-175;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    &__item:not(:last-child) {
+      margin-bottom: rem(8px);
+      text-decoration: underline;
+    }
+  }
+}
