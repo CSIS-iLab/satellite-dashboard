@@ -8,8 +8,24 @@
       nam!
     </p>
     <Social />
-    <Navigation name="footer" />
-    <LearnMoreAbout name="footer" />
+    <div class="wrapper">
+      <Navigation name="footer" />
+      <div class="footer__learnMoreAbout" :class="parentClass">
+        <h2 class="footer__learnMoreAboutHeader">
+          Learn More About
+        </h2>
+        <ul :class="parentClass + '__list'">
+          <li
+            v-for="item in items"
+            :key="item.id"
+            :class="[parentClass + '__' + item.id, parentClass + '__item']"
+            class="footer__learnMoreAbout__item"
+          >
+            <a :href="item.url">{{ item.title }}</a>
+          </li>
+        </ul>
+      </div>
+    </div>
     <Copyright />
   </footer>
 </template>
@@ -19,15 +35,41 @@ import SiteLogo from '~/components/global/SiteLogo.vue'
 import Copyright from '~/components/global/Copyright.vue'
 import Social from '~/components/global/SocialMedia.vue'
 import Navigation from '~/components/global/Navigation.vue'
-import LearnMoreAbout from '~/components/global/LearnMoreAbout.vue'
 
 export default {
+  name: 'Footer',
   components: {
     SiteLogo,
     Copyright,
     Social,
-    Navigation,
-    LearnMoreAbout
+    Navigation
+  },
+
+  data() {
+    return {
+      items: [
+        {
+          title: 'Center for Strategic and International Studies',
+          url: 'https://www.csis.org',
+          id: 'center-for-strategic-and-international-studies'
+        },
+        {
+          title: 'Secure World Foundation',
+          url: 'https://swfound.org/',
+          id: 'secure-world-foundation'
+        },
+        {
+          title: 'University of Texas at Austin',
+          url: 'https://www.utexas.edu/',
+          id: 'universtiy-of-texas-at-austin'
+        }
+      ]
+    }
+  },
+  computed: {
+    parentClass() {
+      return `footer__learnMoreAbout--${this.name}`
+    }
   }
 }
 </script>

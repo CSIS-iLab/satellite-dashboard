@@ -8,5 +8,34 @@
 }
 
 .footer__description {
-  width: 37.5em;
+  width: 26.03em;
+}
+
+.footer__learnMoreAboutHeader {
+  @extend %font-ui-text-sm-oxygen;
+  margin-bottom: rem(4px);
+  color: $color-ltblue-175;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-decoration: none;
+
+}
+
+.footer__learnMoreAbout {
+  @extend %font-ui-text-lg-oxygen;
+  color: $color-white-170;
+  
+  a {
+    text-decoration: underline;
+  }
+
+  li {
+    margin-bottom: rem(8px);
+  }
+}
+
+.wrapper {
+  display: grid;
+  grid-column-gap: 3.31em;
+  grid-template-columns: 4.875em 12.68em;
 }
