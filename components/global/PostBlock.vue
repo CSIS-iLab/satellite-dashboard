@@ -1,32 +1,24 @@
 <template>
   <article class="post-component post-component--wide post-block">
-    <div v-if="data.eventTypes.items[0]" class="post-block__category">
+    <!-- <div v-if="data.eventTypes.items[0]" class="post-block__category">
       {{ data.eventTypes.items[0].eventType.name }}
-    </div>
+    </div> -->
     <h2 class="post-block__title">
-      <nuxt-link :to="nestedSlug" append>{{ data.title }}</nuxt-link>
+      <nuxt-link :to="nestedSlug" append>{{ data.title.rendered }}</nuxt-link>
     </h2>
-    <div class="post-meta">
-      <div class="post-meta__block post-block__date">
-        <span class="post-meta__label">Published</span>
-        {{ formatDate }}
-      </div>
-      <div
-        v-if="data.authors.items[0]"
-        class="post-meta__block post-block__author"
-      >
-        <span class="post-meta__label">Written By</span>
-        {{ data.authors.items[0].author.name }}
-      </div>
-    </div>
-    <div class="post-block__excerpt">
-      {{ data.excerpt }}
-    </div>
+    <PostMeta :date="data.date" :authors="data.authors" />
+    <!-- eslint-disable-next-line -->
+    <div class="post-block__excerpt" v-html="data.excerpt.rendered"></div>
   </article>
 </template>
 
 <script>
+import PostMeta from '~/components/global/PostMeta.vue'
+
 export default {
+  components: {
+    PostMeta
+  },
   props: {
     data: {
       type: Object,
@@ -47,8 +39,7 @@ export default {
       return `${this.data.slug}`
     },
     formatDate() {
-      let formattedDate = this.data.postDate.replace('-', '/')
-      let date = new Date(formattedDate)
+      let date = new Date(this.data.date)
       const options = {
         year: 'numeric',
         month: 'short',

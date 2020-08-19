@@ -36,14 +36,6 @@
     }
   }
 
-  &__author {
-    margin-top: rem(16px);
-
-    @include breakpoint('medium') {
-      margin: 0 0 0 rem(40px);
-    }
-  }
-
   &__excerpt {
     margin: rem(16px) 0 rem(24px) 0;
     color: $color-white-180;

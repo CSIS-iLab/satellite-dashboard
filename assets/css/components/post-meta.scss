@@ -1,19 +1,26 @@
 .post-meta {
-  grid-column: 2 / span 1;
-  grid-row: 3 / span 1;
-  align-items: center;
   margin: 0;
   color: $color-white-180;
   @extend %font-ui-text-lg-oxygen;
 
   @include breakpoint('medium') {
-    display: flex;
-    grid-column: 1 / span 1;
     margin-top: rem(8px);
   }
 
+  > * + * {
+    margin-top: rem(16px);
+  }
+
+  dd {
+    display: inline-block;
+
+    /* stylelint-disable-next-line */
+    + dd::before {
+      content: ', ';
+    }
+  }
+
   &__label {
-    display: table;
     color: $color-white-150;
     @extend %font-ui-text-base-oxygen;
   }
@@ -23,5 +30,30 @@
     margin-top: rem(4px);
     color: $color-white-170;
     letter-spacing: 0.025em;
+  }
+
+  .post-block & {
+    @include breakpoint('medium') {
+      display: flex;
+      align-items: flex-start;
+    }
+
+    /* stylelint-disable-next-line */
+    > * + * {
+      @include breakpoint('medium') {
+        margin-top: 0;
+        margin-left: rem(40px);
+      }
+    }
+  }
+
+  .post & dd {
+    @include breakpoint('medium') {
+      display: block;
+
+      &::before {
+        content: '';
+      }
+    }
   }
 }

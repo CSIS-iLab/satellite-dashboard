@@ -2,28 +2,16 @@
   <article class="post">
     <div class="container">
       <header class="post__header">
-        <span v-if="eventTypes.items[0]" class="post__category"
+        <!-- <span v-if="eventTypes.items[0]" class="post__category"
           ><a href="#">{{ eventTypes.items[0].eventType.name }}</a></span
-        >
-        <h1 class="post__title">{{ title }}</h1>
+        > -->
+        <h1 class="post__title">{{ post.title.rendered }}</h1>
         <div class="post__meta">
-          <ul class="post__meta-list">
-            <li v-if="authors.items[0]" class="post__meta-author">
-              Written by
-              <span v-for="auth in authors.items" :key="auth.id">{{
-                auth.author.name
-              }}</span>
-            </li>
-            <li class="post__meta-date">
-              Published <span>{{ formatDate(postDate) }}</span>
-            </li>
-            <li class="post__meta-updated">
-              Last updated <span>{{ formatDate(updatedAt) }}</span>
-            </li>
-          </ul>
+          <PostMeta :date="post.date" :authors="post.authors" />
         </div>
-        <p class="post__excerpt">{{ excerpt }}</p>
-        <table v-if="satellites.items[0]" class="post__sat-table">
+        <!-- eslint-disable-next-line -->
+        <div class="post__excerpt" v-html="post.excerpt.rendered"></div>
+        <!-- <table v-if="satellites.items[0]" class="post__sat-table">
           <thead>
             <tr>
               <th>Object Name</th>
@@ -44,14 +32,18 @@
               <td><a href="#">NEED URL</a></td>
             </tr>
           </tbody>
-        </table>
+        </table> -->
       </header>
 
-      <!-- eslint-disable-next-line -->
-      <section class="post__content entry-content" v-html="content"></section>
+      <!-- eslint-disable-->
+      <section
+        class="post__content entry-content"
+        v-html="post.content.rendered"
+      ></section>
+      <!-- eslint-enable-->
       <section class="post__further">
         <p class="post__further-footnote">FOOTNOTES GO HERE</p>
-        <template v-for="reading in furtherReadings">
+        <!-- <template v-for="reading in furtherReadings">
           <h2 :key="reading.url" class="post__further-header">
             Further Reading
           </h2>
@@ -60,15 +52,14 @@
               {{ reading.name }}
               <span class="post__further-source">{{ reading.author }}</span>
             </a>
-            <!-- <div class="post__further-icon"></div> -->
             <a :href="reading.url" class="post__further-circle">
               <Icon class="post__further-icon" name="external-link" />
             </a>
           </div>
-        </template>
+        </template> -->
       </section>
       <footer class="post__footer">
-        <div v-if="authors.items[0]" class="post__author-wrapper">
+        <!-- <div v-if="authors.items[0]" class="post__author-wrapper">
           <p
             v-for="author in authors.items"
             :key="author.id"
@@ -77,72 +68,34 @@
             <span class="post__author-name">{{ author.author.name }}</span>
             {{ author.author.biography }}
           </p>
-        </div>
+        </div> -->
         <div class="post__tag">
-          <h2 class="post__tag-header">tags</h2>
-          <ul class="post__tag-list">
+          <h2 class="post__tag-header">Tags</h2>
+          <!-- <ul class="post__tag-list">
             <li v-for="t in tags.items" :key="t.id" class="post__tag-name">
               <a href="#">
                 {{ t.tag.name }}
               </a>
             </li>
-          </ul>
+          </ul> -->
         </div>
       </footer>
     </div>
-    <section class="post__related-wrapper">
-      <template v-for="relatedPost in relatedPosts">
-        <div :key="relatedPost.id" class="post__related-block">
-          <nuxt-link
-            :to="'/analysis/' + relatedPost.slug"
-            class="post__related-link"
-          >
-            <h2 class="post__related-title">
-              {{ relatedPost.title }}
-            </h2>
-            <p class="post__related-author">
-              Written By {{ relatedPost.authors.items[0].author.name }}
-            </p>
-            <p class="post__related-date">
-              Published {{ formatDate(relatedPost.postDate) }}
-            </p>
-          </nuxt-link>
-        </div>
-      </template>
-    </section>
+    <section class="post__related-wrapper"></section>
   </article>
 </template>
 <script>
-import { API, graphqlOperation } from 'aws-amplify'
-import * as queries from '@/src/graphql/queries'
-import Icon from '~/components/global/Icon.vue'
+import PostMeta from '~/components/global/PostMeta.vue'
+// import Icon from '~/components/global/Icon.vue'
 
 export default {
   components: {
-    Icon
+    // Icon
+    PostMeta
   },
-  async asyncData({ params }) {
-    try {
-      const data = await API.graphql(
-        graphqlOperation(queries.postsBySlug, { slug: params.slug })
-      )
-      /*
-        because of API requirements around key and unique value, we get a list
-        back, but we can be pretty sure it will be the only item, so grab 0 index
-        otherwise, on failure, this is a bad slug
-      */
-      const post = data.data.postsBySlug.items[0]
-      const relatedPosts = []
-      for (const index in post.relatedPostIDs) {
-        const relatedPostData = await API.graphql(
-          graphqlOperation(queries.getPost, { id: post.relatedPostIDs[index] })
-        )
-        relatedPosts.push(relatedPostData.data.getPost)
-      }
-      post.relatedPosts = relatedPosts
-      return post
-    } catch (error) {
-      return false
+  data() {
+    return {
+      slug: this.$route.params.slug
     }
   },
   computed: {
@@ -152,7 +105,16 @@ export default {
       } else {
         return this.satellites.items[0].satellite.operator
       }
+    },
+    posts() {
+      return this.$store.state.analysis.posts
+    },
+    post() {
+      return this.posts.find((el) => el.slug === this.slug)
     }
+  },
+  created() {
+    this.$store.dispatch('analysis/getPosts')
   },
   methods: {
     formatDate(d) {
@@ -171,7 +133,7 @@ export default {
   },
   head() {
     return {
-      title: this.title,
+      title: this.post.title.rendered,
       bodyAttrs: {
         class: 'page-layout'
       }
