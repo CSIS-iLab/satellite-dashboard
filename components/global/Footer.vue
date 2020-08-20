@@ -1,17 +1,19 @@
 <template>
   <footer class="footer">
-    <SiteLogo />
-    <p class="footer__description">
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum dolores
-      modi adipisci inventore, nihil cumque. Cumque, sit ipsam? Est aperiam
-      doloremque esse nihil? Asperiores provident ullam incidunt qui nostrum
-      nam!
-    </p>
-    <Social />
     <div class="wrapper">
-      <Navigation name="footer" />
-      <div class="footer__learnMoreAbout" :class="parentClass">
-        <h2 class="footer__learnMoreAboutHeader">
+      <div class="footer__left">
+        <SiteLogo />
+        <p class="footer__desc">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum
+          dolores modi adipisci inventore, nihil cumque. Cumque, sit ipsam? Est
+          aperiam doloremque esse nihil? Asperiores provident ullam incidunt qui
+          nostrum nam!
+        </p>
+        <Social />
+      </div>
+      <Navigation class="footer__nav" name="footer" />
+      <div class="footer__organizations">
+        <h2 class="footer__organizationsHeader">
           Learn More About
         </h2>
         <ul :class="parentClass + '__list'">
@@ -19,14 +21,14 @@
             v-for="item in items"
             :key="item.id"
             :class="[parentClass + '__' + item.id, parentClass + '__item']"
-            class="footer__learnMoreAbout__item"
+            class="footer__organizations__item"
           >
             <a :href="item.url">{{ item.title }}</a>
           </li>
         </ul>
       </div>
+      <Copyright class="footer__copyright" />
     </div>
-    <Copyright />
   </footer>
 </template>
 
@@ -51,24 +53,24 @@ export default {
         {
           title: 'Center for Strategic and International Studies',
           url: 'https://www.csis.org',
-          id: 'center-for-strategic-and-international-studies'
+          id: 'csis'
         },
         {
           title: 'Secure World Foundation',
           url: 'https://swfound.org/',
-          id: 'secure-world-foundation'
+          id: 'swf'
         },
         {
           title: 'University of Texas at Austin',
           url: 'https://www.utexas.edu/',
-          id: 'universtiy-of-texas-at-austin'
+          id: 'uta'
         }
       ]
     }
   },
   computed: {
     parentClass() {
-      return `footer__learnMoreAbout--${this.name}`
+      return `footer__organizations--${this.name}`
     }
   }
 }
