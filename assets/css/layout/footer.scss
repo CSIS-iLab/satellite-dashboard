@@ -1,5 +1,4 @@
 .footer {
-  padding: rem(32px) 1.5rem 3.25rem 1.5rem; // when placing the respective pixels into the rem function the site breaks
   color: $color-white-180;
   @extend %font-ui-text-base-oxygen;
 
@@ -8,13 +7,14 @@
     grid-column-gap: rem(54px);
     grid-template-areas: 'left left' 'nav orgs' 'copyright copyright';
     grid-template-columns: min-content auto;
+    padding: rem(32px) 1.5rem 3.25rem 1.5rem; // when placing the respective pixels into the rem function the site breaks
 
     @include breakpoint('medium') {
       display: grid;
       grid-column-gap: rem(50px);
       grid-template-areas: 'left . nav orgs' 'copyright copyright copyright copyright';
       grid-template-columns: max-content auto min-content 0.25fr;
-      padding: rem(68px) 2.5rem 2rem;
+      padding: rem(64px) 2.5rem 2rem;
     }
   }
 
