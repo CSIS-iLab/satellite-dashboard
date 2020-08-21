@@ -9,12 +9,25 @@
     grid-template-columns: min-content auto;
     padding: rem(32px) 1.5rem 3.25rem 1.5rem; // when placing the respective pixels into the rem function the site breaks
 
+    p {
+      max-width: rem(416.5px); // See the mockups for this value
+    }
+
+    // Breakpoint into desktop
     @include breakpoint('medium') {
       display: grid;
-      grid-column-gap: rem(50px);
       grid-template-areas: 'left . nav orgs' 'copyright copyright copyright copyright';
       grid-template-columns: max-content auto min-content 0.25fr;
       padding: rem(64px) 2.5rem 2rem;
+
+      p {
+        max-width: rem(600px); // See the mockups for this value
+      }
+
+      .footer__copyright {
+        grid-area: copyright;
+        margin-top: -0.5rem;
+      }
     }
   }
 
@@ -29,14 +42,12 @@
   
   .footer__nav {
     grid-area: nav;
-    margin-bottom: 2.25rem;
   }
 
   .footer__organizations {
     grid-area: orgs;
-    margin-bottom: 2.25rem;
     @extend %font-ui-text-base-oxygen;
-    color: $color-white-180;
+    color: $color-white-170;
 
     a {
       @include link-underline($color-ltblue-175);
@@ -54,19 +65,6 @@
     font-weight: bold;
     text-transform: uppercase;
     text-decoration: none;
-  }
-
-  p {
-    max-width: rem(416.5px); // See the mockups for this value
-
-    &__subtitle {
-      // Subtitle styles here
-    }
-
-    &__organizations {
-      @extend %font-ui-text-base-oxygen;
-      color: $color-white-170;
-    }
   }
 
   li {
