@@ -1,5 +1,6 @@
 .social-media {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   margin: 0 rem(8px);
   color: $color-white-170;
