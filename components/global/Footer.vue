@@ -1,33 +1,31 @@
 <template>
   <footer class="footer">
-    <div class="wrapper">
-      <div class="footer__main">
-        <SiteLogo />
-        <p class="footer__desc">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum
-          dolores modi adipisci inventore, nihil cumque. Cumque, sit ipsam? Est
-          aperiam doloremque esse nihil? Asperiores provident ullam incidunt qui
-          nostrum nam!
-        </p>
-        <Social />
-      </div>
-      <Navigation class="footer__nav" name="footer" />
-      <div class="footer__organizations">
-        <h2>
-          Learn More About
-        </h2>
-        <ul>
-          <li
-            v-for="item in items"
-            :key="item.id"
-            class="footer__organizations-item"
-          >
-            <a :href="item.url">{{ item.title }}</a>
-          </li>
-        </ul>
-      </div>
-      <Copyright class="footer__copyright" />
+    <div class="footer__main">
+      <SiteLogo />
+      <p class="footer__desc">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum dolores
+        modi adipisci inventore, nihil cumque. Cumque, sit ipsam? Est aperiam
+        doloremque esse nihil? Asperiores provident ullam incidunt qui nostrum
+        nam!
+      </p>
+      <Social />
     </div>
+    <Navigation class="footer__nav" name="footer" />
+    <div class="footer__organizations">
+      <h2>
+        Learn More About
+      </h2>
+      <ul>
+        <li
+          v-for="item in items"
+          :key="item.id"
+          class="footer__organizations-item"
+        >
+          <a :href="item.url">{{ item.title }}</a>
+        </li>
+      </ul>
+    </div>
+    <Copyright class="footer__copyright" />
   </footer>
 </template>
 
