@@ -1,7 +1,7 @@
 <template>
   <footer class="footer">
     <div class="wrapper">
-      <div class="footer__left">
+      <div class="footer__main">
         <SiteLogo />
         <p class="footer__desc">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum
@@ -13,15 +13,14 @@
       </div>
       <Navigation class="footer__nav" name="footer" />
       <div class="footer__organizations">
-        <h2 class="footer__organizationsHeader">
+        <h2>
           Learn More About
         </h2>
-        <ul :class="parentClass + '__list'">
+        <ul>
           <li
             v-for="item in items"
             :key="item.id"
-            :class="[parentClass + '__' + item.id, parentClass + '__item']"
-            class="footer__organizations__item"
+            class="footer__organizations-item"
           >
             <a :href="item.url">{{ item.title }}</a>
           </li>
@@ -66,11 +65,6 @@ export default {
           id: 'uta'
         }
       ]
-    }
-  },
-  computed: {
-    parentClass() {
-      return `footer__organizations--${this.name}`
     }
   }
 }

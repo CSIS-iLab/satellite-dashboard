@@ -4,34 +4,33 @@
 
   .wrapper {
     display: grid;
-    grid-column-gap: rem(54px);
     grid-template-areas: 'left left' 'nav orgs' 'copyright copyright';
     grid-template-columns: min-content auto;
-    padding: rem(32px) 1.5rem 3.25rem 1.5rem; // when placing the respective pixels into the rem function the site breaks
-
-    p {
-      max-width: rem(416.5px); // See the mockups for this value
-    }
+    // padding: rem(32px) 1.5rem 3.25rem 1.5rem; // when placing the respective pixels into the rem function the site breaks
+    padding: rem(32px) rem(24px);
+    column-gap: rem(54px);
 
     // Breakpoint into desktop
     @include breakpoint('medium') {
       display: grid;
-      grid-template-areas: 'left . nav orgs' 'copyright copyright copyright copyright';
-      grid-template-columns: max-content auto min-content 0.25fr;
+      grid-template-areas: 'left nav orgs' 'copyright copyright copyright';
+      grid-template-columns: minmax(auto, 600px) auto minmax(auto, 250px);
       padding: rem(64px) 2.5rem 2rem;
-
-      p {
-        max-width: rem(600px); // See the mockups for this value
-      }
+      column-gap: rem(80px);
 
       .footer__copyright {
         grid-area: copyright;
         margin-top: -0.5rem;
       }
+
+      .footer__nav,
+      .footer__organizations {
+        justify-self: end;
+      }
     }
   }
 
-  .footer__left {
+  .footer__main {
     grid-area: left;
   }
 
@@ -39,7 +38,7 @@
     color: $color-white-180;
     @extend %font-ui-text-base-oxygen;
   }
-  
+
   .footer__nav {
     grid-area: nav;
   }
