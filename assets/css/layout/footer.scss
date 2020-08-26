@@ -12,53 +12,53 @@
     display: grid;
     grid-template-areas: 'left nav orgs' 'copyright copyright copyright';
     grid-template-columns: minmax(auto, 600px) auto minmax(auto, 250px);
-    padding: rem(64px) 2.5rem 2rem;
+    padding: rem(64px) rem(40px) rem(32px);
     column-gap: rem(80px);
 
-    .footer__copyright {
-      grid-area: copyright;
-      margin-top: -0.5rem;
-    }
-
-    .footer__nav,
-    .footer__organizations {
+    &__nav,
+    &__organizations {
       justify-self: end;
     }
   }
 
-  .footer__main {
+  &__main {
     grid-area: left;
   }
 
-  .footer__desc {
+  &__desc {
     color: $color-white-180;
     @extend %font-ui-text-base-oxygen;
   }
 
-  .footer__nav {
+  &__nav {
     grid-area: nav;
   }
 
-  .footer__organizations {
+  &__organizations {
     grid-area: orgs;
-    @extend %font-ui-text-base-oxygen;
+    @extend %font-ui-text-lg-oxygen;
     color: $color-white-170;
-    
+
     ul {
-      padding-left: 0;
+      margin: 0;
+      padding: 0;
       list-style: none;
     }
-    
+
+    li {
+      margin-bottom: rem(8px);
+    }
+
     a {
       @include link-underline($color-ltblue-175);
-      
+
       &:hover {
         color: $color-white-100;
       }
     }
   }
 
-  .footer__copyright {
+  &__copyright {
     grid-area: copyright;
   }
 
@@ -68,9 +68,5 @@
     font-weight: bold;
     text-transform: uppercase;
     text-decoration: none;
-  }
-
-  li {
-    margin-bottom: rem(8px);
   }
 }
