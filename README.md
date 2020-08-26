@@ -76,7 +76,7 @@ This project is built using Nuxt.js. For detailed explanation on how things work
 
 ### Branching
 
-When modifying the code base, always make a new branch. Unless it's necessary to do otherwise, all branches should be created off of `master`.
+When modifying the code base, always make a new branch. Unless it's necessary to do otherwise, all branches should be created off of `main`.
 
 Branches should use the following naming conventions:
 
@@ -88,7 +88,7 @@ Branches should use the following naming conventions:
 | Code clean-up/refactoring | `refactor/<short description>`                            | `refactor/apply-linting` |
 | Content Updates           | `content/<short description of content>`                  | `content/add-new-posts`  |
 
-When ready to merge, submit a Pull Request into `master`. All code will be reviewed by the lead developer on the project before being merged into `master`.
+When ready to merge, submit a Pull Request into `main`. All code will be reviewed by the lead developer on the project before being merged into `main`.
 
 ### Commit Messages
 
