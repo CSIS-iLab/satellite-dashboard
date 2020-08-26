@@ -21,13 +21,7 @@
   }
 
   &--footer {
-    &__title {
-      @extend %font-ui-text-sm-oxygen;
-      margin-bottom: rem(4px);
-      color: $color-ltblue-175;
-      font-weight: bold;
-      text-transform: uppercase;
-    }
+    @extend %font-ui-text-lg-oxygen;
 
     &__item:not(:last-child) {
       margin-bottom: rem(8px);

@@ -1,6 +1,6 @@
 <template>
   <div class="copyright">
-    &copy; {{ year }}
+    &copy; {{ year }} Satellite Dashboard
     <span>
       <nuxt-link to="/about#license">Licensing Information</nuxt-link>
     </span>

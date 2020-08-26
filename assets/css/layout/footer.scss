@@ -1,0 +1,72 @@
+.footer {
+  display: grid;
+  grid-template-areas: 'left left' 'nav orgs' 'copyright copyright';
+  grid-template-columns: min-content auto;
+  padding: rem(32px) rem(24px) rem(52px);
+  color: $color-white-180;
+  column-gap: rem(54px);
+  @extend %font-ui-text-base-oxygen;
+
+  // Breakpoint into desktop
+  @include breakpoint('medium') {
+    display: grid;
+    grid-template-areas: 'left nav orgs' 'copyright copyright copyright';
+    grid-template-columns: minmax(auto, 600px) auto minmax(auto, 250px);
+    padding: rem(64px) rem(40px) rem(32px);
+    column-gap: rem(80px);
+
+    &__nav,
+    &__organizations {
+      justify-self: end;
+    }
+  }
+
+  &__main {
+    grid-area: left;
+  }
+
+  &__desc {
+    color: $color-white-180;
+    @extend %font-ui-text-base-oxygen;
+  }
+
+  &__nav {
+    grid-area: nav;
+  }
+
+  &__organizations {
+    grid-area: orgs;
+    @extend %font-ui-text-lg-oxygen;
+    color: $color-white-170;
+
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    li {
+      margin-bottom: rem(8px);
+    }
+
+    a {
+      @include link-underline($color-ltblue-175);
+
+      &:hover {
+        color: $color-white-100;
+      }
+    }
+  }
+
+  &__copyright {
+    grid-area: copyright;
+  }
+
+  h2 {
+    @extend %font-ui-text-sm-oxygen;
+    color: $color-ltblue-175;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+}

@@ -21,6 +21,10 @@
   }
 
   .footer & {
-    margin: rem(32px) 0;
+    margin-top: rem(32px);
+
+    @include breakpoint('medium') {
+      margin-top: 0;
+    }
   }
 }
