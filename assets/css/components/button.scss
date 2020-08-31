@@ -1,0 +1,114 @@
+.btn {
+  @extend %font-ui-text-base-good;
+  color: $color-white-160;
+
+  &:hover {
+    color: $color-white-180;
+  }
+
+  &:focus {
+    box-sizing: border-box;
+    box-shadow: 1px $color-focus;
+  }
+
+  &:disabled {
+    color: $color-white-160;
+  }
+
+  &--sm {
+    @extend %font-ui-text-base-good;
+  }
+
+  &--contained {
+    color: $color-white-170;
+    background-color: $color-slate-200;
+    border-radius: 3px;
+
+    &:hover {
+      color: $color-white-190;
+      background-color: $color-slate-100;
+    }
+
+    &:focus {
+      box-sizing: border-box;
+      box-shadow: 1px $color-focus;
+    }
+  
+    &:disabled {
+      color: $color-white-160;
+    }
+  }
+
+  &--round {
+    color: $color-white-170;
+    background-color: $color-slate-600;
+    border-radius: 50px;
+
+    &:hover {
+      color: $color-white-190;
+      background-color: $color-slate-700;
+    }
+
+    &:focus {
+      box-sizing: border-box;
+      box-shadow: 1px $color-focus;
+    }
+  
+    &:disabled {
+      color: $color-white-160;
+    }
+  }
+
+  &--outlined {
+    box-sizing: border-box;
+    color: $color-white-170;
+    border: 1px solid $color-slate-100;
+    border-radius: 50px;
+
+    &:hover {
+      color: $color-white-190;
+      border: 1px solid $color-blue-100;
+    }
+
+    &:focus {
+      box-shadow: 1px $color-focus;
+    }
+  
+    &:disabled {
+      color: $color-white-160;
+    }
+  }
+
+  &--light {
+    color: $color-blue-100;
+    border: 1px solid $color-blue-100;
+    border-radius: 14px;
+
+    &:hover {
+      color: $color-slate-100;
+    }
+
+    &:focus {
+      box-sizing: border-box;
+      box-shadow: 1px $color-focus;
+    }
+  }
+
+  .btn--icon {
+    color: $color-white-140;
+    border-radius: 50px;
+
+    &:hover {
+      color: $color-white-180;
+    }
+
+    &:focus {
+      box-sizing: border-box;
+      box-shadow: 1px $color-focus;
+    }
+  
+    &:disabled {
+      color: $color-white-100;
+    }
+  }
+}
