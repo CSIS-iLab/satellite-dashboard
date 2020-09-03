@@ -1,5 +1,5 @@
 <template>
-  <content :is="type" :href="href" class="button btn" @click="onClick">
+  <content :is="type" :href="href" class="btn" @click="onClick">
     <slot />
   </content>
 </template>
@@ -46,7 +46,7 @@ export default {
     }
   }
 }
-</script>-->
+</script> -->
 
 <style lang="scss">
 @import '../assets/css/components/button';

@@ -3,7 +3,13 @@
     <SiteLogo />
     Site Header
     <SocialShare page-title="Foobar" />
-    <Button :on-click="onClick" />
+    <Button :on-click="onClick">Test Content</Button>
+    <Button :on-click="onClick" class="btn--sm">Smol Button</Button>
+    <Button :on-click="onClick" class="btn--contained">Contained Button</Button>
+    <Button :on-click="onClick" class="btn--round">Round Button</Button>
+    <Button :on-click="onClick" class="btn--outlined">Outlined Button</Button>
+    <Button :on-click="onClick" class="btn--light">Light Button</Button>
+    <Button :on-click="onClick" class="btn--icon">X</Button>
     <nuxt />
     <Footer />
   </div>

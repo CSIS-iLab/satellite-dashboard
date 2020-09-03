@@ -1,6 +1,11 @@
 .btn {
   @extend %font-ui-text-base-good;
+  padding: 0 10px;
   color: $color-white-160;
+  background-color: transparent;
+  border-style: none;
+  border-radius: 0;
+  opacity: 0.7;
 
   &:hover {
     color: $color-white-180;
@@ -8,34 +13,29 @@
 
   &:focus {
     box-sizing: border-box;
-    box-shadow: 1px $color-focus;
+    outline: none;
+    box-shadow: 0 0 0 2px $color-focus;
   }
 
   &:disabled {
     color: $color-white-160;
+    cursor: not-allowed;
+    opacity: 0.4;
+    pointer-events: none;
   }
 
   &--sm {
-    @extend %font-ui-text-base-good;
+    @extend %font-ui-text-sm-good;
   }
 
   &--contained {
     color: $color-white-170;
     background-color: $color-slate-200;
-    border-radius: 3px;
+    border-radius: 50px;
 
     &:hover {
       color: $color-white-190;
       background-color: $color-slate-100;
-    }
-
-    &:focus {
-      box-sizing: border-box;
-      box-shadow: 1px $color-focus;
-    }
-  
-    &:disabled {
-      color: $color-white-160;
     }
   }
 
@@ -47,15 +47,6 @@
     &:hover {
       color: $color-white-190;
       background-color: $color-slate-700;
-    }
-
-    &:focus {
-      box-sizing: border-box;
-      box-shadow: 1px $color-focus;
-    }
-  
-    &:disabled {
-      color: $color-white-160;
     }
   }
 
@@ -69,46 +60,22 @@
       color: $color-white-190;
       border: 1px solid $color-blue-100;
     }
-
-    &:focus {
-      box-shadow: 1px $color-focus;
-    }
-  
-    &:disabled {
-      color: $color-white-160;
-    }
   }
 
   &--light {
     color: $color-blue-100;
     border: 1px solid $color-blue-100;
     border-radius: 14px;
+    opacity: 0.9;
 
     &:hover {
       color: $color-slate-100;
     }
-
-    &:focus {
-      box-sizing: border-box;
-      box-shadow: 1px $color-focus;
-    }
   }
 
-  .btn--icon {
+  &--icon {
     color: $color-white-140;
     border-radius: 50px;
-
-    &:hover {
-      color: $color-white-180;
-    }
-
-    &:focus {
-      box-sizing: border-box;
-      box-shadow: 1px $color-focus;
-    }
-  
-    &:disabled {
-      color: $color-white-100;
-    }
+    opacity: 0.4;
   }
 }
