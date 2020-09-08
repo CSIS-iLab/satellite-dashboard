@@ -1,20 +1,17 @@
 <template>
-  <div>
-    <input v-model="message" class="textInput" placeholder="Placeholder Text" />
-    <p class="test">Message: {{ message }}</p>
-  </div>
+  <label>
+    <input v-model="message" class="input" placeholder="Placeholder Text" />
+  </label>
 </template>
 
 <script>
 export default {
   data() {
-    return {
-      message: ''
-    }
+    return {}
   }
 }
 </script>
 
 <style lang="scss">
-@import '../assets/css/components/text-input';
+@import '../assets/css/components/forms';
 </style>

@@ -1,9 +1,10 @@
-.textInput {
+.input {
   @extend %font-ui-text-base-oxygen;
   color: $color-white-150;
   background-color: $color-slate-800;
   border-style: none;
   border-radius: 3px;
+  transition: all 0.3s ease-in-out;
 
   &:hover {
     background-color: $color-slate-900;
@@ -22,16 +23,33 @@
   &:disabled {
     cursor: not-allowed;
     opacity: 0.4;
-    pointer-events: none;
   }
 
-  &:error {
+  .input--error {
     box-sizing: border-box;
     outline: none;
     box-shadow: 0 0 0 2px $color-orangedark-100;
   }
 }
 
-.test {
-  color: $color-white-150;
+.label {
+  @extend %font-ui-text-base-oxygen;
+  color: $color-white-160;
+  border-style: none;
+  border-radius: 3px;
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    color: $color-white-180;
+  }
+
+  &:focus {
+    box-sizing: border-box;
+    color: $color-white-140;
+    background-color: $color-slate-800;
+    border-radius: 50px;
+    outline: none;
+    box-shadow: 0 0 0 2px $color-focus;
+  }
 }
+
