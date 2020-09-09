@@ -1,13 +1,35 @@
 <template>
-  <label>
-    <input v-model="message" class="input" placeholder="Placeholder Text" />
-  </label>
+  <div class="input__wrapper">
+    <label :for="id">{{ labelText }}</label>
+    <input
+      :id="id"
+      type="text"
+      :name="name"
+      class="input"
+      :placeholder="placeholder"
+    />
+  </div>
 </template>
 
 <script>
 export default {
-  data() {
-    return {}
+  props: {
+    labelText: {
+      type: String,
+      required: true
+    },
+    id: {
+      type: Number,
+      required: true
+    },
+    name: {
+      type: String,
+      required: true
+    },
+    placeholder: {
+      type: String,
+      required: true
+    }
   }
 }
 </script>

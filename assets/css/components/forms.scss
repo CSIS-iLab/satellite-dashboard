@@ -25,7 +25,7 @@
     opacity: 0.4;
   }
 
-  .input--error {
+  &--error {
     box-sizing: border-box;
     outline: none;
     box-shadow: 0 0 0 2px $color-orangedark-100;
