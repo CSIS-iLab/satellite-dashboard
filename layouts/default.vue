@@ -11,7 +11,12 @@
     <Button :on-click="onClick" class="btn--light">Light Button</Button>
     <Button :on-click="onClick" class="btn--icon">X</Button>
     <nuxt />
-    <TextInput />
+    <TextInput
+      id="test"
+      name="test"
+      placeholder="Placeholder text"
+      label-text="Label for Test"
+    />
     <Footer />
   </div>
 </template>
@@ -28,7 +33,7 @@ export default {
     Footer,
     SiteLogo,
     SocialShare,
-    TextInput
+    TextInput,
     Button
   },
   methods: {
