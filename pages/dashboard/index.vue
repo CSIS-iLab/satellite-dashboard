@@ -22,8 +22,8 @@
             </tr>
           </thead>
           <tr v-for="sat in satellites" :key="sat.id">
-            <td>{{ sat.name.value }}</td>
-            <td>{{ sat.orbitalDatum.items[0] }}</td>
+            <td>{{ sat.id }}</td>
+            <td></td>
           </tr>
         </table>
       </template>
@@ -33,8 +33,8 @@
 
 <script>
 import Page from '~/layout/page'
-import { API, graphqlOperation } from 'aws-amplify'
-import * as queries from '@/src/custom-graphql/queries'
+// import { API, graphqlOperation } from 'aws-amplify'
+// import * as queries from '@/src/custom-graphql/queries'
 
 export default {
   layout: 'layout',
@@ -43,28 +43,36 @@ export default {
   },
   data() {
     return {
-      loading: true,
-      satellites: []
+      loading: true
+    }
+  },
+  computed: {
+    satellites() {
+      return this.$store.state.satellites.satellites
     }
   },
   created() {
-    this.getSatellites()
-  },
-  methods: {
-    async getSatellites() {
-      // reset loading just in case
-      this.loading = true
-      let nextToken
-      while (nextToken !== null) {
-        let { data } = await API.graphql(
-          graphqlOperation(queries.allSatellitesToday, { limit: 5000 })
-        )
-        this.satellites = this.satellites.concat(data.listSatellites.items)
-        nextToken = data.listSatellites.nextToken
-      }
-      this.loading = false
-    }
+    this.$store.dispatch('satellites/getSatellites')
+    this.loading = false
   }
+  // created() {
+  //   this.getSatellites()
+  // },
+  // methods: {
+  //   async getSatellites() {
+  //     // reset loading just in case
+  //     this.loading = true
+  //     let nextToken
+  //     while (nextToken !== null) {
+  //       let { data } = await API.graphql(
+  //         graphqlOperation(queries.allSatellitesToday, { limit: 5000 })
+  //       )
+  //       this.satellites = this.satellites.concat(data.listSatellites.items)
+  //       nextToken = data.listSatellites.nextToken
+  //     }
+  //     this.loading = false
+  //   }
+  // }
 }
 </script>
 
