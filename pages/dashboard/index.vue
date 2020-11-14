@@ -14,16 +14,18 @@
       </template>
 
       <template v-else>
-        <table style="color: #fff;">
+        <table border="1" borderColor="#fff" cellSpacing="0">
           <thead>
             <tr>
+              <td>Catalog Id</td>
               <td>Name</td>
-              <td>Latest Orbital Data</td>
+              <td>Orbital Data</td>
             </tr>
           </thead>
           <tr v-for="sat in satellites" :key="sat.id">
-            <td>{{ sat.name.value }}</td>
-            <td>{{ sat.orbitalDatum.items[0] }}</td>
+            <td>{{ sat.catalog_id }}</td>
+            <td>{{ sat.source1.Name }}</td>
+            <td>{{ sat.orbital }}</td>
           </tr>
         </table>
       </template>
@@ -33,8 +35,6 @@
 
 <script>
 import Page from '~/layout/page'
-import { API, graphqlOperation } from 'aws-amplify'
-import * as queries from '@/src/custom-graphql/queries'
 
 export default {
   layout: 'layout',
@@ -43,31 +43,31 @@ export default {
   },
   data() {
     return {
-      loading: true,
-      satellites: []
+      loading: true
+    }
+  },
+  computed: {
+    satellites() {
+      return this.$store.state.satellites.satellites
     }
   },
   created() {
-    this.getSatellites()
-  },
-  methods: {
-    async getSatellites() {
-      // reset loading just in case
-      this.loading = true
-      let nextToken
-      while (nextToken !== null) {
-        let { data } = await API.graphql(
-          graphqlOperation(queries.allSatellitesToday, { limit: 5000 })
-        )
-        this.satellites = this.satellites.concat(data.listSatellites.items)
-        nextToken = data.listSatellites.nextToken
-      }
-      this.loading = false
-    }
+    this.$store.dispatch('satellites/getSatellites')
+    this.loading = false
   }
 }
 </script>
 
 <style lang="scss">
 @import '../assets/css/pages/dashboard';
+
+table {
+  color: #fff;
+  border-collapse: collapse;
+
+  td {
+    padding: 8px;
+    vertical-align: top;
+  }
+}
 </style>

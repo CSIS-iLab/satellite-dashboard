@@ -8,15 +8,13 @@
         in mattis tristique feugiat tellus lacinia.
       </p>
     </div>
-    <PostBlock v-for="post in posts" :key="post.title" :data="post" />
+    <PostBlock v-for="post in posts" :key="post.id" :data="post" />
   </Page>
 </template>
 
 <script>
 import Page from '~/layout/page'
 import PostBlock from '~/components/global/PostBlock.vue'
-import { API, graphqlOperation } from 'aws-amplify'
-import * as queries from '@/src/graphql/queries'
 
 export default {
   layout: 'layout',
@@ -24,13 +22,13 @@ export default {
     Page,
     PostBlock
   },
-  async asyncData() {
-    const data = await API.graphql(
-      graphqlOperation(queries.listPosts, { limit: 1000 })
-    )
-    return {
-      posts: data.data.listPosts.items
+  computed: {
+    posts() {
+      return this.$store.state.analysis.posts
     }
+  },
+  created() {
+    this.$store.dispatch('analysis/getPosts')
   }
 }
 </script>

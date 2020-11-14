@@ -1,20 +1,14 @@
 const path = require('path')
 import Fiber from 'fibers'
 import Sass from 'sass'
-import Amplify from 'aws-amplify'
-import awsconfig from './src/aws-exports'
-import { API, graphqlOperation } from 'aws-amplify'
-import * as queries from './src/graphql/queries'
+import axios from 'axios'
 
-Amplify.configure(awsconfig)
-
-const dynamicRoutes = () => {
-  return API.graphql(graphqlOperation(queries.listPosts, { limit: 1000 })).then(
-    (data) => {
-      const Posts = data.data.listPosts.items
-      return Posts.map((post) => `analysis/${post.slug}`)
-    }
-  )
+let dynamicRoutes = () => {
+  return axios
+    .get('https://satdash.wpengine.com/wp-json/wp/v2/posts?page=1&per_page=20')
+    .then((res) => {
+      return res.data.map((post) => `/analysis/${post.slug}`)
+    })
 }
 
 const customSass = {
@@ -62,7 +56,7 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ['@/plugins/amplify.js'],
+  plugins: [],
   /*
    ** Nuxt.js dev-modules
    */
