@@ -1,11 +1,7 @@
 const path = require('path')
 import Fiber from 'fibers'
 import Sass from 'sass'
-import Amplify from 'aws-amplify'
-import awsconfig from './src/aws-exports'
 import axios from 'axios'
-
-Amplify.configure(awsconfig)
 
 let dynamicRoutes = () => {
   return axios
@@ -60,7 +56,7 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ['@/plugins/amplify.js'],
+  plugins: [],
   /*
    ** Nuxt.js dev-modules
    */

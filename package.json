@@ -24,13 +24,10 @@
     }
   },
   "dependencies": {
-    "@aws-amplify/ui-vue": "^0.2.5",
     "@nuxtjs/pwa": "^3.0.0-0",
-    "aws-amplify": "^3.0.11",
     "axios": "^0.19.2",
     "fibers": "^4.0.2",
     "frontmatter-markdown-loader": "^3.3.0",
-    "graphql-tag": "^2.10.3",
     "nuxt": "^2.12.2"
   },
   "devDependencies": {
