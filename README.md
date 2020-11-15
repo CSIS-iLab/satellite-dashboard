@@ -40,11 +40,13 @@ $ npm dev
 
 ### Local Development
 
-This will give you file watching, browser synchronisation, auto-rebuild, CSS injecting, etc.
+This will give you file watching, browser synchronization, auto-rebuild, CSS injecting, etc.
 
 ```bash
 $ npm dev
 ```
+
+log
 
 ### Build for Production
 
@@ -73,7 +75,6 @@ $ npm run
 
 This project is built using Nuxt.js. For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
 
-<<<<<<< HEAD
 ## Data & API
 
 Data for this project is provided by UT Austin's [AstriaGraph](http://astria.tacc.utexas.edu/AstriaGraph/) API.
@@ -91,7 +92,10 @@ Returns Analysis post content and associated metadata (tags, categories, authors
 
 Returns satellite objects orbital data and metadata, including any meta values overridden by the program via the WordPress dashboard.
 
-- Endpoint: `/wp-json/satdash/v1/satellites`
+- Endpoint: `/wp-json/satdash/v1/satellites`: Returns most recent database record for each satellite (ie. Most updated data we have for that satellite) in GEO.
+- Params:
+  - `date`: `?date=YYYY-MM-DD` will return all records added to the Satellite Dashboard database on the given date. Note that the actual propogation date might differ.
+  - `orbit`: `?orbit=????` will return all records classified in the specified orbit. By default, returns all objects in `GEO`.
 - Accessible via `store/satellites.js`
 
 Each responses contains an array of objects with the properties listed below.
@@ -139,47 +143,40 @@ Each responses contains an array of objects with the properties listed below.
     },
   ```
 
-  #### Fields & Types
+#### Fields & Types
 
-  | field name               | type   | description                                                                                                                                      |
-  | ------------------------ | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-  | source1UniqueId          | int    | AG data source unique identifier of source 1                                                                                                     |
-  | source1Name              | string | Name of source 1                                                                                                                                 |
-  | source1LastCatalogUpdate | string | Datetime that the data from source 1 was last updated                                                                                            |
-  | CatalogId                | string | Unique ID of the space object                                                                                                                    |
-  | Name                     | string | Name of the object                                                                                                                               |
-  | NoradId                  | string | ID of the object assigned by the USAF                                                                                                            |
-  | LaunchDate               | string | Datetime of the launch of the spaceobject                                                                                                        |
-  | countryOfLaunch          | string | Name of country that launched the object                                                                                                         |
-  | ArgP                     | float  | Variable describing the periapsis of the object’s orbit with an angle around the orbit from the equatorial plane; one of the parameters in a TLE |
-  | Ecc                      | float  | Variable describing the shape of the object’s orbit; one of the parameters in a TLE                                                              |
-  | Inc                      | float  | Variable describing the orientation of the object’s orbit relative to the equatorial plane of the earth; one of the parameters in a TLE          |
-  | MeanAnom                 | float  | Variable describing the position of the object in its orbit; the “fast variable;” one of the parameters in a TLE                                 |
-  | SMA                      | float  | Variable describing the size of the object’s orbit; one of the parameters in a TLE                                                               |
-  | RAAN                     | float  | Variable describing the periapsis of the object’s orbit with a vector in the equatorial plane; one of the parameters in a TLE                    |
-  | Epoch                    | string | Time corresponding to the orbit described by a TLE; one of the parameters in a TLE                                                               |
-  | OrbitType                | string | Describes the regime of the orbit (just “GEO” for phase 1)                                                                                       |
-  | source2UniqueId          | int    | AG data source unique identifier of source 2                                                                                                     |
-  | source2Name              | string | Name of source 2                                                                                                                                 |
-  | source2LastCatalogUpdate | string | Datetime that the data from source 2 was last updated                                                                                            |
-  | LaunchSite               | string | Location from which the space object was launched                                                                                                |
-  | LaunchVehicle            | string | Vehicle on which the space object was launched                                                                                                   |
-  | countryOfJurisdiction    | string | Country that has legal power over the space object                                                                                               |
-  | Contractor               | string | Entity contracted to work on space object’s mission                                                                                              |
-  | Operator                 | string | Entity that manages the space object’s mission                                                                                                   |
-  | Type                     | string | General type of the space object                                                                                                                 |
-  | Purpose                  | string | Specified purpose of the space object’s mission                                                                                                  |
-  | Status                   | string | Status of space object                                                                                                                           |
-  | Lifetime                 | string | Expected lifetime of space object                                                                                                                |
+| field name               | type   | description                                                                                                                                      |
+| ------------------------ | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| source1UniqueId          | int    | AG data source unique identifier of source 1                                                                                                     |
+| source1Name              | string | Name of source 1                                                                                                                                 |
+| source1LastCatalogUpdate | string | Datetime that the data from source 1 was last updated                                                                                            |
+| CatalogId                | string | Unique ID of the space object                                                                                                                    |
+| Name                     | string | Name of the object                                                                                                                               |
+| NoradId                  | string | ID of the object assigned by the USAF                                                                                                            |
+| LaunchDate               | string | Datetime of the launch of the spaceobject                                                                                                        |
+| countryOfLaunch          | string | Name of country that launched the object                                                                                                         |
+| ArgP                     | float  | Variable describing the periapsis of the object’s orbit with an angle around the orbit from the equatorial plane; one of the parameters in a TLE |
+| Ecc                      | float  | Variable describing the shape of the object’s orbit; one of the parameters in a TLE                                                              |
+| Inc                      | float  | Variable describing the orientation of the object’s orbit relative to the equatorial plane of the earth; one of the parameters in a TLE          |
+| MeanAnom                 | float  | Variable describing the position of the object in its orbit; the “fast variable;” one of the parameters in a TLE                                 |
+| SMA                      | float  | Variable describing the size of the object’s orbit; one of the parameters in a TLE                                                               |
+| RAAN                     | float  | Variable describing the periapsis of the object’s orbit with a vector in the equatorial plane; one of the parameters in a TLE                    |
+| Epoch                    | string | Time corresponding to the orbit described by a TLE; one of the parameters in a TLE                                                               |
+| OrbitType                | string | Describes the regime of the orbit (just “GEO” for phase 1)                                                                                       |
+| source2UniqueId          | int    | AG data source unique identifier of source 2                                                                                                     |
+| source2Name              | string | Name of source 2                                                                                                                                 |
+| source2LastCatalogUpdate | string | Datetime that the data from source 2 was last updated                                                                                            |
+| LaunchSite               | string | Location from which the space object was launched                                                                                                |
+| LaunchVehicle            | string | Vehicle on which the space object was launched                                                                                                   |
+| countryOfJurisdiction    | string | Country that has legal power over the space object                                                                                               |
+| Contractor               | string | Entity contracted to work on space object’s mission                                                                                              |
+| Operator                 | string | Entity that manages the space object’s mission                                                                                                   |
+| Type                     | string | General type of the space object                                                                                                                 |
+| Purpose                  | string | Specified purpose of the space object’s mission                                                                                                  |
+| Status                   | string | Status of space object                                                                                                                           |
+| Lifetime                 | string | Expected lifetime of space object                                                                                                                |
 
 </details>
-
-
-=======
-### Cesium
-
-This project uses [Cesium](https://cesium.com/cesiumjs/) for the visualization. [Vue Cesium](https://zouyaoji.top/vue-cesium/#/en/index) is used to load Cesium into Vue.
->>>>>>> Add comments to code for visualization & update readme
 
 ## Contributing
 
