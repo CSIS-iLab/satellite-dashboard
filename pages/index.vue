@@ -14,9 +14,8 @@
       </template>
 
       <template v-else>
-        <CesiumViewer />
+        <CesiumViewer :satellites="satellites" />
         <table border="1" borderColor="#fff" cellSpacing="0">
-        <table>
           <thead>
             <tr>
               <td>Catalog Id</td>
@@ -36,7 +35,7 @@
 </template>
 
 <script>
-import CesiumViewer from '~/components/CesiumViewer'
+import CesiumViewer from '~/components/visualizer/CesiumViewer'
 import Page from '~/layout/page'
 
 export default {
@@ -63,7 +62,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../assets/css/pages/dashboard';
+@import '../assets/css/pages/visualizer';
 
 table {
   color: #fff;
