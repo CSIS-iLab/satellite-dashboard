@@ -73,6 +73,7 @@ $ npm run
 
 This project is built using Nuxt.js. For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
 
+<<<<<<< HEAD
 ## Data & API
 
 Data for this project is provided by UT Austin's [AstriaGraph](http://astria.tacc.utexas.edu/AstriaGraph/) API.
@@ -174,6 +175,11 @@ Each responses contains an array of objects with the properties listed below.
 </details>
 
 
+=======
+### Cesium
+
+This project uses [Cesium](https://cesium.com/cesiumjs/) for the visualization. [Vue Cesium](https://zouyaoji.top/vue-cesium/#/en/index) is used to load Cesium into Vue.
+>>>>>>> Add comments to code for visualization & update readme
 
 ## Contributing
 
