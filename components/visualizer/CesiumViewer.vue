@@ -52,7 +52,7 @@ export default {
       alpha: 1,
       brightness: 1,
       contrast: 1,
-      SimInt: 90 * 60,
+      SimInt: 12 * 60 * 60, // 12 hours
       SimStart: null,
       SimStop: null
     }
@@ -86,6 +86,19 @@ export default {
         new Cesium.JulianDate()
       )
 
+      viewer.clock.startTime = this.SimStart
+      viewer.clock.stopTime = this.SimStop
+      viewer.clock.shouldAnimate = true
+      viewer.clock.clockRange = Cesium.ClockRange.CLAMP
+      viewer.timeline.zoomTo(this.SimStart, this.SimStop)
+
+      viewer.selectedEntityChanged.addEventListener((entity) => {
+        if (!entity) {
+          return
+        }
+        entity.path.show = true
+      })
+
       // Set up the current time and then load in the satellite objects.
       Cesium.Transforms.preloadIcrfFixed(
         new Cesium.TimeInterval({
@@ -103,10 +116,7 @@ export default {
       // For each object, calculate its position & orbit
       // Calculations pulled from: https://github.com/ut-astria/AstriaGraph/blob/master/main.js & https://github.com/ut-astria/AstriaGraph/blob/master/celemech.js
 
-      console.log(this.satellites)
-
-      for (let i = 0; i < this.satellites.length; i++) {
-        const sat = this.satellites[i]
+      this.satellites.forEach((sat, i) => {
         const { catalog_id, orbital, source1 } = sat
         const name = source1.Name
 
@@ -120,42 +130,37 @@ export default {
         elems.MeanAnom = (elems.MeanAnom + elems.mmo * t * 86400) % TwoPi
 
         // Calculate Orbit
-        // TODO: This is computationally expensive. If orbits are only visible when the user has selected the object, is there a better way to handle these calculations?
-        let orbit = []
-        if (i === 0) {
-          orbit = this.calcOrbit(Cesium, viewer, CRFtoTRF, elems)
-        }
+        let orbit = this.calcOrbit(Cesium, viewer, CRFtoTRF, elems)
 
-        // TODO: Adjust the availability & position properties. See https://github.com/ut-astria/AstriaGraph/blob/master/main.js#L212-L220 for reference.
         viewer.entities.add({
           id: catalog_id,
           name: `${catalog_id}: ${name}`,
-          // availability: new Cesium.TimeIntervalCollection([
-          //   new Cesium.TimeInterval({
-          //     start: this.SimStart,
-          //     stop: this.SimStop
-          //   })
-          // ]),
-          // position: new Cesium.CallbackProperty(
-          //   this.updatePosition(Cesium, viewer, CRFtoTRF, elems),
-          //   false
-          // ),
-          position: this.updatePosition(Cesium, viewer, CRFtoTRF, elems),
+          availability: new Cesium.TimeIntervalCollection([
+            new Cesium.TimeInterval({
+              start: this.SimStart,
+              stop: this.SimStop
+            })
+          ]),
+          position: orbit,
           point: {
             pixelSize: 7,
             color: Cesium.Color.RED,
             outlineColor: Cesium.Color.WHITE,
             outlineWidth: 1
           },
-          polyline: {
-            positions: Cesium.Cartesian3.fromRadiansArrayHeights(orbit),
-            width: 1,
-            material: Cesium.Color.BLUE
+          path: {
+            resolution: 30,
+            material: new Cesium.PolylineArrowMaterialProperty(
+              Cesium.Color.BLUE
+            ),
+            width: 6,
+            show: i === 0
           }
         })
-      }
+      })
     },
     // Reference: https://github.com/ut-astria/AstriaGraph/blob/master/main.js#L228-L240
+    // this is likely redundant now
     updatePosition(Cesium, CsView, CRFtoTRF, elems) {
       // return function UpdateHelper() {
       var t = Cesium.JulianDate.secondsDifference(
@@ -240,10 +245,19 @@ export default {
     calcOrbit(Cesium, viewer, CRFtoTRF, elems) {
       let car = new Cesium.Cartographic()
       let Y = new Cesium.Cartesian3()
-      let sta = []
-      let arr = []
-      let u = Object.assign({}, elems)
-      for (u.MeanAnom = 0; u.MeanAnom <= 6.29; u.MeanAnom += 0.01) {
+      let sta
+      let positionSamples = new Cesium.SampledPositionProperty()
+      const step = 5 * 60 * 1000 // 5 minutes - resolution for Cesium interpolated values to be derived from
+      const fromTime = Cesium.JulianDate.toDate(this.SimStart).valueOf()
+      const toTime = Cesium.JulianDate.toDate(this.SimStop).valueOf() + step // calc one extra step so timeline end doesn't cut off
+      for (let t = fromTime; t <= toTime; t += step) {
+        const u = Object.assign({}, elems)
+        const timePoint = new Cesium.JulianDate.fromDate(new Date(t))
+        const secondsAdvanced = Cesium.JulianDate.secondsDifference(
+          timePoint,
+          this.SimStart
+        )
+        u.MeanAnom = (u.MeanAnom + u.mmo * secondsAdvanced) % TwoPi
         if (u.MeanAnom === 0) {
           sta = this.eltocart(Cesium, u, false, 1e-6, 100)
           Cesium.Matrix3.multiplyByVector(CRFtoTRF, sta.pos, Y)
@@ -258,11 +272,15 @@ export default {
           Number.isNaN(car.longitude) ||
           Number.isNaN(car.latitude) ||
           Number.isNaN(car.height)
-        )
+        ) {
           continue
-        arr.push(car.longitude, car.latitude, car.height)
+        }
+        positionSamples.addSample(
+          timePoint,
+          Cesium.Cartesian3.fromRadians(car.longitude, car.latitude, car.height)
+        )
       }
-      return arr
+      return positionSamples
     }
   }
 }
