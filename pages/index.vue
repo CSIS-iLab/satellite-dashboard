@@ -15,7 +15,7 @@
 
       <template v-else>
         <CesiumViewer :satellites="satellites" />
-        <table border="1" borderColor="#fff" cellSpacing="0">
+        <!--<table border="1" borderColor="#fff" cellSpacing="0">
           <thead>
             <tr>
               <td>Catalog Id</td>
@@ -28,7 +28,7 @@
             <td>{{ sat.source1.Name }}</td>
             <td>{{ sat.orbital }}</td>
           </tr>
-        </table>
+        </table>-->
       </template>
     </div>
   </Page>
