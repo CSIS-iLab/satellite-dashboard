@@ -9,12 +9,12 @@
       </p>
     </div>
     <div>
-      <template v-if="loading">
-        Loading...
-      </template>
+      <template v-if="loading"> Loading... </template>
 
       <template v-else>
         <CesiumViewer :satellites="satellites" />
+
+        <Timeline />
         <!--<table border="1" borderColor="#fff" cellSpacing="0">
           <thead>
             <tr>
@@ -36,13 +36,15 @@
 
 <script>
 import CesiumViewer from '~/components/visualizer/CesiumViewer'
+import Timeline from '~/components/timeline/Timeline'
 import Page from '~/layout/page'
 
 export default {
   layout: 'visualizer',
   components: {
     Page,
-    CesiumViewer
+    CesiumViewer,
+    Timeline
   },
   data() {
     return {
