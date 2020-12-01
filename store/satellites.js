@@ -1,5 +1,15 @@
 const siteURL = 'https://satdash.wpengine.com'
 
+const getDateForApi = () => {
+  const now = new Date()
+  const hour = now.getHours()
+  if (hour < 12) {
+    return `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`
+  } else {
+    return `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate() + 1}`
+  }
+}
+
 export const state = () => ({
   satellites: []
 })
