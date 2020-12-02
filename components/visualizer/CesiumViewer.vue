@@ -68,6 +68,7 @@ export default {
       const { Cesium, viewer } = cesiumInstance
       const scene = viewer.scene
       const globe = scene.globe
+      const jNow = Cesium.JulianDate.now()
 
       globe.enableLighting = true
       globe.lightingFadeOutDistance = 9000000
@@ -79,9 +80,14 @@ export default {
         show: false
       })
 
-      this.SimStart = Cesium.JulianDate.now()
+      this.SimStart = Cesium.JulianDate.addSeconds(
+        jNow,
+        -this.SimInt,
+        new Cesium.JulianDate()
+      )
+
       this.SimStop = Cesium.JulianDate.addSeconds(
-        this.SimStart,
+        jNow,
         this.SimInt,
         new Cesium.JulianDate()
       )
@@ -115,7 +121,6 @@ export default {
 
       // For each object, calculate its position & orbit
       // Calculations pulled from: https://github.com/ut-astria/AstriaGraph/blob/master/main.js & https://github.com/ut-astria/AstriaGraph/blob/master/celemech.js
-
       this.satellites.forEach((sat, i) => {
         const { catalog_id, orbital, source1 } = sat
         const name = source1.Name
@@ -243,11 +248,17 @@ export default {
     },
     // Reference: https://github.com/ut-astria/AstriaGraph/blob/master/main.js#L242
     calcOrbit(Cesium, viewer, CRFtoTRF, elems) {
+      let sampleCount = 0
       let car = new Cesium.Cartographic()
       let Y = new Cesium.Cartesian3()
       let sta
       let positionSamples = new Cesium.SampledPositionProperty()
-      const step = 5 * 60 * 1000 // 5 minutes - resolution for Cesium interpolated values to be derived from
+      const interpolationAlgorithm = Cesium.LagrangePolynomialApproximation
+      positionSamples.setInterpolationOptions({
+        interpolationAlgorithm,
+        interpolationDegree: 1
+      })
+      let step = 5 * 60 * 1000 // 5 minutes - starting point resolution for Cesium interpolated values to be derived from
       const fromTime = Cesium.JulianDate.toDate(this.SimStart).valueOf()
       const toTime = Cesium.JulianDate.toDate(this.SimStop).valueOf() + step // calc one extra step so timeline end doesn't cut off
       for (let t = fromTime; t <= toTime; t += step) {
@@ -275,10 +286,27 @@ export default {
         ) {
           continue
         }
-        positionSamples.addSample(
-          timePoint,
-          Cesium.Cartesian3.fromRadians(car.longitude, car.latitude, car.height)
+        const position = Cesium.Cartesian3.fromRadians(
+          car.longitude,
+          car.latitude,
+          car.height
         )
+        positionSamples.addSample(timePoint, position)
+        ++sampleCount
+        if (sampleCount === 2) {
+          // once we have two points, we have the velocity
+          const orbitalRadius = Cesium.Cartesian3.distance(
+            new Cesium.Cartesian3(0, 0, 0),
+            position
+          )
+          const orbitalCircumf = TwoPi * orbitalRadius
+          const prevPosition = positionSamples.getValue(
+            new Cesium.JulianDate.fromDate(new Date(fromTime))
+          )
+          const distance = Cesium.Cartesian3.distance(prevPosition, position)
+          const velocity = distance / step
+          step = orbitalCircumf / 360 / velocity
+        }
       }
       return positionSamples
     }
