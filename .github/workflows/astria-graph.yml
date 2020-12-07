@@ -2,7 +2,7 @@ name: Access AstriaGraph
 
 on:
   schedule:
-    - cron: "*/60 * * * *"
+    - cron: "0 0 */1 * *"
 
 jobs:
   build:
