@@ -30,7 +30,9 @@
     "frontmatter-markdown-loader": "^3.3.0",
     "nuxt": "^2.12.2",
     "satellite.js": "^4.0.0",
-    "vue-cesium": "^2.1.4"
+    "vue-cesium": "^2.1.4",
+    "vue-select": "^3.10.8",
+    "vuejs-datepicker": "^1.6.2"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^2.0.0",

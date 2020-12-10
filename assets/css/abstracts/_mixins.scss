@@ -50,6 +50,7 @@
 @mixin vw100() {
   width: 100vw; // Fallback for old browsers
   width: calc(100vw - var(--scrollbar));
+  margin-left: calc(50% - 50vw + (var(--scrollbar) / 2));
 }
 
 // Extend Background to full width of window

@@ -16,6 +16,10 @@ body {
   @include breakpoint('medium') {
     --container-padding: #{rem(32px)};
   }
+
+  &--full {
+    @include vw100();
+  }
 }
 
 .content-wrapper {
