@@ -12,9 +12,9 @@
       <template v-if="loading"> Loading... </template>
 
       <template v-else>
-        <CesiumViewer :satellites="satellites" />
+        <CesiumViewer :satellites="satellites" :selected-date="targetDate" />
 
-        <Timeline />
+        <Timeline :selected-date="targetDate" />
         <!--<table border="1" borderColor="#fff" cellSpacing="0">
           <thead>
             <tr>
@@ -54,6 +54,9 @@ export default {
   computed: {
     satellites() {
       return this.$store.state.satellites.satellites
+    },
+    targetDate() {
+      return this.$store.state.satellites.targetDate
     }
   },
   created() {

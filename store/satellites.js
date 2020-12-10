@@ -19,7 +19,7 @@ const getDateForApi = (targetDate) => {
 
 export const state = () => ({
   satellites: [],
-  targetDate: getDateForApi(new Date())
+  targetDate: new Date()
 })
 
 export const mutations = {
@@ -27,7 +27,7 @@ export const mutations = {
     state.satellites = satellites
   },
   updateTargetDate: (state, newTargetDate) => {
-    state.targetDate = getDateForApi(newTargetDate)
+    state.targetDate = newTargetDate
   }
 }
 
@@ -38,7 +38,9 @@ export const actions = {
   async getSatellites({ state, commit }) {
     try {
       let satellites = await fetch(
-        `${siteURL}/wp-json/satdash/v1/satellites?date=${state.targetDate}`
+        `${siteURL}/wp-json/satdash/v1/satellites?date=${getDateForApi(
+          state.targetDate
+        )}`
       ).then((res) => res.json())
 
       commit('updateSatellites', satellites)

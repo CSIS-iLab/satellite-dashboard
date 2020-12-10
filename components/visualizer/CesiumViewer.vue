@@ -35,11 +35,17 @@ const TwoPi = 2 * Math.PI
 const RadDeg = 180 / Math.PI
 const DegRad = Math.PI / 180
 
+let Cesium, viewer, pathMaterial
+
 export default {
   props: {
     satellites: {
       type: Array,
       default: () => []
+    },
+    selectedDate: {
+      type: Date,
+      default: new Date()
     }
   },
   data() {
@@ -52,10 +58,14 @@ export default {
       alpha: 1,
       brightness: 1,
       contrast: 1,
-      SimInt: 12 * 60 * 60, // 12 hours
+      SimInt: 24 * 60 * 60, // 12 hours
       SimStart: null,
-      SimStop: null
+      SimStop: null,
+      satellitesHaveLoaded: false
     }
+  },
+  watch: {
+    satellites: 'processNewData'
   },
   mounted() {
     this.$refs.vcViewer.createPromise.then(({ Cesium, viewer }) => {
@@ -64,11 +74,12 @@ export default {
   },
   methods: {
     ready(cesiumInstance) {
+      console.log('is ready')
       // Set up the Cesium Viewer
-      const { Cesium, viewer } = cesiumInstance
+      Cesium = cesiumInstance.Cesium
+      viewer = cesiumInstance.viewer
       const scene = viewer.scene
       const globe = scene.globe
-      const jNow = Cesium.JulianDate.now()
 
       globe.enableLighting = true
       globe.lightingFadeOutDistance = 9000000
@@ -80,23 +91,7 @@ export default {
         show: false
       })
 
-      this.SimStart = Cesium.JulianDate.addSeconds(
-        jNow,
-        -this.SimInt,
-        new Cesium.JulianDate()
-      )
-
-      this.SimStop = Cesium.JulianDate.addSeconds(
-        jNow,
-        this.SimInt,
-        new Cesium.JulianDate()
-      )
-
-      viewer.clock.startTime = this.SimStart
-      viewer.clock.stopTime = this.SimStop
-      viewer.clock.shouldAnimate = true
       viewer.clock.clockRange = Cesium.ClockRange.CLAMP
-      viewer.timeline.zoomTo(this.SimStart, this.SimStop)
 
       viewer.selectedEntityChanged.addEventListener((entity) => {
         if (!entity) {
@@ -104,7 +99,32 @@ export default {
         }
         entity.path.show = true
       })
-
+      pathMaterial = new Cesium.PolylineArrowMaterialProperty(Cesium.Color.BLUE)
+      /* if this.satellitesHaveLoaded is true then API beat Cesium to it
+      and we didn't process data when watch handler fired */
+      if (this.satellitesHaveLoaded) {
+        this.processNewData()
+      }
+    },
+    processNewData() {
+      // in case cesium hasn't loaded yet
+      this.satellitesHaveLoaded = true
+      if (!Cesium) {
+        return
+      }
+      console.log('processing new data')
+      const jNow = Cesium.JulianDate.fromDate(this.selectedDate)
+      this.SimStart = jNow
+      this.SimStop = Cesium.JulianDate.addSeconds(
+        jNow,
+        this.SimInt,
+        new Cesium.JulianDate()
+      )
+      viewer.clock.startTime = this.SimStart
+      viewer.clock.stopTime = this.SimStop
+      viewer.clock.shouldAnimate = true
+      viewer.timeline.zoomTo(this.SimStart, this.SimStop)
+      viewer.clock.currentTime = this.SimStart
       // Set up the current time and then load in the satellite objects.
       Cesium.Transforms.preloadIcrfFixed(
         new Cesium.TimeInterval({
@@ -118,6 +138,8 @@ export default {
     displayObjects(Cesium, viewer) {
       let epjd = new Cesium.JulianDate()
       let CRFtoTRF = Cesium.Transforms.computeIcrfToFixedMatrix(this.SimStart)
+
+      viewer.entities.removeAll()
 
       // For each object, calculate its position & orbit
       // Calculations pulled from: https://github.com/ut-astria/AstriaGraph/blob/master/main.js & https://github.com/ut-astria/AstriaGraph/blob/master/celemech.js
@@ -155,9 +177,7 @@ export default {
           },
           path: {
             resolution: 30,
-            material: new Cesium.PolylineArrowMaterialProperty(
-              Cesium.Color.BLUE
-            ),
+            material: pathMaterial,
             width: 6,
             show: i === 0
           }

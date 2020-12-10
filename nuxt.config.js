@@ -60,6 +60,14 @@ export default {
     {
       src: '@/plugins/vue-cesium.js',
       ssr: false
+    },
+    {
+      src: '@/plugins/vue-datepicker',
+      ssr: false
+    },
+    {
+      src: '@/plugins/vue-select',
+      ssr: false
     }
   ],
   /*
