@@ -1,7 +1,7 @@
 <template>
   <div>
+    <PanelLeft />
     <template v-if="loading"> Loading... </template>
-
     <template v-else>
       <CesiumViewer :satellites="satellites" :selected-date="targetDate" />
 
@@ -12,12 +12,14 @@
 
 <script>
 import CesiumViewer from '~/components/visualizer/CesiumViewer'
+import PanelLeft from '~/components/visualizer/PanelLeft'
 import Timeline from '~/components/timeline/Timeline'
 
 export default {
   layout: 'visualizer',
   components: {
     CesiumViewer,
+    PanelLeft,
     Timeline
   },
   data() {
@@ -36,6 +38,11 @@ export default {
   created() {
     this.$store.dispatch('satellites/getSatellites')
     this.loading = false
+  },
+  methods: {
+    openFilters() {
+      console.log('open filters')
+    }
   }
 }
 </script>

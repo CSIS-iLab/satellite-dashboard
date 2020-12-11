@@ -77,3 +77,15 @@ $breakpoints: (
 
 $size__container-max-width: 1000px;
 $size__content-max-width: 680px;
+
+$z-index: (
+  panel: 1
+);
+
+$shadows: (
+  lg: (
+    0 10px 20px rgba(0, 0, 0, 0.64),
+    0 2px 14px rgba(0, 0, 0, 0.34),
+    0 0 1px rgba(0, 0, 0, 0.54)
+  )
+);
