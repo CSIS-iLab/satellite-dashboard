@@ -1,0 +1,78 @@
+.form {
+  &__label {
+    color: $color-white-160;
+    @extend %font-ui-text-base-oxygen;
+  }
+
+  &__input {
+    background: $color-slate-800;
+    border: 0;
+    border-radius: 3px;
+  }
+
+  .vs {
+    &__search {
+      color: $color-white-150;
+    }
+
+    /*----------  Dropdown  ----------*/
+
+    &__dropdown-menu {
+      max-height: 400px;
+      background: $color-slate-600;
+      border: 0;
+    }
+
+    &__dropdown-option {
+      position: relative;
+      padding: rem(12) rem(24);
+      color: $color-white-170;
+      @extend %font-ui-text-lg-oxygen;
+
+      &--highlight {
+        color: $color-white-190;
+        background: $color-slate-800;
+      }
+
+      .icon {
+        display: none;
+      }
+
+      &--selected .icon {
+        position: absolute;
+        top: 50%;
+        left: rem(12);
+        display: inline-block;
+        font-size: 0.5em;
+        transform: translateY(-50%);
+      }
+    }
+
+    /*----------  Open/Close carat  ----------*/
+
+    &__open-indicator {
+      display: grid;
+      transition: none;
+
+      > * {
+        grid-column: 1;
+        grid-row: 1;
+      }
+    }
+
+    .icon-minus {
+      opacity: 0;
+    }
+
+    &--open {
+      .icon-plus {
+        visibility: hidden;
+        opacity: 0;
+      }
+
+      .icon-minus {
+        opacity: 1;
+      }
+    }
+  }
+}

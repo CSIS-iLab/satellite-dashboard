@@ -1,37 +1,62 @@
 <template>
   <div>
-    <h2>{{ numActiveFilters }} filters</h2>
-    <template v-if="isEditing" class="form">
-      <p v-show="numVisibleFilters == 0">
-        Please apply at least one filter to view results.
-      </p>
+    <h2 class="panel__title">{{ numActiveFilters }} filters</h2>
 
-      <template v-if="visibleFilters.includes('countryOfLaunch')">
-        <label>Country of Jurisdiction</label>
+    <div class="filters form">
+      <template v-if="isEditing" class="form">
+        <p v-show="numVisibleFilters == 0">
+          Please apply at least one filter to view results.
+        </p>
+
+        <div v-for="filter in visibleFilters" :key="filter">
+          <label :for="'filter__' + filter" class="form__label">
+            {{ filterOptions[filter].label }}
+          </label>
+          <v-select
+            :id="'filter__' + filter"
+            v-model="activeFilterValues[filter]"
+            class="form__input"
+            :options="filterValueOptions[filter]"
+            :reduce="(option) => option.value"
+            multiple
+          >
+            <template #open-indicator="{ attributes }">
+              <span v-bind="attributes">
+                <Icon id="plus" class="icon" name="plus" />
+                <Icon id="minus" class="icon" name="minus" />
+              </span>
+            </template>
+            <template #option="{ label }">
+              <Icon id="check" class="icon" name="check" />{{ label }}
+            </template>
+          </v-select>
+        </div>
+
+        <label for="selectFilter">Add a filter</label>
         <v-select
-          v-model="countryOfLaunch"
-          multiple
-          :options="countries"
-          :reduce="(option) => option.value"
-        ></v-select>
+          id="selectFilter"
+          class="form__input"
+          :clearable="false"
+          :options="Object.values(filterOptions)"
+          :selectable="(option) => !activeFilters.includes(option.value)"
+          @input="selectFilter"
+        >
+          <template #open-indicator="{ attributes }">
+            <span v-bind="attributes">
+              <Icon id="plus" class="icon" name="plus" />
+              <Icon id="minus" class="icon" name="minus" />
+            </span>
+          </template>
+        </v-select>
+        <div v-show="numVisibleFilters">
+          <button @click="applyFilters">Apply</button>
+        </div>
       </template>
-
-      <label for="selectFilter">Add a filter</label>
-      <v-select
-        id="selectFilter"
-        :clearable="false"
-        :options="filterOptions"
-        :selectable="(option) => !activeFilters.includes(option.value)"
-        @input="selectFilter"
-      ></v-select>
-      <div v-show="numVisibleFilters">
-        <button @click="applyFilters">Apply</button>
-      </div>
-    </template>
-    <template v-else>
-      {{ activeFilters }}
-      <button @click="editFilters">Edit Filters</button>
-    </template>
+      <template v-else>
+        {{ activeFiltersList }}
+        <button @click="editFilters">Edit Filters</button>
+      </template>
+    </div>
     <hr />
     <button @click="applyFilterTest">Test Filter</button>
     <button @click="resetFilters">Reset</button>
@@ -45,7 +70,7 @@
       </thead>
       <tr v-for="sat in activeSatellites" :key="sat">
         <td>{{ sat }}</td>
-        <td>{{ satellites[sat].source1.Name }}</td>
+        <td>{{ satellites[sat].meta.Name }}</td>
       </tr>
     </table>
   </div>
@@ -54,29 +79,36 @@
 <script>
 import { mapGetters } from 'vuex'
 import { mapMutations } from 'vuex'
+import Icon from '~/components/global/Icon.vue'
 
 export default {
+  components: {
+    Icon
+  },
   data: function() {
     return {
       isEditing: true,
-      filterOptions: [
-        { value: 'Name', label: 'Name' },
-        { value: 'COSPAR', label: 'COSPAR' },
-        {
-          value: 'countryOfLaunch',
+      filterOptions: {
+        Name: { value: 'Name', label: 'Name' },
+        NoradId: { value: 'NoradId', label: 'Norad ID' },
+        countryOfJurisdiction: {
+          value: 'countryOfJurisdiction',
           label: 'Country of Jurisdiction'
         },
-        { value: 'Purpose', label: 'Purpose' },
-        { value: 'Users', label: 'Users' },
-        { value: 'Status', label: 'Status' }
-      ],
+        Purpose: { value: 'Purpose', label: 'Purpose' },
+        Users: { value: 'Users', label: 'Users' },
+        Status: { value: 'Status', label: 'Status' }
+      },
       activeFilters: [],
-      visibleFilters: [],
-      countries: [
-        { value: 'US', label: 'United States' },
-        { value: 'JPN', label: 'Japan' }
-      ],
-      countryOfLaunch: []
+      activeFilterValues: {
+        countryOfJurisdiction: [],
+        Name: [],
+        NoradId: [],
+        Purpose: [],
+        Users: [],
+        Status: []
+      },
+      visibleFilters: []
     }
   },
   computed: {
@@ -86,13 +118,48 @@ export default {
     numActiveFilters() {
       return this.activeFilters.length
     },
+    activeFiltersList() {
+      return this.activeFilters
+        .map((d) => this.filterOptions[d].label)
+        .join(', ')
+    },
     satellites() {
       return this.$store.state.satellites.satellites
     },
     ...mapGetters({
       activeSatellites: 'satellites/activeSatellites',
       numSatellites: 'satellites/activeSatellitesCount'
-    })
+    }),
+    filterValueOptions() {
+      let filters = {
+        countryOfJurisdiction: new Set(),
+        Purpose: new Set(),
+        Users: new Set(),
+        Name: new Set(),
+        NoradId: new Set(),
+        Status: new Set()
+      }
+
+      const satellites = Object.values(this.satellites)
+
+      for (let i = 0; i < satellites.length; i++) {
+        const sat = satellites[i]
+        filters.countryOfJurisdiction.add(sat.meta.countryOfJurisdiction)
+        filters.Purpose.add(sat.meta.Purpose)
+        filters.Users.add(sat.meta.Operator)
+        filters.Name.add(sat.meta.Name)
+        filters.NoradId.add(sat.meta.NoradId)
+        filters.Status.add(sat.meta.Status)
+      }
+
+      for (const key in filters) {
+        filters[key] = [...filters[key]].map((d) => ({ value: d, label: d }))
+      }
+
+      console.log(filters)
+
+      return filters
+    }
   },
   methods: {
     editFilters() {
@@ -109,7 +176,7 @@ export default {
       let filters = {}
       for (let i = 0; i < this.activeFilters.length; i++) {
         const filter = this.activeFilters[i]
-        filters[filter] = this[filter]
+        filters[filter] = this.activeFilterValues[filter]
       }
 
       console.log(filters)
@@ -118,8 +185,8 @@ export default {
         .filter(function(item) {
           for (var key in filters) {
             if (
-              item.source1[key] === undefined ||
-              !filters[key].includes(item.source1[key])
+              item.meta[key] === undefined ||
+              !filters[key].includes(item.meta[key])
             )
               return false
           }
@@ -133,26 +200,25 @@ export default {
     applyFilterTest() {
       console.log('apply the filter!')
       const filteredSatellites = Object.values(this.satellites)
-        .filter((sat) => sat.source1.countryOfLaunch === 'US')
+        .filter((sat) => sat.meta.countryOfLaunch === 'US')
         .map((sat) => sat.catalog_id)
       console.log(filteredSatellites)
       this.updateActiveSatellites(filteredSatellites)
     },
     resetFilters() {
       console.log('reset filters')
+      // Clear Filters
+      let filters = {}
+      for (let i = 0; i < this.activeFilters.length; i++) {
+        const filter = this.activeFilters[i]
+        this[filter] = []
+      }
+      this.activeFilters = []
+      this.visibleFilters = []
+
+      // Reset Satellite Ids
       const filteredSatellites = Object.keys(this.satellites)
       this.updateActiveSatellites(filteredSatellites)
-    },
-    nestedFilter(targetArray, filters) {
-      var filterKeys = Object.keys(filters)
-      return targetArray.filter(function(eachObj) {
-        return filterKeys.every(function(eachKey) {
-          if (!filters[eachKey].length) {
-            return true
-          }
-          return filters[eachKey].includes(eachObj[eachKey])
-        })
-      })
     },
     ...mapMutations({
       updateActiveSatellites: 'satellites/updateActiveSatellites'
@@ -161,8 +227,6 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.form {
-  margin: 2rem 0;
-}
+<style lang="scss">
+@import '../assets/css/components/form-input';
 </style>
