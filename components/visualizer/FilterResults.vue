@@ -11,7 +11,7 @@
       :columns="columns"
       :rows="satellites"
       :pagination-options="{
-        enabled: true,
+        enabled: totalResults > 75 ? true : false,
         mode: 'pages',
         perPage: 75
       }"
@@ -37,7 +37,7 @@
         <div v-if="props.column.field == 'Name'">
           <div
             class="sat__basic sat__basic--status"
-            :data-status="props.row.status"
+            :data-status="props.row.Status"
           >
             <div class="sat__name">
               {{ props.formattedRow[props.column.field] }}

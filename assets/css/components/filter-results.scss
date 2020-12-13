@@ -39,6 +39,14 @@
   .vgt-wrap {
     grid-area: table;
     margin: 0 calc(var(--panel-padding-side) * -1);
+
+    &__footer {
+      position: sticky;
+      bottom: 0;
+      background: $color-slate-300;
+      border: 0;
+      @include shadow(sm);
+    }
   }
 
   .vgt-table {
@@ -81,6 +89,17 @@
       &:last-of-type {
         padding-right: var(--panel-padding-side);
       }
+    }
+  }
+
+  .footer {
+    &__row-count {
+      display: none;
+    }
+
+    &__navigation {
+      float: none !important;
+      text-align: center;
     }
   }
 }
