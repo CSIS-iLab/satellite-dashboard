@@ -10,6 +10,7 @@
   @include shadow(lg);
 
   &__title {
+    margin-bottom: rem(16);
     color: $color-white-190;
     @extend %font-ui-heading-section-lg;
   }
@@ -29,6 +30,14 @@
 
     &--no-active-tab {
       transform: translateX(-100%);
+    }
+
+    [data-is-faded='true'] {
+      opacity: 0.3;
+    }
+
+    p {
+      margin-bottom: 1rem;
     }
   }
 

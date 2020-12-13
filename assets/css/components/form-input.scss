@@ -14,8 +14,16 @@
   }
 
   .vs {
+    &--disabled {
+      opacity: 0.5;
+
+      * {
+        background-color: unset !important;
+      }
+    }
+
     &__search {
-      color: $color-white-150;
+      color: $color-white-170;
     }
 
     &__search,
@@ -99,10 +107,11 @@
         grid-column: 1;
         grid-row: 1;
       }
-    }
 
-    .icon-minus {
-      opacity: 0;
+      .icon-minus {
+        visibility: hidden;
+        opacity: 0;
+      }
     }
 
     &--open {
@@ -112,6 +121,7 @@
       }
 
       .icon-minus {
+        visibility: visible;
         opacity: 1;
       }
     }

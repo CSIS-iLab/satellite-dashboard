@@ -1,0 +1,35 @@
+#filters-panel {
+  /* stylelint-disable-next-line */
+  .form > * + * {
+    margin-top: rem(16);
+  }
+}
+
+.filters__buttons {
+  display: flex;
+  justify-content: space-between;
+
+  .btn {
+    text-transform: uppercase;
+
+    &:hover .icon {
+      color: $color-orange-100;
+    }
+  }
+
+  .icon {
+    color: $color-orange-180;
+    font-size: 0.75em;
+    transition: color 0.3s ease-in-out;
+  }
+}
+
+.filters__list {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+
+  .btn {
+    opacity: 1;
+  }
+}

@@ -1,9 +1,11 @@
 <template>
   <div>
-    <h2 class="panel__title">{{ numActiveFilters }} filters</h2>
+    <h2 class="panel__title" :data-is-faded="isEditable">
+      {{ numActiveFilters }} {{ 'filter' | pluralize(numActiveFilters) }}
+    </h2>
 
-    <div class="filters form">
-      <template v-if="isEditing" class="form">
+    <div class="filters">
+      <form v-if="isEditable" class="form" @submit.prevent>
         <p v-show="numVisibleFilters == 0">
           Please apply at least one filter to view results.
         </p>
@@ -21,7 +23,9 @@
             class="form__input"
             :options="filterValueOptions[filter]"
             :reduce="(option) => option.value"
+            placeholder="Type to search"
             multiple
+            required
           >
             <template #open-indicator="{ attributes }">
               <span v-bind="attributes">
@@ -29,19 +33,29 @@
                 <Icon id="minus" class="icon" name="minus" />
               </span>
             </template>
+            <template #search="{attributes, events}">
+              <input
+                class="vs__search"
+                :required="!activeFilterValues[filter]"
+                v-bind="attributes"
+                v-on="events"
+              />
+            </template>
             <template #option="{ label }">
               <Icon id="check" class="icon" name="check" />{{ label }}
             </template>
           </v-select>
         </div>
 
-        <label for="selectFilter">Add a filter</label>
         <v-select
           id="selectFilter"
+          v-model="latestFilterAdded"
+          placeholder="Add a filter"
           class="form__input"
           :clearable="false"
-          :options="Object.values(filterOptions)"
-          :selectable="(option) => !activeFilters.includes(option.value)"
+          :options="availableFilterOptions"
+          :disabled="availableFilterOptions.length === 0"
+          :searchable="false"
           @input="selectFilter"
         >
           <template #open-indicator="{ attributes }">
@@ -51,17 +65,23 @@
             </span>
           </template>
         </v-select>
-        <div v-show="numVisibleFilters">
-          <Button :on-click="applyFilters">Apply</Button>
-          <Button :on-click="resetFilters">Reset</Button>
+        <div v-show="numVisibleFilters" class="filters__buttons">
+          <Button :on-click="resetFilters">Remove All</Button>
+          <Button :on-click="applyFilters" type="submit">
+            <Icon id="check" class="icon" name="check" /> Apply
+          </Button>
+          <Button :on-click="cancelFilters">Cancel</Button>
         </div>
-      </template>
-      <template v-else>
-        {{ activeFiltersList }}
-        <Button :on-click="editFilters">Edit Filters</Button>
-      </template>
+      </form>
+      <div v-else class="filters__list">
+        {{ listActiveFilters }}
+        <Button class="btn--contained btn--icon" :on-click="editFilters">
+          <Icon id="pen" class="icon" name="pen" />
+        </Button>
+      </div>
     </div>
     <FilterResults
+      v-if="activeFilters.length > 0"
       :satellites="activeSatelliteMeta"
       :total-results="numSatellites"
     />
@@ -83,7 +103,7 @@ export default {
   },
   data: function() {
     return {
-      isEditing: true,
+      isEditable: true,
       filterOptions: {
         Name: { value: 'Name', label: 'Name' },
         NoradId: { value: 'NoradId', label: 'Norad ID' },
@@ -104,7 +124,8 @@ export default {
         Users: [],
         Status: []
       },
-      visibleFilters: []
+      visibleFilters: [],
+      latestFilterAdded: null
     }
   },
   computed: {
@@ -114,10 +135,15 @@ export default {
     numActiveFilters() {
       return this.activeFilters.length
     },
-    activeFiltersList() {
+    listActiveFilters() {
       return this.activeFilters
         .map((d) => this.filterOptions[d].label)
         .join(', ')
+    },
+    availableFilterOptions() {
+      return Object.keys(this.filterOptions)
+        .filter((d) => !this.visibleFilters.includes(d))
+        .map((d) => this.filterOptions[d])
     },
     satellites() {
       return this.$store.state.satellites.satellites
@@ -149,7 +175,9 @@ export default {
       }
 
       for (const key in filters) {
-        filters[key] = [...filters[key]].map((d) => ({ value: d, label: d }))
+        filters[key] = [...filters[key]]
+          .sort()
+          .map((d) => ({ value: d, label: d }))
       }
 
       console.log(filters)
@@ -177,10 +205,11 @@ export default {
   },
   methods: {
     editFilters() {
-      this.isEditing = true
+      this.isEditable = true
     },
     selectFilter(value) {
       this.visibleFilters.push(value.value)
+      this.latestFilterAdded = null
     },
     deleteFilter(e, filter) {
       this.activeFilterValues[filter] = []
@@ -188,7 +217,7 @@ export default {
     },
     applyFilters() {
       console.log('apply the filter!')
-      this.isEditing = false
+      this.isEditable = false
       this.activeFilters = this.visibleFilters
 
       let filters = {}
@@ -221,7 +250,7 @@ export default {
       let filters = {}
       for (let i = 0; i < this.activeFilters.length; i++) {
         const filter = this.activeFilters[i]
-        this[filter] = []
+        this.activeFilterValues[filter] = []
       }
       this.activeFilters = []
       this.visibleFilters = []
@@ -232,11 +261,15 @@ export default {
     },
     ...mapMutations({
       updateActiveSatellites: 'satellites/updateActiveSatellites'
-    })
+    }),
+    cancelFilters() {
+      console.log('cancel the filters')
+    }
   }
 }
 </script>
 
 <style lang="scss">
+@import '../assets/css/components/filter-panel';
 @import '../assets/css/components/form-input';
 </style>
