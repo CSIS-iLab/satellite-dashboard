@@ -1,8 +1,9 @@
 .panel {
+  --panel-padding-side: #{rem(32)};
   @include z-index(panel);
   width: 100%;
   // max-width: 360px;
-  padding: rem(56) rem(32px) 0;
+  padding: rem(56) var(--panel-padding-side) 0;
   color: $color-white-170;
   @extend %font-ui-text-base-oxygen;
   background: $color-slate-600;

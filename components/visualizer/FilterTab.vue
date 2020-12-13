@@ -11,6 +11,9 @@
         <div v-for="filter in visibleFilters" :key="filter">
           <label :for="'filter__' + filter" class="form__label">
             {{ filterOptions[filter].label }}
+            <Button :on-click="(e) => deleteFilter(e, filter)">
+              <Icon id="trash" class="icon" name="trash" />
+            </Button>
           </label>
           <v-select
             :id="'filter__' + filter"
@@ -49,41 +52,34 @@
           </template>
         </v-select>
         <div v-show="numVisibleFilters">
-          <button @click="applyFilters">Apply</button>
+          <Button :on-click="applyFilters">Apply</Button>
+          <Button :on-click="resetFilters">Reset</Button>
         </div>
       </template>
       <template v-else>
         {{ activeFiltersList }}
-        <button @click="editFilters">Edit Filters</button>
+        <Button :on-click="editFilters">Edit Filters</Button>
       </template>
     </div>
-    <hr />
-    <button @click="applyFilterTest">Test Filter</button>
-    <button @click="resetFilters">Reset</button>
-    {{ numSatellites }} Results<br />
-    <table border="1" borderColor="#fff" cellSpacing="0">
-      <thead>
-        <tr>
-          <td>Catalog Id</td>
-          <td>Name</td>
-        </tr>
-      </thead>
-      <tr v-for="sat in activeSatellites" :key="sat">
-        <td>{{ sat }}</td>
-        <td>{{ satellites[sat].meta.Name }}</td>
-      </tr>
-    </table>
+    <FilterResults
+      :satellites="activeSatelliteMeta"
+      :total-results="numSatellites"
+    />
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
 import { mapMutations } from 'vuex'
+import Button from '~/components/global/Button.vue'
 import Icon from '~/components/global/Icon.vue'
+import FilterResults from '~/components/visualizer/FilterResults.vue'
 
 export default {
   components: {
-    Icon
+    Button,
+    Icon,
+    FilterResults
   },
   data: function() {
     return {
@@ -159,6 +155,24 @@ export default {
       console.log(filters)
 
       return filters
+    },
+    activeSatelliteMeta() {
+      let results = []
+      for (let i = 0; i < this.activeSatellites.length; i++) {
+        const catalog_id = this.activeSatellites[i]
+        const { Name, Status, countryOfJurisdiction } = this.satellites[
+          catalog_id
+        ].meta
+        results.push({
+          catalog_id,
+          Name,
+          Status,
+          country: countryOfJurisdiction.substring(0, 3)
+        })
+      }
+
+      console.log(results)
+      return results
     }
   },
   methods: {
@@ -167,6 +181,10 @@ export default {
     },
     selectFilter(value) {
       this.visibleFilters.push(value.value)
+    },
+    deleteFilter(e, filter) {
+      this.activeFilterValues[filter] = []
+      this.visibleFilters = this.visibleFilters.filter((d) => d !== filter)
     },
     applyFilters() {
       console.log('apply the filter!')
@@ -194,14 +212,6 @@ export default {
         })
         .map((sat) => sat.catalog_id)
 
-      console.log(filteredSatellites)
-      this.updateActiveSatellites(filteredSatellites)
-    },
-    applyFilterTest() {
-      console.log('apply the filter!')
-      const filteredSatellites = Object.values(this.satellites)
-        .filter((sat) => sat.meta.countryOfLaunch === 'US')
-        .map((sat) => sat.catalog_id)
       console.log(filteredSatellites)
       this.updateActiveSatellites(filteredSatellites)
     },

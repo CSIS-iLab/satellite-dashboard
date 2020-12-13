@@ -68,7 +68,8 @@ export default {
     {
       src: '@/plugins/vue-select',
       ssr: false
-    }
+    },
+    { src: '~/plugins/vue-good-table', ssr: false }
   ],
   /*
    ** Nuxt.js dev-modules

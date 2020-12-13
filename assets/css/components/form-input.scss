@@ -1,10 +1,13 @@
 .form {
   &__label {
+    display: flex;
+    justify-content: space-between;
     color: $color-white-160;
     @extend %font-ui-text-base-oxygen;
   }
 
   &__input {
+    padding: rem(10) rem(16) rem(12);
     background: $color-slate-800;
     border: 0;
     border-radius: 3px;
@@ -15,7 +18,40 @@
       color: $color-white-150;
     }
 
+    &__search,
+    &__search:focus {
+      margin: 0;
+      padding: 0;
+      border: 0;
+    }
+
+    /*----------  Selected Options  ----------*/
+
+    &__selected {
+      padding: rem(4) rem(12);
+      color: $color-white-190;
+      background: $color-slate-200;
+      border: 0;
+      border-radius: 50px;
+
+      &-options {
+        padding: 0 rem(12) 0 0;
+      }
+    }
+
+    &__deselect {
+      margin-left: rem(12);
+      text-shadow: none;
+      fill: $color-white-130;
+    }
+
     /*----------  Dropdown  ----------*/
+
+    &__dropdown-toggle {
+      padding-bottom: 0;
+      border: 0;
+      border-radius: 0;
+    }
 
     &__dropdown-menu {
       max-height: 400px;
@@ -28,6 +64,7 @@
       padding: rem(12) rem(24);
       color: $color-white-170;
       @extend %font-ui-text-lg-oxygen;
+      transition: color 0.3s ease-in-out, background 0.3s ease-in-out;
 
       &--highlight {
         color: $color-white-190;
@@ -49,6 +86,10 @@
     }
 
     /*----------  Open/Close carat  ----------*/
+
+    &__actions {
+      padding: 0;
+    }
 
     &__open-indicator {
       display: grid;
