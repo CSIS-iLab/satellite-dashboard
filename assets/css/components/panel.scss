@@ -30,6 +30,11 @@
 
     &--no-active-tab {
       transform: translateX(-100%);
+
+      .btn--panel-close {
+        visibility: hidden;
+        opacity: 0;
+      }
     }
 
     [data-is-faded='true'] {
