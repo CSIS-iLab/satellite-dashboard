@@ -1,3 +1,4 @@
+// @use 'variables' as *;
 @use 'sass:math';
 
 /*=================================
@@ -5,7 +6,42 @@
 =================================*/
 
 $browser-context: 16px;
+
 @function rem($size) {
+  @if is-px($size) == false {
+    $size: $size * 1px;
+  }
+
   $rem-size: $size / $browser-context;
-  @return #{$rem-size}rem;
+  @return $rem-size * 1rem;
+}
+
+@function is-number($value) {
+  @return type-of($value) == 'number';
+}
+
+@function is-px($value) {
+  @return is-number($value) and index('px', unit($value)) != null;
+}
+
+@function z-index($key) {
+  $z-index: map-get($z-index, $key);
+
+  @if $z-index {
+    @return $z-index;
+  }
+
+  @warn 'There is no item "#{$element}" in this list; choose one of: #{$list}';
+  @return null;
+}
+
+@function box-shadow($key) {
+  $box-shadow: map-get($shadows, $key);
+
+  @if $box-shadow {
+    @return $box-shadow;
+  }
+
+  @warn 'There is no item "#{$element}" in this list; choose one of: #{$list}';
+  @return null;
 }

@@ -40,6 +40,10 @@ let Cesium, viewer, pathMaterial
 export default {
   props: {
     satellites: {
+      type: Object,
+      default: () => {}
+    },
+    activeSatellites: {
       type: Array,
       default: () => []
     },
@@ -65,7 +69,7 @@ export default {
     }
   },
   watch: {
-    satellites: 'processNewData'
+    activeSatellites: 'processNewData'
   },
   mounted() {
     this.$refs.vcViewer.createPromise.then(({ Cesium, viewer }) => {
@@ -143,12 +147,14 @@ export default {
 
       // For each object, calculate its position & orbit
       // Calculations pulled from: https://github.com/ut-astria/AstriaGraph/blob/master/main.js & https://github.com/ut-astria/AstriaGraph/blob/master/celemech.js
-      this.satellites.forEach((sat, i) => {
-        const { catalog_id, orbital, source1 } = sat
+      this.activeSatellites.forEach((sat, i) => {
+        const { catalog_id, orbits, source1 } = this.satellites[sat]
         const name = source1.Name
 
         // Make a copy of the orbital parameters so we can modify it with our calculations.
-        let elems = Object.assign({}, orbital)
+
+        // TODO: Change this so it looks at the correct orbit, not just the first one.
+        let elems = Object.assign({}, orbits[0].elements)
 
         // Cesium.JulianDate.fromIso8601('2020-06-13T22:00:02.000000Z', epjd)
         Cesium.JulianDate.fromIso8601(elems.Epoch, epjd)

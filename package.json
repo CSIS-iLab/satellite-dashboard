@@ -24,6 +24,7 @@
     }
   },
   "dependencies": {
+    "@a11y-kit/vue-tabs": "^1.0.1",
     "@nuxtjs/pwa": "^3.0.0-0",
     "axios": "^0.19.2",
     "fibers": "^4.0.2",

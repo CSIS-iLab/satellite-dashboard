@@ -1,4 +1,5 @@
 // @use 'variables' as *;
+// @use 'functions' as *;
 // @use 'sass:map';
 
 /*=================================
@@ -114,4 +115,14 @@
       box-shadow: none;
     }
   }
+}
+
+// Returns the z-index given an element.
+@mixin z-index($key) {
+  z-index: z-index($key);
+}
+
+// Returns the box-shadow given a shadow-size.
+@mixin shadow($key) {
+  box-shadow: box-shadow($key);
 }

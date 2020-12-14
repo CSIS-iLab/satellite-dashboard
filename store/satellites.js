@@ -18,9 +18,19 @@ const getDateForApi = (targetDate) => {
 }
 
 export const state = () => ({
-  satellites: [],
+  satellites: {},
+  activeSatellites: [],
   targetDate: new Date()
 })
+
+export const getters = {
+  activeSatellites: (state) => {
+    return state.activeSatellites
+  },
+  activeSatellitesCount: (state, getters) => {
+    return getters.activeSatellites.length
+  }
+}
 
 export const mutations = {
   updateSatellites: (state, satellites) => {
@@ -28,6 +38,9 @@ export const mutations = {
   },
   updateTargetDate: (state, newTargetDate) => {
     state.targetDate = newTargetDate
+  },
+  updateActiveSatellites: (state, satellites) => {
+    state.activeSatellites = satellites
   }
 }
 
@@ -43,7 +56,17 @@ export const actions = {
         )}`
       ).then((res) => res.json())
 
-      commit('updateSatellites', satellites)
+      let items = {}
+      let activeItems = []
+
+      // TODO: Update API to return object keyed by ID instead of doing it here.
+      satellites.forEach((sat) => {
+        items[sat.catalog_id] = sat
+        activeItems.push(sat.catalog_id)
+      })
+
+      commit('updateSatellites', items)
+      commit('updateActiveSatellites', activeItems)
     } catch (err) {
       console.log(err)
     }

@@ -1,0 +1,64 @@
+.panel {
+  @include z-index(panel);
+  width: 100%;
+  // max-width: 360px;
+  padding: rem(56) rem(32px) 0;
+  color: $color-white-170;
+  background: $color-slate-600;
+  @include shadow(lg);
+}
+
+.ak-vt {
+  &__wrapper {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    @include z-index(panel);
+    width: 100%;
+    max-width: 360px;
+    @include shadow(lg);
+    transition: transform 0.3s ease-in-out;
+
+    &--no-active-tab {
+      transform: translateX(-100%);
+    }
+  }
+
+  &__list {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__activator {
+    --tab-bg: #{$color-slate-600};
+    color: $color-white-180;
+    background: var(--tab-bg, $color-slate-600);
+    border: 0;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.34)),
+      drop-shadow(0 2px 5px rgba(0, 0, 0, 0.24)),
+      drop-shadow(0 0 1px rgba(0, 0, 0, 0.44));
+    transition: background 0.3s ease-in-out;
+
+    &:hover {
+      --tab-bg: #{$color-slate-400};
+    }
+
+    /* stylelint-disable */
+    .ak-vt__wrapper:not(.ak-vt__wrapper--no-active-tab)
+      &[aria-selected='false'] {
+      --tab-bg: #{$color-slate-800};
+    }
+    /* stylelint-enable */
+  }
+
+  &__panel {
+    height: 100%;
+    overflow: scroll;
+  }
+}
