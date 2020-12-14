@@ -5,6 +5,7 @@
   background-color: transparent;
   border-style: none;
   border-radius: 0;
+  cursor: pointer;
   opacity: 0.7;
   transition: all 0.3s ease-in-out;
 
@@ -76,8 +77,9 @@
   }
 
   &--icon {
+    width: 40px;
+    height: 40px;
     color: $color-white-140;
     border-radius: 50px;
-    opacity: 0.4;
   }
 }

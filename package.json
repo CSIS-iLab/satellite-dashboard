@@ -32,6 +32,7 @@
     "nuxt": "^2.12.2",
     "satellite.js": "^4.0.0",
     "vue-cesium": "^2.1.4",
+    "vue-good-table": "^2.21.1",
     "vue-select": "^3.10.8",
     "vuejs-datepicker": "^1.6.2"
   },

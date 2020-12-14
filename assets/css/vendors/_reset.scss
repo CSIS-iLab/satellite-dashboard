@@ -13,8 +13,8 @@
 }
 
 /* Remove default padding */
-ul[class],
-ol[class] {
+ul[role='list'],
+ol[role='list'] {
   padding: 0;
 }
 

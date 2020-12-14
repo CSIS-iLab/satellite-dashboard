@@ -21,6 +21,8 @@ export const state = () => ({
   satellites: {},
   activeSatellites: [],
   targetDate: new Date()
+  // countriesOfJurisdiction: null,
+  // countriesOfLaunch: null
 })
 
 export const getters = {
@@ -42,6 +44,10 @@ export const mutations = {
   updateActiveSatellites: (state, satellites) => {
     state.activeSatellites = satellites
   }
+  // updateCountries: (state, countries) => {
+  //   state.countriesOfJurisdiction = countries.jurisdiction
+  //   state.countriesOfLaunch = countries.launch
+  // }
 }
 
 export const actions = {
@@ -58,15 +64,29 @@ export const actions = {
 
       let items = {}
       let activeItems = []
+      // let countries = {
+      //   jurisdiction: new Set(),
+      //   launch: new Set()
+      // }
 
       // TODO: Update API to return object keyed by ID instead of doing it here.
       satellites.forEach((sat) => {
         items[sat.catalog_id] = sat
         activeItems.push(sat.catalog_id)
+        sat.meta = { ...sat.source1, ...sat.source2 }
+        // countries.jurisdiction.add({
+        //   value: sat.source2.countryOfJurisdiction,
+        //   label: sat.source2.countryOfJurisdiction
+        // })
+        // countries.launch.add({
+        //   value: sat.source1.countryOfLaunch,
+        //   label: sat.source1.countryOfLaunch
+        // })
       })
 
       commit('updateSatellites', items)
       commit('updateActiveSatellites', activeItems)
+      // commit('updateCountries', countries)
     } catch (err) {
       console.log(err)
     }

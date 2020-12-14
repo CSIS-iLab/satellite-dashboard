@@ -1,0 +1,51 @@
+.sat {
+  &__basic {
+    &--status {
+      display: grid;
+      grid-template-columns: max-content auto;
+      column-gap: rem(16);
+      row-gap: rem(2);
+
+      &::before {
+        content: '';
+        display: block;
+        grid-column: 1;
+        grid-row: 1;
+        width: 10px;
+        height: 10px;
+        margin-top: rem(4);
+        background: var(--status, $color-slate-200);
+        border-radius: 50%;
+      }
+
+      .sat__name {
+        grid-column: 2;
+        grid-row: 1;
+      }
+
+      .sat__id {
+        grid-column: 2;
+        grid-row: 2;
+      }
+    }
+  }
+
+  &__id {
+    color: $color-white-160;
+    @extend %font-ui-text-sm-oxygen;
+  }
+
+  &__status {
+    width: 10px;
+    height: 10px;
+    background: var(--status, $color-slate-200);
+    border-radius: 50%;
+  }
+}
+
+/*----------  Status Colors  ----------*/
+@each $stat, $color in $status {
+  [data-status='#{$stat}'] {
+    --status: #{$color};
+  }
+}
