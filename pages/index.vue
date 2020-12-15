@@ -7,9 +7,14 @@
         :satellites="satellites"
         :active-satellites="activeSatellites"
         :selected-date="targetDate"
+        :selected-timescale="selectedTimescale.value"
       />
 
-      <Timeline :selected-date="targetDate" />
+      <Timeline
+        :selected-date="targetDate"
+        :timescales="timescales"
+        :selected-timescale="selectedTimescale"
+      />
     </template>
   </div>
 </template>
@@ -38,6 +43,12 @@ export default {
     },
     targetDate() {
       return this.$store.state.satellites.targetDate
+    },
+    timescales() {
+      return this.$store.state.satellites.timescales
+    },
+    selectedTimescale() {
+      return this.$store.state.satellites.selectedTimescale
     },
     ...mapGetters({
       activeSatellites: 'satellites/activeSatellites'

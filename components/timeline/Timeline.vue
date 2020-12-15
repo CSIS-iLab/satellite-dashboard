@@ -7,7 +7,7 @@
           <v-select
             :clearable="false"
             :options="playbackSpeeds"
-            :value="playbackSpeeds[0]"
+            v-model="playbackSpeeds[0]"
             attach
             :menu-props="{ top: true, offsetY: true }"
           ></v-select>
@@ -39,8 +39,10 @@
           <v-select
             :clearable="false"
             :options="timescales"
-            :value="timescales[0]"
+            v-model="chosenTimescale"
+            attach
             :menu-props="{ top: true, offsetY: true }"
+            @input="selectTimescale"
           ></v-select>
         </span>
       </div>
@@ -58,28 +60,25 @@
 </template>
 
 <script>
-import Icon from '../global/Icon'
-
 export default {
   props: {
     selectedDate: {
       type: Date,
-      default: new Date()
+      required: true
+    },
+    timescales: {
+      type: Array,
+      required: true
+    },
+    selectedTimescale: {
+      type: Object,
+      required: true
     }
   },
   data() {
     return {
       chosenDate: this.selectedDate,
-      timescales: [
-        {
-          label: 'Day',
-          value: 24 * 60 * 60
-        },
-        {
-          label: 'Week',
-          value: 7 * 24 * 60 * 60
-        }
-      ],
+      chosenTimescale: this.selectedTimescale,
       playbackSpeeds: [
         {
           label: '1x',
@@ -107,6 +106,10 @@ export default {
   methods: {
     selectNewDate(date) {
       this.$store.commit('satellites/updateTargetDate', date)
+      this.$store.dispatch('satellites/getSatellites')
+    },
+    selectTimescale(timescale) {
+      this.$store.commit('satellites/updateSelectedTimescale', timescale)
       this.$store.dispatch('satellites/getSatellites')
     }
   }

@@ -49,7 +49,11 @@ export default {
     },
     selectedDate: {
       type: Date,
-      default: new Date()
+      required: true
+    },
+    selectedTimescale: {
+      type: Number,
+      required: true
     }
   },
   data() {
@@ -118,6 +122,7 @@ export default {
       }
       console.log('processing new data')
       const jNow = Cesium.JulianDate.fromDate(this.selectedDate)
+      this.SimInt = this.selectedTimescale
       this.SimStart = jNow
       this.SimStop = Cesium.JulianDate.addSeconds(
         jNow,
@@ -154,16 +159,7 @@ export default {
         // Make a copy of the orbital parameters so we can modify it with our calculations.
 
         // TODO: Change this so it looks at the correct orbit, not just the first one.
-        let elems = Object.assign({}, orbits[0].elements)
-
-        // Cesium.JulianDate.fromIso8601('2020-06-13T22:00:02.000000Z', epjd)
-        Cesium.JulianDate.fromIso8601(elems.Epoch, epjd)
-        let t = Cesium.JulianDate.daysDifference(this.SimStop, epjd)
-        elems.mmo = Math.sqrt(EGM96_mu / (elems.SMA * elems.SMA * elems.SMA))
-        elems.MeanAnom = (elems.MeanAnom + elems.mmo * t * 86400) % TwoPi
-
-        // Calculate Orbit
-        let orbit = this.calcOrbit(Cesium, viewer, CRFtoTRF, elems)
+        const orbit = this.compileOrbits(orbits, CRFtoTRF, epjd)
 
         viewer.entities.add({
           id: catalog_id,
@@ -189,22 +185,6 @@ export default {
           }
         })
       })
-    },
-    // Reference: https://github.com/ut-astria/AstriaGraph/blob/master/main.js#L228-L240
-    // this is likely redundant now
-    updatePosition(Cesium, CsView, CRFtoTRF, elems) {
-      // return function UpdateHelper() {
-      var t = Cesium.JulianDate.secondsDifference(
-        CsView.clock.currentTime,
-        this.SimStart
-      )
-      var u = Object.assign({}, elems)
-      u.MeanAnom = (u.MeanAnom + u.mmo * t) % TwoPi
-      var eff = new Cesium.Cartesian3()
-      var eci = this.eltocart(Cesium, u, true, 1e-3)
-      Cesium.Matrix3.multiplyByVector(CRFtoTRF, eci, eff)
-      return eff
-      // }
     },
     // Reference: https://github.com/ut-astria/AstriaGraph/blob/master/celemech.js#L44
     eltocart(Cesium, ele, posonly = false, tol = 1e-6, MAXITER = 20) {
@@ -273,17 +253,12 @@ export default {
       return NaN
     },
     // Reference: https://github.com/ut-astria/AstriaGraph/blob/master/main.js#L242
-    calcOrbit(Cesium, viewer, CRFtoTRF, elems) {
+    calcOrbit(CRFtoTRF, elems, positionSamples) {
       let sampleCount = 0
       let car = new Cesium.Cartographic()
       let Y = new Cesium.Cartesian3()
       let sta
-      let positionSamples = new Cesium.SampledPositionProperty()
-      const interpolationAlgorithm = Cesium.LagrangePolynomialApproximation
-      positionSamples.setInterpolationOptions({
-        interpolationAlgorithm,
-        interpolationDegree: 1
-      })
+
       let step = 5 * 60 * 1000 // 5 minutes - starting point resolution for Cesium interpolated values to be derived from
       const fromTime = Cesium.JulianDate.toDate(this.SimStart).valueOf()
       const toTime = Cesium.JulianDate.toDate(this.SimStop).valueOf() + step // calc one extra step so timeline end doesn't cut off
@@ -334,6 +309,36 @@ export default {
           step = orbitalCircumf / 360 / velocity
         }
       }
+      return positionSamples
+    },
+    compileOrbits(orbits, CRFtoTRF, epjd) {
+      const positionSamples = new Cesium.SampledPositionProperty()
+      positionSamples.setInterpolationOptions({
+        interpolationAlgorithm: Cesium.LagrangePolynomialApproximation,
+        interpolationDegree: 1
+      })
+
+      const duration = this.SimInt
+      const orbitalFragmentSize = duration / orbits.length
+
+      orbits.forEach((orbit, i) => {
+        const elems = Object.assign({}, orbit.elements)
+        const fragmentEnd = Cesium.JulianDate.addSeconds(
+          this.SimStart,
+          orbitalFragmentSize * (i + 1),
+          new Cesium.JulianDate()
+        )
+
+        // Cesium.JulianDate.fromIso8601('2020-06-13T22:00:02.000000Z', epjd)
+        Cesium.JulianDate.fromIso8601(elems.Epoch, epjd)
+        let t = Cesium.JulianDate.daysDifference(fragmentEnd, epjd)
+        elems.mmo = Math.sqrt(EGM96_mu / (elems.SMA * elems.SMA * elems.SMA))
+        elems.MeanAnom = (elems.MeanAnom + elems.mmo * t * 86400) % TwoPi
+
+        // Calculate Orbit
+        this.calcOrbit(CRFtoTRF, elems, positionSamples)
+      })
+
       return positionSamples
     }
   }
