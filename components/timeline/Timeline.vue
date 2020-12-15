@@ -5,9 +5,9 @@
         <span class="timeline-label-header">Speed</span>
         <span class="timeline-label-value">
           <v-select
+            v-model="playbackSpeeds[0]"
             :clearable="false"
             :options="playbackSpeeds"
-            v-model="playbackSpeeds[0]"
             attach
             :menu-props="{ top: true, offsetY: true }"
           ></v-select>
@@ -37,9 +37,9 @@
         <span class="timeline-label-header">Scale</span>
         <span class="timeline-label-value">
           <v-select
+            v-model="chosenTimescale"
             :clearable="false"
             :options="timescales"
-            v-model="chosenTimescale"
             attach
             :menu-props="{ top: true, offsetY: true }"
             @input="selectTimescale"
