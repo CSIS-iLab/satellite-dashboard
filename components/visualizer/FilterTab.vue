@@ -33,7 +33,7 @@
                 <Icon id="minus" class="icon" name="minus" />
               </span>
             </template>
-            <template #search="{attributes, events}">
+            <template #search="{ attributes, events }">
               <input
                 class="vs__search"
                 :required="!activeFilterValues[filter]"
@@ -180,8 +180,6 @@ export default {
           .map((d) => ({ value: d, label: d }))
       }
 
-      console.log(filters)
-
       return filters
     },
     activeSatelliteMeta() {
@@ -199,7 +197,6 @@ export default {
         })
       }
 
-      console.log(results)
       return results
     }
   },
@@ -226,8 +223,6 @@ export default {
         filters[filter] = this.activeFilterValues[filter]
       }
 
-      console.log(filters)
-
       const filteredSatellites = Object.values(this.satellites)
         .filter(function(item) {
           for (var key in filters) {
@@ -241,7 +236,6 @@ export default {
         })
         .map((sat) => sat.catalog_id)
 
-      console.log(filteredSatellites)
       this.updateActiveSatellites(filteredSatellites)
     },
     resetFilters() {

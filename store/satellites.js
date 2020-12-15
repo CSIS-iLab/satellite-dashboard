@@ -4,23 +4,32 @@ const padNumber = (num) => {
   return num.toString().padStart(2, 0)
 }
 
-const getDateForApi = (targetDate) => {
-  const hour = targetDate.getHours()
-  if (hour < 12) {
-    return `${padNumber(targetDate.getFullYear())}-${padNumber(
-      targetDate.getMonth() + 1
-    )}-${padNumber(targetDate.getDate())}`
-  } else {
-    return `${padNumber(targetDate.getFullYear())}-${padNumber(
-      targetDate.getMonth() + 1
-    )}-${padNumber(targetDate.getDate() + 1)}`
+const oneDay = 24 * 60 * 60
+const oneWeek = 7 * oneDay
+
+const timescales = [
+  {
+    label: 'Day',
+    value: oneDay
+  },
+  {
+    label: 'Week',
+    value: oneWeek
   }
+]
+
+const getDateForApi = (targetDate) => {
+  return `${padNumber(targetDate.getFullYear())}-${padNumber(
+    targetDate.getMonth() + 1
+  )}-${padNumber(targetDate.getDate())}`
 }
 
 export const state = () => ({
   satellites: {},
   activeSatellites: [],
-  targetDate: new Date()
+  targetDate: new Date(),
+  selectedTimescale: timescales[0],
+  timescales
   // countriesOfJurisdiction: null,
   // countriesOfLaunch: null
 })
@@ -41,6 +50,9 @@ export const mutations = {
   updateTargetDate: (state, newTargetDate) => {
     state.targetDate = newTargetDate
   },
+  updateSelectedTimescale: (state, selectedTimescale) => {
+    state.selectedTimescale = selectedTimescale
+  },
   updateActiveSatellites: (state, satellites) => {
     state.activeSatellites = satellites
   }
@@ -56,10 +68,12 @@ export const actions = {
    */
   async getSatellites({ state, commit }) {
     try {
+      const endDate = new Date(state.targetDate)
+      endDate.setSeconds(endDate.getSeconds() + state.selectedTimescale.value)
       let satellites = await fetch(
-        `${siteURL}/wp-json/satdash/v1/satellites?date=${getDateForApi(
+        `${siteURL}/wp-json/satdash/v1/satellites?startDate=${getDateForApi(
           state.targetDate
-        )}`
+        )}&endDate=${getDateForApi(endDate)}`
       ).then((res) => res.json())
 
       let items = {}
