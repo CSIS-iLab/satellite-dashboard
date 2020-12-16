@@ -223,16 +223,17 @@ export default {
         filters[filter] = this.activeFilterValues[filter]
       }
 
+      // "OR" relationship: objects only need to meet one of the filter values to be returned.
       const filteredSatellites = Object.values(this.satellites)
         .filter(function(item) {
           for (var key in filters) {
             if (
-              item.meta[key] === undefined ||
-              !filters[key].includes(item.meta[key])
+              item.meta[key] !== undefined &&
+              filters[key].includes(item.meta[key])
             )
-              return false
+              return true
           }
-          return true
+          return false
         })
         .map((sat) => sat.catalog_id)
 
