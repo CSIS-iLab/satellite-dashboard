@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - name: Webhook
-      uses: joelwmale/webhook-action@master
-      with:
-        url: ${{ secrets.AG_API_URL }}
+    - name: Trigger our build webhook on Netlify
+      run: curl -s -X POST "${TOKEN}"
+      env:
+        TOKEN: ${{ secrets.AG_API_URL }}
