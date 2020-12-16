@@ -45,6 +45,14 @@
             <div class="sat__id">{{ props.row.catalog_id }}</div>
           </div>
         </div>
+        <div v-else-if="props.column.field == 'actions'">
+          <Button :on-click="highlightOrbit">
+            <Icon id="orbit" class="icon" name="orbit" />
+          </Button>
+          <Button :on-click="togglePinState">
+            <Icon id="unpin" class="icon" name="unpin" />
+          </Button>
+        </div>
         <span v-else>
           {{ props.formattedRow[props.column.field] }}
         </span>
@@ -54,8 +62,15 @@
 </template>
 
 <script>
+import Button from '~/components/global/Button.vue'
+import Icon from '~/components/global/Icon.vue'
+
 export default {
   name: 'FilterResults',
+  components: {
+    Button,
+    Icon
+  },
   props: {
     satellites: {
       type: Array,
@@ -70,8 +85,17 @@ export default {
     return {
       columns: [
         { label: 'Name/Norad ID', field: 'Name' },
-        { label: 'CO.', field: 'country' }
+        { label: 'CO.', field: 'country' },
+        { label: '', field: 'actions', tdClass: 'sat__actions' }
       ]
+    }
+  },
+  methods: {
+    highlightOrbit() {
+      console.log('highlight orbit')
+    },
+    togglePinState() {
+      console.log('toggle the pin state')
     }
   }
 }

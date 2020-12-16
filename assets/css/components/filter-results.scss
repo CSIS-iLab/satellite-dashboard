@@ -62,7 +62,7 @@
 
     /* stylelint-disable-next-line */
     thead th {
-      padding: rem(16) 0;
+      --cell-vertical-padding: #{rem(16)};
       color: $color-white-150;
       @extend %font-ui-text-base-oxygen;
       border-bottom-color: $color-white-110;
@@ -74,7 +74,7 @@
     }
 
     td {
-      padding: rem(12) 0;
+      --cell-vertical-padding: #{rem(12)};
       color: $color-white-180;
       @extend %font-ui-text-lg-oxygen;
       border: 0;
@@ -82,6 +82,15 @@
 
     th,
     td {
+      padding: var(--cell-vertical-padding) 0;
+
+      /* stylelint-disable-next-line */
+      + th,
+      + td {
+        padding-right: 0;
+        padding-left: rem(16);
+      }
+
       &:first-of-type {
         padding-left: var(--panel-padding-side);
       }
