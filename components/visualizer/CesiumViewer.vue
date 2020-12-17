@@ -23,6 +23,8 @@
 </template>
 
 <script>
+import cesiumServiceProvider from '../../services/cesium-service'
+const cesiumService = cesiumServiceProvider()
 // Set up constants needed for position calculations.
 const J2000Epoch = 2451545.0
 const JulYear = 365.25
@@ -59,14 +61,14 @@ export default {
   data() {
     return {
       animation: true,
-      timeline: true,
+      timeline: false,
       baseLayerPicker: false,
       fullscreenButton: false,
       infoBox: true,
       alpha: 1,
       brightness: 1,
       contrast: 1,
-      SimInt: 24 * 60 * 60, // 12 hours
+      SimInt: 24 * 60 * 60, // 24 hours
       SimStart: null,
       SimStop: null,
       satellitesHaveLoaded: false
@@ -76,7 +78,8 @@ export default {
     activeSatellites: 'processNewData'
   },
   mounted() {
-    this.$refs.vcViewer.createPromise.then(({ Cesium, viewer }) => {
+    this.$refs.vcViewer.createPromise.then((cesiumInstance) => {
+      cesiumService.registerInstance(cesiumInstance)
       console.log('viewer is loaded.')
     })
   },
@@ -132,7 +135,9 @@ export default {
       viewer.clock.startTime = this.SimStart
       viewer.clock.stopTime = this.SimStop
       viewer.clock.shouldAnimate = true
-      viewer.timeline.zoomTo(this.SimStart, this.SimStop)
+      cesiumService.getTimeline().then((timeline) => {
+        timeline.zoomTo(this.SimStart, this.SimStop)
+      })
       viewer.clock.currentTime = this.SimStart
       // Set up the current time and then load in the satellite objects.
       Cesium.Transforms.preloadIcrfFixed(
