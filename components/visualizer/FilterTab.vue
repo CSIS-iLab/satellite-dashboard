@@ -66,7 +66,7 @@
           </template>
         </v-select>
         <div v-show="numVisibleFilters" class="filters__buttons">
-          <Button :on-click="resetFilters">Remove All</Button>
+          <Button :on-click="removeAllFilters">Remove All</Button>
           <Button :on-click="applyFilters" type="submit">
             <Icon id="check" class="icon" name="check" /> Apply
           </Button>
@@ -217,8 +217,8 @@ export default {
     applyFilters() {
       console.log('apply the filter!')
       this.isEditable = false
-      this.activeFilters = this.visibleFilters
-      this.activeFilterValues = this.visibleFilterValues
+      this.activeFilters = [...this.visibleFilters]
+      this.activeFilterValues = Object.assign({}, this.visibleFilterValues)
 
       let filters = {}
       for (let i = 0; i < this.activeFilters.length; i++) {
@@ -242,7 +242,7 @@ export default {
 
       this.updateActiveSatellites(filteredSatellites)
     },
-    resetFilters() {
+    removeAllFilters() {
       console.log('reset filters')
       // Clear Filters
       let filters = {}
@@ -263,9 +263,11 @@ export default {
     }),
     cancelFilters() {
       console.log('cancel the filters')
-      // TODO: These should not be the same values at this point. Figure out why they are...
-      console.log(this.visibleFilterValues)
-      console.log(this.activeFilterValues)
+      // Reset visible state to match the previous "apply" results
+      this.visibleFilterValues = Object.assign({}, this.activeFilterValues)
+      this.visibleFilters = [...this.activeFilters]
+
+      this.isEditable = false
     }
   }
 }
