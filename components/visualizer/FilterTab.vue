@@ -14,7 +14,7 @@
           <label :for="'filter__' + filter" class="form__label">
             {{ filterOptions[filter].label }}
             <Button :on-click="(e) => deleteFilter(e, filter)">
-              <Icon id="trash" class="icon" name="trash" />
+              <Icon id="trash" name="trash" />
             </Button>
           </label>
           <v-select
@@ -29,8 +29,8 @@
           >
             <template #open-indicator="{ attributes }">
               <span v-bind="attributes">
-                <Icon id="plus" class="icon" name="plus" />
-                <Icon id="minus" class="icon" name="minus" />
+                <Icon id="plus" name="plus" />
+                <Icon id="minus" name="minus" />
               </span>
             </template>
             <template #search="{ attributes, events }">
@@ -42,7 +42,7 @@
               />
             </template>
             <template #option="{ label }">
-              <Icon id="check" class="icon" name="check" />{{ label }}
+              <Icon id="check" name="check" />{{ label }}
             </template>
           </v-select>
         </div>
@@ -60,15 +60,15 @@
         >
           <template #open-indicator="{ attributes }">
             <span v-bind="attributes">
-              <Icon id="plus" class="icon" name="plus" />
-              <Icon id="minus" class="icon" name="minus" />
+              <Icon id="plus" name="plus" />
+              <Icon id="minus" name="minus" />
             </span>
           </template>
         </v-select>
         <div v-show="numVisibleFilters" class="filters__buttons">
           <Button :on-click="removeAllFilters">Remove All</Button>
           <Button :on-click="applyFilters" type="submit">
-            <Icon id="check" class="icon" name="check" /> Apply
+            <Icon id="check" name="check" /> Apply
           </Button>
           <Button :on-click="cancelFilters">Cancel</Button>
         </div>
@@ -76,7 +76,7 @@
       <div v-else class="filters__list">
         {{ listActiveFilters }}
         <Button class="btn--contained btn--icon" :on-click="editFilters">
-          <Icon id="pen" class="icon" name="pen" />
+          <Icon id="pen" name="pen" />
         </Button>
       </div>
     </div>

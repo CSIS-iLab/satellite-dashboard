@@ -1,7 +1,20 @@
 <template>
   <div class="filter-results">
     <h3 class="filter-results__total">{{ totalResults }} results</h3>
-    <div class="filter-results__sort">Sort</div>
+    <div class="filter-results__sort form">
+      <v-select
+        v-model="currentSort"
+        class="dropdown--simple"
+        :clearable="false"
+        :options="sortOptions"
+        :searchable="false"
+      >
+        <template #selected-option="{ label }">
+          <Icon id="sort" name="sort" />
+          {{ label }}
+        </template>
+      </v-select>
+    </div>
     <p v-if="totalResults === 0" class="filter-results__no-results">
       No objects with found that satisfied the filters applied. Try changing
       your selections or removing a filter.
@@ -17,7 +30,8 @@
         pageLabel: 'Page'
       }"
       :sort-options="{
-        enabled: false
+        enabled: false,
+        initialSortBy: { field: 'Name', type: 'asc' }
       }"
       style-class="vgt-table striped"
     >
@@ -48,10 +62,10 @@
         </div>
         <div v-else-if="props.column.field == 'actions'" class="sat__actions">
           <Button :on-click="highlightOrbit">
-            <Icon id="orbit" class="icon" name="orbit" />
+            <Icon id="orbit" name="orbit" />
           </Button>
           <Button :on-click="togglePinState">
-            <Icon id="unpin" class="icon" name="unpin" />
+            <Icon id="unpin" name="unpin" />
           </Button>
         </div>
         <span v-else>
@@ -88,11 +102,17 @@ export default {
         {
           label: 'Name/Norad ID',
           field: 'Name',
-          thClass: 'filter-results__name'
+          thClass: 'filter-results__name',
+          sortFn: this.sortFn
         },
-        { label: 'CO.', field: 'country' },
+        { label: 'CO.', field: 'country', sortFn: this.sortFn },
         { label: '', field: 'actions' }
-      ]
+      ],
+      sortOptions: [
+        { value: 'Name', label: 'Name' },
+        { value: 'country', label: 'Country' }
+      ],
+      currentSort: 'Name'
     }
   },
   methods: {
@@ -107,6 +127,7 @@ export default {
 </script>
 
 <style lang="scss">
+// @import '../assets/css/components/form-input';
 @import '../assets/css/components/filter-results';
 @import '../assets/css/components/satellite-block';
 </style>
