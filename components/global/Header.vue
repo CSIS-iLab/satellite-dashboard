@@ -1,20 +1,30 @@
 <template>
   <header class="header">
-    <h1 class="title">satellite-dashboard</h1>
-    <div class="links">
-      <a href="https://nuxtjs.org/" target="_blank">
-        Nuxt Documentation
-      </a>
-      <br />
-      <a href="https://github.com/nuxt/nuxt.js" target="_blank">
-        GitHub
-      </a>
-      <br />
-      <nuxt-link to="/about">About Page</nuxt-link>
-      <br />
-      <nuxt-link to="/analysis">Analysis</nuxt-link>
-    </div>
+    <nuxt-link to="/">
+      <SiteLogo />
+    </nuxt-link>
+    <Navigation class="header__nav" name="header" />
+    <SocialShare page-title="Sat Dash" />
   </header>
 </template>
 
-<style lang="scss"></style>
+<script>
+import SiteLogo from '~/components/global/SiteLogo.vue'
+import Navigation from '~/components/global/Navigation.vue'
+import SocialShare from '~/components/global/SocialShare.vue'
+
+export default {
+  components: {
+    Navigation,
+    SiteLogo,
+    SocialShare
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+</style>

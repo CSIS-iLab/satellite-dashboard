@@ -67,4 +67,12 @@ export default {
 
 <style lang="scss">
 @import '../assets/css/components/navigation';
+
+.nav--header__list {
+  display: flex;
+
+  li + li {
+    margin-left: 1rem;
+  }
+}
 </style>
