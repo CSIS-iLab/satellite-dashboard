@@ -61,7 +61,7 @@ export default {
   data() {
     return {
       animation: true,
-      timeline: false,
+      timeline: true,
       baseLayerPicker: false,
       fullscreenButton: false,
       infoBox: true,
@@ -134,7 +134,6 @@ export default {
       )
       viewer.clock.startTime = this.SimStart
       viewer.clock.stopTime = this.SimStop
-      viewer.clock.shouldAnimate = true
       cesiumService.getTimeline().then((timeline) => {
         timeline.zoomTo(this.SimStart, this.SimStop)
       })
@@ -152,13 +151,17 @@ export default {
     displayObjects(Cesium, viewer) {
       let epjd = new Cesium.JulianDate()
       let CRFtoTRF = Cesium.Transforms.computeIcrfToFixedMatrix(this.SimStart)
-
+      let satCount = 0
       viewer.entities.removeAll()
 
       // For each object, calculate its position & orbit
       // Calculations pulled from: https://github.com/ut-astria/AstriaGraph/blob/master/main.js & https://github.com/ut-astria/AstriaGraph/blob/master/celemech.js
       this.activeSatellites.forEach((sat, i) => {
         const { catalog_id, orbits, source1 } = this.satellites[sat]
+        if (!orbits) {
+          return
+        }
+        satCount++
         const name = source1.Name
 
         // Make a copy of the orbital parameters so we can modify it with our calculations.
@@ -258,21 +261,21 @@ export default {
       return NaN
     },
     // Reference: https://github.com/ut-astria/AstriaGraph/blob/master/main.js#L242
-    calcOrbit(CRFtoTRF, elems, positionSamples) {
+    calcOrbit(CRFtoTRF, elems, positionSamples, startTime, endTime, step) {
       let sampleCount = 0
       let car = new Cesium.Cartographic()
       let Y = new Cesium.Cartesian3()
       let sta
 
-      let step = 5 * 60 * 1000 // 5 minutes - starting point resolution for Cesium interpolated values to be derived from
-      const fromTime = Cesium.JulianDate.toDate(this.SimStart).valueOf()
-      const toTime = Cesium.JulianDate.toDate(this.SimStop).valueOf() + step // calc one extra step so timeline end doesn't cut off
+      // let step = 5 * 60 * 1000 // 5 minutes - starting point resolution for Cesium interpolated values to be derived from
+      const fromTime = Cesium.JulianDate.toDate(startTime).valueOf()
+      const toTime = Cesium.JulianDate.toDate(endTime).valueOf() + step // calc one extra step so timeline end doesn't cut off
       for (let t = fromTime; t <= toTime; t += step) {
         const u = Object.assign({}, elems)
         const timePoint = new Cesium.JulianDate.fromDate(new Date(t))
         const secondsAdvanced = Cesium.JulianDate.secondsDifference(
           timePoint,
-          this.SimStart
+          startTime
         )
         u.MeanAnom = (u.MeanAnom + u.mmo * secondsAdvanced) % TwoPi
         if (u.MeanAnom === 0) {
@@ -298,7 +301,7 @@ export default {
           car.height
         )
         positionSamples.addSample(timePoint, position)
-        ++sampleCount
+        /* ++sampleCount
         if (sampleCount === 2) {
           // once we have two points, we have the velocity
           const orbitalRadius = Cesium.Cartesian3.distance(
@@ -306,13 +309,11 @@ export default {
             position
           )
           const orbitalCircumf = TwoPi * orbitalRadius
-          const prevPosition = positionSamples.getValue(
-            new Cesium.JulianDate.fromDate(new Date(fromTime))
-          )
+          const prevPosition = positionSamples.getValue(startTime)
           const distance = Cesium.Cartesian3.distance(prevPosition, position)
           const velocity = distance / step
-          step = orbitalCircumf / 360 / velocity
-        }
+          step = Math.max(step, orbitalCircumf / 360 / velocity)
+        }*/
       }
       return positionSamples
     },
@@ -325,9 +326,15 @@ export default {
 
       const duration = this.SimInt
       const orbitalFragmentSize = duration / orbits.length
+      let step = (duration / 360) * 1000
 
       orbits.forEach((orbit, i) => {
         const elems = Object.assign({}, orbit.elements)
+        const fragmentStart = Cesium.JulianDate.addSeconds(
+          this.SimStart,
+          orbitalFragmentSize * i,
+          new Cesium.JulianDate()
+        )
         const fragmentEnd = Cesium.JulianDate.addSeconds(
           this.SimStart,
           orbitalFragmentSize * (i + 1),
@@ -341,7 +348,14 @@ export default {
         elems.MeanAnom = (elems.MeanAnom + elems.mmo * t * 86400) % TwoPi
 
         // Calculate Orbit
-        this.calcOrbit(CRFtoTRF, elems, positionSamples)
+        this.calcOrbit(
+          CRFtoTRF,
+          elems,
+          positionSamples,
+          fragmentStart,
+          fragmentEnd,
+          step
+        )
       })
 
       return positionSamples

@@ -5,7 +5,7 @@
         <span class="timeline-label-header">Speed</span>
         <span class="timeline-label-value">
           <v-select
-            v-model="playbackSpeeds[0]"
+            v-model="chosenPlaybackSpeed"
             :clearable="false"
             :options="playbackSpeeds"
             :menu-props="{ top: true, offsetY: true }"
@@ -67,6 +67,28 @@
 <script>
 import cesiumServiceProvider from '../../services/cesium-service'
 const cesiumService = cesiumServiceProvider()
+const playbackSpeeds = [
+  {
+    label: '1x',
+    value: 1
+  },
+  {
+    label: '10x',
+    value: 10
+  },
+  {
+    label: '100x',
+    value: 100
+  },
+  {
+    label: '1000x',
+    value: 1000
+  },
+  {
+    label: '10000x',
+    value: 10000
+  }
+]
 let cesium
 export default {
   props: {
@@ -88,37 +110,24 @@ export default {
       chosenDate: this.selectedDate,
       chosenTimescale: this.selectedTimescale,
       isPlaying: true,
-      playbackSpeeds: [
-        {
-          label: '1x',
-          value: 1
-        },
-        {
-          label: '10x',
-          value: 10
-        },
-        {
-          label: '100x',
-          value: 100
-        },
-        {
-          label: '1000x',
-          value: 1000
-        },
-        {
-          label: '10000x',
-          value: 10000
-        }
-      ]
+      playbackSpeeds: playbackSpeeds,
+      chosenPlaybackSpeed: playbackSpeeds[0]
     }
   },
   mounted() {
     cesiumService.getInstance().then((cesiumInstance) => {
       cesium = cesiumInstance
       const { viewer, Cesium } = cesiumInstance
-      const timeline = new Cesium.Timeline(this.$refs.scrubber, viewer.clock)
+      const timeline = viewer.timeline
+      this.$refs.scrubber.insertBefore(timeline.container, null)
+      timeline.container.style.left = '0px'
+      timeline.container.addEventListener(
+        'click',
+        () => (this.isPlaying = false)
+      )
       cesiumService.registerTimeline(timeline)
       timeline.resize()
+      viewer.clockViewModel.shouldAnimate = true
     })
   },
   methods: {

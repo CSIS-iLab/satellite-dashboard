@@ -6,6 +6,7 @@ const padNumber = (num) => {
 
 const oneDay = 24 * 60 * 60
 const oneWeek = 7 * oneDay
+const oneMonth = oneWeek * 4
 
 const timescales = [
   {
@@ -15,6 +16,10 @@ const timescales = [
   {
     label: 'Week',
     value: oneWeek
+  },
+  {
+    label: 'Month',
+    value: oneMonth
   }
 ]
 
@@ -27,7 +32,7 @@ const getDateForApi = (targetDate) => {
 export const state = () => ({
   satellites: {},
   activeSatellites: [],
-  targetDate: new Date(),
+  targetDate: new Date(new Date().setHours(0, 0, 0, 0)),
   selectedTimescale: timescales[0],
   timescales
   // countriesOfJurisdiction: null,
@@ -69,7 +74,10 @@ export const actions = {
   async getSatellites({ state, commit }) {
     try {
       const endDate = new Date(state.targetDate)
-      endDate.setSeconds(endDate.getSeconds() + state.selectedTimescale.value)
+      endDate.setSeconds(
+        endDate.getSeconds() + state.selectedTimescale.value - 1
+      ) // minus 1 second so we don't get n + 1 days
+      console.log(state.targetDate, endDate)
       let satellites = await fetch(
         `${siteURL}/wp-json/satdash/v1/satellites?startDate=${getDateForApi(
           state.targetDate
