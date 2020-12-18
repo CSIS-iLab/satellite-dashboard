@@ -47,24 +47,26 @@
           </v-select>
         </div>
 
-        <v-select
-          id="selectFilter"
-          v-model="latestFilterAdded"
-          placeholder="Add a filter"
-          class="form__input"
-          :clearable="false"
-          :options="availableFilterOptions"
-          :disabled="availableFilterOptions.length === 0"
-          :searchable="false"
-          @input="selectFilter"
-        >
-          <template #open-indicator="{ attributes }">
-            <span v-bind="attributes">
-              <Icon id="plus" name="plus" />
-              <Icon id="minus" name="minus" />
-            </span>
-          </template>
-        </v-select>
+        <client-only>
+          <v-select
+            id="selectFilter"
+            v-model="latestFilterAdded"
+            placeholder="Add a filter"
+            class="form__input"
+            :clearable="false"
+            :options="availableFilterOptions"
+            :disabled="availableFilterOptions.length === 0"
+            :searchable="false"
+            @input="selectFilter"
+          >
+            <template #open-indicator="{ attributes }">
+              <span v-bind="attributes">
+                <Icon id="plus" name="plus" />
+                <Icon id="minus" name="minus" />
+              </span>
+            </template>
+          </v-select>
+        </client-only>
         <div v-show="numVisibleFilters" class="filters__buttons">
           <Button :on-click="removeAllFilters">Remove All</Button>
           <Button :on-click="applyFilters" type="submit">
