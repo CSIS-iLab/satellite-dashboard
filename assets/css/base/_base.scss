@@ -59,3 +59,7 @@ a {
     outline: 0;
   }
 }
+
+:focus {
+  outline: thin solid $color-focus;
+}

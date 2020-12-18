@@ -14,12 +14,12 @@
           <label :for="'filter__' + filter" class="form__label">
             {{ filterOptions[filter].label }}
             <Button :on-click="(e) => deleteFilter(e, filter)">
-              <Icon id="trash" class="icon" name="trash" />
+              <Icon id="trash" name="trash" />
             </Button>
           </label>
           <v-select
             :id="'filter__' + filter"
-            v-model="activeFilterValues[filter]"
+            v-model="visibleFilterValues[filter]"
             class="form__input"
             :options="filterValueOptions[filter]"
             :reduce="(option) => option.value"
@@ -29,20 +29,20 @@
           >
             <template #open-indicator="{ attributes }">
               <span v-bind="attributes">
-                <Icon id="plus" class="icon" name="plus" />
-                <Icon id="minus" class="icon" name="minus" />
+                <Icon id="plus" name="plus" />
+                <Icon id="minus" name="minus" />
               </span>
             </template>
             <template #search="{ attributes, events }">
               <input
                 class="vs__search"
-                :required="!activeFilterValues[filter]"
+                :required="!visibleFilterValues[filter]"
                 v-bind="attributes"
                 v-on="events"
               />
             </template>
             <template #option="{ label }">
-              <Icon id="check" class="icon" name="check" />{{ label }}
+              <Icon id="check" name="check" />{{ label }}
             </template>
           </v-select>
         </div>
@@ -60,15 +60,15 @@
         >
           <template #open-indicator="{ attributes }">
             <span v-bind="attributes">
-              <Icon id="plus" class="icon" name="plus" />
-              <Icon id="minus" class="icon" name="minus" />
+              <Icon id="plus" name="plus" />
+              <Icon id="minus" name="minus" />
             </span>
           </template>
         </v-select>
         <div v-show="numVisibleFilters" class="filters__buttons">
-          <Button :on-click="resetFilters">Remove All</Button>
+          <Button :on-click="removeAllFilters">Remove All</Button>
           <Button :on-click="applyFilters" type="submit">
-            <Icon id="check" class="icon" name="check" /> Apply
+            <Icon id="check" name="check" /> Apply
           </Button>
           <Button :on-click="cancelFilters">Cancel</Button>
         </div>
@@ -76,7 +76,7 @@
       <div v-else class="filters__list">
         {{ listActiveFilters }}
         <Button class="btn--contained btn--icon" :on-click="editFilters">
-          <Icon id="pen" class="icon" name="pen" />
+          <Icon id="pen" name="pen" />
         </Button>
       </div>
     </div>
@@ -116,7 +116,9 @@ export default {
         Status: { value: 'Status', label: 'Status' }
       },
       activeFilters: [],
-      activeFilterValues: {
+      activeFilterValues: {},
+      visibleFilters: [],
+      visibleFilterValues: {
         countryOfJurisdiction: [],
         Name: [],
         NoradId: [],
@@ -124,7 +126,6 @@ export default {
         Users: [],
         Status: []
       },
-      visibleFilters: [],
       latestFilterAdded: null
     }
   },
@@ -210,12 +211,14 @@ export default {
     },
     deleteFilter(e, filter) {
       this.activeFilterValues[filter] = []
+      this.visibleFilterValues[filter] = []
       this.visibleFilters = this.visibleFilters.filter((d) => d !== filter)
     },
     applyFilters() {
       console.log('apply the filter!')
       this.isEditable = false
-      this.activeFilters = this.visibleFilters
+      this.activeFilters = [...this.visibleFilters]
+      this.activeFilterValues = Object.assign({}, this.visibleFilterValues)
 
       let filters = {}
       for (let i = 0; i < this.activeFilters.length; i++) {
@@ -223,29 +226,31 @@ export default {
         filters[filter] = this.activeFilterValues[filter]
       }
 
+      // "OR" relationship: objects only need to meet one of the filter values to be returned.
       const filteredSatellites = Object.values(this.satellites)
         .filter(function(item) {
           for (var key in filters) {
             if (
-              item.meta[key] === undefined ||
-              !filters[key].includes(item.meta[key])
+              item.meta[key] !== undefined &&
+              filters[key].includes(item.meta[key])
             )
-              return false
+              return true
           }
-          return true
+          return false
         })
         .map((sat) => sat.catalog_id)
 
       this.updateActiveSatellites(filteredSatellites)
     },
-    resetFilters() {
+    removeAllFilters() {
       console.log('reset filters')
       // Clear Filters
       let filters = {}
       for (let i = 0; i < this.activeFilters.length; i++) {
         const filter = this.activeFilters[i]
-        this.activeFilterValues[filter] = []
+        this.visibleFilterValues[filter] = []
       }
+      this.activeFilterValues = {}
       this.activeFilters = []
       this.visibleFilters = []
 
@@ -258,6 +263,11 @@ export default {
     }),
     cancelFilters() {
       console.log('cancel the filters')
+      // Reset visible state to match the previous "apply" results
+      this.visibleFilterValues = Object.assign({}, this.activeFilterValues)
+      this.visibleFilters = [...this.activeFilters]
+
+      this.isEditable = false
     }
   }
 }

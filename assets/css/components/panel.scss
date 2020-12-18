@@ -56,10 +56,19 @@
 
   &__activator {
     --tab-bg: #{$color-slate-600};
+    --tab-cut-out: invert(10%) sepia(11%) saturate(528%) hue-rotate(169deg)
+      brightness(95%) contrast(99%);
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: rem(48);
+    min-height: rem(56);
+    margin-bottom: rem(41);
+    padding-top: rem(16);
     color: $color-white-180;
     background: var(--tab-bg, $color-slate-600);
     border: 0;
-    border-radius: 0 4px 4px 0;
+    border-radius: 0 4px 0 0;
     cursor: pointer;
     filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.34)),
       drop-shadow(0 2px 5px rgba(0, 0, 0, 0.24)),
@@ -67,13 +76,50 @@
     transition: background 0.3s ease-in-out;
 
     &:hover {
-      --tab-bg: #{$color-slate-400};
+      --tab-bg: #{$color-slate-400} !important;
+      --tab-cut-out: invert(9%) sepia(9%) saturate(1146%) hue-rotate(169deg)
+        brightness(92%) contrast(90%) !important;
+    }
+
+    &:focus {
+      outline: 1px solid $color-focus;
+
+      &::before {
+        outline: 1px solid $color-focus;
+      }
+    }
+
+    // Create before pseudo specifically for focus outline.
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      left: 0;
+      display: block;
+      width: rem(48);
+    }
+
+    &::before {
+      top: calc(100% + 1px);
+      height: rem(40);
+    }
+
+    &::after {
+      top: 100%;
+      height: rem(41);
+      background-image: url('~static/tab.svg');
+      background-repeat: no-repeat;
+      filter: var(--tab-cut-out);
+      transition: filter 0.3s ease-in-out;
     }
 
     /* stylelint-disable */
     .ak-vt__wrapper:not(.ak-vt__wrapper--no-active-tab)
       &[aria-selected='false'] {
       --tab-bg: #{$color-slate-800};
+      --tab-cut-out: invert(3%) sepia(4%) saturate(6998%) hue-rotate(163deg)
+        brightness(94%) contrast(93%);
     }
     /* stylelint-enable */
   }

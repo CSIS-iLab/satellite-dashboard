@@ -41,6 +41,16 @@
     background: var(--status, $color-slate-200);
     border-radius: 50%;
   }
+
+  &__actions {
+    display: flex;
+
+    button {
+      padding-right: rem(4);
+      padding-left: rem(4);
+      @include font-size(18px);
+    }
+  }
 }
 
 /*----------  Status Colors  ----------*/
