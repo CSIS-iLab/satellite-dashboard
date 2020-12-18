@@ -5,13 +5,18 @@
         <span class="timeline-label-header">Speed</span>
         <span class="timeline-label-value">
           <v-select
-            v-model="playbackSpeeds[0]"
+            v-model="chosenPlaybackSpeed"
             :clearable="false"
             :options="playbackSpeeds"
-            attach
             :menu-props="{ top: true, offsetY: true }"
+            @input="selectPlaybackSpeed"
           ></v-select>
         </span>
+      </div>
+      <div class="timeline-control-button-container">
+        <button class="timeline-control-button" @click="playOrPause">
+          {{ isPlaying ? 'playing' : 'paused' }}
+        </button>
       </div>
     </div>
     <div class="timeline-series">
@@ -31,6 +36,7 @@
         </div>
         <div class="timeline-value-change-forward"></div>
       </div>
+      <div ref="scrubber" class="timeline-scrub"></div>
     </div>
     <div class="timeline-control">
       <div class="timeline-control-labels">
@@ -40,7 +46,6 @@
             v-model="chosenTimescale"
             :clearable="false"
             :options="timescales"
-            attach
             :menu-props="{ top: true, offsetY: true }"
             @input="selectTimescale"
           ></v-select>
@@ -60,6 +65,31 @@
 </template>
 
 <script>
+import cesiumServiceProvider from '../../services/cesium-service'
+const cesiumService = cesiumServiceProvider()
+const playbackSpeeds = [
+  {
+    label: '1x',
+    value: 1
+  },
+  {
+    label: '10x',
+    value: 10
+  },
+  {
+    label: '100x',
+    value: 100
+  },
+  {
+    label: '1000x',
+    value: 1000
+  },
+  {
+    label: '10000x',
+    value: 10000
+  }
+]
+let cesium
 export default {
   props: {
     selectedDate: {
@@ -79,38 +109,51 @@ export default {
     return {
       chosenDate: this.selectedDate,
       chosenTimescale: this.selectedTimescale,
-      playbackSpeeds: [
-        {
-          label: '1x',
-          value: 1
-        },
-        {
-          label: '10x',
-          value: 10
-        },
-        {
-          label: '100x',
-          value: 100
-        },
-        {
-          label: '1000x',
-          value: 1000
-        },
-        {
-          label: '10000x',
-          value: 10000
-        }
-      ]
+      isPlaying: true,
+      playbackSpeeds: playbackSpeeds,
+      chosenPlaybackSpeed: playbackSpeeds[0]
     }
+  },
+  mounted() {
+    cesiumService.getInstance().then((cesiumInstance) => {
+      cesium = cesiumInstance
+      const { viewer, Cesium } = cesiumInstance
+      const timeline = viewer.timeline
+      this.$refs.scrubber.insertBefore(timeline.container, null)
+      timeline.container.style.left = '0px'
+      timeline.container.addEventListener(
+        'click',
+        () => (this.isPlaying = false)
+      )
+      cesiumService.registerTimeline(timeline)
+      timeline.resize()
+      viewer.clockViewModel.shouldAnimate = true
+    })
   },
   methods: {
     selectNewDate(date) {
       this.$store.commit('satellites/updateTargetDate', date)
       this.$store.dispatch('satellites/getSatellites')
     },
+    selectPlaybackSpeed(playbackSpeed) {
+      const { viewer } = cesium
+      viewer.clock.multiplier = playbackSpeed.value
+    },
     selectTimescale(timescale) {
       this.$store.commit('satellites/updateSelectedTimescale', timescale)
       this.$store.dispatch('satellites/getSatellites')
+    },
+    playOrPause() {
+      if (!cesium) {
+        return
+      }
+      const { viewer } = cesium
+      this.isPlaying = !this.isPlaying
+      if (this.isPlaying) {
+        viewer.clockViewModel.shouldAnimate = true
+      } else {
+        viewer.clockViewModel.shouldAnimate = false
+      }
     }
   }
 }
@@ -121,6 +164,7 @@ export default {
 
 .timeline-container {
   display: flex;
+  min-height: 300px;
   margin-top: 2em;
   color: #fff;
   background: rgba(0, 0, 0, 1);
@@ -130,14 +174,20 @@ export default {
   flex-grow: 1;
 }
 
+.timeline-scrub {
+  position: relative;
+  height: 30px;
+}
+
 .timeline-control {
   display: flex;
+  margin-top: 50px;
 }
 
 .timeline-control-labels {
   display: flex;
   flex-direction: column;
-  padding: 1em;
+  padding: 0 1em;
 }
 
 .timeline-label-header {
@@ -148,9 +198,11 @@ export default {
 .timeline-control-button {
   width: 4em;
   height: 4em;
-  margin: 1em;
+  margin: 0 1em;
   background: rgba(128, 128, 128, 0.5);
+  border: 0;
   border-radius: 50%;
+  cursor: pointer;
 }
 
 .timeline-series {
@@ -159,10 +211,9 @@ export default {
 }
 
 .timeline-current-value {
-  position: absolute;
-  left: 50%;
+  margin: 0 auto;
   padding: 0.5em;
-  transform: translateX(-50%);
+  text-align: center;
 }
 
 .timeline-key {
@@ -204,5 +255,21 @@ export default {
 
 .timeline-container .vs__selected {
   color: #ddd;
+}
+
+.cesium-viewer-animationContainer {
+  display: none;
+}
+
+.cesium-viewer .cesium-widget-credits {
+  display: none !important;
+}
+
+.cesium-timeline-bar {
+  height: 2.5em;
+}
+
+.timeline-series .vdp-datepicker {
+  text-align: center;
 }
 </style>
