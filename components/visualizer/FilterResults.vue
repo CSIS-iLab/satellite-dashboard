@@ -13,7 +13,8 @@
       :pagination-options="{
         enabled: totalResults > 75 ? true : false,
         mode: 'pages',
-        perPage: 75
+        perPage: 75,
+        pageLabel: 'Page'
       }"
       :sort-options="{
         enabled: false
@@ -45,7 +46,7 @@
             <div class="sat__id">{{ props.row.catalog_id }}</div>
           </div>
         </div>
-        <div v-else-if="props.column.field == 'actions'">
+        <div v-else-if="props.column.field == 'actions'" class="sat__actions">
           <Button :on-click="highlightOrbit">
             <Icon id="orbit" class="icon" name="orbit" />
           </Button>
@@ -84,9 +85,13 @@ export default {
   data() {
     return {
       columns: [
-        { label: 'Name/Norad ID', field: 'Name' },
+        {
+          label: 'Name/Norad ID',
+          field: 'Name',
+          thClass: 'filter-results__name'
+        },
         { label: 'CO.', field: 'country' },
-        { label: '', field: 'actions', tdClass: 'sat__actions' }
+        { label: '', field: 'actions' }
       ]
     }
   },

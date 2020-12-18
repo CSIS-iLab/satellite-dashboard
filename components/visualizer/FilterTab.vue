@@ -19,7 +19,7 @@
           </label>
           <v-select
             :id="'filter__' + filter"
-            v-model="activeFilterValues[filter]"
+            v-model="visibleFilterValues[filter]"
             class="form__input"
             :options="filterValueOptions[filter]"
             :reduce="(option) => option.value"
@@ -36,7 +36,7 @@
             <template #search="{ attributes, events }">
               <input
                 class="vs__search"
-                :required="!activeFilterValues[filter]"
+                :required="!visibleFilterValues[filter]"
                 v-bind="attributes"
                 v-on="events"
               />
@@ -116,7 +116,9 @@ export default {
         Status: { value: 'Status', label: 'Status' }
       },
       activeFilters: [],
-      activeFilterValues: {
+      activeFilterValues: {},
+      visibleFilters: [],
+      visibleFilterValues: {
         countryOfJurisdiction: [],
         Name: [],
         NoradId: [],
@@ -124,7 +126,6 @@ export default {
         Users: [],
         Status: []
       },
-      visibleFilters: [],
       latestFilterAdded: null
     }
   },
@@ -210,12 +211,14 @@ export default {
     },
     deleteFilter(e, filter) {
       this.activeFilterValues[filter] = []
+      this.visibleFilterValues[filter] = []
       this.visibleFilters = this.visibleFilters.filter((d) => d !== filter)
     },
     applyFilters() {
       console.log('apply the filter!')
       this.isEditable = false
       this.activeFilters = this.visibleFilters
+      this.activeFilterValues = this.visibleFilterValues
 
       let filters = {}
       for (let i = 0; i < this.activeFilters.length; i++) {
@@ -245,8 +248,9 @@ export default {
       let filters = {}
       for (let i = 0; i < this.activeFilters.length; i++) {
         const filter = this.activeFilters[i]
-        this.activeFilterValues[filter] = []
+        this.visibleFilterValues[filter] = []
       }
+      this.activeFilterValues = {}
       this.activeFilters = []
       this.visibleFilters = []
 
@@ -259,6 +263,9 @@ export default {
     }),
     cancelFilters() {
       console.log('cancel the filters')
+      // TODO: These should not be the same values at this point. Figure out why they are...
+      console.log(this.visibleFilterValues)
+      console.log(this.activeFilterValues)
     }
   }
 }
