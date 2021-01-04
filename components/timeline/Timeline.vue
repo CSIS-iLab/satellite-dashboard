@@ -24,6 +24,9 @@
         <div class="timeline-value-change-back"></div>
         <div class="timeline-label-value-large">
           <client-only>
+            <div class="timeline-current-timepoint">
+              {{ timelinePoint }}
+            </div>
             <date-picker
               v-model="chosenDate"
               placeholder="MM/DD/YYYY"
@@ -111,7 +114,8 @@ export default {
       chosenTimescale: this.selectedTimescale,
       isPlaying: true,
       playbackSpeeds: playbackSpeeds,
-      chosenPlaybackSpeed: playbackSpeeds[0]
+      chosenPlaybackSpeed: playbackSpeeds[0],
+      timelinePoint: this.selectedDate
     }
   },
   mounted() {
@@ -120,14 +124,19 @@ export default {
       const { viewer, Cesium } = cesiumInstance
       const timeline = viewer.timeline
       this.$refs.scrubber.insertBefore(timeline.container, null)
-      timeline.container.style.left = '0px'
       timeline.container.addEventListener(
         'click',
         () => (this.isPlaying = false)
       )
       cesiumService.registerTimeline(timeline)
       timeline.resize()
+      timeline.container.style.left = '0px'
       viewer.clockViewModel.shouldAnimate = true
+      viewer.clock.onTick.addEventListener(() => {
+        this.timelinePoint = Cesium.JulianDate.toDate(
+          viewer.clock.currentTime
+        ).toLocaleDateString()
+      })
     })
   },
   methods: {
@@ -270,6 +279,14 @@ export default {
 }
 
 .timeline-series .vdp-datepicker {
+  position: absolute;
+  top: 0;
+  width: 100%;
   text-align: center;
+}
+
+.timeline-series .vdp-datepicker input {
+  cursor: pointer;
+  opacity: 0;
 }
 </style>
