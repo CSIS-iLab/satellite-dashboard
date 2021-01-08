@@ -175,7 +175,11 @@ export default {
           availability: new Cesium.TimeIntervalCollection([
             new Cesium.TimeInterval({
               start: this.SimStart,
-              stop: this.SimStop
+              stop: Cesium.JulianDate.addSeconds(
+                this.SimStop,
+                this.SimInt * 0.01, // add 1% to ensure satellites don't disappear when Cesium goes slightly beyond
+                new Cesium.JulianDate()
+              )
             })
           ]),
           position: orbit,
@@ -262,14 +266,12 @@ export default {
     },
     // Reference: https://github.com/ut-astria/AstriaGraph/blob/master/main.js#L242
     calcOrbit(CRFtoTRF, elems, positionSamples, startTime, endTime, step) {
-      let sampleCount = 0
       let car = new Cesium.Cartographic()
       let Y = new Cesium.Cartesian3()
       let sta
 
-      // let step = 5 * 60 * 1000 // 5 minutes - starting point resolution for Cesium interpolated values to be derived from
       const fromTime = Cesium.JulianDate.toDate(startTime).valueOf()
-      const toTime = Cesium.JulianDate.toDate(endTime).valueOf() + step // calc one extra step so timeline end doesn't cut off
+      const toTime = Cesium.JulianDate.toDate(endTime).valueOf()
       for (let t = fromTime; t <= toTime; t += step) {
         const u = Object.assign({}, elems)
         const timePoint = new Cesium.JulianDate.fromDate(new Date(t))
@@ -298,22 +300,10 @@ export default {
         const position = Cesium.Cartesian3.fromRadians(
           car.longitude,
           car.latitude,
-          car.height
+          car.height,
+          viewer.scene.mapProjection.ellipsoid
         )
         positionSamples.addSample(timePoint, position)
-        /* ++sampleCount
-        if (sampleCount === 2) {
-          // once we have two points, we have the velocity
-          const orbitalRadius = Cesium.Cartesian3.distance(
-            new Cesium.Cartesian3(0, 0, 0),
-            position
-          )
-          const orbitalCircumf = TwoPi * orbitalRadius
-          const prevPosition = positionSamples.getValue(startTime)
-          const distance = Cesium.Cartesian3.distance(prevPosition, position)
-          const velocity = distance / step
-          step = Math.max(step, orbitalCircumf / 360 / velocity)
-        }*/
       }
       return positionSamples
     },
@@ -324,7 +314,7 @@ export default {
         interpolationDegree: 1
       })
 
-      const duration = this.SimInt
+      const duration = this.SimInt * 1.01
       const orbitalFragmentSize = duration / orbits.length
       let step = (duration / 360) * 1000
 
