@@ -133,8 +133,14 @@ export default {
         return
       }
 
-      cesium.viewer.selectedEntity = entity
-      cesium.viewer.trackedEntity = entity
+      if (viewer.selectedEntity == entity || viewer.trackedEntity == entity) {
+        viewer.selectedEntity = null
+        viewer.trackedEntity = null
+        return
+      }
+
+      viewer.selectedEntity = entity
+      viewer.trackedEntity = entity
     },
     togglePinState() {
       console.log('toggle the pin state')
