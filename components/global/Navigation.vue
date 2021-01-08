@@ -3,7 +3,7 @@
     <h2 v-if="parentClass == 'nav--footer'">
       Navigate
     </h2>
-    <ul :class="parentClass + '__list'">
+    <ul :class="parentClass + '__list'" role="list">
       <li
         v-for="item in items"
         :key="item.id"

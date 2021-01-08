@@ -1,7 +1,7 @@
 <template>
   <div class="social-share">
     <div class="social-share__text">Share</div>
-    <ul class="social-share__list">
+    <ul class="social-share__list" role="list">
       <li class="social-share__item">
         <a
           :href="facebookURL"
