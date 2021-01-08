@@ -61,7 +61,7 @@
           </div>
         </div>
         <div v-else-if="props.column.field == 'actions'" class="sat__actions">
-          <Button :on-click="highlightOrbit">
+          <Button :on-click="(e) => highlightOrbit(e, props.row.catalog_id)">
             <Icon id="orbit" name="orbit" />
           </Button>
           <Button :on-click="togglePinState">
@@ -79,6 +79,9 @@
 <script>
 import Button from '~/components/global/Button.vue'
 import Icon from '~/components/global/Icon.vue'
+import cesiumServiceProvider from '../../services/cesium-service'
+const cesiumService = cesiumServiceProvider()
+let cesium
 
 export default {
   name: 'FilterResults',
@@ -98,6 +101,7 @@ export default {
   },
   data() {
     return {
+      viewer: null,
       columns: [
         {
           label: 'Name/Norad ID',
@@ -115,9 +119,22 @@ export default {
       currentSort: 'Name'
     }
   },
+  mounted() {
+    cesiumService.getInstance().then((cesiumInstance) => {
+      cesium = cesiumInstance
+    })
+  },
   methods: {
-    highlightOrbit() {
-      console.log('highlight orbit')
+    highlightOrbit(e, catalog_id) {
+      const { viewer } = cesium
+      const entity = viewer.entities.getById(catalog_id)
+
+      if (!entity) {
+        return
+      }
+
+      cesium.viewer.selectedEntity = entity
+      cesium.viewer.trackedEntity = entity
     },
     togglePinState() {
       console.log('toggle the pin state')
