@@ -110,6 +110,19 @@ export default {
         }
         entity.path.show = true
       })
+
+      viewer.scene.postUpdate.addEventListener((scene, time) => {
+        if (scene.mode !== Cesium.SceneMode.SCENE3D) {
+          return
+        }
+        const icrfToFixed = Cesium.Transforms.computeIcrfToFixedMatrix(time)
+        if (Cesium.defined(icrfToFixed)) {
+          var offset = Cesium.Cartesian3.clone(viewer.camera.position)
+          var transform = Cesium.Matrix4.fromRotationTranslation(icrfToFixed)
+          viewer.camera.lookAtTransform(transform, offset)
+        }
+      })
+
       pathMaterial = new Cesium.PolylineArrowMaterialProperty(Cesium.Color.BLUE)
       /* if this.satellitesHaveLoaded is true then API beat Cesium to it
       and we didn't process data when watch handler fired */
