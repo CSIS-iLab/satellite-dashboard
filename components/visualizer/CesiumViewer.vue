@@ -321,7 +321,9 @@ export default {
       return positionSamples
     },
     compileOrbits(orbits, CRFtoTRF, epjd) {
-      const positionSamples = new Cesium.SampledPositionProperty()
+      const positionSamples = new Cesium.SampledPositionProperty(
+        Cesium.ReferenceFrame.INERTIAL
+      )
       positionSamples.setInterpolationOptions({
         interpolationAlgorithm: Cesium.LagrangePolynomialApproximation,
         interpolationDegree: 1
