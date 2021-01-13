@@ -329,20 +329,37 @@ export default {
         interpolationDegree: 1
       })
 
-      const duration = this.SimInt * 1.01
-      const orbitalFragmentSize = duration / orbits.length
+      const duration = this.SimInt
+      const numDays = duration / 86400
+
+      const paddedOrbits = []
+      let lastMatch = 0
+      for (let day = 0; day < numDays; day++) {
+        const targetDate = Cesium.JulianDate.toDate(
+          Cesium.JulianDate.addDays(this.SimStart, day, new Cesium.JulianDate())
+        ).setHours(0, 0, 0, 0)
+        const orbit = orbits[lastMatch]
+        const epochDate = new Date(orbit.elements.Epoch).setHours(0, 0, 0, 0)
+        if (epochDate.valueOf() === targetDate.valueOf() && orbits[day + 1]) {
+          lastMatch++
+        }
+        paddedOrbits.push(orbit)
+      }
+
+      const orbitalFragmentSize = duration / paddedOrbits.length
       let step = (duration / 360) * 1000
 
-      orbits.forEach((orbit, i) => {
+      paddedOrbits.forEach((orbit, i, a) => {
         const elems = Object.assign({}, orbit.elements)
         const fragmentStart = Cesium.JulianDate.addSeconds(
           this.SimStart,
           orbitalFragmentSize * i,
           new Cesium.JulianDate()
         )
+        const padFactor = i === a.length - 1 ? 1.01 : 1
         const fragmentEnd = Cesium.JulianDate.addSeconds(
           this.SimStart,
-          orbitalFragmentSize * (i + 1),
+          orbitalFragmentSize * (i + 1) * padFactor,
           new Cesium.JulianDate()
         )
 

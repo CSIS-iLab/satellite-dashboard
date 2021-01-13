@@ -115,7 +115,7 @@ export default {
       isPlaying: true,
       playbackSpeeds: playbackSpeeds,
       chosenPlaybackSpeed: playbackSpeeds[0],
-      timelinePoint: this.selectedDate
+      timelinePoint: this.selectedDate.toLocaleDateString()
     }
   },
   mounted() {

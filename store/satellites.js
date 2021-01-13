@@ -77,7 +77,6 @@ export const actions = {
       endDate.setSeconds(
         endDate.getSeconds() + state.selectedTimescale.value - 1
       ) // minus 1 second so we don't get n + 1 days
-      console.log(state.targetDate, endDate)
       let satellites = await fetch(
         `${siteURL}/wp-json/satdash/v1/satellites?startDate=${getDateForApi(
           state.targetDate
