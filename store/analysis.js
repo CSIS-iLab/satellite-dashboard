@@ -35,7 +35,12 @@ export const actions = {
             modified,
             tags,
             content,
-            coauthors
+            coauthors,
+            meta,
+            acf,
+            categories,
+            country,
+            user
           }) => ({
             id,
             slug,
@@ -45,7 +50,12 @@ export const actions = {
             modified,
             tags,
             content,
-            authors: coauthors
+            authors: coauthors,
+            meta,
+            acf,
+            categories,
+            country,
+            user
           })
         )
 

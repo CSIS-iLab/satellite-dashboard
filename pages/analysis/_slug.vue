@@ -7,11 +7,15 @@
         > -->
         <h1 class="post__title">{{ post.title.rendered }}</h1>
         <div class="post__meta">
-          <PostMeta :date="post.date" :authors="post.authors" />
+          <PostMeta
+            :date="post.date"
+            :authors="post.authors"
+            :modified="post.modified"
+          />
         </div>
         <!-- eslint-disable-next-line -->
         <div class="post__excerpt" v-html="post.excerpt.rendered"></div>
-        <!-- <table v-if="satellites.items[0]" class="post__sat-table">
+        <table v-if="post.acf.related_satellites" class="post__sat-table">
           <thead>
             <tr>
               <th>Object Name</th>
@@ -22,7 +26,14 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="sat in satellites.items" :key="sat.id">
+            <tr v-for="sat in post.acf.related_satellites" :key="sat.ID">
+              <td>{{ sat.post_name }}</td>
+              <td>Colmn 2</td>
+              <td>Colmn 3</td>
+              <td>Colmn 4</td>
+            </tr>
+
+            <!-- <tr v-for="sat in satellites.items" :key="sat.id">
               <td>{{ sat.satellite.launchVehicle }}</td>
               <td>{{ sat.satellite.countryOfJurisdiction }}</td>
               <td class="desktop">
@@ -30,9 +41,9 @@
               </td>
               <td class="desktop">{{ operator }}</td>
               <td><a href="#">NEED URL</a></td>
-            </tr>
+            </tr> -->
           </tbody>
-        </table> -->
+        </table>
       </header>
 
       <!-- eslint-disable-->
@@ -43,6 +54,7 @@
       <!-- eslint-enable-->
       <section class="post__further">
         <p class="post__further-footnote">FOOTNOTES GO HERE</p>
+        {{ post.meta.further_reading }}
         <!-- <template v-for="reading in furtherReadings">
           <h2 :key="reading.url" class="post__further-header">
             Further Reading
@@ -115,6 +127,7 @@ export default {
   },
   created() {
     this.$store.dispatch('analysis/getPosts')
+    this.$store.dispatch('analysis/getTags')
   },
   methods: {
     formatDate(d) {
