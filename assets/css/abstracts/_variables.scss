@@ -83,6 +83,11 @@ $z-index: (
 );
 
 $shadows: (
+  xsm: (
+    0 0 1px rgba(0, 0, 0, 0.2),
+    0 0 11px rgba(0, 0, 0, 0.14),
+    0 0 0 rgba(0, 0, 0, 0.34)
+  ),
   sm: (
     0 2px 10px rgba(0, 0, 0, 0.34),
     0 2px 5px rgba(0, 0, 0, 0.24),
