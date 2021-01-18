@@ -16,6 +16,7 @@
         :selected-timescale="selectedTimescale"
       />
     </template>
+    <DetailsPanel />
   </div>
 </template>
 
@@ -23,12 +24,14 @@
 import { mapGetters } from 'vuex'
 import CesiumViewer from '~/components/visualizer/CesiumViewer'
 import PanelLeft from '~/components/visualizer/PanelLeft'
+import DetailsPanel from '~/components/visualizer/DetailsPanel'
 import Timeline from '~/components/timeline/Timeline'
 
 export default {
   layout: 'visualizer',
   components: {
     CesiumViewer,
+    DetailsPanel,
     PanelLeft,
     Timeline
   },
