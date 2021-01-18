@@ -60,11 +60,12 @@
       brightness(95%) contrast(99%);
     position: relative;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
     width: rem(48);
     min-height: rem(56);
     margin-bottom: rem(41);
-    padding-top: rem(16);
+    padding-top: rem(24);
     color: $color-white-180;
     background: var(--tab-bg, $color-slate-600);
     border: 0;
@@ -122,6 +123,13 @@
         brightness(94%) contrast(93%);
     }
     /* stylelint-enable */
+
+    // # of Filters Badge
+    .badge--pinned {
+      position: absolute;
+      top: rem(12);
+      left: rem(24);
+    }
   }
 
   &__panel {
