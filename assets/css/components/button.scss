@@ -1,7 +1,9 @@
 .btn {
-  @extend %font-ui-text-base-good;
-  padding: 4px 12px;
+  padding: 4px 12px 2px;
   color: $color-white-160;
+  @extend %font-ui-text-base-good;
+  letter-spacing: 0.015em;
+  text-transform: uppercase;
   background-color: transparent;
   border-style: none;
   border-radius: 0;

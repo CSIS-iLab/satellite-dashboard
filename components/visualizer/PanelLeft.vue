@@ -20,19 +20,21 @@
       <FilterTab />
     </TabPanel>
     <TabPanel tab="list" class="panel panel--left">
-      The focus list goes here.
+      <FocusList />
     </TabPanel>
   </TabWrapper>
 </template>
 
 <script>
 import FilterTab from '~/components/visualizer/FilterTab'
+import FocusList from '~/components/visualizer/FocusList'
 import Icon from '~/components/global/Icon'
 import { TabActivator, TabList, TabPanel, TabWrapper } from '@a11y-kit/vue-tabs'
 
 export default {
   components: {
     FilterTab,
+    FocusList,
     Icon,
     TabActivator,
     TabList,

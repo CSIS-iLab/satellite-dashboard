@@ -1,5 +1,25 @@
 .sat {
+  &-list {
+    margin: 0;
+    padding: 0;
+  }
+
   &__basic {
+    .sat-list & {
+      grid-template-columns: max-content auto max-content;
+      margin-top: rem(16);
+      padding: rem(16);
+      background: $color-slate-400;
+      border-radius: 3px;
+      @include shadow(xsm);
+      transition: background 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+
+      &:hover {
+        background: $color-slate-300;
+        @include shadow(sm);
+      }
+    }
+
     &--status {
       display: grid;
       grid-template-columns: max-content auto;
@@ -30,6 +50,11 @@
     }
   }
 
+  &__name {
+    color: $color-white-180;
+    @extend %font-ui-text-lg-oxygen;
+  }
+
   &__id {
     color: $color-white-160;
     @extend %font-ui-text-sm-oxygen;
@@ -44,6 +69,11 @@
 
   &__actions {
     display: flex;
+
+    .sat-list & {
+      grid-column: 3;
+      grid-row: 1 / span 2;
+    }
 
     button {
       padding-right: rem(4);
