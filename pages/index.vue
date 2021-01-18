@@ -15,8 +15,8 @@
         :timescales="timescales"
         :selected-timescale="selectedTimescale"
       />
+      <DetailsPanel :satellite="detailedSatellite" />
     </template>
-    <DetailsPanel />
   </div>
 </template>
 
@@ -24,7 +24,7 @@
 import { mapGetters } from 'vuex'
 import CesiumViewer from '~/components/visualizer/CesiumViewer'
 import PanelLeft from '~/components/visualizer/PanelLeft'
-import DetailsPanel from '~/components/visualizer/DetailsPanel'
+import DetailsPanel from '~/components/visualizer/details-panel/Panel'
 import Timeline from '~/components/timeline/Timeline'
 
 export default {
@@ -52,6 +52,9 @@ export default {
     },
     selectedTimescale() {
       return this.$store.state.satellites.selectedTimescale
+    },
+    detailedSatellite() {
+      return this.$store.state.satellites.satellites['00858']
     },
     ...mapGetters({
       activeSatellites: 'satellites/activeSatellites'

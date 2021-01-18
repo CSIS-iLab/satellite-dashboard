@@ -29,7 +29,7 @@
 
       <div class="details-panel__content">
         <TabPanel tab="details" scope="detailsPanel">
-          Details goes here!
+          <Details />
         </TabPanel>
         <TabPanel tab="events" scope="detailsPanel">
           Events goes here!
@@ -45,12 +45,14 @@
 <script>
 import { mapGetters } from 'vuex'
 import Button from '~/components/global/Button'
+import Details from '~/components/visualizer/details-panel/Details.vue'
 import Icon from '~/components/global/Icon'
 import { TabActivator, TabList, TabPanel, TabWrapper } from '@a11y-kit/vue-tabs'
 
 export default {
   components: {
     Button,
+    Details,
     Icon,
     TabActivator,
     TabList,

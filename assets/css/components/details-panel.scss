@@ -13,6 +13,8 @@
 
   &__content {
     padding-top: rem(32);
+    padding-bottom: rem(4);
+    overflow: auto;
     color: $color-white-180;
     background: $color-slate-385;
   }
@@ -85,5 +87,36 @@
         margin-left: rem(24);
       }
     }
+  }
+
+  h3 {
+    @extend %font-ui-heading-section-md;
+    font-weight: 500;
+    letter-spacing: 0.025em;
+  }
+
+  hr {
+    height: 1px;
+    margin: rem(16) calc(var(--panel-padding-side) * -1);
+    background: $color-white-115;
+    border: 0;
+  }
+
+  dl {
+    /* stylelint-disable-next-line */
+    > * + * {
+      margin-top: rem(12);
+    }
+  }
+
+  dt {
+    color: $color-white-150;
+    @extend %font-ui-text-base-oxygen;
+  }
+
+  &__desc {
+    margin-bottom: rem(16);
+    color: $color-white-140;
+    @extend %font-ui-text-sm-oxygen;
   }
 }
