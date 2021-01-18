@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="focus-list">
     <h2 class="panel__title">Focus List</h2>
     <p>
       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
@@ -11,22 +11,30 @@
       Hide unlisted objects<br />
       Hide object labels<br />
     </div>
-    <div>
-      <div v-if="isEditable">
-        <Button :on-click="cancelEditing">
-          <Icon id="close-small" name="close-small" />
-        </Button>
-        {{ numSelectedItems }} selected
-        <Button :on-click="removeFromFocused">
-          Remove
-        </Button>
-      </div>
-      <div v-else>
-        {{ focusedSatellitesCount }} objects saved<br />
-        <Button class="btn--contained btn--icon" :on-click="editFocusList">
-          <Icon id="pen" name="pen" />
-        </Button>
-      </div>
+    <div
+      v-if="isEditable"
+      class="focus-list__heading focus-list__heading--editing"
+    >
+      <Button :on-click="cancelEditing">
+        <Icon id="close-small" name="close-small" />
+      </Button>
+      <strong>{{ numSelectedItems }}</strong
+      >&nbsp; selected
+      <Button
+        class="btn--sm btn--contained btn--remove"
+        :on-click="removeFromFocused"
+      >
+        Remove
+      </Button>
+    </div>
+    <div v-else class="focus-list__heading">
+      <strong>{{ focusedSatellitesCount }} objects saved</strong>
+      <Button
+        class="btn--contained btn--icon btn--edit"
+        :on-click="editFocusList"
+      >
+        <Icon id="pen" name="pen" />
+      </Button>
     </div>
     <ul class="sat-list" role="list">
       <li
@@ -73,7 +81,7 @@ export default {
   },
   data() {
     return {
-      isEditable: true,
+      isEditable: false,
       selectedItems: []
     }
   },
@@ -100,9 +108,16 @@ export default {
       this.isEditable = false
       this.selectedItems = []
     },
-    removeFromFocused(e, catalog_id) {
-      this.focusedItems.delete(catalog_id)
-      this.updateFocusedSatellites(this.focusedItems)
+    removeFromFocused() {
+      let newFocusedItems = new Set(this.focusedSatellites)
+
+      for (let i = 0; i < this.selectedItems.length; i++) {
+        const item = this.selectedItems[i]
+        newFocusedItems.delete(item)
+      }
+
+      this.updateFocusedSatellites(newFocusedItems)
+      this.cancelEditing()
     },
     showSatelliteDetails() {
       console.log('show details')
@@ -114,4 +129,6 @@ export default {
 }
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+@import '../assets/css/components/focus-list';
+</style>
