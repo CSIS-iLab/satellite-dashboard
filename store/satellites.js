@@ -87,16 +87,11 @@ export const actions = {
       endDate.setSeconds(
         endDate.getSeconds() + state.selectedTimescale.value - 1
       ) // minus 1 second so we don't get n + 1 days
-      console.log(state.targetDate, endDate)
-      // let satellites = await fetch(
-      //   `${siteURL}/wp-json/satdash/v1/satellites?startDate=${getDateForApi(
-      //     state.targetDate
-      //   )}&endDate=${getDateForApi(endDate)}`
-      // ).then((res) => res.json())
 
-      // TODO: REMOVE THIS. TESTING ONLY!
       let satellites = await fetch(
-        `${siteURL}/wp-json/satdash/v1/satellites?startDate=2020-01-03&endDate=2020-01-04`
+        `${siteURL}/wp-json/satdash/v1/satellites?startDate=${getDateForApi(
+          state.targetDate
+        )}&endDate=${getDateForApi(endDate)}`
       ).then((res) => res.json())
 
       let items = {}
