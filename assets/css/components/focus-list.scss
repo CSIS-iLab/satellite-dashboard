@@ -23,4 +23,13 @@
     padding-bottom: rem(6);
     background: $color-slate-600;
   }
+
+  &__options {
+    margin: 0;
+    padding: 0;
+
+    li {
+      margin-bottom: rem(16);
+    }
+  }
 }

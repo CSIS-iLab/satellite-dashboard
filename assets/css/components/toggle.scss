@@ -1,4 +1,4 @@
-.checkbox {
+.toggle {
   display: flex;
   align-items: center;
 
@@ -30,30 +30,34 @@
       content: '';
       position: relative;
       display: inline-block;
-      width: 20px;
-      height: 20px;
+      width: 40px;
+      height: 24px;
       margin-right: 10px;
-      background: var(--checkbox-bg, transparent);
-      border: 2px solid var(--checkbox-border, $color-white-180);
-      border-radius: 2px;
+      background: var(--checkbox-bg, $color-slate-200);
+      border-radius: 12px;
+      transition: background 0.3s ease-in-out;
+    }
+
+    + label::after {
+      content: '';
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 18px;
+      height: 18px;
+      background-color: $color-white-170;
+      border-radius: 50%;
+      @include shadow(xxsm);
+      transition: transform 0.3s ease-in-out;
     }
 
     &:checked + label {
       &::before {
-        --checkbox-bg: #{$color-white-180};
-        --checkbox-border: transparent;
+        --checkbox-bg: #{$color-blue-100};
       }
 
       &::after {
-        content: '';
-        position: absolute;
-        top: 5px;
-        left: 4px;
-        width: 13px;
-        height: 6px;
-        border-bottom: 2px solid $color-black-100;
-        border-left: 2px solid $color-black-100;
-        transform: rotate(-45deg);
+        transform: translateX(90%);
       }
     }
 

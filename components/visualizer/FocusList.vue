@@ -7,10 +7,22 @@
       veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
       commodo consequat.
     </p>
-    <div>
-      Hide unlisted objects<br />
-      Hide object labels<br />
-    </div>
+    <ul class="focus-list__options" role="list">
+      <li>
+        <Toggle
+          id="hide_unlisted"
+          v-model="hideUnlisted"
+          label="Hide unlisted objects"
+        />
+      </li>
+      <li>
+        <Toggle
+          id="hide_object_labels"
+          v-model="hideObjectLabels"
+          label="Hide object labels"
+        />
+      </li>
+    </ul>
     <div
       v-if="isEditable"
       class="focus-list__heading focus-list__heading--editing"
@@ -71,18 +83,22 @@ import { mapMutations } from 'vuex'
 import Button from '~/components/global/Button.vue'
 import Checkbox from '~/components/global/Checkbox.vue'
 import Icon from '~/components/global/Icon.vue'
+import Toggle from '~/components/global/Toggle.vue'
 
 export default {
   name: 'FocusList',
   components: {
     Button,
     Checkbox,
-    Icon
+    Icon,
+    Toggle
   },
   data() {
     return {
       isEditable: false,
-      selectedItems: []
+      selectedItems: [],
+      hideUnlisted: false,
+      hideObjectLabels: false
     }
   },
   computed: {
@@ -99,6 +115,24 @@ export default {
       focusedSatellites: 'satellites/focusedSatellites',
       focusedSatellitesCount: 'satellites/focusedSatellitesCount'
     })
+  },
+  watch: {
+    hideUnlisted: function(val, oldVal) {
+      if (val) {
+        console.log('hide anything not in the focus list')
+        return
+      }
+
+      console.log('show everything')
+    },
+    hideObjectLabels: function(val, oldVal) {
+      if (val) {
+        console.log('hide anything not in the focus list')
+        return
+      }
+
+      console.log('show everything')
+    }
   },
   methods: {
     editFocusList() {
