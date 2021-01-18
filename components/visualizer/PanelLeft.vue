@@ -10,9 +10,18 @@
       </button>
       <TabActivator tab="filters">
         <Icon id="filter" class="icon" name="filter" />
+        <div
+          v-show="activeFiltersCount"
+          class="badge badge--small badge--pinned"
+        >
+          {{ activeFiltersCount }}
+        </div>
       </TabActivator>
       <TabActivator tab="list">
         <Icon id="pin" class="icon" name="pin" />
+        <div v-show="focusedSatellitesCount" class="badge badge--large">
+          {{ focusedSatellitesCount }}
+        </div>
       </TabActivator>
     </TabList>
 
@@ -26,6 +35,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import FilterTab from '~/components/visualizer/FilterTab'
 import FocusList from '~/components/visualizer/FocusList'
 import Icon from '~/components/global/Icon'
@@ -45,10 +55,17 @@ export default {
     return {
       activeTab: ''
     }
+  },
+  computed: {
+    ...mapGetters({
+      activeFiltersCount: 'filters/activeFiltersCount',
+      focusedSatellitesCount: 'satellites/focusedSatellitesCount'
+    })
   }
 }
 </script>
 
 <style lang="scss">
 @import '../assets/css/components/panel';
+@import '../assets/css/components/badge';
 </style>

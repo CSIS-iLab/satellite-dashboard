@@ -83,7 +83,7 @@
       </div>
     </div>
     <FilterResults
-      v-if="activeFilters.length > 0"
+      v-if="numActiveFilters > 0"
       :satellites="activeSatelliteMeta"
       :total-results="numSatellites"
     />
@@ -117,7 +117,6 @@ export default {
         Users: { value: 'Users', label: 'Users' },
         Status: { value: 'Status', label: 'Status' }
       },
-      activeFilters: [],
       activeFilterValues: {},
       visibleFilters: [],
       visibleFilterValues: {
@@ -135,9 +134,6 @@ export default {
     numVisibleFilters() {
       return this.visibleFilters.length
     },
-    numActiveFilters() {
-      return this.activeFilters.length
-    },
     listActiveFilters() {
       return this.activeFilters
         .map((d) => this.filterOptions[d].label)
@@ -153,7 +149,9 @@ export default {
     },
     ...mapGetters({
       activeSatellites: 'satellites/activeSatellites',
-      numSatellites: 'satellites/activeSatellitesCount'
+      numSatellites: 'satellites/activeSatellitesCount',
+      activeFilters: 'filters/activeFilters',
+      numActiveFilters: 'filters/activeFiltersCount'
     }),
     filterValueOptions() {
       let filters = {
@@ -219,7 +217,7 @@ export default {
     applyFilters() {
       console.log('apply the filter!')
       this.isEditable = false
-      this.activeFilters = [...this.visibleFilters]
+      this.updateActiveFilters([...this.visibleFilters])
       this.activeFilterValues = Object.assign({}, this.visibleFilterValues)
 
       let filters = {}
@@ -253,7 +251,7 @@ export default {
         this.visibleFilterValues[filter] = []
       }
       this.activeFilterValues = {}
-      this.activeFilters = []
+      this.updateActiveFilters([])
       this.visibleFilters = []
 
       // Reset Satellite Ids
@@ -261,7 +259,8 @@ export default {
       this.updateActiveSatellites(filteredSatellites)
     },
     ...mapMutations({
-      updateActiveSatellites: 'satellites/updateActiveSatellites'
+      updateActiveSatellites: 'satellites/updateActiveSatellites',
+      updateActiveFilters: 'filters/updateActiveFilters'
     }),
     cancelFilters() {
       console.log('cancel the filters')
