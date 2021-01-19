@@ -7,7 +7,8 @@
             <Icon id="target" name="target" />
           </Button>
           <Button class="btn--icon btn--pin" :on-click="toggleFocusState">
-            <Icon id="pin" name="pin" />
+            <Icon v-show="satelliteIsInFocused" id="pin" name="pin" />
+            <Icon v-show="!satelliteIsInFocused" id="unpin" name="unpin" />
           </Button>
           <Button class="btn--icon btn--close" :on-click="closePanel">
             <Icon id="close-large" name="close-large" />
@@ -80,19 +81,34 @@ export default {
   computed: {
     satelliteName() {
       return this.satellite.meta.Name
-    }
+    },
+    satelliteIsInFocused() {
+      return this.focusedSatellites.has(this.id)
+    },
+    ...mapGetters({
+      focusedSatellites: 'satellites/focusedSatellites'
+    })
   },
   methods: {
     zoomIn() {
       console.log('zoom in on this object')
     },
     toggleFocusState() {
-      console.log('toggle focus state')
+      let newFocusedItems = new Set(this.focusedSatellites)
+
+      if (this.satelliteIsInFocused) {
+        newFocusedItems.delete(this.id)
+      } else {
+        newFocusedItems.add(this.id)
+      }
+
+      return this.updateFocusedSatellites(newFocusedItems)
     },
     closePanel() {
       this.updateDetailedSatellite(null)
     },
     ...mapMutations({
+      updateFocusedSatellites: 'satellites/updateFocusedSatellites',
       updateDetailedSatellite: 'satellites/updateDetailedSatellite'
     })
   }
