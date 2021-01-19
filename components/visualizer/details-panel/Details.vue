@@ -24,21 +24,19 @@
         <dd>{{ satellite.meta[item.value] }}</dd>
       </div>
     </dl>
-    <hr />
-    <h3>Orbit</h3>
-    <p class="details-panel__desc">
-      Updated from [SOURCE] [DATE]<br />Current as of [DATE]
-    </p>
-    <dl v-if="hasOrbit" class="details__orbit">
-      <div v-for="item in info.orbit" :key="item.value">
-        <dt>{{ item.label }}</dt>
-        <dd>{{ orbit[item.value] }}</dd>
-      </div>
-      <div>
-        <dt class="visually-hidden">Status</dt>
-        <dd>Status</dd>
-      </div>
-    </dl>
+    <div v-if="hasOrbit">
+      <hr />
+      <h3>Orbit</h3>
+      <p class="details-panel__desc">
+        Updated from {{ orbitSource }}<br />Current as of {{ currentDate }}
+      </p>
+      <dl class="details__orbit">
+        <div v-for="item in info.orbit" :key="item.value">
+          <dt>{{ item.label }}</dt>
+          <dd>{{ orbit[item.value] }}</dd>
+        </div>
+      </dl>
+    </div>
     <hr />
     <h3>ITU Filings</h3>
     <hr />
@@ -101,21 +99,35 @@ export default {
     },
     orbit() {
       // TODO: Need to get the right orbit for the current timeline
-      return this.satellite.orbits[0]
+      return this.satellite.orbits[0].elements
     },
     status() {
       return this.satellite.meta.Status
+    },
+    orbitSource() {
+      return `${this.satellite.meta.source1Name} ${this.formatDate(
+        this.satellite.meta.source1LastCatalogUpdate
+      )}`
+    },
+    currentDate() {
+      return this.formatDate(this.satellite.orbits[0].epoch)
     }
   },
   methods: {
-    zoomIn() {
-      console.log('zoom in on this object')
-    },
-    toggleFocusState() {
-      console.log('toggle focus state')
-    },
-    closePanel() {
-      console.log('close panel')
+    formatDate(date) {
+      const event = new Date(date)
+
+      const options = {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        timeZoneName: 'short',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+      }
+
+      return event.toLocaleString('en-US', options)
     }
   }
 }
