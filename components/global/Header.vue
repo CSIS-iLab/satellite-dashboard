@@ -18,7 +18,7 @@
         <SiteLogo />
       </nuxt-link>
     </div>
-    <SocialShare page-title="Sat Dash" />
+    <SocialShare v-if="!isVisualizer" page-title="Sat Dash" />
   </header>
 </template>
 
@@ -46,8 +46,14 @@ export default {
       navIsOpen: false
     }
   },
+  computed: {
+    isVisualizer() {
+      return this.$nuxt.$data.layoutName === 'visualizer' ? true : false
+    }
+  },
   methods: {
     openNav() {
+      console.log(this.$nuxt.$data.layoutName)
       this.navIsOpen = true
     },
     closeNav() {
