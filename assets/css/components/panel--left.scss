@@ -41,6 +41,7 @@
       position: absolute;
       top: 0;
       left: 100%;
+      @include z-index(panelLeftTabs);
       display: flex;
       flex-direction: column;
     }
@@ -127,5 +128,9 @@
       height: 100%;
       overflow: scroll;
     }
+  }
+
+  .btn--panel-close {
+    height: $size__header-height;
   }
 }
