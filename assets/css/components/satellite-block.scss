@@ -23,7 +23,7 @@
     &--status {
       display: grid;
       grid-template-columns: max-content auto;
-      column-gap: rem(16);
+      column-gap: var(--marker-gap, rem(16));
       row-gap: rem(2);
 
       &::before {

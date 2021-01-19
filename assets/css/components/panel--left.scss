@@ -106,15 +106,6 @@
         transition: filter 0.3s ease-in-out;
       }
 
-      /* stylelint-disable */
-      .ak-vt__wrapper:not(.ak-vt__wrapper--no-active-tab)
-        &[aria-selected='false'] {
-        --tab-bg: #{$color-slate-800};
-        --tab-cut-out: invert(3%) sepia(4%) saturate(6998%) hue-rotate(163deg)
-          brightness(94%) contrast(93%);
-      }
-      /* stylelint-enable */
-
       // # of Filters Badge
       .badge--pinned {
         position: absolute;
@@ -122,6 +113,15 @@
         left: rem(24);
       }
     }
+
+    /* stylelint-disable */
+    &__wrapper:not(.ak-vt__wrapper--no-active-tab)
+      .ak-vt__activator[aria-selected='false'] {
+      --tab-bg: #{$color-slate-800};
+      --tab-cut-out: invert(3%) sepia(4%) saturate(6998%) hue-rotate(163deg)
+        brightness(94%) contrast(93%);
+    }
+    /* stylelint-enable */
 
     &__panel {
       height: 100%;

@@ -126,7 +126,7 @@
   .sat__basic--status {
     --marker-size: 8px;
     --marker-top: 0;
-    grid-gap: rem(4);
+    --marker-gap: #{rem(4)};
     align-items: baseline;
     max-width: fit-content;
     margin-top: rem(2);
