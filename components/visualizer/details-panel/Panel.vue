@@ -13,7 +13,7 @@
             <Icon id="close-large" name="close-large" />
           </Button>
         </div>
-        <h2 class="panel__title">Satellite Name</h2>
+        <h2 class="panel__title">{{ satelliteName }}</h2>
         <TabList label="Controller" scope="detailsPanel">
           <TabActivator tab="details" scope="detailsPanel">
             Details
@@ -29,7 +29,7 @@
 
       <div class="details-panel__content">
         <TabPanel tab="details" scope="detailsPanel">
-          <Details />
+          <Details :id="id" :satellite="satellite" />
         </TabPanel>
         <TabPanel tab="events" scope="detailsPanel">
           Events goes here!
@@ -44,6 +44,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { mapMutations } from 'vuex'
 import Button from '~/components/global/Button'
 import Details from '~/components/visualizer/details-panel/Details.vue'
 import Icon from '~/components/global/Icon'
@@ -59,9 +60,26 @@ export default {
     TabPanel,
     TabWrapper
   },
+  props: {
+    id: {
+      type: String,
+      required: false,
+      default: ''
+    },
+    satellite: {
+      type: Object,
+      required: false,
+      default: () => {}
+    }
+  },
   data() {
     return {
       activeTab: 'details'
+    }
+  },
+  computed: {
+    satelliteName() {
+      return this.satellite.meta.Name
     }
   },
   methods: {
@@ -72,8 +90,11 @@ export default {
       console.log('toggle focus state')
     },
     closePanel() {
-      console.log('close panel')
-    }
+      this.updateDetailedSatellite(null)
+    },
+    ...mapMutations({
+      updateDetailedSatellite: 'satellites/updateDetailedSatellite'
+    })
   }
 }
 </script>

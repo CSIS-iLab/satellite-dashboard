@@ -3,18 +3,25 @@
     <dl class="details__basic">
       <div v-for="item in info.basic" :key="item.value">
         <dt>{{ item.label }}</dt>
-        <dd>{{ item.value }}</dd>
+        <dd>{{ satellite.meta[item.value] }}</dd>
       </div>
       <div>
         <dt class="visually-hidden">Status</dt>
-        <dd>Status</dd>
+        <dd>
+          <div
+            class="sat__basic sat__basic--status"
+            :data-status="satellite.meta.Status"
+          >
+            {{ status }}
+          </div>
+        </dd>
       </div>
     </dl>
     <hr />
     <dl class="details__advanced">
       <div v-for="item in info.advanced" :key="item.value">
         <dt>{{ item.label }}</dt>
-        <dd>{{ item.value }}</dd>
+        <dd>{{ satellite.meta[item.value] }}</dd>
       </div>
     </dl>
     <hr />
@@ -22,10 +29,10 @@
     <p class="details-panel__desc">
       Updated from [SOURCE] [DATE]<br />Current as of [DATE]
     </p>
-    <dl class="details__orbit">
+    <dl v-if="hasOrbit" class="details__orbit">
       <div v-for="item in info.orbit" :key="item.value">
         <dt>{{ item.label }}</dt>
-        <dd>{{ item.value }}</dd>
+        <dd>{{ orbit[item.value] }}</dd>
       </div>
       <div>
         <dt class="visually-hidden">Status</dt>
@@ -44,6 +51,11 @@ import { mapGetters } from 'vuex'
 
 export default {
   props: {
+    id: {
+      type: String,
+      required: false,
+      default: ''
+    },
     satellite: {
       type: Object,
       required: false,
@@ -80,9 +92,19 @@ export default {
     }
   },
   computed: {
-    meta() {
-      console.log(this.satellite)
-      return this.satellite
+    hasOrbit() {
+      if (!this.satellite.orbits || this.satellite.orbits.length === -1) {
+        return
+      }
+
+      return true
+    },
+    orbit() {
+      // TODO: Need to get the right orbit for the current timeline
+      return this.satellite.orbits[0]
+    },
+    status() {
+      return this.satellite.meta.Status
     }
   },
   methods: {

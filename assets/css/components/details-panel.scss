@@ -3,6 +3,8 @@
   top: 2rem;
   right: 2rem;
   width: 360px;
+  max-height: 66vh;
+  overflow: auto;
 }
 
 .details-panel {
@@ -56,6 +58,7 @@
       background: transparent;
       border: 0;
       border-radius: 0;
+      cursor: pointer;
       transition: color 0.3s ease-in-out;
 
       &:hover {
@@ -118,5 +121,21 @@
     margin-bottom: rem(16);
     color: $color-white-140;
     @extend %font-ui-text-sm-oxygen;
+  }
+
+  .sat__basic--status {
+    --marker-size: 8px;
+    --marker-top: 0;
+    grid-gap: rem(4);
+    align-items: baseline;
+    max-width: fit-content;
+    margin-top: rem(2);
+    padding: rem(4) rem(12) rem(4) rem(8);
+    color: $color-white-190;
+    @extend %font-ui-text-sm-good;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+    background: var(--status-bg);
+    border-radius: 50px;
   }
 }

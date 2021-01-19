@@ -60,7 +60,10 @@
         </div>
         <div class="sat__id">{{ satellites[item].catalog_id }}</div>
         <div class="sat__actions">
-          <Button v-if="!isEditable" :on-click="showSatelliteDetails">
+          <Button
+            v-if="!isEditable"
+            :on-click="(e) => showSatelliteDetails(e, item)"
+          >
             <Icon id="info" name="info" />
           </Button>
           <Checkbox
@@ -153,11 +156,13 @@ export default {
       this.updateFocusedSatellites(newFocusedItems)
       this.cancelEditing()
     },
-    showSatelliteDetails() {
+    showSatelliteDetails(e, catalog_id) {
       console.log('show details')
+      this.updateDetailedSatellite(catalog_id)
     },
     ...mapMutations({
-      updateFocusedSatellites: 'satellites/updateFocusedSatellites'
+      updateFocusedSatellites: 'satellites/updateFocusedSatellites',
+      updateDetailedSatellite: 'satellites/updateDetailedSatellite'
     })
   }
 }
