@@ -3,7 +3,7 @@
     <h2 v-if="parentClass == 'nav--footer'">
       Navigate
     </h2>
-    <ul :class="parentClass + '__list'" role="list">
+    <ul class="nav__list" role="list">
       <li
         v-for="item in items"
         :key="item.id"
@@ -67,12 +67,4 @@ export default {
 
 <style lang="scss">
 @import '../assets/css/components/navigation';
-
-.nav--header__list {
-  display: flex;
-
-  li + li {
-    margin-left: 1rem;
-  }
-}
 </style>
