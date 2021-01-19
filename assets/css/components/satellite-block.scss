@@ -23,7 +23,7 @@
     &--status {
       display: grid;
       grid-template-columns: max-content auto;
-      column-gap: rem(16);
+      column-gap: var(--marker-gap, rem(16));
       row-gap: rem(2);
 
       &::before {
@@ -31,9 +31,9 @@
         display: block;
         grid-column: 1;
         grid-row: 1;
-        width: 10px;
-        height: 10px;
-        margin-top: rem(4);
+        width: var(--marker-size, 10px);
+        height: var(--marker-size, 10px);
+        margin-top: var(--marker-top, 2px);
         background: var(--status, $color-slate-200);
         border-radius: 50%;
       }
@@ -87,5 +87,6 @@
 @each $stat, $color in $status {
   [data-status='#{$stat}'] {
     --status: #{$color};
+    --status-bg: #{rgba($color, 0.3)};
   }
 }

@@ -33,6 +33,7 @@ export const state = () => ({
   satellites: {},
   activeSatellites: [],
   focusedSatellites: new Set(),
+  detailedSatellite: null,
   targetDate: new Date(new Date().setHours(0, 0, 0, 0)),
   selectedTimescale: timescales[0],
   timescales
@@ -52,6 +53,9 @@ export const getters = {
   },
   focusedSatellitesCount: (state, getters) => {
     return getters.focusedSatellites.size
+  },
+  detailedSatellite: (state) => {
+    return state.detailedSatellite
   }
 }
 
@@ -70,6 +74,9 @@ export const mutations = {
   },
   updateFocusedSatellites: (state, satellites) => {
     state.focusedSatellites = satellites
+  },
+  updateDetailedSatellite: (state, satellite) => {
+    state.detailedSatellite = satellite
   }
   // updateCountries: (state, countries) => {
   //   state.countriesOfJurisdiction = countries.jurisdiction
