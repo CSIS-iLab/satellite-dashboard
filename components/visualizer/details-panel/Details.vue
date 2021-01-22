@@ -32,8 +32,10 @@
       </p>
       <dl class="details__orbit">
         <div v-for="item in info.orbit" :key="item.value">
-          <dt>{{ item.label }}</dt>
-          <dd>{{ orbit[item.value] }}</dd>
+          <!-- eslint-disable -->
+          <dt v-html="item.label"></dt>
+          <dd v-html="formattedOrbitData[item.value]"></dd>
+          <!-- eslint-enable -->
         </div>
       </dl>
     </div>
@@ -81,12 +83,20 @@ export default {
           { value: 'NoradId', label: 'NORAD ID (SATCAT)' }
         ],
         orbit: [
+          { value: 'Apogee', label: 'Apogee (km)' },
           { value: 'ArgP', label: 'Argument of perigee' },
+          { value: 'Perigee', label: 'Perigee (km)' },
           { value: 'Ecc', label: 'Eccentricity' },
           { value: 'Inc', label: 'Inclination' },
+          { value: 'Longitude', label: 'Longitude' },
+          { value: 'MeanMotion', label: 'Mean Motion (&deg/s)' },
+          { value: 'OrbitalPeriod', label: 'Orbital Period (min)' },
+          { value: 'OrbitalSpeed', label: 'Mean Orbital Speed (km/s)' },
           { value: 'SMA', label: 'Semi-major axis (km)' }
         ]
-      }
+      },
+      earthRadius: 6378136.3, // m
+      mu: 3.986004415e14 // m^3/s^2
     }
   },
   computed: {
@@ -100,6 +110,48 @@ export default {
     orbit() {
       // TODO: Need to get the right orbit for the current timeline
       return this.satellite.orbits[0].elements
+    },
+    formattedOrbitData() {
+      const Apogee = this.orbit.SMA * (1 + this.orbit.Ecc) - this.earthRadius
+
+      const Perigee = this.orbit.SMA * (1 - this.orbit.Ecc) - this.earthRadius
+
+      const ArgP = `${((this.orbit.ArgP * 180) / Math.PI).toFixed(4)}&deg;`
+
+      const Ecc = `${this.orbit.Ecc.toFixed(4)}`
+
+      const Inc = `${this.orbit.Inc / Math.PI} &deg;`
+
+      const mmo = Math.sqrt(
+        this.mu / (this.orbit.SMA * this.orbit.SMA * this.orbit.SMA)
+      )
+
+      const MeanMotion = ((mmo * 180) / Math.PI).toFixed(4)
+
+      const OrbitalPeriod = (Math.PI / mmo) * 30
+
+      const SMA = `${(this.orbit.SMA / 1000).toFixed(1)} km`
+
+      const OrbitalSpeed =
+        ((2 * Math.PI * this.orbit.SMA) / OrbitalPeriod) *
+        (1 -
+          (1 / 4) * Ecc ** 2 -
+          (3 / 64) * Ecc ** 4 -
+          (5 / 256) * Ecc ** 6 -
+          (175 / 16384) * Ecc ** 8)
+
+      return {
+        Apogee,
+        ArgP,
+        Perigee,
+        Ecc,
+        Inc,
+        Longitude: null,
+        MeanMotion,
+        OrbitalPeriod,
+        OrbitalSpeed,
+        SMA
+      }
     },
     status() {
       return this.satellite.meta.Status
