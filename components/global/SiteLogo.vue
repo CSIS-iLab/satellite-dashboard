@@ -2,12 +2,13 @@
   <svg
     :height="height"
     :width="width"
+    class="site-logo"
     viewBox="0 0 311 31"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     title="Satellite Dashboard"
   >
-    <g opacity=".7">
+    <g>
       <path
         fill-rule="evenodd"
         clip-rule="evenodd"

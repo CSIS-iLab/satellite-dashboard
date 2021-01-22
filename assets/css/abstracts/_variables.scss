@@ -30,9 +30,9 @@ $color-slate-385: rgba(33, 38, 43, 0.85);
 $color-slate-400: rgba(28, 32, 36, 1);
 $color-slate-478: rgba(28, 32, 36, 0.78);
 $color-slate-495: rgba(28, 32, 36, 0.95);
-$color-slate-490: rgba(22, 25, 28, 0.9);
 $color-slate-500: rgba(24, 27, 31, 1);
 $color-slate-600: rgba(22, 25, 28, 1);
+$color-slate-690: rgba(22, 25, 28, 0.9);
 $color-slate-695: rgba(22, 25, 28, 0.95);
 $color-slate-700: rgba(16, 20, 23, 1);
 $color-slate-800: rgba(12, 16, 19, 1);
@@ -77,12 +77,26 @@ $breakpoints: (
 
 $size__container-max-width: 1000px;
 $size__content-max-width: 680px;
+$size__header-height: 56px;
 
 $z-index: (
-  panel: 1
+  panel: 1,
+  header: 2,
+  panelLeftTabs: 3,
+  nav: 4
 );
 
 $shadows: (
+  xxsm: (
+    0 4px 5px rgba(0, 0, 0, 0.14),
+    0 1px 10px rgba(0, 0, 0, 0.12),
+    0 2px 4px rgba(0, 0, 0, 0.2)
+  ),
+  xsm: (
+    0 0 1px rgba(0, 0, 0, 0.2),
+    0 0 11px rgba(0, 0, 0, 0.14),
+    0 0 0 rgba(0, 0, 0, 0.34)
+  ),
   sm: (
     0 2px 10px rgba(0, 0, 0, 0.34),
     0 2px 5px rgba(0, 0, 0, 0.24),

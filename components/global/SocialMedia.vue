@@ -1,5 +1,5 @@
 <template>
-  <ul class="social-media">
+  <ul class="social-media" role="list">
     <li class="social-media__item">
       <a id="twitter-link" href="https://twitter.com/satdashboard">
         <Icon id="twitter" class="icon" name="twitter" />

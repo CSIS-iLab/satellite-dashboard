@@ -1,13 +1,8 @@
 .social-share {
   display: flex;
+  align-items: center;
   margin: 0 rem(8px);
-  color: $color-white-170;
-  @extend %font-ui-text-sm-oxygen;
-
-  .icon {
-    margin-right: rem(8px);
-    margin-left: rem(8px);
-  }
+  color: $color-white-150;
 
   a:hover {
     color: $color-orange-100;
@@ -16,20 +11,43 @@
   &__list {
     display: flex;
     align-items: center;
-    color: $color-ltblue-175;
-    font-weight: bold;
-    @include font-size(12px);
-    letter-spacing: 0.025em;
+    padding: 0;
+  }
+
+  &__item {
+    a {
+      display: flex;
+      align-items: center;
+      @include font-size(14px);
+    }
   }
 
   &__text {
+    margin-right: rem(8);
+    color: $color-ltblue-175;
+    @extend %font-ui-text-sm-oxygen;
+    font-weight: bold;
+    letter-spacing: 0.025em;
     text-transform: uppercase;
   }
 
+  .icon {
+    margin-right: rem(8px);
+    margin-left: rem(8px);
+  }
+
   .btn--copy {
+    color: $color-ltblue-175;
+    @include font-size(12px);
     background: transparent;
     border: 0;
     border-radius: 0;
+    cursor: pointer;
+    transition: color 0.3s ease-in-out;
+
+    &:hover {
+      color: $color-orange-100;
+    }
   }
 
   #copyText {

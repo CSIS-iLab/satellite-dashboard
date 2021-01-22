@@ -3,13 +3,10 @@
   flex-wrap: wrap;
   align-items: center;
   margin: 0 rem(8px);
+  padding: 0;
   color: $color-white-170;
   @extend %font-ui-text-sm-oxygen;
   letter-spacing: 0.025em;
-
-  > li + li {
-    margin-left: rem(16px);
-  }
 
   .icon {
     margin-right: rem(8px);
@@ -25,7 +22,23 @@
     }
   }
 
+  .site-header & {
+    flex-direction: column;
+    align-items: flex-start;
+    margin: rem(32) 0;
+
+    /* stylelint-disable-next-line */
+    > li + li {
+      margin-top: rem(12px);
+    }
+  }
+
   .footer & {
     margin: rem(16px) 0;
+
+    /* stylelint-disable-next-line */
+    > li + li {
+      margin-left: rem(16px);
+    }
   }
 }

@@ -64,7 +64,16 @@
           <Button :on-click="(e) => highlightOrbit(e, props.row.catalog_id)">
             <Icon id="orbit" name="orbit" />
           </Button>
-          <Button :on-click="togglePinState">
+          <Button
+            v-if="checkItemFocusedState(props.row.catalog_id)"
+            :on-click="(e) => removeFromFocused(e, props.row.catalog_id)"
+          >
+            <Icon id="pin" name="pin" />
+          </Button>
+          <Button
+            v-else
+            :on-click="(e) => addToFocused(e, props.row.catalog_id)"
+          >
             <Icon id="unpin" name="unpin" />
           </Button>
         </div>
@@ -77,6 +86,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+import { mapMutations } from 'vuex'
 import Button from '~/components/global/Button.vue'
 import Icon from '~/components/global/Icon.vue'
 import cesiumServiceProvider from '../../services/cesium-service'
@@ -119,6 +130,14 @@ export default {
       currentSort: 'Name'
     }
   },
+  computed: {
+    focusedItems() {
+      return new Set(this.focusedSatellites)
+    },
+    ...mapGetters({
+      focusedSatellites: 'satellites/focusedSatellites'
+    })
+  },
   mounted() {
     cesiumService.getInstance().then((cesiumInstance) => {
       cesium = cesiumInstance
@@ -142,9 +161,20 @@ export default {
       viewer.selectedEntity = entity
       viewer.trackedEntity = entity
     },
-    togglePinState() {
-      console.log('toggle the pin state')
-    }
+    checkItemFocusedState(catalog_id) {
+      return this.focusedItems.has(catalog_id)
+    },
+    removeFromFocused(e, catalog_id) {
+      this.focusedItems.delete(catalog_id)
+      this.updateFocusedSatellites(this.focusedItems)
+    },
+    addToFocused(e, catalog_id) {
+      this.focusedItems.add(catalog_id)
+      this.updateFocusedSatellites(this.focusedItems)
+    },
+    ...mapMutations({
+      updateFocusedSatellites: 'satellites/updateFocusedSatellites'
+    })
   }
 }
 </script>
