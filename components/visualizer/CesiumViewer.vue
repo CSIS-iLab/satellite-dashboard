@@ -23,7 +23,8 @@
 </template>
 
 <script>
-import cesiumServiceProvider from '../../services/cesium-service'
+import { mapMutations } from 'vuex'
+import cesiumServiceProvider from '~/services/cesium-service'
 const cesiumService = cesiumServiceProvider()
 // Set up constants needed for position calculations.
 const J2000Epoch = 2451545.0
@@ -64,7 +65,7 @@ export default {
       timeline: true,
       baseLayerPicker: false,
       fullscreenButton: false,
-      infoBox: true,
+      infoBox: false,
       alpha: 1,
       brightness: 1,
       contrast: 1,
@@ -109,6 +110,7 @@ export default {
           return
         }
         entity.path.show = true
+        this.showSatelliteDetails(entity.id)
       })
       pathMaterial = new Cesium.PolylineArrowMaterialProperty(Cesium.Color.BLUE)
       /* if this.satellitesHaveLoaded is true then API beat Cesium to it
@@ -349,7 +351,14 @@ export default {
       })
 
       return positionSamples
-    }
+    },
+    showSatelliteDetails(catalog_id) {
+      console.log('show details')
+      this.updateDetailedSatellite(catalog_id)
+    },
+    ...mapMutations({
+      updateDetailedSatellite: 'satellites/updateDetailedSatellite'
+    })
   }
 }
 </script>

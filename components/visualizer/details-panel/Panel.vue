@@ -3,10 +3,7 @@
     <TabWrapper v-model="activeTab" scope="detailsPanel">
       <header class="details-panel__header">
         <div class="details-panel__controls">
-          <Button
-            class="btn--icon btn--zoom"
-            :on-click="(e) => highlightOrbit(e, id)"
-          >
+          <Button class="btn--icon btn--zoom" :on-click="highlightOrbit">
             <Icon id="target" name="target" />
           </Button>
           <Button class="btn--icon btn--pin" :on-click="toggleFocusState">
@@ -102,9 +99,9 @@ export default {
     })
   },
   methods: {
-    highlightOrbit(e, catalog_id) {
+    highlightOrbit() {
       const { viewer } = cesium
-      const entity = viewer.entities.getById(catalog_id)
+      const entity = viewer.entities.getById(this.id)
 
       if (!entity) {
         return
@@ -113,6 +110,7 @@ export default {
       if (viewer.selectedEntity == entity || viewer.trackedEntity == entity) {
         viewer.selectedEntity = null
         viewer.trackedEntity = null
+        entity.path.show = false
         return
       }
 
@@ -131,6 +129,7 @@ export default {
       return this.updateFocusedSatellites(newFocusedItems)
     },
     closePanel() {
+      this.highlightOrbit()
       this.updateDetailedSatellite(null)
     },
     ...mapMutations({
