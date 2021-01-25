@@ -137,9 +137,23 @@ export default {
           viewer.clock.currentTime
         ).toLocaleDateString()
       })
+      const realDestroy = viewer.destroy
+      viewer.destroy = () => {
+        this.beforeViewerDestroy()
+        realDestroy.bind(viewer)()
+      }
     })
   },
   methods: {
+    beforeViewerDestroy() {
+      const { cesiumInstance } = cesiumService
+      const { viewer } = cesiumInstance
+      const timeline = viewer.timeline
+      viewer.container
+        .querySelector('.cesium-viewer')
+        .insertBefore(timeline.container, null)
+      cesiumService.deregisterInstance()
+    },
     selectNewDate(date) {
       this.$store.commit('satellites/updateTargetDate', date)
       this.$store.dispatch('satellites/getSatellites')

@@ -13,6 +13,10 @@ class CesiumService {
     this.awaiters.cesium.forEach((f) => f(cesiumInstance))
   }
 
+  deregisterInstance() {
+    this.cesiumInstance = null
+  }
+
   getInstance() {
     return new Promise((resolve, reject) => {
       try {
