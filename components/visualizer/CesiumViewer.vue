@@ -111,6 +111,9 @@ export default {
         entity.path.show = true
       })
 
+      /* This event listener adjusts the camera position every frame
+      so that it does not track the Earth's rotation, and we see the 
+      Earth rotating from a fixed position */
       viewer.scene.postUpdate.addEventListener((scene, time) => {
         if (scene.mode !== Cesium.SceneMode.SCENE3D) {
           return
@@ -332,6 +335,11 @@ export default {
       const duration = this.SimInt
       const numDays = duration / 86400
 
+      /* The below ensures that we have the number of orbital elements we iterate
+      over matches the number we would expect to have given the number of days. So
+      If we request 7 days, and only 3 orbital elements are available, then we fill
+      the gaps with the last available orbital element. This is so the position
+      calculations are evenly spaced */
       const paddedOrbits = []
       let lastMatch = 0
       for (let day = 0; day < numDays; day++) {
