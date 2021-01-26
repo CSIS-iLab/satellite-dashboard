@@ -188,6 +188,7 @@ export default {
         year: 'numeric',
         month: 'short',
         day: 'numeric',
+        timeZone: 'UTC',
         timeZoneName: 'short',
         hour: '2-digit',
         minute: '2-digit',
