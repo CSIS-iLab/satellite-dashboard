@@ -1,63 +1,93 @@
 <template>
-  <div class="timeline-container">
-    <div class="timeline-control">
-      <div class="timeline-control-labels">
-        <span class="timeline-label-header">Speed</span>
-        <span class="timeline-label-value">
-          <v-select
-            v-model="chosenPlaybackSpeed"
-            :clearable="false"
-            :options="playbackSpeeds"
-            :menu-props="{ top: true, offsetY: true }"
-            @input="selectPlaybackSpeed"
-          ></v-select>
-        </span>
-      </div>
-      <div class="timeline-control-button-container">
-        <button class="timeline-control-button" @click="playOrPause">
-          {{ isPlaying ? 'playing' : 'paused' }}
-        </button>
-      </div>
+  <div class="timeline__container">
+    <div class="timeline__speed">
+      <label for="timeline-speed" class="timeline__control-label">Speed</label>
+      <v-select
+        id="timeline-speed"
+        v-model="chosenPlaybackSpeed"
+        :clearable="false"
+        :options="playbackSpeeds"
+        :searchable="false"
+        @input="selectPlaybackSpeed"
+      >
+        <template #open-indicator="{ attributes }">
+          <span v-bind="attributes">
+            <Icon id="triangle-down" name="triangle-down" />
+          </span>
+        </template>
+        <template #option="{ label }">
+          <Icon id="check" name="check" />{{ label }}
+        </template>
+      </v-select>
     </div>
-    <div class="timeline-series">
-      <div class="timeline-current-value">
-        <div class="timeline-value-change-back"></div>
-        <div class="timeline-label-value-large">
+    <div class="timeline__control">
+      <Button
+        class="btn--control"
+        :on-click="playOrPause"
+        :data-playing="isPlaying"
+        :aria-label="isPlaying ? 'Play' : 'Pause'"
+      >
+        <Icon v-show="!isPlaying" id="play" name="play" />
+        <Icon v-show="isPlaying" id="pause" name="pause" />
+      </Button>
+    </div>
+    <div class="timeline__player">
+      <div class="timeline__date">
+        <Button
+          class="btn--date"
+          :on-click="(e) => selectPrevNextDate(e, 'prev')"
+          aria-label="Go to previous date"
+        >
+          <Icon id="boomarang-left" name="boomarang-left" />
+        </Button>
+        <div class="timeline__date-current">
           <client-only>
-            <div class="timeline-current-timepoint">
-              {{ timelinePoint }}
+            <div class="timeline__date-label">
+              {{ timelinePointFormatted }}
+              <Icon id="calendar" name="calendar" />
             </div>
             <date-picker
               v-model="chosenDate"
               placeholder="MM/DD/YYYY"
               format="MM/dd/yyyy"
-              calendar-class="datepicker-dark-calendar"
-              input-class="datepicker-dark-input"
+              calendar-class="datepicker__calendar"
+              input-class="datepicker__input"
               @selected="selectNewDate"
             />
           </client-only>
         </div>
-        <div class="timeline-value-change-forward"></div>
+        <Button
+          class="btn--date"
+          :on-click="(e) => selectPrevNextDate(e, 'next')"
+          aria-label="Go to next date"
+        >
+          <Icon id="boomarang-right" name="boomarang-right" />
+        </Button>
       </div>
-      <div ref="scrubber" class="timeline-scrub"></div>
+      <div ref="scrubber" class="timeline__player-scrub"></div>
     </div>
-    <div class="timeline-control">
-      <div class="timeline-control-labels">
-        <span class="timeline-label-header">Scale</span>
-        <span class="timeline-label-value">
-          <v-select
-            v-model="chosenTimescale"
-            :clearable="false"
-            :options="timescales"
-            :menu-props="{ top: true, offsetY: true }"
-            @input="selectTimescale"
-          ></v-select>
-        </span>
-      </div>
+    <div class="timeline__scale">
+      <label for="timeline-scale" class="timeline__control-label">Scale</label>
+      <v-select
+        id="timeline-scale"
+        v-model="chosenTimescale"
+        :clearable="false"
+        :options="timescales"
+        @input="selectTimescale"
+      >
+        <template #open-indicator="{ attributes }">
+          <span v-bind="attributes">
+            <Icon id="triangle-down" name="triangle-down" />
+          </span>
+        </template>
+        <template #option="{ label }">
+          <Icon id="check" name="check" />{{ label }}
+        </template>
+      </v-select>
     </div>
-    <div class="timeline-key">
-      <ul>
-        <li>Payload/active</li>
+    <div class="timeline__legend">
+      <ul role="list">
+        <li data-status="active">Payload/active</li>
         <li>Payload/inactive</li>
         <li>Rocket Body</li>
         <li>Debris</li>
@@ -68,6 +98,9 @@
 </template>
 
 <script>
+import Button from '~/components/global/Button'
+import Icon from '~/components/global/Icon'
+
 import cesiumServiceProvider from '../../services/cesium-service'
 const cesiumService = cesiumServiceProvider()
 const playbackSpeeds = [
@@ -93,7 +126,9 @@ const playbackSpeeds = [
   }
 ]
 let cesium
+
 export default {
+  components: { Button, Icon },
   props: {
     selectedDate: {
       type: Date,
@@ -112,17 +147,51 @@ export default {
     return {
       chosenDate: this.selectedDate,
       chosenTimescale: this.selectedTimescale,
-      isPlaying: true,
+      isPlaying: false,
       playbackSpeeds: playbackSpeeds,
       chosenPlaybackSpeed: playbackSpeeds[0],
-      timelinePoint: this.selectedDate.toLocaleDateString()
+      timelinePoint: this.selectedDate,
+      dateOptions: {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+      }
+    }
+  },
+  computed: {
+    timelinePointFormatted() {
+      return this.timelinePoint.toLocaleDateString('en-US', this.dateOptions)
     }
   },
   mounted() {
     cesiumService.getInstance().then((cesiumInstance) => {
       cesium = cesiumInstance
       const { viewer, Cesium } = cesiumInstance
+
       const timeline = viewer.timeline
+
+      /**
+       *
+       * Modify makeLabel function.
+       * From: https://sandcastle.cesium.com/index.html#c=bZFPa8QgEMW/ypBTCkXpuUkobE9loYctPeXimtntsBMNOmbZln736qb/aFcQnfH93lPUGh5nDIEGhMEIwi45K+RdBPGwpxmBvTUMQiP2boWR0qiecsHkUE3Bi5fThGo0B1ybLTK03x5QF+oK3noHYLOnLGb3JaiFT7OHxGRc6SnxZVmo2wIFlBTcD5UV67LHjQRy+7qo3vPs3WwCzIRHDNnZ4fHL/fncq/vKnuuVd2LyzUNfFba6rpooJ8aupJVxR+Pkg0AKXCulBceJc3DU22QPKMrGuFwNoNG/0WagGWhoLySBZRNjPtkl5g29Yl91jc76fyh7M+R3lS9hcyqyl5tuvTSVUo3O5WVSvOetCX+cPwA
+       *
+       */
+
+      viewer.timeline.makeLabel = function(time) {
+        const localDate = Cesium.JulianDate.toDate(time)
+
+        const options = {
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric',
+          timeZone: 'UTC',
+          timeZoneName: 'short',
+          hour: '2-digit'
+        }
+
+        return localDate.toLocaleString('en-US', options)
+      }
+
       this.$refs.scrubber.insertBefore(timeline.container, null)
       timeline.container.addEventListener(
         'click',
@@ -133,9 +202,7 @@ export default {
       timeline.container.style.left = '0px'
       viewer.clockViewModel.shouldAnimate = true
       viewer.clock.onTick.addEventListener(() => {
-        this.timelinePoint = Cesium.JulianDate.toDate(
-          viewer.clock.currentTime
-        ).toLocaleDateString()
+        this.timelinePoint = Cesium.JulianDate.toDate(viewer.clock.currentTime)
       })
       const realDestroy = viewer.destroy
       viewer.destroy = () => {
@@ -155,6 +222,7 @@ export default {
       cesiumService.deregisterInstance()
     },
     selectNewDate(date) {
+      console.log(date)
       this.$store.commit('satellites/updateTargetDate', date)
       this.$store.dispatch('satellites/getSatellites')
     },
@@ -177,6 +245,27 @@ export default {
       } else {
         viewer.clockViewModel.shouldAnimate = false
       }
+    },
+    formatDate(date) {
+      const options = {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+      }
+
+      return date.toLocaleString('en-US', options)
+    },
+    selectPrevNextDate(e, direction) {
+      const milliseconds = this.chosenTimescale.value * 1000
+      let newDate
+
+      if (direction === 'next') {
+        newDate = new Date(this.timelinePoint.getTime() + milliseconds)
+      } else {
+        newDate = new Date(this.timelinePoint.getTime() - milliseconds)
+      }
+
+      this.selectNewDate(newDate)
     }
   }
 }
@@ -184,123 +273,5 @@ export default {
 
 <style lang="scss">
 @import 'vue-select/src/scss/vue-select';
-
-.timeline-container {
-  display: flex;
-  min-height: 300px;
-  margin-top: 2em;
-  color: #fff;
-  background: rgba(0, 0, 0, 1);
-}
-
-.timeline-series {
-  flex-grow: 1;
-}
-
-.timeline-scrub {
-  position: relative;
-  height: 30px;
-}
-
-.timeline-control {
-  display: flex;
-  margin-top: 50px;
-}
-
-.timeline-control-labels {
-  display: flex;
-  flex-direction: column;
-  padding: 0 1em;
-}
-
-.timeline-label-header {
-  color: rgba(128, 128, 128, 0.8);
-  text-transform: uppercase;
-}
-
-.timeline-control-button {
-  width: 4em;
-  height: 4em;
-  margin: 0 1em;
-  background: rgba(128, 128, 128, 0.5);
-  border: 0;
-  border-radius: 50%;
-  cursor: pointer;
-}
-
-.timeline-series {
-  position: relative;
-  flex-grow: 1;
-}
-
-.timeline-current-value {
-  margin: 0 auto;
-  padding: 0.5em;
-  text-align: center;
-}
-
-.timeline-key {
-  flex-grow: 0.5;
-  font-size: 0.8em;
-}
-
-.timeline-key ul {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  height: 100px;
-  margin: 0 0 0 1em;
-}
-
-.timeline-container .datepicker-dark-calendar {
-  bottom: 0;
-  padding: 1em;
-  background: #222;
-  border: 0;
-}
-
-.timeline-container .datepicker-dark-input {
-  width: 8em;
-  padding: 0 1em;
-  color: #fff;
-  background: #222;
-  border: 0;
-}
-
-.timeline-container .datepicker-dark-input:focus {
-  background: #333;
-  outline: 0;
-}
-
-.timeline-container .datepicker-dark-calendar .up:not(.disabled):hover {
-  background: #444;
-}
-
-.timeline-container .vs__selected {
-  color: #ddd;
-}
-
-.cesium-viewer-animationContainer {
-  display: none;
-}
-
-.cesium-viewer .cesium-widget-credits {
-  display: none !important;
-}
-
-.cesium-timeline-bar {
-  height: 2.5em;
-}
-
-.timeline-series .vdp-datepicker {
-  position: absolute;
-  top: 0;
-  width: 100%;
-  text-align: center;
-}
-
-.timeline-series .vdp-datepicker input {
-  cursor: pointer;
-  opacity: 0;
-}
+@import '../assets/css/components/timeline';
 </style>

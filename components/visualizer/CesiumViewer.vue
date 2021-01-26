@@ -116,7 +116,7 @@ export default {
       })
 
       /* This event listener adjusts the camera position every frame
-      so that it does not track the Earth's rotation, and we see the 
+      so that it does not track the Earth's rotation, and we see the
       Earth rotating from a fixed position */
       viewer.scene.postUpdate.addEventListener((scene, time) => {
         if (scene.mode !== Cesium.SceneMode.SCENE3D) {
@@ -401,6 +401,6 @@ export default {
 <style lang="scss">
 .viewer {
   width: 100%;
-  height: 800px;
+  height: 66vh;
 }
 </style>
