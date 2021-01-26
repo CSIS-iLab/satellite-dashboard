@@ -5,18 +5,20 @@
   a {
     position: relative;
     color: $color-white-150;
-    @include link-underline($color-ltblue-175);
+    text-decoration: underline;
+    text-decoration-color: $color-ltblue-175;
+    text-underline-offset: 0.2em;
 
     &:hover {
-      color: $color-white-100;
+      color: $color-orangedull-100;
+      text-decoration-color: $color-orangedull-100;
     }
   }
 
-  span {
-    &::before {
-      content: '|';
-      margin: 0 rem(8px);
-      color: $color-white-125;
+  .site-header & {
+    span {
+      display: block;
+      margin-top: rem(4);
     }
   }
 
@@ -25,6 +27,14 @@
 
     @include breakpoint('medium') {
       margin-top: 0;
+    }
+
+    span {
+      &::before {
+        content: '|';
+        margin: 0 rem(8px);
+        color: $color-white-125;
+      }
     }
   }
 }

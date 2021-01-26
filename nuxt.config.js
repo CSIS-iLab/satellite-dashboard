@@ -17,7 +17,8 @@ const customSass = {
   sassOptions: {
     fiber: Fiber,
     includePaths: ['node_modules']
-  }
+  },
+  sourceMap: process.env.NODE_ENV === 'production'
 }
 
 export default {
@@ -99,7 +100,8 @@ export default {
    */
   build: {
     loaders: {
-      scss: customSass
+      scss: customSass,
+      vue: { cacheBusting: process.env.NODE_ENV === 'production' }
     },
     postcss: {
       // Add plugin names as key and arguments as value

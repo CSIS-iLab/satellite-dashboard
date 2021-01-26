@@ -1,38 +1,52 @@
 <template>
-  <TabWrapper v-model="activeTab" orientation="vertical">
-    <TabList label="Controller">
-      <button
-        id="close-left-panel"
-        class="btn btn--panel-close"
-        @click="activeTab = ''"
-      >
-        <Icon id="chevron-left" class="icon" name="chevron-left" />
-      </button>
-      <TabActivator tab="filters">
-        <Icon id="filter" class="icon" name="filter" />
-      </TabActivator>
-      <TabActivator tab="list">
-        <Icon id="pin" class="icon" name="pin" />
-      </TabActivator>
-    </TabList>
+  <div class="panel-left">
+    <TabWrapper v-model="activeTab" scope="panelLeft" orientation="vertical">
+      <TabList label="Controller" scope="panelLeft">
+        <button
+          id="close-left-panel"
+          class="btn btn--panel-close"
+          @click="activeTab = ''"
+        >
+          <Icon id="chevron-left" class="icon" name="chevron-left" />
+        </button>
+        <TabActivator tab="filters" scope="panelLeft">
+          <Icon id="filter" class="icon" name="filter" />
+          <div
+            v-show="activeFiltersCount"
+            class="badge badge--small badge--pinned"
+          >
+            {{ activeFiltersCount }}
+          </div>
+        </TabActivator>
+        <TabActivator tab="list" scope="panelLeft">
+          <Icon id="pin" class="icon" name="pin" />
+          <div v-show="focusedSatellitesCount" class="badge badge--large">
+            {{ focusedSatellitesCount }}
+          </div>
+        </TabActivator>
+      </TabList>
 
-    <TabPanel tab="filters" class="panel panel--left">
-      <FilterTab />
-    </TabPanel>
-    <TabPanel tab="list" class="panel panel--left">
-      The focus list goes here.
-    </TabPanel>
-  </TabWrapper>
+      <TabPanel tab="filters" class="panel panel--left" scope="panelLeft">
+        <FilterTab />
+      </TabPanel>
+      <TabPanel tab="list" class="panel panel--left" scope="panelLeft">
+        <FocusList />
+      </TabPanel>
+    </TabWrapper>
+  </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import FilterTab from '~/components/visualizer/FilterTab'
+import FocusList from '~/components/visualizer/FocusList'
 import Icon from '~/components/global/Icon'
 import { TabActivator, TabList, TabPanel, TabWrapper } from '@a11y-kit/vue-tabs'
 
 export default {
   components: {
     FilterTab,
+    FocusList,
     Icon,
     TabActivator,
     TabList,
@@ -43,10 +57,18 @@ export default {
     return {
       activeTab: ''
     }
+  },
+  computed: {
+    ...mapGetters({
+      activeFiltersCount: 'filters/activeFiltersCount',
+      focusedSatellitesCount: 'satellites/focusedSatellitesCount'
+    })
   }
 }
 </script>
 
 <style lang="scss">
 @import '../assets/css/components/panel';
+@import '../assets/css/components/panel--left';
+@import '../assets/css/components/badge';
 </style>

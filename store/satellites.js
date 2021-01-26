@@ -32,6 +32,8 @@ const getDateForApi = (targetDate) => {
 export const state = () => ({
   satellites: {},
   activeSatellites: [],
+  focusedSatellites: new Set(),
+  detailedSatellite: null,
   targetDate: new Date(new Date().setHours(0, 0, 0, 0)),
   selectedTimescale: timescales[0],
   timescales
@@ -45,6 +47,15 @@ export const getters = {
   },
   activeSatellitesCount: (state, getters) => {
     return getters.activeSatellites.length
+  },
+  focusedSatellites: (state) => {
+    return state.focusedSatellites
+  },
+  focusedSatellitesCount: (state, getters) => {
+    return getters.focusedSatellites.size
+  },
+  detailedSatellite: (state) => {
+    return state.detailedSatellite
   }
 }
 
@@ -60,6 +71,12 @@ export const mutations = {
   },
   updateActiveSatellites: (state, satellites) => {
     state.activeSatellites = satellites
+  },
+  updateFocusedSatellites: (state, satellites) => {
+    state.focusedSatellites = satellites
+  },
+  updateDetailedSatellite: (state, satellite) => {
+    state.detailedSatellite = satellite
   }
   // updateCountries: (state, countries) => {
   //   state.countriesOfJurisdiction = countries.jurisdiction
@@ -77,6 +94,7 @@ export const actions = {
       endDate.setSeconds(
         endDate.getSeconds() + state.selectedTimescale.value - 1
       ) // minus 1 second so we don't get n + 1 days
+
       let satellites = await fetch(
         `${siteURL}/wp-json/satdash/v1/satellites?startDate=${getDateForApi(
           state.targetDate

@@ -3,7 +3,18 @@
   color: $color-white-170;
   text-transform: capitalize;
 
+  &__list {
+    margin: 0;
+    padding: 0;
+  }
+
   &__item {
+    transition: color 0.3s ease-in-out, background 0.3s ease-in-out;
+
+    a {
+      display: block;
+    }
+
     &:hover {
       color: $color-white-180;
     }
@@ -25,6 +36,26 @@
 
     &__item:not(:last-child) {
       margin-bottom: rem(8px);
+    }
+  }
+
+  .site-header & {
+    &__item {
+      margin-bottom: 0;
+
+      a {
+        padding: rem(12) var(--nav-padding-sides);
+      }
+
+      &:hover {
+        background: $color-slate-800;
+      }
+    }
+  }
+
+  .footer & {
+    &__list {
+      margin-top: rem(4);
     }
   }
 }
