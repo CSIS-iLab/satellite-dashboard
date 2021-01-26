@@ -27,20 +27,20 @@
     <div v-if="hasOrbit">
       <hr />
       <h3>Orbit</h3>
-      <p class="details-panel__desc">
-        Updated from {{ orbitSource }}<br />Current as of {{ currentDate }}
-      </p>
+      <p class="details-panel__desc">Last updated from {{ orbitSource }}</p>
       <dl class="details__orbit">
         <div v-for="item in info.orbit" :key="item.value">
-          <dt>{{ item.label }}</dt>
-          <dd>{{ orbit[item.value] }}</dd>
+          <!-- eslint-disable -->
+          <dt v-html="item.label"></dt>
+          <dd v-html="formattedOrbitData[item.value]"></dd>
+          <!-- eslint-enable -->
         </div>
       </dl>
     </div>
-    <hr />
+    <!-- <hr />
     <h3>ITU Filings</h3>
     <hr />
-    <h3>Comments</h3>
+    <h3>Comments</h3> -->
   </div>
 </template>
 
@@ -81,12 +81,20 @@ export default {
           { value: 'NoradId', label: 'NORAD ID (SATCAT)' }
         ],
         orbit: [
+          { value: 'Apogee', label: 'Apogee Altitude (km)' },
           { value: 'ArgP', label: 'Argument of perigee' },
+          { value: 'Perigee', label: 'Perigee Altitude (km)' },
           { value: 'Ecc', label: 'Eccentricity' },
           { value: 'Inc', label: 'Inclination' },
+          { value: 'Longitude', label: 'Longitude' },
+          { value: 'MeanMotion', label: 'Mean Motion (&deg/s)' },
+          { value: 'OrbitalPeriod', label: 'Orbital Period' },
+          { value: 'OrbitalSpeed', label: 'Mean Orbital Speed (km/s)' },
           { value: 'SMA', label: 'Semi-major axis (km)' }
         ]
-      }
+      },
+      earthRadius: 6378136.3, // m
+      mu: 3.986004415e14 // m^3/s^2
     }
   },
   computed: {
@@ -101,13 +109,68 @@ export default {
       // TODO: Need to get the right orbit for the current timeline
       return this.satellite.orbits[0].elements
     },
+    formattedOrbitData() {
+      const Apogee = `${this.formatNumbers(
+        (this.orbit.SMA * (1 + this.orbit.Ecc) - this.earthRadius) / 1000
+      )} km`
+
+      const Perigee = `${this.formatNumbers(
+        (this.orbit.SMA * (1 - this.orbit.Ecc) - this.earthRadius) / 1000
+      )} km`
+
+      const ArgP = `${this.formatNumbers(
+        (this.orbit.ArgP * 180) / Math.PI,
+        4
+      )}&deg;`
+
+      const Ecc = `${this.formatNumbers(this.orbit.Ecc, 4)}&deg;`
+
+      const Inc = `${this.formatNumbers(this.orbit.Inc / Math.PI, 4)}&deg;`
+
+      const mmo = Math.sqrt(
+        this.mu / (this.orbit.SMA * this.orbit.SMA * this.orbit.SMA)
+      )
+
+      const MeanMotion = `${this.formatNumbers(
+        (mmo * 180) / Math.PI,
+        4
+      )}&deg;/s`
+
+      const OrbitalPeriod = (2 * Math.PI) / mmo
+      const OrbitalPeriodDisplay = this.secondsToDhms(OrbitalPeriod)
+
+      const SMA = `${this.formatNumbers(this.orbit.SMA / 1000)} km`
+
+      const OrbitalSpeed = `
+        ${this.formatNumbers(
+          (((2 * Math.PI * this.orbit.SMA) / OrbitalPeriod) *
+            (1 -
+              (1 / 4) * this.orbit.Ecc ** 2 -
+              (3 / 64) * this.orbit.Ecc ** 4 -
+              (5 / 256) * this.orbit.Ecc ** 6 -
+              (175 / 16384) * this.orbit.Ecc ** 8)) /
+            1000,
+          1
+        )} km/s`
+
+      return {
+        Apogee,
+        ArgP,
+        Perigee,
+        Ecc,
+        Inc,
+        Longitude: null,
+        MeanMotion,
+        OrbitalPeriod: OrbitalPeriodDisplay,
+        OrbitalSpeed,
+        SMA
+      }
+    },
     status() {
       return this.satellite.meta.Status
     },
     orbitSource() {
-      return `${this.satellite.meta.source1Name} ${this.formatDate(
-        this.satellite.meta.source1LastCatalogUpdate
-      )}`
+      return `${this.formatDate(this.satellite.meta.source1LastCatalogUpdate)}`
     },
     currentDate() {
       return this.formatDate(this.satellite.orbits[0].epoch)
@@ -121,6 +184,7 @@ export default {
         year: 'numeric',
         month: 'short',
         day: 'numeric',
+        timeZone: 'UTC',
         timeZoneName: 'short',
         hour: '2-digit',
         minute: '2-digit',
@@ -128,6 +192,25 @@ export default {
       }
 
       return event.toLocaleString('en-US', options)
+    },
+    secondsToDhms(seconds) {
+      seconds = Number(seconds)
+      const d = Math.floor(seconds / (3600 * 24))
+      const h = Math.floor((seconds % (3600 * 24)) / 3600)
+      const m = Math.floor((seconds % 3600) / 60)
+      const s = Math.floor(seconds % 60)
+
+      const dDisplay = d > 0 ? d + (d == 1 ? ' day, ' : ' days, ') : ''
+      const hDisplay = h > 0 ? h + (h == 1 ? ' hour, ' : ' hours, ') : ''
+      const mDisplay = m > 0 ? m + (m == 1 ? ' minute, ' : ' minutes, ') : ''
+      const sDisplay = s > 0 ? s + (s == 1 ? ' second' : ' seconds') : ''
+      return dDisplay + hDisplay + mDisplay + sDisplay
+    },
+    formatNumbers(num, minDecimals = 0) {
+      return num.toLocaleString('en-US', {
+        minimumFractionDigits: minDecimals,
+        maximumFractionDigits: minDecimals
+      })
     }
   }
 }

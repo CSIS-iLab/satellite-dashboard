@@ -3,7 +3,7 @@
     <TabWrapper v-model="activeTab" scope="detailsPanel">
       <header class="details-panel__header">
         <div class="details-panel__controls">
-          <Button class="btn--icon btn--zoom" :on-click="zoomIn">
+          <Button class="btn--icon btn--zoom" :on-click="highlightOrbit">
             <Icon id="target" name="target" />
           </Button>
           <Button class="btn--icon btn--pin" :on-click="toggleFocusState">
@@ -51,6 +51,10 @@ import Details from '~/components/visualizer/details-panel/Details.vue'
 import Icon from '~/components/global/Icon'
 import { TabActivator, TabList, TabPanel, TabWrapper } from '@a11y-kit/vue-tabs'
 
+import cesiumServiceProvider from '~/services/cesium-service'
+const cesiumService = cesiumServiceProvider()
+let cesium
+
 export default {
   components: {
     Button,
@@ -89,9 +93,29 @@ export default {
       focusedSatellites: 'satellites/focusedSatellites'
     })
   },
+  mounted() {
+    cesiumService.getInstance().then((cesiumInstance) => {
+      cesium = cesiumInstance
+    })
+  },
   methods: {
-    zoomIn() {
-      console.log('zoom in on this object')
+    highlightOrbit() {
+      const { viewer } = cesium
+      const entity = viewer.entities.getById(this.id)
+
+      if (!entity) {
+        return
+      }
+
+      if (viewer.selectedEntity == entity || viewer.trackedEntity == entity) {
+        viewer.selectedEntity = null
+        viewer.trackedEntity = null
+        entity.path.show = false
+        return
+      }
+
+      viewer.selectedEntity = entity
+      viewer.trackedEntity = entity
     },
     toggleFocusState() {
       let newFocusedItems = new Set(this.focusedSatellites)
@@ -105,6 +129,7 @@ export default {
       return this.updateFocusedSatellites(newFocusedItems)
     },
     closePanel() {
+      this.highlightOrbit()
       this.updateDetailedSatellite(null)
     },
     ...mapMutations({
