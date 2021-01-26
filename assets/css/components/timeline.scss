@@ -404,6 +404,7 @@
     color: $color-white-190;
     @extend %font-ui-text-lg-oxygen;
     letter-spacing: 0.25px;
+    background: transparent;
     border: 0;
   }
 
