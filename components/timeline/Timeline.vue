@@ -12,8 +12,14 @@
       ></v-select>
     </div>
     <div class="timeline__control">
-      <Button class="timeline-control-button" :on-click="playOrPause">
-        {{ isPlaying ? 'playing' : 'paused' }}
+      <Button
+        class="btn--control"
+        :on-click="playOrPause"
+        :data-playing="isPlaying"
+        :aria-label="isPlaying ? 'Play' : 'Pause'"
+      >
+        <Icon v-show="!isPlaying" id="play" name="play" />
+        <Icon v-show="isPlaying" id="pause" name="pause" />
       </Button>
     </div>
     <div class="timeline__player">
@@ -112,7 +118,7 @@ export default {
     return {
       chosenDate: this.selectedDate,
       chosenTimescale: this.selectedTimescale,
-      isPlaying: true,
+      isPlaying: false,
       playbackSpeeds: playbackSpeeds,
       chosenPlaybackSpeed: playbackSpeeds[0],
       timelinePoint: this.selectedDate,

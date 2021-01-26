@@ -94,6 +94,33 @@
 
   &__control {
     grid-area: control;
+
+    .btn--control {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: rem(40);
+      height: rem(40);
+      color: var(--control-color, $color-white-160);
+      background: var(--control-bg, $color-slate-200);
+      border-radius: 50%;
+
+      &:hover {
+        --control-color: #{$color-white-180};
+        filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.34)),
+          drop-shadow(0 2px 5px rgba(0, 0, 0, 0.24)),
+          drop-shadow(0 0 1px rgba(0, 0, 0, 0.44));
+      }
+
+      &:disabled {
+        opacity: 0.4;
+      }
+    }
+
+    [data-playing='true'] {
+      --control-bg: #{$color-slate-100};
+      --control-color: #{$color-white-180};
+    }
   }
 
   &__player {
@@ -241,21 +268,6 @@
   display: none !important;
 }
 
-.timeline-control {
-  display: flex;
-  margin-top: 50px;
-}
-
-.timeline-control-button {
-  width: 4em;
-  height: 4em;
-  margin: 0 1em;
-  background: rgba(128, 128, 128, 0.5);
-  border: 0;
-  border-radius: 50%;
-  cursor: pointer;
-}
-
 /*----------  Date Picker  ----------*/
 .timeline__container {
   .datepicker {
@@ -366,11 +378,11 @@
       border: 1px solid $color-orange-100;
     }
   }
-}
 
-.timeline__player .vdp-datepicker input {
-  cursor: pointer;
-  opacity: 0;
+  input {
+    cursor: pointer;
+    opacity: 0;
+  }
 }
 
 .timeline__container .vs__selected {
