@@ -9,7 +9,16 @@
         :options="playbackSpeeds"
         :searchable="false"
         @input="selectPlaybackSpeed"
-      ></v-select>
+      >
+        <template #open-indicator="{ attributes }">
+          <span v-bind="attributes">
+            <Icon id="triangle-down" name="triangle-down" />
+          </span>
+        </template>
+        <template #option="{ label }">
+          <Icon id="check" name="check" />{{ label }}
+        </template>
+      </v-select>
     </div>
     <div class="timeline__control">
       <Button
@@ -52,9 +61,17 @@
         v-model="chosenTimescale"
         :clearable="false"
         :options="timescales"
-        :menu-props="{ top: true, offsetY: true }"
         @input="selectTimescale"
-      ></v-select>
+      >
+        <template #open-indicator="{ attributes }">
+          <span v-bind="attributes">
+            <Icon id="triangle-down" name="triangle-down" />
+          </span>
+        </template>
+        <template #option="{ label }">
+          <Icon id="check" name="check" />{{ label }}
+        </template>
+      </v-select>
     </div>
     <div class="timeline__legend">
       <ul role="list">

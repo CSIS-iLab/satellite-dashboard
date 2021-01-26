@@ -10,16 +10,17 @@
       'speed scale . legend';
     grid-template-columns: max-content max-content auto max-content;
     align-items: end;
-    height: rem(88);
     padding: var(--padding-top) var(--padding-sides) var(--padding-bottom);
     color: $color-white-180;
     column-gap: rem(12);
+    row-gap: rem(12);
     background: $color-black-185;
     backdrop-filter: blur(4px);
 
     @include breakpoint('xlarge') {
       grid-template-areas: 'speed control player scale legend';
       grid-template-columns: max-content max-content auto max-content max-content;
+      height: rem(88);
     }
 
     &::before {
@@ -385,6 +386,70 @@
   }
 }
 
-.timeline__container .vs__selected {
-  color: #ddd;
+/*----------  Dropdowns  ----------*/
+.timeline__container {
+  .v-select {
+    width: rem(80);
+  }
+
+  .vs__dropdown-toggle {
+    border: 0;
+  }
+
+  .vs__selected {
+    margin: 0;
+    padding: 0;
+    color: $color-white-190;
+    @extend %font-ui-text-lg-oxygen;
+    letter-spacing: 0.25px;
+    border: 0;
+  }
+
+  /* stylelint-disable-next-line */
+  .vs--single.vs--open .vs__selected {
+    position: relative;
+  }
+
+  .vs__selected-options {
+    flex: 0 0 auto;
+  }
+
+  .vs__selected-options input {
+    display: none;
+  }
+
+  .vs__open-indicator {
+    font-size: 8px;
+    fill: $color-white-180;
+  }
+
+  .vs__dropdown-menu {
+    background: $color-slate-700;
+    border: 0;
+  }
+
+  .vs__dropdown-option {
+    position: relative;
+    padding: rem(8) rem(24);
+    color: $color-white-170;
+    transition: color 0.3s ease-in-out, background 0.3s ease-in-out;
+
+    &--highlight {
+      color: $color-white-190;
+      background: $color-slate-800;
+    }
+
+    .icon {
+      display: none;
+    }
+
+    &--selected .icon {
+      position: absolute;
+      top: 50%;
+      left: rem(10);
+      display: inline-block;
+      font-size: 0.5em;
+      transform: translateY(-50%);
+    }
+  }
 }
