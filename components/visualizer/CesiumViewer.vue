@@ -114,6 +114,22 @@ export default {
         }
         entity.path.show = true
       })
+
+      /* This event listener adjusts the camera position every frame
+      so that it does not track the Earth's rotation, and we see the 
+      Earth rotating from a fixed position */
+      viewer.scene.postUpdate.addEventListener((scene, time) => {
+        if (scene.mode !== Cesium.SceneMode.SCENE3D) {
+          return
+        }
+        const icrfToFixed = Cesium.Transforms.computeIcrfToFixedMatrix(time)
+        if (Cesium.defined(icrfToFixed)) {
+          var offset = Cesium.Cartesian3.clone(viewer.camera.position)
+          var transform = Cesium.Matrix4.fromRotationTranslation(icrfToFixed)
+          viewer.camera.lookAtTransform(transform, offset)
+        }
+      })
+
       pathMaterial = new Cesium.PolylineArrowMaterialProperty(Cesium.Color.BLUE)
       /* if this.satellitesHaveLoaded is true then API beat Cesium to it
       and we didn't process data when watch handler fired */
@@ -312,26 +328,50 @@ export default {
       return positionSamples
     },
     compileOrbits(orbits, CRFtoTRF, epjd) {
-      const positionSamples = new Cesium.SampledPositionProperty()
+      const positionSamples = new Cesium.SampledPositionProperty(
+        Cesium.ReferenceFrame.INERTIAL
+      )
       positionSamples.setInterpolationOptions({
         interpolationAlgorithm: Cesium.LagrangePolynomialApproximation,
         interpolationDegree: 1
       })
 
-      const duration = this.SimInt * 1.01
-      const orbitalFragmentSize = duration / orbits.length
+      const duration = this.SimInt
+      const numDays = duration / 86400
+
+      /* The below ensures that we have the number of orbital elements we iterate
+      over matches the number we would expect to have given the number of days. So
+      If we request 7 days, and only 3 orbital elements are available, then we fill
+      the gaps with the last available orbital element. This is so the position
+      calculations are evenly spaced */
+      const paddedOrbits = []
+      let lastMatch = 0
+      for (let day = 0; day < numDays; day++) {
+        const targetDate = Cesium.JulianDate.toDate(
+          Cesium.JulianDate.addDays(this.SimStart, day, new Cesium.JulianDate())
+        ).setHours(0, 0, 0, 0)
+        const orbit = orbits[lastMatch]
+        const epochDate = new Date(orbit.elements.Epoch).setHours(0, 0, 0, 0)
+        if (epochDate.valueOf() === targetDate.valueOf() && orbits[day + 1]) {
+          lastMatch++
+        }
+        paddedOrbits.push(orbit)
+      }
+
+      const orbitalFragmentSize = duration / paddedOrbits.length
       let step = (duration / 360) * 1000
 
-      orbits.forEach((orbit, i) => {
+      paddedOrbits.forEach((orbit, i, a) => {
         const elems = Object.assign({}, orbit.elements)
         const fragmentStart = Cesium.JulianDate.addSeconds(
           this.SimStart,
           orbitalFragmentSize * i,
           new Cesium.JulianDate()
         )
+        const padFactor = i === a.length - 1 ? 1.01 : 1
         const fragmentEnd = Cesium.JulianDate.addSeconds(
           this.SimStart,
-          orbitalFragmentSize * (i + 1),
+          orbitalFragmentSize * (i + 1) * padFactor,
           new Cesium.JulianDate()
         )
 
