@@ -35,7 +35,7 @@ export const state = () => ({
   focusedSatellites: new Set(),
   detailedSatellite: null,
   targetDate: new Date(new Date().setHours(0, 0, 0, 0)),
-  selectedTimescale: timescales[0],
+  selectedTimescale: timescales[1],
   timescales
   // countriesOfJurisdiction: null,
   // countriesOfLaunch: null

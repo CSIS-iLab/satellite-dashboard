@@ -185,5 +185,9 @@
 <path fill="#fe7414" style="fill: var(--color1, #fe7414)" opacity="0.8" d="M0 20l8.658-8.488v-11.512h-8.658v20z"></path>
 <path fill="#fe7414" style="fill: var(--color1, #fe7414)" opacity="0.8" d="M12.121 20l8.658-8.488v-11.512h-8.658v20z"></path>
 </symbol>
+<symbol id="icon-calendar" viewBox="0 0 11 12">
+<title>calendar</title>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M9.389 11.675H1.61A1.115 1.115 0 01.5 10.557V2.735c0-.616.498-1.118 1.111-1.118h1.111V.5h1.111v1.117h3.334V.5h1.11v1.117H9.39c.613 0 1.111.502 1.111 1.118v7.822c0 .616-.498 1.118-1.111 1.118zM3.278 10.55h1l2.764-2.777-1-1.005-2.764 2.777v1.005zM7.513 7.3l-1-1.005.763-.766.999 1.005-.762.766zm1.876-4.006H1.61V4.41H9.39V3.294z" fill="currentColor"/>
+</symbol>
 </defs>
 </svg>

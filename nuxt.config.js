@@ -125,7 +125,7 @@ export default {
       // Change the postcss-preset-env settings
       preset: {
         autoprefixer: {
-          grid: true
+          grid: false
         }
       }
     },

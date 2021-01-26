@@ -5,12 +5,22 @@
     --padding-bottom: #{rem(20)};
     position: relative;
     display: grid;
-    grid-template-columns: max-content max-content auto max-content max-content;
+    grid-template-areas:
+      'control player player player'
+      'speed scale . legend';
+    grid-template-columns: max-content max-content auto max-content;
+    align-items: end;
     height: rem(88);
     padding: var(--padding-top) var(--padding-sides) var(--padding-bottom);
-    color: #fff;
+    color: $color-white-180;
+    column-gap: rem(12);
     background: $color-black-185;
     backdrop-filter: blur(4px);
+
+    @include breakpoint('xlarge') {
+      grid-template-areas: 'speed control player scale legend';
+      grid-template-columns: max-content max-content auto max-content max-content;
+    }
 
     &::before {
       content: '';
@@ -28,16 +38,11 @@
 
   &__legend {
     position: relative;
-    margin: 0;
+    grid-area: legend;
     padding: 0 0 0 rem(32);
-    color: $color-white-180;
     @extend %font-ui-text-sm-good;
-    letter-spacing: 0.01em;
-    column-count: 3;
-    column-gap: rem(24);
 
     @include breakpoint('xlarge') {
-      column-count: 2;
       background: $color-slate-700;
     }
 
@@ -50,6 +55,17 @@
         width: calc(100% + var(--padding-sides));
         height: calc(100% + var(--padding-bottom));
         background: $color-slate-700;
+      }
+    }
+
+    ul {
+      margin: 0;
+      padding: 0;
+      column-count: 3;
+      column-gap: rem(24);
+
+      @include breakpoint('xlarge') {
+        column-count: 2;
       }
     }
 
@@ -71,27 +87,163 @@
       }
     }
   }
+
+  &__speed {
+    grid-area: speed;
+  }
+
+  &__control {
+    grid-area: control;
+  }
+
+  &__player {
+    position: relative;
+    grid-area: player;
+    padding-top: rem(20);
+
+    &-scrub {
+      position: relative;
+      height: rem(40);
+    }
+  }
+
+  &__date {
+    position: absolute;
+    bottom: rem(20);
+    left: 50%;
+    z-index: 1;
+    padding: rem(4) rem(24) rem(8);
+    background: $color-black-100;
+    @include shadow(xsm);
+    transform: translate(-50%, 0);
+
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: rem(12);
+      // background: #f00;
+      background: linear-gradient(
+        68deg,
+        rgba(0, 0, 0, 0) 50%,
+        $color-black-100 50%
+      );
+    }
+
+    &::before {
+      right: 100%;
+    }
+
+    &::after {
+      left: 100%;
+      transform: rotate(224deg);
+    }
+
+    &-current {
+      @extend %font-ui-heading-section-sm;
+
+      .icon {
+        margin-left: rem(4);
+        color: $color-white-140;
+        font-size: 0.8em;
+      }
+    }
+  }
+
+  &__scale {
+    grid-area: scale;
+  }
+
+  &__control-label {
+    @extend %font-ui-text-sm-good;
+    text-transform: uppercase;
+    opacity: 0.6;
+  }
 }
 
-.timeline-scrub {
-  position: relative;
-  height: 30px;
+/*----------  Cesium Overrides ----------*/
+.cesium-viewer-timelineContainer {
+  left: 0 !important;
+  height: 100% !important;
+}
+
+.cesium-timeline-main,
+.cesium-timeline-bar {
+  height: 100% !important;
+}
+
+.cesium-timeline-main {
+  border: 0 !important;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    z-index: 1;
+    width: 10%;
+    background: linear-gradient(
+      270deg,
+      rgba(0, 0, 2, 0.0001) 1.14%,
+      #000005 100%
+    );
+  }
+
+  &::after {
+    right: 0;
+    transform: rotate(-180deg);
+  }
+}
+
+.cesium-timeline-bar {
+  color: $color-white-180 !important;
+  @extend %font-ui-text-sm-good;
+  background: $color-slate-700 !important;
+}
+
+.cesium-timeline-ticLabel {
+  top: rem(6) !important;
+  font-size: 100% !important;
+  opacity: 0.7;
+}
+
+.cesium-timeline-ticSub {
+  background: rgba(151, 151, 151, 0.25) !important;
+}
+
+.cesium-timeline-ticMain {
+  height: 100% !important;
+  background: rgba(151, 151, 151, 0.5) !important;
+}
+
+.cesium-timeline-needle {
+  width: 2px !important;
+  background: $color-orange-100 !important;
+}
+
+.cesium-timeline-icon16 {
+  top: 50%;
+  width: 0 !important;
+  height: 0 !important;
+  background-image: none !important;
+  border-width: 5px 4.5px 0;
+  border-style: solid;
+  border-color: $color-orange-100 transparent transparent transparent;
+  transform: translateX(50%);
+}
+
+.cesium-viewer-animationContainer,
+.cesium-viewer .cesium-widget-credits,
+.cesium-timeline-ticTiny {
+  display: none !important;
 }
 
 .timeline-control {
   display: flex;
   margin-top: 50px;
-}
-
-.timeline-control-labels {
-  display: flex;
-  flex-direction: column;
-  padding: 0 1em;
-}
-
-.timeline-label-header {
-  color: rgba(128, 128, 128, 0.8);
-  text-transform: uppercase;
 }
 
 .timeline-control-button {
@@ -104,65 +256,116 @@
   cursor: pointer;
 }
 
-.timeline-series {
-  position: relative;
-  flex-grow: 1;
+/*----------  Date Picker  ----------*/
+.timeline__container {
+  .datepicker {
+    &__calendar {
+      bottom: 0;
+      padding: 1em;
+      background: $color-slate-700;
+      border: 0;
+      border-radius: 2px;
+    }
+
+    &__input {
+      width: 8em;
+      padding: 0 1em;
+      color: #fff;
+      background: #222;
+      border: 0;
+
+      &:focus {
+        background: #333;
+        outline: 0;
+      }
+    }
+  }
+
+  .vdp-datepicker {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    text-align: center;
+
+    header {
+      color: $color-white-170;
+      @extend %font-ui-heading-section-md;
+      font-weight: 500;
+
+      /* stylelint-disable */
+      .prev::after,
+      .next::after {
+        /* stylelint-enable */
+        top: 45% !important;
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        border: 0;
+        border-right: 2px solid var(--arrow-color, $color-white-170);
+        border-bottom: 2px solid var(--arrow-color, $color-white-170);
+      }
+
+      /* stylelint-disable-next-line */
+      .prev::after {
+        transform: rotate(-225deg);
+      }
+
+      /* stylelint-disable-next-line */
+      .next::after {
+        transform: rotate(-45deg);
+      }
+
+      /* stylelint-disable-next-line */
+      *:hover {
+        --arrow-color: #{$color-orange-100};
+        color: $color-orange-100;
+        background: transparent !important;
+      }
+    }
+
+    .cell {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid transparent;
+    }
+
+    .day-header {
+      color: $color-white-150;
+      @extend %font-ui-text-base-good;
+      font-size: rem(14px) !important;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .day {
+      color: $color-white-160;
+      @extend %font-ui-text-base-oxygen;
+      line-height: 1;
+      border-radius: 50%;
+    }
+
+    .cell.selected {
+      color: $color-white-190;
+      background: $color-orange-100;
+    }
+
+    .cell:not(.blank):not(.disabled).day:hover {
+      background: $color-orangedull-150;
+      border-color: transparent;
+    }
+
+    .today {
+      color: $color-white-190;
+      border: 1px solid $color-orange-100;
+    }
+  }
 }
 
-.timeline-current-value {
-  margin: 0 auto;
-  padding: 0.5em;
-  text-align: center;
-}
-
-.timeline-container .datepicker-dark-calendar {
-  bottom: 0;
-  padding: 1em;
-  background: #222;
-  border: 0;
-}
-
-.timeline-container .datepicker-dark-input {
-  width: 8em;
-  padding: 0 1em;
-  color: #fff;
-  background: #222;
-  border: 0;
-}
-
-.timeline-container .datepicker-dark-input:focus {
-  background: #333;
-  outline: 0;
-}
-
-.timeline-container .datepicker-dark-calendar .up:not(.disabled):hover {
-  background: #444;
-}
-
-.timeline-container .vs__selected {
-  color: #ddd;
-}
-
-.cesium-viewer-animationContainer {
-  display: none;
-}
-
-.cesium-viewer .cesium-widget-credits {
-  display: none !important;
-}
-
-.cesium-timeline-bar {
-  height: 2.5em;
-}
-
-.timeline-series .vdp-datepicker {
-  position: absolute;
-  top: 0;
-  width: 100%;
-  text-align: center;
-}
-
-.timeline-series .vdp-datepicker input {
+.timeline__player .vdp-datepicker input {
   cursor: pointer;
   opacity: 0;
+}
+
+.timeline__container .vs__selected {
+  color: #ddd;
 }

@@ -1,88 +1,71 @@
 <template>
   <div class="timeline__container">
     <div class="timeline__speed">
-      <span class="timeline-label-header">Speed</span>
-      <span class="timeline-label-value">
-        <v-select
-          v-model="chosenPlaybackSpeed"
-          :clearable="false"
-          :options="playbackSpeeds"
-          :menu-props="{ top: true, offsetY: true }"
-          @input="selectPlaybackSpeed"
-        ></v-select>
-      </span>
+      <label for="timeline-speed" class="timeline__control-label">Speed</label>
+      <v-select
+        id="timeline-speed"
+        v-model="chosenPlaybackSpeed"
+        :clearable="false"
+        :options="playbackSpeeds"
+        :searchable="false"
+        @input="selectPlaybackSpeed"
+      ></v-select>
     </div>
-    <div class="timeline-control-button-container">
-      <button class="timeline-control-button" @click="playOrPause">
+    <div class="timeline__control">
+      <Button class="timeline-control-button" :on-click="playOrPause">
         {{ isPlaying ? 'playing' : 'paused' }}
-      </button>
+      </Button>
     </div>
-    <!-- <div class="timeline-control">
-      <div class="timeline-control-labels">
-        <span class="timeline-label-header">Speed</span>
-        <span class="timeline-label-value">
-          <v-select
-            v-model="chosenPlaybackSpeed"
-            :clearable="false"
-            :options="playbackSpeeds"
-            :menu-props="{ top: true, offsetY: true }"
-            @input="selectPlaybackSpeed"
-          ></v-select>
-        </span>
-      </div>
-      <div class="timeline-control-button-container">
-        <button class="timeline-control-button" @click="playOrPause">
-          {{ isPlaying ? 'playing' : 'paused' }}
-        </button>
-      </div>
-    </div> -->
-    <div class="timeline-series">
-      <div class="timeline-current-value">
+    <div class="timeline__player">
+      <div class="timeline__date">
         <div class="timeline-value-change-back"></div>
-        <div class="timeline-label-value-large">
+        <div class="timeline__date-current">
           <client-only>
-            <div class="timeline-current-timepoint">
-              {{ timelinePoint }}
+            <div class="timeline__date-label">
+              {{ timelinePointFormatted }}
+              <Icon id="calendar" name="calendar" />
             </div>
             <date-picker
               v-model="chosenDate"
               placeholder="MM/DD/YYYY"
               format="MM/dd/yyyy"
-              calendar-class="datepicker-dark-calendar"
-              input-class="datepicker-dark-input"
+              calendar-class="datepicker__calendar"
+              input-class="datepicker__input"
               @selected="selectNewDate"
             />
           </client-only>
         </div>
         <div class="timeline-value-change-forward"></div>
       </div>
-      <div ref="scrubber" class="timeline-scrub"></div>
+      <div ref="scrubber" class="timeline__player-scrub"></div>
     </div>
     <div class="timeline__scale">
-      <div class="timeline-control-labels">
-        <span class="timeline-label-header">Scale</span>
-        <span class="timeline-label-value">
-          <v-select
-            v-model="chosenTimescale"
-            :clearable="false"
-            :options="timescales"
-            :menu-props="{ top: true, offsetY: true }"
-            @input="selectTimescale"
-          ></v-select>
-        </span>
-      </div>
+      <label for="timeline-scale" class="timeline__control-label">Scale</label>
+      <v-select
+        id="timeline-scale"
+        v-model="chosenTimescale"
+        :clearable="false"
+        :options="timescales"
+        :menu-props="{ top: true, offsetY: true }"
+        @input="selectTimescale"
+      ></v-select>
     </div>
-    <ul class="timeline__legend" role="list">
-      <li data-status="active">Payload/active</li>
-      <li>Payload/inactive</li>
-      <li>Rocket Body</li>
-      <li>Debris</li>
-      <li>Uncategorized</li>
-    </ul>
+    <div class="timeline__legend">
+      <ul role="list">
+        <li data-status="active">Payload/active</li>
+        <li>Payload/inactive</li>
+        <li>Rocket Body</li>
+        <li>Debris</li>
+        <li>Uncategorized</li>
+      </ul>
+    </div>
   </div>
 </template>
 
 <script>
+import Button from '~/components/global/Button'
+import Icon from '~/components/global/Icon'
+
 import cesiumServiceProvider from '../../services/cesium-service'
 const cesiumService = cesiumServiceProvider()
 const playbackSpeeds = [
@@ -108,7 +91,9 @@ const playbackSpeeds = [
   }
 ]
 let cesium
+
 export default {
+  components: { Button, Icon },
   props: {
     selectedDate: {
       type: Date,
@@ -130,14 +115,48 @@ export default {
       isPlaying: true,
       playbackSpeeds: playbackSpeeds,
       chosenPlaybackSpeed: playbackSpeeds[0],
-      timelinePoint: this.selectedDate.toLocaleDateString()
+      timelinePoint: this.selectedDate,
+      dateOptions: {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+      }
+    }
+  },
+  computed: {
+    timelinePointFormatted() {
+      return this.timelinePoint.toLocaleDateString('en-US', this.dateOptions)
     }
   },
   mounted() {
     cesiumService.getInstance().then((cesiumInstance) => {
       cesium = cesiumInstance
       const { viewer, Cesium } = cesiumInstance
+
       const timeline = viewer.timeline
+
+      /**
+       *
+       * Modify makeLabel function.
+       * From: https://sandcastle.cesium.com/index.html#c=bZFPa8QgEMW/ypBTCkXpuUkobE9loYctPeXimtntsBMNOmbZln736qb/aFcQnfH93lPUGh5nDIEGhMEIwi45K+RdBPGwpxmBvTUMQiP2boWR0qiecsHkUE3Bi5fThGo0B1ybLTK03x5QF+oK3noHYLOnLGb3JaiFT7OHxGRc6SnxZVmo2wIFlBTcD5UV67LHjQRy+7qo3vPs3WwCzIRHDNnZ4fHL/fncq/vKnuuVd2LyzUNfFba6rpooJ8aupJVxR+Pkg0AKXCulBceJc3DU22QPKMrGuFwNoNG/0WagGWhoLySBZRNjPtkl5g29Yl91jc76fyh7M+R3lS9hcyqyl5tuvTSVUo3O5WVSvOetCX+cPwA
+       *
+       */
+
+      viewer.timeline.makeLabel = function(time) {
+        const localDate = Cesium.JulianDate.toDate(time)
+
+        const options = {
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric',
+          timeZone: 'UTC',
+          timeZoneName: 'short',
+          hour: '2-digit'
+        }
+
+        return localDate.toLocaleString('en-US', options)
+      }
+
       this.$refs.scrubber.insertBefore(timeline.container, null)
       timeline.container.addEventListener(
         'click',
@@ -148,9 +167,7 @@ export default {
       timeline.container.style.left = '0px'
       viewer.clockViewModel.shouldAnimate = true
       viewer.clock.onTick.addEventListener(() => {
-        this.timelinePoint = Cesium.JulianDate.toDate(
-          viewer.clock.currentTime
-        ).toLocaleDateString()
+        this.timelinePoint = Cesium.JulianDate.toDate(viewer.clock.currentTime)
       })
       const realDestroy = viewer.destroy
       viewer.destroy = () => {
@@ -192,6 +209,15 @@ export default {
       } else {
         viewer.clockViewModel.shouldAnimate = false
       }
+    },
+    formatDate(date) {
+      const options = {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+      }
+
+      return date.toLocaleString('en-US', options)
     }
   }
 }
