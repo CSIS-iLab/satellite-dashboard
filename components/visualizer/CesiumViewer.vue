@@ -77,6 +77,10 @@ export default {
   watch: {
     activeSatellites: 'processNewData'
   },
+  beforeDestroy() {
+    Cesium = null
+    viewer = null
+  },
   mounted() {
     this.$refs.vcViewer.createPromise.then((cesiumInstance) => {
       cesiumService.registerInstance(cesiumInstance)
