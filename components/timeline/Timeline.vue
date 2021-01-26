@@ -33,7 +33,13 @@
     </div>
     <div class="timeline__player">
       <div class="timeline__date">
-        <div class="timeline-value-change-back"></div>
+        <Button
+          class="btn--date"
+          :on-click="(e) => selectPrevNextDate(e, 'prev')"
+          aria-label="Go to previous date"
+        >
+          <Icon id="boomarang-left" name="boomarang-left" />
+        </Button>
         <div class="timeline__date-current">
           <client-only>
             <div class="timeline__date-label">
@@ -50,7 +56,13 @@
             />
           </client-only>
         </div>
-        <div class="timeline-value-change-forward"></div>
+        <Button
+          class="btn--date"
+          :on-click="(e) => selectPrevNextDate(e, 'next')"
+          aria-label="Go to next date"
+        >
+          <Icon id="boomarang-right" name="boomarang-right" />
+        </Button>
       </div>
       <div ref="scrubber" class="timeline__player-scrub"></div>
     </div>
@@ -210,6 +222,7 @@ export default {
       cesiumService.deregisterInstance()
     },
     selectNewDate(date) {
+      console.log(date)
       this.$store.commit('satellites/updateTargetDate', date)
       this.$store.dispatch('satellites/getSatellites')
     },
@@ -241,6 +254,18 @@ export default {
       }
 
       return date.toLocaleString('en-US', options)
+    },
+    selectPrevNextDate(e, direction) {
+      const milliseconds = this.chosenTimescale.value * 1000
+      let newDate
+
+      if (direction === 'next') {
+        newDate = new Date(this.timelinePoint.getTime() + milliseconds)
+      } else {
+        newDate = new Date(this.timelinePoint.getTime() - milliseconds)
+      }
+
+      this.selectNewDate(newDate)
     }
   }
 }

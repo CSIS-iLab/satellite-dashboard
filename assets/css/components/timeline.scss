@@ -140,7 +140,9 @@
     bottom: rem(20);
     left: 50%;
     z-index: 1;
-    padding: rem(4) rem(24) rem(8);
+    display: flex;
+    align-items: center;
+    padding: rem(4) rem(8) rem(8);
     background: $color-black-100;
     @include shadow(xsm);
     transform: translate(-50%, 0);
@@ -151,8 +153,8 @@
       position: absolute;
       top: 0;
       bottom: 0;
+      z-index: -1;
       width: rem(12);
-      // background: #f00;
       background: linear-gradient(
         68deg,
         rgba(0, 0, 0, 0) 50%,
