@@ -3,7 +3,7 @@
     <dl class="details__basic">
       <div v-for="item in info.basic" :key="item.value">
         <dt>{{ item.label }}</dt>
-        <dd>{{ satellite.meta[item.value] }}</dd>
+        <dd>{{ satellite.meta[item.value] || 'N/A' }}</dd>
       </div>
       <div>
         <dt class="visually-hidden">Status</dt>
@@ -21,7 +21,7 @@
     <dl class="details__advanced">
       <div v-for="item in info.advanced" :key="item.value">
         <dt>{{ item.label }}</dt>
-        <dd>{{ satellite.meta[item.value] }}</dd>
+        <dd>{{ satellite.meta[item.value] || 'N/A' }}</dd>
       </div>
     </dl>
     <div v-if="hasOrbit">
