@@ -316,6 +316,11 @@
       }
 
       /* stylelint-disable-next-line */
+      span {
+        transition: color 0.3s ease-in-out;
+      }
+
+      /* stylelint-disable-next-line */
       *:hover {
         --arrow-color: #{$color-orange-100};
         color: $color-orange-100;
@@ -349,7 +354,9 @@
       background: $color-orange-100;
     }
 
-    .cell:not(.blank):not(.disabled).day:hover {
+    .cell:not(.blank):not(.disabled).day:hover,
+    .cell:not(.blank):not(.disabled).month:hover,
+    .cell:not(.blank):not(.disabled).year:hover {
       background: $color-orangedull-150;
       border-color: transparent;
     }
