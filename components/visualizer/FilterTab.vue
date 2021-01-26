@@ -165,6 +165,15 @@ export default {
 
       const satellites = Object.values(this.satellites)
 
+      const countries = [
+        ...new Set(
+          satellites
+            .map((d) => [d.meta.countryOfJurisdiction, d.meta.countryOfLaunch])
+            .flat()
+        )
+      ]
+      console.log(countries)
+
       for (let i = 0; i < satellites.length; i++) {
         const sat = satellites[i]
         filters.countryOfJurisdiction.add(sat.meta.countryOfJurisdiction)

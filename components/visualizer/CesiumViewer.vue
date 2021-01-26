@@ -23,7 +23,8 @@
 </template>
 
 <script>
-import cesiumServiceProvider from '../../services/cesium-service'
+import { mapMutations } from 'vuex'
+import cesiumServiceProvider from '~/services/cesium-service'
 const cesiumService = cesiumServiceProvider()
 // Set up constants needed for position calculations.
 const J2000Epoch = 2451545.0
@@ -64,7 +65,7 @@ export default {
       timeline: true,
       baseLayerPicker: false,
       fullscreenButton: false,
-      infoBox: true,
+      infoBox: false,
       alpha: 1,
       brightness: 1,
       contrast: 1,
@@ -113,6 +114,7 @@ export default {
           return
         }
         entity.path.show = true
+        this.showSatelliteDetails(entity.id)
       })
 
       /* This event listener adjusts the camera position every frame
@@ -393,7 +395,14 @@ export default {
       })
 
       return positionSamples
-    }
+    },
+    showSatelliteDetails(catalog_id) {
+      console.log('show details')
+      this.updateDetailedSatellite(catalog_id)
+    },
+    ...mapMutations({
+      updateDetailedSatellite: 'satellites/updateDetailedSatellite'
+    })
   }
 }
 </script>
