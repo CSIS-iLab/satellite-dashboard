@@ -27,9 +27,7 @@
     <div v-if="hasOrbit">
       <hr />
       <h3>Orbit</h3>
-      <p class="details-panel__desc">
-        Updated from {{ orbitSource }}<br />Current as of {{ currentDate }}
-      </p>
+      <p class="details-panel__desc">Last updated from {{ orbitSource }}</p>
       <dl class="details__orbit">
         <div v-for="item in info.orbit" :key="item.value">
           <!-- eslint-disable -->
@@ -39,10 +37,10 @@
         </div>
       </dl>
     </div>
-    <hr />
+    <!-- <hr />
     <h3>ITU Filings</h3>
     <hr />
-    <h3>Comments</h3>
+    <h3>Comments</h3> -->
   </div>
 </template>
 
@@ -83,9 +81,9 @@ export default {
           { value: 'NoradId', label: 'NORAD ID (SATCAT)' }
         ],
         orbit: [
-          { value: 'Apogee', label: 'Apogee (km)' },
+          { value: 'Apogee', label: 'Apogee Altitude (km)' },
           { value: 'ArgP', label: 'Argument of perigee' },
-          { value: 'Perigee', label: 'Perigee (km)' },
+          { value: 'Perigee', label: 'Perigee Altitude (km)' },
           { value: 'Ecc', label: 'Eccentricity' },
           { value: 'Inc', label: 'Inclination' },
           { value: 'Longitude', label: 'Longitude' },
@@ -172,9 +170,7 @@ export default {
       return this.satellite.meta.Status
     },
     orbitSource() {
-      return `${this.satellite.meta.source1Name} ${this.formatDate(
-        this.satellite.meta.source1LastCatalogUpdate
-      )}`
+      return `${this.formatDate(this.satellite.meta.source1LastCatalogUpdate)}`
     },
     currentDate() {
       return this.formatDate(this.satellite.orbits[0].epoch)
@@ -210,8 +206,11 @@ export default {
       const sDisplay = s > 0 ? s + (s == 1 ? ' second' : ' seconds') : ''
       return dDisplay + hDisplay + mDisplay + sDisplay
     },
-    formatNumbers(num, maxDecimals = 0) {
-      return num.toLocaleString('en-US', { maximumFractionDigits: maxDecimals })
+    formatNumbers(num, minDecimals = 0) {
+      return num.toLocaleString('en-US', {
+        minimumFractionDigits: minDecimals,
+        maximumFractionDigits: minDecimals
+      })
     }
   }
 }
