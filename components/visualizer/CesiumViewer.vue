@@ -14,9 +14,7 @@
         <Icon v-show="showSunlight" id="sun-on" name="sun-on" />
         <Icon v-show="!showSunlight" id="sun-off" name="sun-off" />
       </Button>
-      <Button class="btn--controls btn--help" :on-click="toggleHelpPanel">
-        <Icon id="help" name="help" />
-      </Button>
+      <HelpPanel />
     </ul>
     <vc-viewer
       ref="vcViewer"
@@ -43,6 +41,7 @@
 import { mapMutations } from 'vuex'
 import Button from '~/components/global/Button.vue'
 import Icon from '~/components/global/Icon.vue'
+import HelpPanel from '~/components/visualizer/HelpPanel'
 import cesiumServiceProvider from '~/services/cesium-service'
 const cesiumService = cesiumServiceProvider()
 // Set up constants needed for position calculations.
@@ -62,7 +61,8 @@ let Cesium, viewer, pathMaterial
 export default {
   components: {
     Button,
-    Icon
+    Icon,
+    HelpPanel
   },
   props: {
     satellites: {
@@ -96,7 +96,6 @@ export default {
       SimStart: null,
       SimStop: null,
       showSunlight: true,
-      showHelpPanel: false,
       satellitesHaveLoaded: false,
       defaultZoomAmount: 15000000,
       defaultPosition: {
@@ -481,9 +480,6 @@ export default {
 
       globe.enableLighting = this.showSunlight
       scene.sun.show = this.showSunlight
-    },
-    toggleHelpPanel() {
-      this.showHelpPanel = !this.showHelpPanel
     },
     ...mapMutations({
       updateDetailedSatellite: 'satellites/updateDetailedSatellite'

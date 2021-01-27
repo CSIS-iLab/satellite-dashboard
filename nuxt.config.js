@@ -71,7 +71,8 @@ export default {
       ssr: false
     },
     { src: '~/plugins/vue-good-table', ssr: false },
-    { src: '~/plugins/vue-pluralize' }
+    { src: '~/plugins/vue-pluralize' },
+    { src: '~/plugins/vue-tippy', ssr: false }
   ],
   /*
    ** Nuxt.js dev-modules
