@@ -34,7 +34,8 @@
     "vue-cesium": "^2.1.9",
     "vue-good-table": "^2.21.1",
     "vue-select": "^3.10.8",
-    "vue2-datepicker": "^3.8.2"
+    "vue2-datepicker": "^3.8.2",
+    "vue-tippy": "^4.7.2"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^2.0.0",

@@ -71,6 +71,7 @@ export default {
       ssr: false
     },
     { src: '~/plugins/vue-good-table', ssr: false },
+    { src: '~/plugins/vue-tippy', ssr: false },
     { src: '~/plugins/vue-pluralize' },
     { src: '~/plugins/server/pages.js' },
     { src: '~/plugins/server/posts.js' },
