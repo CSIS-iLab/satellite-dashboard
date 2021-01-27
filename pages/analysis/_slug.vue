@@ -83,6 +83,7 @@
         </div> -->
         <div class="post__tag">
           <h2 class="post__tag-header">Tags</h2>
+          {{ tagsArray }}
           <!-- <ul class="post__tag-list">
             <li v-for="t in tags.items" :key="t.id" class="post__tag-name">
               <a href="#">
@@ -123,6 +124,15 @@ export default {
     },
     post() {
       return this.posts.find((el) => el.slug === this.slug)
+    },
+    tagsArray() {
+      let tagsArray = [
+        this.post.tags,
+        this.post.country,
+        this.post.user,
+        this.post.acf.keywords_satellites
+      ]
+      return console.log(tagsArray)
     }
   },
   created() {
