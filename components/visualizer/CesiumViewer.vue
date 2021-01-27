@@ -14,6 +14,9 @@
         <Icon v-show="showSunlight" id="sun-on" name="sun-on" />
         <Icon v-show="!showSunlight" id="sun-off" name="sun-off" />
       </Button>
+      <Button class="btn--controls btn--help" :on-click="toggleHelpPanel">
+        <Icon id="help" name="help" />
+      </Button>
     </ul>
     <vc-viewer
       ref="vcViewer"
@@ -93,6 +96,7 @@ export default {
       SimStart: null,
       SimStop: null,
       showSunlight: true,
+      showHelpPanel: false,
       satellitesHaveLoaded: false,
       defaultZoomAmount: 15000000,
       defaultPosition: {
@@ -436,17 +440,12 @@ export default {
       return positionSamples
     },
     showSatelliteDetails(catalog_id) {
-      console.log('show details')
       this.updateDetailedSatellite(catalog_id)
     },
     zoomIn() {
-      console.log('zoom in!')
-      console.log(viewer)
       viewer.camera.zoomIn()
     },
     zoomOut() {
-      console.log('zoom out!')
-      console.log(viewer)
       viewer.camera.zoomOut()
     },
     zoomReset() {
@@ -482,6 +481,9 @@ export default {
 
       globe.enableLighting = this.showSunlight
       scene.sun.show = this.showSunlight
+    },
+    toggleHelpPanel() {
+      this.showHelpPanel = !this.showHelpPanel
     },
     ...mapMutations({
       updateDetailedSatellite: 'satellites/updateDetailedSatellite'

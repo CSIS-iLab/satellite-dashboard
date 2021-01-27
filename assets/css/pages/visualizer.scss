@@ -31,6 +31,7 @@
     @include font-size(22px);
     line-height: 1;
     background: $color-slate-500;
+    @include shadow(md);
 
     &:hover {
       color: $color-white-100;
@@ -53,5 +54,18 @@
   .btn--sun {
     margin-left: rem(24);
     border-radius: 50%;
+  }
+
+  .btn--help {
+    margin-left: rem(24);
+    padding: 0;
+    color: $color-white-150;
+    @include font-size(36px);
+    background: transparent;
+    border-radius: 50%;
+
+    &:hover {
+      color: $color-white-180;
+    }
   }
 }
