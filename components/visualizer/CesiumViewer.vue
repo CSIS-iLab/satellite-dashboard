@@ -1,6 +1,23 @@
 <template>
   <div ref="viewerContainer" class="viewer">
-    Test Viewer Component
+    <ul class="viewer-controls" role="list">
+      <Button class="btn--controls btn--zoom" :on-click="zoomIn">
+        <Icon id="minus" name="minus" />
+      </Button>
+      <Button class="btn--controls btn--zoom" :on-click="zoomReset">
+        <Icon id="world" name="world" />
+      </Button>
+      <Button class="btn--controls btn--zoom" :on-click="zoomOut">
+        <Icon id="plus" name="plus" />
+      </Button>
+      <Button class="btn--controls btn--sun" :on-click="toggleSunlight">
+        <Icon v-show="showSunlight" id="sun-on" name="sun-on" />
+        <Icon v-show="!showSunlight" id="sun-off" name="sun-off" />
+      </Button>
+      <Button class="btn--controls btn--help" :on-click="toggleHelpPanel">
+        <Icon id="help" name="help" />
+      </Button>
+    </ul>
     <vc-viewer
       ref="vcViewer"
       :animation="animation"
@@ -8,9 +25,9 @@
       :timeline="timeline"
       :fullscreen-button="fullscreenButton"
       :info-box="infoBox"
+      :camera="camera"
       @ready="ready"
     >
-      <vc-navigation></vc-navigation>
       <!-- <vc-layer-imagery
         :alpha="alpha"
         :brightness="brightness"
@@ -24,6 +41,8 @@
 
 <script>
 import { mapMutations } from 'vuex'
+import Button from '~/components/global/Button.vue'
+import Icon from '~/components/global/Icon.vue'
 import cesiumServiceProvider from '~/services/cesium-service'
 const cesiumService = cesiumServiceProvider()
 // Set up constants needed for position calculations.
@@ -41,6 +60,10 @@ const DegRad = Math.PI / 180
 let Cesium, viewer, pathMaterial
 
 export default {
+  components: {
+    Button,
+    Icon
+  },
   props: {
     satellites: {
       type: Object,
@@ -72,7 +95,22 @@ export default {
       SimInt: 24 * 60 * 60, // 24 hours
       SimStart: null,
       SimStop: null,
-      satellitesHaveLoaded: false
+      showSunlight: true,
+      showHelpPanel: false,
+      satellitesHaveLoaded: false,
+      defaultZoomAmount: 15000000,
+      defaultPosition: {
+        lng: -80,
+        lat: 5,
+        height: 100000000
+      },
+      camera: {
+        position: {
+          lng: 104.06,
+          lat: 5,
+          height: 100000000
+        }
+      }
     }
   },
   watch: {
@@ -97,7 +135,10 @@ export default {
       const scene = viewer.scene
       const globe = scene.globe
 
-      globe.enableLighting = true
+      globe.enableLighting = this.showSunlight
+      scene.sun = new Cesium.Sun()
+      scene.sun.show = this.showSunlight
+
       globe.lightingFadeOutDistance = 9000000
       globe.lightingFadeInDistance = 30000000
       globe.nightFadeOutDistance = 1000000
@@ -106,6 +147,8 @@ export default {
       scene.skyBox = new Cesium.SkyBox({
         show: false
       })
+
+      viewer.camera.defaultZoomAmount = this.defaultZoomAmount
 
       viewer.clock.clockRange = Cesium.ClockRange.CLAMP
 
@@ -397,8 +440,50 @@ export default {
       return positionSamples
     },
     showSatelliteDetails(catalog_id) {
-      console.log('show details')
       this.updateDetailedSatellite(catalog_id)
+    },
+    zoomIn() {
+      viewer.camera.zoomIn()
+    },
+    zoomOut() {
+      viewer.camera.zoomOut()
+    },
+    zoomReset() {
+      const camera = viewer.camera
+
+      const resetView = this.defaultPosition
+      if (resetView && resetView.lng) {
+        camera.flyTo({
+          destination: Cesium.Cartesian3.fromDegrees(
+            resetView.lng,
+            resetView.lat,
+            resetView.height
+          ),
+          orientation: {
+            heading: Cesium.Math.toRadians(resetView.heading || 360),
+            pitch: Cesium.Math.toRadians(resetView.pitch || -90),
+            roll: Cesium.Math.toRadians(resetView.roll || 0)
+          }
+        })
+      }
+
+      if (Cesium.defined(viewer.trackedEntity)) {
+        // when tracking do not reset to default view but to default view of tracked entity
+        const trackedEntity = viewer.trackedEntity
+        viewer.trackedEntity = undefined
+        viewer.trackedEntity = trackedEntity
+      }
+    },
+    toggleSunlight() {
+      this.showSunlight = !this.showSunlight
+      const scene = viewer.scene
+      const globe = scene.globe
+
+      globe.enableLighting = this.showSunlight
+      scene.sun.show = this.showSunlight
+    },
+    toggleHelpPanel() {
+      this.showHelpPanel = !this.showHelpPanel
     },
     ...mapMutations({
       updateDetailedSatellite: 'satellites/updateDetailedSatellite'

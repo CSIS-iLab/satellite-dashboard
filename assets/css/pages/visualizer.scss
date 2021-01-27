@@ -1,0 +1,71 @@
+.vc-navigationContainer {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.vc-navigation-controls,
+.vc-location-distance {
+  display: none;
+}
+
+.viewer {
+  &-controls {
+    position: absolute;
+    top: rem(24);
+    right: rem(32);
+    @include z-index(viewerControls);
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+  }
+
+  .btn--controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: rem(40);
+    height: rem(40);
+    color: $color-white-190;
+    @include font-size(22px);
+    line-height: 1;
+    background: $color-slate-500;
+    @include shadow(md);
+
+    &:hover {
+      color: $color-white-100;
+      background: $color-slate-300;
+    }
+  }
+
+  .btn--zoom {
+    margin-left: rem(2);
+
+    &:first-of-type {
+      border-radius: 3px 0 0 3px;
+    }
+
+    &:last-of-type {
+      border-radius: 0 3px 3px 0;
+    }
+  }
+
+  .btn--sun {
+    margin-left: rem(24);
+    border-radius: 50%;
+  }
+
+  .btn--help {
+    margin-left: rem(24);
+    padding: 0;
+    color: $color-white-150;
+    @include font-size(36px);
+    background: transparent;
+    border-radius: 50%;
+
+    &:hover {
+      color: $color-white-180;
+    }
+  }
+}
