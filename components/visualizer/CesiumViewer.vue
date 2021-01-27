@@ -212,7 +212,7 @@ export default {
             outlineWidth: 1
           },
           path: {
-            resolution: 30,
+            resolution: 2000,
             material: pathMaterial,
             width: 6,
             show: i === 0
