@@ -20,7 +20,8 @@
 
       <div class="help-panel__content">
         <TabPanel tab="about" scope="helpPanel">
-          About the interface content here.
+          About the interface content here.<br />
+          <Icon id="tilt-hand2" name="tilt-hand2" />
         </TabPanel>
         <TabPanel tab="view" scope="helpPanel">
           Changing the view goes here.
