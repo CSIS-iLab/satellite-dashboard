@@ -1,8 +1,20 @@
 <template>
   <div ref="viewerContainer" class="viewer">
-    <button @click="zoomIn">Zoom in</button>
-    <button @click="zoomReset">Reset</button>
-    <button @click="zoomOut">Zoom Out</button>
+    <ul class="viewer-controls" role="list">
+      <Button class="btn--controls btn--zoom" :on-click="zoomIn">
+        <Icon id="minus" name="minus" />
+      </Button>
+      <Button class="btn--controls btn--zoom" :on-click="zoomReset">
+        <Icon id="world" name="world" />
+      </Button>
+      <Button class="btn--controls btn--zoom" :on-click="zoomOut">
+        <Icon id="plus" name="plus" />
+      </Button>
+      <Button class="btn--controls btn--sun" :on-click="toggleSunlight">
+        <Icon v-show="showSunlight" id="sun-on" name="sun-on" />
+        <Icon v-show="!showSunlight" id="sun-off" name="sun-off" />
+      </Button>
+    </ul>
     <vc-viewer
       ref="vcViewer"
       :animation="animation"
@@ -26,6 +38,8 @@
 
 <script>
 import { mapMutations } from 'vuex'
+import Button from '~/components/global/Button.vue'
+import Icon from '~/components/global/Icon.vue'
 import cesiumServiceProvider from '~/services/cesium-service'
 const cesiumService = cesiumServiceProvider()
 // Set up constants needed for position calculations.
@@ -43,6 +57,10 @@ const DegRad = Math.PI / 180
 let Cesium, viewer, pathMaterial
 
 export default {
+  components: {
+    Button,
+    Icon
+  },
   props: {
     satellites: {
       type: Object,
@@ -74,6 +92,7 @@ export default {
       SimInt: 24 * 60 * 60, // 24 hours
       SimStart: null,
       SimStop: null,
+      showSunlight: true,
       satellitesHaveLoaded: false,
       defaultZoomAmount: 15000000,
       defaultPosition: {
@@ -112,7 +131,10 @@ export default {
       const scene = viewer.scene
       const globe = scene.globe
 
-      globe.enableLighting = true
+      globe.enableLighting = this.showSunlight
+      scene.sun = new Cesium.Sun()
+      scene.sun.show = this.showSunlight
+
       globe.lightingFadeOutDistance = 9000000
       globe.lightingFadeInDistance = 30000000
       globe.nightFadeOutDistance = 1000000
@@ -430,15 +452,8 @@ export default {
     zoomReset() {
       const camera = viewer.camera
 
-      console.log(camera.position)
-      console.log(camera.heading)
-      console.log(camera.pitch)
-      console.log(camera.roll)
-
       const resetView = this.defaultPosition
-      console.log(resetView)
       if (resetView && resetView.lng) {
-        console.log('reset to here')
         camera.flyTo({
           destination: Cesium.Cartesian3.fromDegrees(
             resetView.lng,
@@ -447,8 +462,6 @@ export default {
           ),
           orientation: {
             heading: Cesium.Math.toRadians(resetView.heading || 360),
-            // pitch: Cesium.Math.toRadians(45),
-            // pitch: -1.5702983362514793,
             pitch: Cesium.Math.toRadians(resetView.pitch || -90),
             roll: Cesium.Math.toRadians(resetView.roll || 0)
           }
@@ -461,6 +474,14 @@ export default {
         viewer.trackedEntity = undefined
         viewer.trackedEntity = trackedEntity
       }
+    },
+    toggleSunlight() {
+      this.showSunlight = !this.showSunlight
+      const scene = viewer.scene
+      const globe = scene.globe
+
+      globe.enableLighting = this.showSunlight
+      scene.sun.show = this.showSunlight
     },
     ...mapMutations({
       updateDetailedSatellite: 'satellites/updateDetailedSatellite'
