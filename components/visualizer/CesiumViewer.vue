@@ -1,6 +1,8 @@
 <template>
   <div ref="viewerContainer" class="viewer">
-    Test Viewer Component
+    <button @click="zoomIn">Zoom in</button>
+    <button @click="zoomReset">Reset</button>
+    <button @click="zoomOut">Zoom Out</button>
     <vc-viewer
       ref="vcViewer"
       :animation="animation"
@@ -8,9 +10,9 @@
       :timeline="timeline"
       :fullscreen-button="fullscreenButton"
       :info-box="infoBox"
+      :camera="camera"
       @ready="ready"
     >
-      <vc-navigation></vc-navigation>
       <!-- <vc-layer-imagery
         :alpha="alpha"
         :brightness="brightness"
@@ -72,7 +74,20 @@ export default {
       SimInt: 24 * 60 * 60, // 24 hours
       SimStart: null,
       SimStop: null,
-      satellitesHaveLoaded: false
+      satellitesHaveLoaded: false,
+      defaultZoomAmount: 15000000,
+      defaultPosition: {
+        lng: -80,
+        lat: 5,
+        height: 100000000
+      },
+      camera: {
+        position: {
+          lng: 104.06,
+          lat: 5,
+          height: 100000000
+        }
+      }
     }
   },
   watch: {
@@ -106,6 +121,8 @@ export default {
       scene.skyBox = new Cesium.SkyBox({
         show: false
       })
+
+      viewer.camera.defaultZoomAmount = this.defaultZoomAmount
 
       viewer.clock.clockRange = Cesium.ClockRange.CLAMP
 
@@ -399,6 +416,51 @@ export default {
     showSatelliteDetails(catalog_id) {
       console.log('show details')
       this.updateDetailedSatellite(catalog_id)
+    },
+    zoomIn() {
+      console.log('zoom in!')
+      console.log(viewer)
+      viewer.camera.zoomIn()
+    },
+    zoomOut() {
+      console.log('zoom out!')
+      console.log(viewer)
+      viewer.camera.zoomOut()
+    },
+    zoomReset() {
+      const camera = viewer.camera
+
+      console.log(camera.position)
+      console.log(camera.heading)
+      console.log(camera.pitch)
+      console.log(camera.roll)
+
+      const resetView = this.defaultPosition
+      console.log(resetView)
+      if (resetView && resetView.lng) {
+        console.log('reset to here')
+        camera.flyTo({
+          destination: Cesium.Cartesian3.fromDegrees(
+            resetView.lng,
+            resetView.lat,
+            resetView.height
+          ),
+          orientation: {
+            heading: Cesium.Math.toRadians(resetView.heading || 360),
+            // pitch: Cesium.Math.toRadians(45),
+            // pitch: -1.5702983362514793,
+            pitch: Cesium.Math.toRadians(resetView.pitch || -90),
+            roll: Cesium.Math.toRadians(resetView.roll || 0)
+          }
+        })
+      }
+
+      if (Cesium.defined(viewer.trackedEntity)) {
+        // when tracking do not reset to default view but to default view of tracked entity
+        const trackedEntity = viewer.trackedEntity
+        viewer.trackedEntity = undefined
+        viewer.trackedEntity = trackedEntity
+      }
     },
     ...mapMutations({
       updateDetailedSatellite: 'satellites/updateDetailedSatellite'

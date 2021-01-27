@@ -28,7 +28,6 @@
 import { mapGetters } from 'vuex'
 import CesiumViewer from '~/components/visualizer/CesiumViewer'
 import PanelLeft from '~/components/visualizer/PanelLeft'
-// import DetailsPanel from '~/components/visualizer/details-panel/Panel'
 import Timeline from '~/components/timeline/Timeline'
 
 export default {
@@ -79,14 +78,4 @@ export default {
 
 <style lang="scss">
 @import '../assets/css/pages/visualizer';
-
-table {
-  color: #fff;
-  border-collapse: collapse;
-
-  td {
-    padding: 8px;
-    vertical-align: top;
-  }
-}
 </style>
