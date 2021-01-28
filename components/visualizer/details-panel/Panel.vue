@@ -84,7 +84,7 @@ export default {
   },
   computed: {
     satelliteName() {
-      return this.satellite.meta.Name
+      return this.satellite.Name
     },
     satelliteIsInFocused() {
       return this.focusedSatellites.has(this.id)

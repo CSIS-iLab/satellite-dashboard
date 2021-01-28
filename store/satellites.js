@@ -1,4 +1,5 @@
 const siteURL = 'https://satdash.wpengine.com'
+const siteURLLocal = 'http://satellite-dashboard.local/'
 
 const padNumber = (num) => {
   return num.toString().padStart(2, 0)
@@ -31,14 +32,13 @@ const getDateForApi = (targetDate) => {
 
 export const state = () => ({
   satellites: {},
+  orbits: {},
   activeSatellites: [],
   focusedSatellites: new Set(),
   detailedSatellite: null,
   targetDate: new Date(new Date().setHours(0, 0, 0, 0)),
   selectedTimescale: timescales[1],
   timescales
-  // countriesOfJurisdiction: null,
-  // countriesOfLaunch: null
 })
 
 export const getters = {
@@ -63,6 +63,9 @@ export const mutations = {
   updateSatellites: (state, satellites) => {
     state.satellites = satellites
   },
+  updateOrbits: (state, orbits) => {
+    state.orbits = orbits
+  },
   updateTargetDate: (state, newTargetDate) => {
     state.targetDate = newTargetDate
   },
@@ -78,10 +81,6 @@ export const mutations = {
   updateDetailedSatellite: (state, satellite) => {
     state.detailedSatellite = satellite
   }
-  // updateCountries: (state, countries) => {
-  //   state.countriesOfJurisdiction = countries.jurisdiction
-  //   state.countriesOfLaunch = countries.launch
-  // }
 }
 
 export const actions = {
@@ -90,42 +89,68 @@ export const actions = {
    */
   async getSatellites({ state, commit }) {
     try {
+      let satellites = await fetch(
+        `${siteURL}/wp-json/wp/v2/satellites?show_all=true`
+      ).then((res) => res.json())
+
+      let items = {}
+      let activeItems = []
+
+      /**
+       * Todo:
+       * Show manual overrides in ACF fields
+       * Match type/status with spreadsheet
+       * Match country with spreadsheet
+       */
+
+      satellites = satellites
+        .filter((el) => el.status === 'publish')
+        .map(({ id, ag_meta, acf }) => ({
+          post_id: id,
+          catalog_id: acf.catalog_id,
+          acf,
+          ...ag_meta
+        }))
+        .forEach((sat) => {
+          items[sat.acf.catalog_id] = sat
+
+          // By default all items are active!
+          activeItems.push(sat.acf.catalog_id)
+        })
+
+      console.log('Get the satellites.')
+
+      commit('updateSatellites', Object.freeze(items))
+      commit('updateActiveSatellites', activeItems)
+    } catch (err) {
+      console.log(err)
+    }
+  },
+
+  /**
+   * Pulls Satellite Orbit Information from WordPress database. Pulls based on given date range.
+   */
+  async getOrbits({ state, commit }) {
+    try {
       const endDate = new Date(state.targetDate)
       endDate.setSeconds(
         endDate.getSeconds() + state.selectedTimescale.value - 1
       ) // minus 1 second so we don't get n + 1 days
 
-      let satellites = await fetch(
-        `${siteURL}/wp-json/satdash/v1/satellites?startDate=${getDateForApi(
+      let orbits = await fetch(
+        `${siteURL}/wp-json/satdash/v1/satellites/orbits/?startDate=${getDateForApi(
           state.targetDate
         )}&endDate=${getDateForApi(endDate)}`
       ).then((res) => res.json())
 
-      let items = {}
-      let activeItems = []
-      // let countries = {
-      //   jurisdiction: new Set(),
-      //   launch: new Set()
-      // }
+      if (Array.isArray(orbits)) {
+        return
+      }
 
-      // TODO: Update API to return object keyed by ID instead of doing it here.
-      satellites.forEach((sat) => {
-        items[sat.catalog_id] = sat
-        activeItems.push(sat.catalog_id)
-        sat.meta = { ...sat.source1, ...sat.source2 }
-        // countries.jurisdiction.add({
-        //   value: sat.source2.countryOfJurisdiction,
-        //   label: sat.source2.countryOfJurisdiction
-        // })
-        // countries.launch.add({
-        //   value: sat.source1.countryOfLaunch,
-        //   label: sat.source1.countryOfLaunch
-        // })
-      })
+      // Todo: Modify active satellites here to trigger watch in CesiumViewer
 
-      commit('updateSatellites', items)
-      commit('updateActiveSatellites', activeItems)
-      // commit('updateCountries', countries)
+      console.log('Get updated orbits.')
+      commit('updateOrbits', Object.freeze(orbits))
     } catch (err) {
       console.log(err)
     }

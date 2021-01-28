@@ -91,6 +91,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import { mapGetters } from 'vuex'
 import { mapMutations } from 'vuex'
 import Button from '~/components/global/Button.vue'
@@ -144,9 +145,9 @@ export default {
         .filter((d) => !this.visibleFilters.includes(d))
         .map((d) => this.filterOptions[d])
     },
-    satellites() {
-      return this.$store.state.satellites.satellites
-    },
+    ...mapState({
+      satellites: (state) => state.satellites.satellites
+    }),
     ...mapGetters({
       activeSatellites: 'satellites/activeSatellites',
       numSatellites: 'satellites/activeSatellitesCount',
@@ -168,7 +169,7 @@ export default {
       const countries = [
         ...new Set(
           satellites
-            .map((d) => [d.meta.countryOfJurisdiction, d.meta.countryOfLaunch])
+            .map((d) => [d.countryOfJurisdiction, d.countryOfLaunch])
             .flat()
         )
       ]
@@ -176,12 +177,12 @@ export default {
 
       for (let i = 0; i < satellites.length; i++) {
         const sat = satellites[i]
-        filters.countryOfJurisdiction.add(sat.meta.countryOfJurisdiction)
-        filters.Purpose.add(sat.meta.Purpose)
-        filters.Users.add(sat.meta.Operator)
-        filters.Name.add(sat.meta.Name)
-        filters.NoradId.add(sat.meta.NoradId)
-        filters.Status.add(sat.meta.Status)
+        filters.countryOfJurisdiction.add(sat.countryOfJurisdiction)
+        filters.Purpose.add(sat.Purpose)
+        filters.Users.add(sat.Operator)
+        filters.Name.add(sat.Name)
+        filters.NoradId.add(sat.NoradId)
+        filters.Status.add(sat.Status)
       }
 
       for (const key in filters) {
@@ -198,7 +199,8 @@ export default {
         const catalog_id = this.activeSatellites[i]
         const { Name, Status, countryOfJurisdiction } = this.satellites[
           catalog_id
-        ].meta
+        ]
+
         results.push({
           catalog_id,
           Name,
@@ -207,6 +209,7 @@ export default {
         })
       }
 
+      console.log('activeSatelliteMeta')
       return results
     }
   },
@@ -239,10 +242,7 @@ export default {
       const filteredSatellites = Object.values(this.satellites)
         .filter(function(item) {
           for (var key in filters) {
-            if (
-              item.meta[key] !== undefined &&
-              filters[key].includes(item.meta[key])
-            )
+            if (item[key] !== undefined && filters[key].includes(item[key]))
               return true
           }
           return false
