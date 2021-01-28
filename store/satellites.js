@@ -90,7 +90,7 @@ export const actions = {
   async getSatellites({ state, commit }) {
     try {
       let satellites = await fetch(
-        `${siteURLLocal}/wp-json/wp/v2/satellites`
+        `${siteURLLocal}/wp-json/wp/v2/satellites?show_all=true`
       ).then((res) => res.json())
 
       let items = {}
@@ -106,8 +106,8 @@ export const actions = {
       satellites = satellites
         .filter((el) => el.status === 'publish')
         .map(({ id, ag_meta, acf }) => ({
-          PostId: id,
-          CatalogId: acf.catalog_id,
+          post_id: id,
+          catalog_id: acf.catalog_id,
           acf,
           ...ag_meta
         }))
@@ -118,8 +118,7 @@ export const actions = {
           activeItems.push(sat.acf.catalog_id)
         })
 
-      console.log('get the satellites')
-      console.log(activeItems)
+      console.log('Get the satellites.')
 
       commit('updateSatellites', Object.freeze(items))
       commit('updateActiveSatellites', activeItems)
@@ -144,15 +143,13 @@ export const actions = {
         )}&endDate=${getDateForApi(endDate)}`
       ).then((res) => res.json())
 
-      console.log(orbits)
-
       if (Array.isArray(orbits)) {
         return
       }
 
       // Todo: Modify active satellites here to trigger watch in CesiumViewer
 
-      console.log('commit')
+      console.log('Get updated orbits.')
       commit('updateOrbits', Object.freeze(orbits))
     } catch (err) {
       console.log(err)

@@ -50,6 +50,7 @@ export default {
       return this.satellites[this.detailedSatellite]
     },
     ...mapState({
+      satellites: (state) => state.satellites.satellites,
       orbits: (state) => state.satellites.orbits,
       targetDate: (state) => state.satellites.targetDate,
       timescales: (state) => state.satellites.timescales,

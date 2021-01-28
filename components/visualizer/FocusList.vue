@@ -53,10 +53,10 @@
         v-for="item in focusedItems"
         :key="item"
         class="sat__basic sat__basic--status"
-        :data-status="satellites[item].meta.Status"
+        :data-status="satellites[item].Status"
       >
         <div class="sat__name">
-          {{ satellites[item].meta.Name }}
+          {{ satellites[item].Name }}
         </div>
         <div class="sat__id">{{ satellites[item].catalog_id }}</div>
         <div class="sat__actions">
@@ -71,7 +71,7 @@
             :id="item"
             v-model="selectedItems"
             :value="item"
-            :label="`Remove ${satellites[item].meta.Name} from focus list.`"
+            :label="`Remove ${satellites[item].Name} from focus list.`"
             :hide-label="true"
           />
         </div>

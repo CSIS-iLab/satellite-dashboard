@@ -3,14 +3,14 @@
     <dl class="details__basic">
       <div v-for="item in info.basic" :key="item.value">
         <dt>{{ item.label }}</dt>
-        <dd>{{ satellite.meta[item.value] || 'N/A' }}</dd>
+        <dd>{{ satellite[item.value] || 'N/A' }}</dd>
       </div>
       <div>
         <dt class="visually-hidden">Status</dt>
         <dd>
           <div
             class="sat__basic sat__basic--status"
-            :data-status="satellite.meta.Status"
+            :data-status="satellite.Status"
           >
             {{ status }}
           </div>
@@ -21,7 +21,7 @@
     <dl class="details__advanced">
       <div v-for="item in info.advanced" :key="item.value">
         <dt>{{ item.label }}</dt>
-        <dd>{{ satellite.meta[item.value] || 'N/A' }}</dd>
+        <dd>{{ satellite[item.value] || 'N/A' }}</dd>
       </div>
     </dl>
     <div v-if="hasOrbit">
@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapState } from 'vuex'
 
 export default {
   props: {
@@ -99,36 +99,49 @@ export default {
   },
   computed: {
     hasOrbit() {
-      if (!this.satellite.orbits || this.satellite.orbits.length === -1) {
+      if (!this.satelliteAllOrbits || this.satelliteAllOrbits.length === -1) {
         return
       }
 
       return true
     },
-    orbit() {
+    satelliteAllOrbits() {
+      return this.orbits[this.id].orbits
+    },
+    orbitalElements() {
       // TODO: Need to get the right orbit for the current timeline
-      return this.satellite.orbits[0].elements
+      return this.satelliteAllOrbits[0].elements
     },
     formattedOrbitData() {
       const Apogee = `${this.formatNumbers(
-        (this.orbit.SMA * (1 + this.orbit.Ecc) - this.earthRadius) / 1000
+        (this.orbitalElements.SMA * (1 + this.orbitalElements.Ecc) -
+          this.earthRadius) /
+          1000
       )} km`
 
       const Perigee = `${this.formatNumbers(
-        (this.orbit.SMA * (1 - this.orbit.Ecc) - this.earthRadius) / 1000
+        (this.orbitalElements.SMA * (1 - this.orbitalElements.Ecc) -
+          this.earthRadius) /
+          1000
       )} km`
 
       const ArgP = `${this.formatNumbers(
-        (this.orbit.ArgP * 180) / Math.PI,
+        (this.orbitalElements.ArgP * 180) / Math.PI,
         4
       )}&deg;`
 
-      const Ecc = `${this.formatNumbers(this.orbit.Ecc, 4)}&deg;`
+      const Ecc = `${this.formatNumbers(this.orbitalElements.Ecc, 4)}&deg;`
 
-      const Inc = `${this.formatNumbers(this.orbit.Inc / Math.PI, 4)}&deg;`
+      const Inc = `${this.formatNumbers(
+        this.orbitalElements.Inc / Math.PI,
+        4
+      )}&deg;`
 
       const mmo = Math.sqrt(
-        this.mu / (this.orbit.SMA * this.orbit.SMA * this.orbit.SMA)
+        this.mu /
+          (this.orbitalElements.SMA *
+            this.orbitalElements.SMA *
+            this.orbitalElements.SMA)
       )
 
       const MeanMotion = `${this.formatNumbers(
@@ -139,16 +152,16 @@ export default {
       const OrbitalPeriod = (2 * Math.PI) / mmo
       const OrbitalPeriodDisplay = this.secondsToDhms(OrbitalPeriod)
 
-      const SMA = `${this.formatNumbers(this.orbit.SMA / 1000)} km`
+      const SMA = `${this.formatNumbers(this.orbitalElements.SMA / 1000)} km`
 
       const OrbitalSpeed = `
         ${this.formatNumbers(
-          (((2 * Math.PI * this.orbit.SMA) / OrbitalPeriod) *
+          (((2 * Math.PI * this.orbitalElements.SMA) / OrbitalPeriod) *
             (1 -
-              (1 / 4) * this.orbit.Ecc ** 2 -
-              (3 / 64) * this.orbit.Ecc ** 4 -
-              (5 / 256) * this.orbit.Ecc ** 6 -
-              (175 / 16384) * this.orbit.Ecc ** 8)) /
+              (1 / 4) * this.orbitalElements.Ecc ** 2 -
+              (3 / 64) * this.orbitalElements.Ecc ** 4 -
+              (5 / 256) * this.orbitalElements.Ecc ** 6 -
+              (175 / 16384) * this.orbitalElements.Ecc ** 8)) /
             1000,
           1
         )} km/s`
@@ -167,14 +180,19 @@ export default {
       }
     },
     status() {
-      return this.satellite.meta.Status
+      return this.satellite.Status
     },
     orbitSource() {
-      return `${this.formatDate(this.satellite.meta.source1LastCatalogUpdate)}`
+      return `${this.formatDate(
+        this.satelliteAllOrbits[0].source.last_updated
+      )}`
     },
     currentDate() {
-      return this.formatDate(this.satellite.orbits[0].epoch)
-    }
+      return this.formatDate(this.satelliteAllOrbits[0].epoch)
+    },
+    ...mapState({
+      orbits: (state) => state.satellites.orbits
+    })
   },
   methods: {
     formatDate(date) {
