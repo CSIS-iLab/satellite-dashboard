@@ -222,8 +222,6 @@ export default {
       // For each object, calculate its position & orbit
       // Calculations pulled from: https://github.com/ut-astria/AstriaGraph/blob/master/main.js & https://github.com/ut-astria/AstriaGraph/blob/master/celemech.js
 
-      console.log(this.satelliteOrbits)
-
       this.activeSatellites.forEach((sat, i) => {
         if (!this.satelliteOrbits[sat]) {
           return
