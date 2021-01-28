@@ -4,7 +4,7 @@
     <template v-if="loading"> Loading... </template>
     <template v-else>
       <CesiumViewer
-        :satellites="satellites"
+        :satellite-orbits="orbits"
         :active-satellites="activeSatellites"
         :selected-date="targetDate"
         :selected-timescale="selectedTimescale.value"
@@ -25,6 +25,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+import { mapState } from 'vuex'
 import { mapGetters } from 'vuex'
 import CesiumViewer from '~/components/visualizer/CesiumViewer'
 import PanelLeft from '~/components/visualizer/PanelLeft'
@@ -47,18 +49,15 @@ export default {
     satellites() {
       return this.$store.state.satellites.satellites
     },
-    targetDate() {
-      return this.$store.state.satellites.targetDate
-    },
-    timescales() {
-      return this.$store.state.satellites.timescales
-    },
-    selectedTimescale() {
-      return this.$store.state.satellites.selectedTimescale
-    },
     detailedSatelliteInfo() {
       return this.satellites[this.detailedSatellite]
     },
+    ...mapState({
+      orbits: (state) => state.satellites.orbits,
+      targetDate: (state) => state.satellites.targetDate,
+      timescales: (state) => state.satellites.timescales,
+      selectedTimescale: (state) => state.satellites.selectedTimescale
+    }),
     ...mapGetters({
       activeSatellites: 'satellites/activeSatellites',
       detailedSatellite: 'satellites/detailedSatellite'
@@ -66,12 +65,16 @@ export default {
   },
   created() {
     this.$store.dispatch('satellites/getSatellites')
+    this.getOrbits()
     this.loading = false
   },
   methods: {
     openFilters() {
       console.log('open filters')
-    }
+    },
+    ...mapActions({
+      getOrbits: 'satellites/getOrbits'
+    })
   }
 }
 </script>

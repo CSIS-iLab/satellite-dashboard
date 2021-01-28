@@ -65,7 +65,7 @@ export default {
     Icon
   },
   props: {
-    satellites: {
+    satelliteOrbits: {
       type: Object,
       default: () => {}
     },
@@ -114,7 +114,8 @@ export default {
     }
   },
   watch: {
-    activeSatellites: 'processNewData'
+    // activeSatellites: 'processNewData'
+    satelliteOrbits: 'processNewData'
   },
   beforeDestroy() {
     Cesium = null
@@ -216,27 +217,29 @@ export default {
     displayObjects(Cesium, viewer) {
       let epjd = new Cesium.JulianDate()
       let CRFtoTRF = Cesium.Transforms.computeIcrfToFixedMatrix(this.SimStart)
-      let satCount = 0
       viewer.entities.removeAll()
 
       // For each object, calculate its position & orbit
       // Calculations pulled from: https://github.com/ut-astria/AstriaGraph/blob/master/main.js & https://github.com/ut-astria/AstriaGraph/blob/master/celemech.js
+
+      console.log(this.satelliteOrbits)
+
       this.activeSatellites.forEach((sat, i) => {
-        const { catalog_id, orbits, source1 } = this.satellites[sat]
+        if (!this.satelliteOrbits[sat]) {
+          return
+        }
+
+        const { catalog_id, orbits } = this.satelliteOrbits[sat]
+
         if (!orbits) {
           return
         }
-        satCount++
-        const name = source1.Name
 
-        // Make a copy of the orbital parameters so we can modify it with our calculations.
-
-        // TODO: Change this so it looks at the correct orbit, not just the first one.
         const orbit = this.compileOrbits(orbits, CRFtoTRF, epjd)
 
         viewer.entities.add({
           id: catalog_id,
-          name: `${catalog_id}: ${name}`,
+          // name: `${catalog_id}: ${name}`,
           availability: new Cesium.TimeIntervalCollection([
             new Cesium.TimeInterval({
               start: this.SimStart,

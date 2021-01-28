@@ -98,6 +98,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+import { mapMutations } from 'vuex'
 import Button from '~/components/global/Button'
 import Icon from '~/components/global/Icon'
 
@@ -223,16 +225,16 @@ export default {
     },
     selectNewDate(date) {
       console.log(date)
-      this.$store.commit('satellites/updateTargetDate', date)
-      this.$store.dispatch('satellites/getSatellites')
+      this.updateTargetDate(date)
+      this.getOrbits()
     },
     selectPlaybackSpeed(playbackSpeed) {
       const { viewer } = cesium
       viewer.clock.multiplier = playbackSpeed.value
     },
     selectTimescale(timescale) {
-      this.$store.commit('satellites/updateSelectedTimescale', timescale)
-      this.$store.dispatch('satellites/getSatellites')
+      this.updateSelectedTimescale(timescale)
+      this.getOrbits()
     },
     playOrPause() {
       if (!cesium) {
@@ -266,7 +268,14 @@ export default {
       }
 
       this.selectNewDate(newDate)
-    }
+    },
+    ...mapActions({
+      getOrbits: 'satellites/getOrbits'
+    }),
+    ...mapMutations({
+      updateSelectedTimescale: 'satellites/updateSelectedTimescale',
+      updateTargetDate: 'satellites/updateTargetDate'
+    })
   }
 }
 </script>

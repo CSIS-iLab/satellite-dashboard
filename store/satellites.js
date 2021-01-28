@@ -1,4 +1,5 @@
 const siteURL = 'https://satdash.wpengine.com'
+const siteURLLocal = 'http://satellite-dashboard.local/'
 
 const padNumber = (num) => {
   return num.toString().padStart(2, 0)
@@ -31,14 +32,13 @@ const getDateForApi = (targetDate) => {
 
 export const state = () => ({
   satellites: {},
+  orbits: {},
   activeSatellites: [],
   focusedSatellites: new Set(),
   detailedSatellite: null,
   targetDate: new Date(new Date().setHours(0, 0, 0, 0)),
   selectedTimescale: timescales[1],
   timescales
-  // countriesOfJurisdiction: null,
-  // countriesOfLaunch: null
 })
 
 export const getters = {
@@ -63,6 +63,9 @@ export const mutations = {
   updateSatellites: (state, satellites) => {
     state.satellites = satellites
   },
+  updateOrbits: (state, orbits) => {
+    state.orbits = orbits
+  },
   updateTargetDate: (state, newTargetDate) => {
     state.targetDate = newTargetDate
   },
@@ -78,10 +81,6 @@ export const mutations = {
   updateDetailedSatellite: (state, satellite) => {
     state.detailedSatellite = satellite
   }
-  // updateCountries: (state, countries) => {
-  //   state.countriesOfJurisdiction = countries.jurisdiction
-  //   state.countriesOfLaunch = countries.launch
-  // }
 }
 
 export const actions = {
@@ -126,6 +125,41 @@ export const actions = {
       commit('updateSatellites', items)
       commit('updateActiveSatellites', activeItems)
       // commit('updateCountries', countries)
+    } catch (err) {
+      console.log(err)
+    }
+  },
+
+  /**
+   * Pulls Satellite Orbit Information from WordPress database. Pulls based on given date range.
+   */
+  async getOrbits({ state, commit }) {
+    try {
+      const endDate = new Date(state.targetDate)
+      endDate.setSeconds(
+        endDate.getSeconds() + state.selectedTimescale.value - 1
+      ) // minus 1 second so we don't get n + 1 days
+
+      // let orbits = await fetch(
+      //   `${siteURLLocal}/wp-json/satdash/v1/satellites/orbits/?startDate=${getDateForApi(
+      //     state.targetDate
+      //   )}&endDate=${getDateForApi(endDate)}`
+      // ).then((res) => res.json())
+
+      let orbits = await fetch(
+        `${siteURLLocal}/wp-json/satdash/v1/satellites/orbits/?startDate=${getDateForApi(
+          state.targetDate
+        )}&endDate=${getDateForApi(endDate)}`
+      ).then((res) => res.json())
+
+      console.log(orbits)
+
+      if (Array.isArray(orbits)) {
+        return
+      }
+
+      console.log('commit')
+      commit('updateOrbits', orbits)
     } catch (err) {
       console.log(err)
     }
