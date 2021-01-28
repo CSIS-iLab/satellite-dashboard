@@ -33,8 +33,10 @@ const getDateForApi = (targetDate) => {
 export const state = () => ({
   satellites: {},
   orbits: {},
-  activeSatellites: [],
+  filteredSatellites: [],
   focusedSatellites: new Set(),
+  visibleSatellites: [],
+  visibleSatellitesType: 'catalog',
   detailedSatellite: null,
   targetDate: new Date(new Date().setHours(0, 0, 0, 0)),
   selectedTimescale: timescales[1],
@@ -42,20 +44,14 @@ export const state = () => ({
 })
 
 export const getters = {
-  activeSatellites: (state) => {
-    return state.activeSatellites
+  satelliteCatalogIds: (state) => {
+    return Object.keys(state.satellites)
   },
-  activeSatellitesCount: (state, getters) => {
-    return getters.activeSatellites.length
+  filteredSatellitesCount: (state) => {
+    return state.filteredSatellites.length
   },
-  focusedSatellites: (state) => {
-    return state.focusedSatellites
-  },
-  focusedSatellitesCount: (state, getters) => {
-    return getters.focusedSatellites.size
-  },
-  detailedSatellite: (state) => {
-    return state.detailedSatellite
+  focusedSatellitesCount: (state) => {
+    return state.focusedSatellites.size
   }
 }
 
@@ -72,14 +68,21 @@ export const mutations = {
   updateSelectedTimescale: (state, selectedTimescale) => {
     state.selectedTimescale = selectedTimescale
   },
-  updateActiveSatellites: (state, satellites) => {
-    state.activeSatellites = satellites
+  updateFilteredSatellites: (state, satellites) => {
+    state.filteredSatellites = satellites
   },
   updateFocusedSatellites: (state, satellites) => {
     state.focusedSatellites = satellites
   },
   updateDetailedSatellite: (state, satellite) => {
     state.detailedSatellite = satellite
+  },
+  updateVisibleSatellites: (state, satellites) => {
+    console.log('update visible satellites')
+    state.visibleSatellites = satellites
+  },
+  updateVisibleSatellitesType: (state, type) => {
+    state.visibleSatellitesType = type
   }
 }
 
@@ -94,7 +97,7 @@ export const actions = {
       ).then((res) => res.json())
 
       let items = {}
-      let activeItems = []
+      let visibleItems = []
 
       /**
        * Todo:
@@ -114,14 +117,14 @@ export const actions = {
         .forEach((sat) => {
           items[sat.acf.catalog_id] = sat
 
-          // By default all items are active!
-          activeItems.push(sat.acf.catalog_id)
+          // By default all items are visible!
+          visibleItems.push(sat.acf.catalog_id)
         })
 
       console.log('Get the satellites.')
 
       commit('updateSatellites', Object.freeze(items))
-      commit('updateActiveSatellites', activeItems)
+      commit('updateVisibleSatellites', visibleItems)
     } catch (err) {
       console.log(err)
     }

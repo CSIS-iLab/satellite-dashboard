@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapState } from 'vuex'
 import { mapMutations } from 'vuex'
 import Button from '~/components/global/Button'
 import Details from '~/components/visualizer/details-panel/Details.vue'
@@ -89,8 +89,8 @@ export default {
     satelliteIsInFocused() {
       return this.focusedSatellites.has(this.id)
     },
-    ...mapGetters({
-      focusedSatellites: 'satellites/focusedSatellites'
+    ...mapState({
+      focusedSatellites: (state) => state.satellites.focusedSatellites
     })
   },
   mounted() {

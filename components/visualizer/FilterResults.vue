@@ -86,7 +86,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapState } from 'vuex'
 import { mapMutations } from 'vuex'
 import Button from '~/components/global/Button.vue'
 import Icon from '~/components/global/Icon.vue'
@@ -134,8 +134,8 @@ export default {
     focusedItems() {
       return new Set(this.focusedSatellites)
     },
-    ...mapGetters({
-      focusedSatellites: 'satellites/focusedSatellites'
+    ...mapState({
+      focusedSatellites: (state) => state.satellites.focusedSatellites
     })
   },
   mounted() {

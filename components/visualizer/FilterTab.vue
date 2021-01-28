@@ -84,7 +84,7 @@
     </div>
     <FilterResults
       v-if="numActiveFilters > 0"
-      :satellites="activeSatelliteMeta"
+      :satellites="filteredSatelliteMeta"
       :total-results="numSatellites"
     />
   </div>
@@ -145,15 +145,6 @@ export default {
         .filter((d) => !this.visibleFilters.includes(d))
         .map((d) => this.filterOptions[d])
     },
-    ...mapState({
-      satellites: (state) => state.satellites.satellites
-    }),
-    ...mapGetters({
-      activeSatellites: 'satellites/activeSatellites',
-      numSatellites: 'satellites/activeSatellitesCount',
-      activeFilters: 'filters/activeFilters',
-      numActiveFilters: 'filters/activeFiltersCount'
-    }),
     filterValueOptions() {
       let filters = {
         countryOfJurisdiction: new Set(),
@@ -193,10 +184,10 @@ export default {
 
       return filters
     },
-    activeSatelliteMeta() {
+    filteredSatelliteMeta() {
       let results = []
-      for (let i = 0; i < this.activeSatellites.length; i++) {
-        const catalog_id = this.activeSatellites[i]
+      for (let i = 0; i < this.filteredSatellites.length; i++) {
+        const catalog_id = this.filteredSatellites[i]
         const { Name, Status, countryOfJurisdiction } = this.satellites[
           catalog_id
         ]
@@ -209,9 +200,19 @@ export default {
         })
       }
 
-      console.log('activeSatelliteMeta')
+      console.log('filteredSatelliteMeta')
       return results
-    }
+    },
+    ...mapState({
+      satellites: (state) => state.satellites.satellites,
+      filteredSatellites: (state) => state.satellites.filteredSatellites,
+      activeFilters: (state) => state.filters.activeFilters
+    }),
+    ...mapGetters({
+      satelliteCatalogIds: 'satellites/satelliteCatalogIds',
+      numSatellites: 'satellites/filteredSatellitesCount',
+      numActiveFilters: 'filters/activeFiltersCount'
+    })
   },
   methods: {
     editFilters() {
@@ -249,7 +250,8 @@ export default {
         })
         .map((sat) => sat.catalog_id)
 
-      this.updateActiveSatellites(filteredSatellites)
+      this.updateFilteredSatellites(filteredSatellites)
+      this.updateVisibleSatellites(filteredSatellites)
     },
     removeAllFilters() {
       console.log('reset filters')
@@ -264,12 +266,13 @@ export default {
       this.visibleFilters = []
 
       // Reset Satellite Ids
-      const filteredSatellites = Object.keys(this.satellites)
-      this.updateActiveSatellites(filteredSatellites)
+      this.updateFilteredSatellites([])
+      this.updateVisibleSatellites(this.satelliteCatalogIds)
     },
     ...mapMutations({
-      updateActiveSatellites: 'satellites/updateActiveSatellites',
-      updateActiveFilters: 'filters/updateActiveFilters'
+      updateFilteredSatellites: 'satellites/updateFilteredSatellites',
+      updateActiveFilters: 'filters/updateActiveFilters',
+      updateVisibleSatellites: 'satellites/updateVisibleSatellites'
     }),
     cancelFilters() {
       console.log('cancel the filters')

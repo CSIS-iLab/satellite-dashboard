@@ -37,7 +37,9 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import { mapGetters } from 'vuex'
+import { mapMutations } from 'vuex'
 import FilterTab from '~/components/visualizer/FilterTab'
 import FocusList from '~/components/visualizer/FocusList'
 import Icon from '~/components/global/Icon'
@@ -55,13 +57,52 @@ export default {
   },
   data() {
     return {
-      activeTab: ''
+      activeTab: '',
+      prevTab: ''
     }
   },
   computed: {
+    ...mapState({
+      filteredSatellites: (state) => state.satellites.filteredSatellites,
+      focusedSatellites: (state) => state.satellites.focusedSatellites
+    }),
     ...mapGetters({
       activeFiltersCount: 'filters/activeFiltersCount',
       focusedSatellitesCount: 'satellites/focusedSatellitesCount'
+    })
+  },
+  watch: {
+    activeTab(newTab, oldTab) {
+      // console.log(newTab, oldTab)
+      // console.log(this.activeTab, this.prevTab)
+
+      // this.updateVisibleSatellitesType(newTab)
+
+      // Switch Visible Objects based on active tab
+      if (!newTab || newTab == this.prevTab) {
+        console.log("don't change current visible")
+        return
+      }
+
+      if (newTab) {
+        this.prevTab = newTab
+      }
+
+      if (this.activeTab === 'filters' && this.activeFiltersCount > 0) {
+        console.log('the filter list')
+        this.updateVisibleSatellites(this.filteredSatellites)
+      }
+
+      if (this.activeTab === 'list' && this.focusedSatellitesCount > 0) {
+        console.log('the focus list')
+        this.updateVisibleSatellites([...this.focusedSatellites])
+      }
+    }
+  },
+  methods: {
+    ...mapMutations({
+      updateVisibleSatellites: 'satellites/updateVisibleSatellites',
+      updateVisibleSatellitesType: 'satellites/updateVisibleSatellitesType'
     })
   }
 }

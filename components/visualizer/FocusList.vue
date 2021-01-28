@@ -81,6 +81,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import { mapGetters } from 'vuex'
 import { mapMutations } from 'vuex'
 import Button from '~/components/global/Button.vue'
@@ -114,8 +115,10 @@ export default {
     numSelectedItems() {
       return this.selectedItems.length
     },
+    ...mapState({
+      focusedSatellites: (state) => state.satellites.focusedSatellites
+    }),
     ...mapGetters({
-      focusedSatellites: 'satellites/focusedSatellites',
       focusedSatellitesCount: 'satellites/focusedSatellitesCount'
     })
   },
