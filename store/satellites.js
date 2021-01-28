@@ -90,7 +90,7 @@ export const actions = {
   async getSatellites({ state, commit }) {
     try {
       let satellites = await fetch(
-        `${siteURLLocal}/wp-json/wp/v2/satellites?show_all=true`
+        `${siteURL}/wp-json/wp/v2/satellites?show_all=true`
       ).then((res) => res.json())
 
       let items = {}
@@ -138,7 +138,7 @@ export const actions = {
       ) // minus 1 second so we don't get n + 1 days
 
       let orbits = await fetch(
-        `${siteURLLocal}/wp-json/satdash/v1/satellites/orbits/?startDate=${getDateForApi(
+        `${siteURL}/wp-json/satdash/v1/satellites/orbits/?startDate=${getDateForApi(
           state.targetDate
         )}&endDate=${getDateForApi(endDate)}`
       ).then((res) => res.json())
