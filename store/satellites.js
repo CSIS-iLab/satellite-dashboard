@@ -89,42 +89,39 @@ export const actions = {
    */
   async getSatellites({ state, commit }) {
     try {
-      const endDate = new Date(state.targetDate)
-      endDate.setSeconds(
-        endDate.getSeconds() + state.selectedTimescale.value - 1
-      ) // minus 1 second so we don't get n + 1 days
-
       let satellites = await fetch(
-        `${siteURL}/wp-json/satdash/v1/satellites?startDate=${getDateForApi(
-          state.targetDate
-        )}&endDate=${getDateForApi(endDate)}`
+        `${siteURLLocal}/wp-json/wp/v2/satellites`
       ).then((res) => res.json())
 
       let items = {}
       let activeItems = []
-      // let countries = {
-      //   jurisdiction: new Set(),
-      //   launch: new Set()
-      // }
 
-      // TODO: Update API to return object keyed by ID instead of doing it here.
-      satellites.forEach((sat) => {
-        items[sat.catalog_id] = sat
-        activeItems.push(sat.catalog_id)
-        sat.meta = { ...sat.source1, ...sat.source2 }
-        // countries.jurisdiction.add({
-        //   value: sat.source2.countryOfJurisdiction,
-        //   label: sat.source2.countryOfJurisdiction
-        // })
-        // countries.launch.add({
-        //   value: sat.source1.countryOfLaunch,
-        //   label: sat.source1.countryOfLaunch
-        // })
-      })
+      /**
+       * Todo:
+       * Show manual overrides in ACF fields
+       * Match type/status with spreadsheet
+       * Match country with spreadsheet
+       */
+
+      satellites = satellites
+        .filter((el) => el.status === 'publish')
+        .map(({ id, ag_meta, acf }) => ({
+          PostId: id,
+          CatalogId: acf.catalog_id,
+          acf,
+          ...ag_meta
+        }))
+        .forEach((sat) => {
+          items[sat.acf.catalog_id] = sat
+
+          // By default all items are active!
+          activeItems.push(sat.acf.catalog_id)
+        })
+
+      console.log('get the satellites')
 
       commit('updateSatellites', items)
       commit('updateActiveSatellites', activeItems)
-      // commit('updateCountries', countries)
     } catch (err) {
       console.log(err)
     }
@@ -140,12 +137,6 @@ export const actions = {
         endDate.getSeconds() + state.selectedTimescale.value - 1
       ) // minus 1 second so we don't get n + 1 days
 
-      // let orbits = await fetch(
-      //   `${siteURLLocal}/wp-json/satdash/v1/satellites/orbits/?startDate=${getDateForApi(
-      //     state.targetDate
-      //   )}&endDate=${getDateForApi(endDate)}`
-      // ).then((res) => res.json())
-
       let orbits = await fetch(
         `${siteURLLocal}/wp-json/satdash/v1/satellites/orbits/?startDate=${getDateForApi(
           state.targetDate
@@ -157,6 +148,8 @@ export const actions = {
       if (Array.isArray(orbits)) {
         return
       }
+
+      // Todo: Modify active satellites here to trigger watch in CesiumViewer
 
       console.log('commit')
       commit('updateOrbits', orbits)

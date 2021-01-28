@@ -46,9 +46,6 @@ export default {
     }
   },
   computed: {
-    satellites() {
-      return this.$store.state.satellites.satellites
-    },
     detailedSatelliteInfo() {
       return this.satellites[this.detailedSatellite]
     },
@@ -64,7 +61,6 @@ export default {
     })
   },
   created() {
-    this.$store.dispatch('satellites/getSatellites')
     this.getOrbits()
     this.loading = false
   },
