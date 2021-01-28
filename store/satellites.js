@@ -119,8 +119,9 @@ export const actions = {
         })
 
       console.log('get the satellites')
+      console.log(activeItems)
 
-      commit('updateSatellites', items)
+      commit('updateSatellites', Object.freeze(items))
       commit('updateActiveSatellites', activeItems)
     } catch (err) {
       console.log(err)
@@ -152,7 +153,7 @@ export const actions = {
       // Todo: Modify active satellites here to trigger watch in CesiumViewer
 
       console.log('commit')
-      commit('updateOrbits', orbits)
+      commit('updateOrbits', Object.freeze(orbits))
     } catch (err) {
       console.log(err)
     }
