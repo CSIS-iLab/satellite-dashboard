@@ -202,7 +202,7 @@ export default {
       cesiumService.registerTimeline(timeline)
       timeline.resize()
       timeline.container.style.left = '0px'
-      viewer.clockViewModel.shouldAnimate = true
+      viewer.clockViewModel.shouldAnimate = false
       viewer.clock.onTick.addEventListener(() => {
         this.timelinePoint = Cesium.JulianDate.toDate(viewer.clock.currentTime)
       })
@@ -223,16 +223,23 @@ export default {
         .insertBefore(timeline.container, null)
       cesiumService.deregisterInstance()
     },
+    stopPlayback() {
+      this.isPlaying = false
+      const { viewer } = cesium
+      viewer.clockViewModel.shouldAnimate = false
+    },
     selectNewDate(date) {
-      console.log(date)
+      this.stopPlayback()
       this.updateTargetDate(date)
       this.getOrbits()
     },
     selectPlaybackSpeed(playbackSpeed) {
+      this.stopPlayback()
       const { viewer } = cesium
       viewer.clock.multiplier = playbackSpeed.value
     },
     selectTimescale(timescale) {
+      this.stopPlayback()
       this.updateSelectedTimescale(timescale)
       this.getOrbits()
     },
