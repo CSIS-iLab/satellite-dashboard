@@ -21,4 +21,5 @@ export default {
 <style lang="scss">
 @import '../assets/css/components/post-component';
 @import '../assets/css/pages/post-content';
+@import '../assets/css/pages/page';
 </style>

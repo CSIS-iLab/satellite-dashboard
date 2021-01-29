@@ -3,10 +3,10 @@
     <div class="footer__main">
       <SiteLogo />
       <p class="footer__desc">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum dolores
-        modi adipisci inventore, nihil cumque. Cumque, sit ipsam? Est aperiam
-        doloremque esse nihil? Asperiores provident ullam incidunt qui nostrum
-        nam!
+        The Satellite Dashboard is an analyis and visualization tool to help
+        readers better understand space situational awareness (SSA) data, with a
+        focus on particularly interesting on-orbit activities. Learn more
+        <nuxt-link to="/about">here</nuxt-link>.
       </p>
       <Social />
     </div>

@@ -16,8 +16,8 @@
       </v-select>
     </div>
     <p v-if="totalResults === 0" class="filter-results__no-results">
-      No objects with found that satisfied the filters applied. Try changing
-      your selections or removing a filter.
+      There are no objects in our database that match the selected filters. Try
+      changing your selections or removing a filter.
     </p>
     <vue-good-table
       v-if="totalResults > 0"

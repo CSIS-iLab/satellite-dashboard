@@ -3,6 +3,10 @@
     <h2 class="panel__title" :data-is-faded="isEditable">
       {{ numActiveFilters }} {{ 'filter' | pluralize(numActiveFilters) }}
     </h2>
+    <p>
+      Apply a filter to search for space objects. View an object in orbit using
+      the orbit icon. Pin an object to the focus list using the pin icon.
+    </p>
 
     <div class="filters">
       <form v-if="isEditable" class="form" @submit.prevent>
