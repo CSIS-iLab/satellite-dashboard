@@ -1,3 +1,5 @@
+import Types from '~/assets/data/types.json'
+
 const siteURL = 'https://satdash.wpengine.com'
 const siteURLLocal = 'http://satellite-dashboard.local/'
 
@@ -103,6 +105,8 @@ export const actions = {
        * Match country with spreadsheet
        */
 
+      console.log(Types['10000'])
+
       satellites = satellites
         .filter((el) => el.status === 'publish')
         .map(({ id, ag_meta, acf }) => ({
@@ -112,11 +116,27 @@ export const actions = {
           ...ag_meta
         }))
         .forEach((sat) => {
-          items[sat.acf.catalog_id] = sat
+          let type_status = Types[sat.acf.catalog_id]?.type || 'TBA'
+
+          if (type_status == 'payload') {
+            if (sat.Status == 'active') {
+              type_status = `${type_status}-active`
+            } else {
+              type_status = `${type_status}-inactive`
+            }
+          }
+
+          items[sat.acf.catalog_id] = {
+            ...sat,
+            type_status
+          }
 
           // By default all items are active!
           activeItems.push(sat.acf.catalog_id)
         })
+
+      console.log(items['39508'])
+      console.log(items['23768'])
 
       console.log('Get the satellites.')
 
