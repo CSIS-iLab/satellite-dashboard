@@ -50,6 +50,11 @@ export default {
           id: 'about'
         },
         {
+          title: 'Methodology',
+          url: '/methodology',
+          id: 'methodology'
+        },
+        {
           title: 'Glossary',
           url: '/glossary',
           id: 'glossary'
