@@ -1,0 +1,22 @@
+.status-types {
+  margin: 0;
+  padding: 0;
+
+  li {
+    position: relative;
+
+    + li {
+      margin-top: rem(8);
+    }
+
+    &::before {
+      content: '';
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      margin-right: rem(4);
+      background: var(--status);
+      border-radius: 50%;
+    }
+  }
+}

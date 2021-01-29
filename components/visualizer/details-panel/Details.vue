@@ -12,7 +12,7 @@
             class="sat__basic sat__basic--status"
             :data-status="satellite.Status"
           >
-            {{ status }}
+            {{ statusTypes[satellite.Status].label }}
           </div>
         </dd>
       </div>
@@ -21,7 +21,16 @@
     <dl class="details__advanced">
       <div v-for="item in info.advanced" :key="item.value">
         <dt>{{ item.label }}</dt>
-        <dd>{{ satellite[item.value] || 'N/A' }}</dd>
+        <dd>
+          <template
+            v-if="item.customFormatter && typeof item.formatter === 'function'"
+          >
+            {{ item.formatter(satellite[item.value]) || 'N/A' }}
+          </template>
+          <template v-else>
+            {{ satellite[item.value] || 'N/A' }}
+          </template>
+        </dd>
       </div>
     </dl>
     <div v-if="hasOrbit">
@@ -61,6 +70,7 @@ export default {
     }
   },
   data() {
+    let self = this
     return {
       info: {
         basic: [
@@ -70,10 +80,24 @@ export default {
         advanced: [
           { value: 'Purpose', label: 'Purpose' },
           { value: 'Type', label: 'Type' },
-          { value: 'countryOfJurisdiction', label: 'Country of Jurisdiction' },
+          {
+            value: 'countryOfJurisdiction',
+            label: 'Country of Jurisdiction',
+            customFormatter: true,
+            formatter: function(value) {
+              return self.formatCountries(value)
+            }
+          },
           { value: 'Operator', label: 'Operator' },
           { value: 'LaunchDate', label: 'Launch Date' },
-          { value: 'countryOfLaunch', label: 'Country of Launch Site' },
+          {
+            value: 'countryOfLaunch',
+            label: 'Country of Launch Site',
+            customFormatter: true,
+            formatter: function(value) {
+              return self.formatCountries(value)
+            }
+          },
           { value: 'LaunchSite', label: 'Launch Site' },
           { value: 'LaunchVehicle', label: 'Launch Vehicle' },
           { value: 'Contractor', label: 'Contractor' },
@@ -179,9 +203,6 @@ export default {
         SMA
       }
     },
-    status() {
-      return this.satellite.Status
-    },
     orbitSource() {
       return `${this.formatDate(
         this.satelliteAllOrbits[0].source.last_updated
@@ -191,10 +212,14 @@ export default {
       return this.formatDate(this.satelliteAllOrbits[0].epoch)
     },
     ...mapState({
-      orbits: (state) => state.satellites.orbits
+      orbits: (state) => state.satellites.orbits,
+      statusTypes: (state) => state.satellites.statusTypes
     })
   },
   methods: {
+    formatCountries(countryField) {
+      return countryField.map((d) => d.label).join(' / ')
+    },
     formatDate(date) {
       const event = new Date(date)
 

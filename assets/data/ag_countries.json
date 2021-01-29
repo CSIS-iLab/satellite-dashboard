@@ -1,0 +1,302 @@
+{
+  "US": {
+    "iso": "USA"
+  },
+  "ITSO": {
+    "iso": ""
+  },
+  "UK": {
+    "iso": "GBR"
+  },
+  "NATO": {
+    "iso": ""
+  },
+  "CA": {
+    "iso": "CAN"
+  },
+  "CIS": {
+    "iso": ""
+  },
+  "FGER": {
+    "iso": ""
+  },
+  "INDO": {
+    "iso": "IDN"
+  },
+  "JPN": {
+    "iso": "JPN"
+  },
+  "IT": {
+    "iso": "ITA"
+  },
+  "ESA": {
+    "iso": ""
+  },
+  "IND": {
+    "iso": "IND"
+  },
+  "EUTE": {
+    "iso": ""
+  },
+  "ARGN": {
+    "iso": "ARG"
+  },
+  "AB": {
+    "iso": ""
+  },
+  "PRC": {
+    "iso": "CHN"
+  },
+  "FR": {
+    "iso": "FRA"
+  },
+  "BRAZ": {
+    "iso": "BRA"
+  },
+  "MEX": {
+    "iso": "MEX"
+  },
+  "AUS": {
+    "iso": "AUS"
+  },
+  "RP": {
+    "iso": "PHL"
+  },
+  "GER": {
+    "iso": "DEU"
+  },
+  "NETH": {
+    "iso": "NLD"
+  },
+  "USA": {
+    "iso": "USA"
+  },
+  "SES": {
+    "iso": ""
+  },
+  "SWED": {
+    "iso": "SWE"
+  },
+  "AC": {
+    "iso": ""
+  },
+  "NOR": {
+    "iso": "NOR"
+  },
+  "United Kingdom": {
+    "iso": "GBR"
+  },
+  "IM": {
+    "iso": ""
+  },
+  "SPN": {
+    "iso": "ESP"
+  },
+  "GREC": {
+    "iso": "GRC"
+  },
+  "EUME": {
+    "iso": ""
+  },
+  "THAI": {
+    "iso": "THA"
+  },
+  "TURK": {
+    "iso": "TUR"
+  },
+  "Luxembourg": {
+    "iso": "LUX"
+  },
+  "SKOR": {
+    "iso": "KOR"
+  },
+  "ISRA": {
+    "iso": "ISR"
+  },
+  "MALA": {
+    "iso": "MYS"
+  },
+  "PAKI": {
+    "iso": "PAK"
+  },
+  "NR": {
+    "iso": ""
+  },
+  "Canada": {
+    "iso": "CAN"
+  },
+  "Japan": {
+    "iso": "JPN"
+  },
+  "EGYP": {
+    "iso": "EGY"
+  },
+  "STCT": {
+    "iso": ""
+  },
+  "China": {
+    "iso": "CHN"
+  },
+  "South Korea": {
+    "iso": "KOR"
+  },
+  "France": {
+    "iso": "FRA"
+  },
+  "Brazil": {
+    "iso": "BRA"
+  },
+  "UAE": {
+    "iso": "UAE"
+  },
+  "EUMETSAT/ESA": {
+    "iso": ""
+  },
+  "Spain": {
+    "iso": "ESP"
+  },
+  "Greece": {
+    "iso": "GRC"
+  },
+  "United Arab Emirates": {
+    "iso": "ARE"
+  },
+  "Australia": {
+    "iso": "AUS"
+  },
+  "Russia": {
+    "iso": "RUS"
+  },
+  "USBZ": {
+    "iso": ""
+  },
+  "Indonesia": {
+    "iso": "IDN"
+  },
+  "EUMETSAT": {
+    "iso": ""
+  },
+  "Mexico": {
+    "iso": "MEX"
+  },
+  "KAZ": {
+    "iso": "KAZ"
+  },
+  "Malaysia": {
+    "iso": "MYS"
+  },
+  "India": {
+    "iso": "IND"
+  },
+  "NIG": {
+    "iso": "NGA"
+  },
+  "Sweden": {
+    "iso": "SWE"
+  },
+  "RASC": {
+    "iso": ""
+  },
+  "Norway": {
+    "iso": "NOR"
+  },
+  "VTNM": {
+    "iso": "VNM"
+  },
+  "Turkey": {
+    "iso": "TUR"
+  },
+  "VENZ": {
+    "iso": "VEN"
+  },
+  "Germany": {
+    "iso": "DEU"
+  },
+  "Kazakhstan": {
+    "iso": "KAZ"
+  },
+  "Pakistan": {
+    "iso": "PAK"
+  },
+  "China/Sri Lanka": {
+    "iso": ""
+  },
+  "Sri Lanka": {
+    "iso": "LKA"
+  },
+  "Azerbaijan": {
+    "iso": "AZE"
+  },
+  "AZER": {
+    "iso": "AZE"
+  },
+  "QAT": {
+    "iso": "QAT"
+  },
+  "Bolivia": {
+    "iso": "BOL"
+  },
+  "BOL": {
+    "iso": "BOL"
+  },
+  "FRIT": {
+    "iso": ""
+  },
+  "Argentina": {
+    "iso": "ARG"
+  },
+  "Inda": {
+    "iso": "IND"
+  },
+  "TMMC": {
+    "iso": ""
+  },
+  "Laos": {
+    "iso": "LAO"
+  },
+  "LAOS": {
+    "iso": "LAO"
+  },
+  "Belarus": {
+    "iso": "BLR"
+  },
+  "BELA": {
+    "iso": "BLR"
+  },
+  "BERM": {
+    "iso": "BMU"
+  },
+  "BGR": {
+    "iso": "BGR"
+  },
+  "Algeria": {
+    "iso": "DZA"
+  },
+  "ALG": {
+    "iso": "DZA"
+  },
+  "AGO": {
+    "iso": "AGO"
+  },
+  "BGD": {
+    "iso": "BGD"
+  },
+  "NR (11/19)": {
+    "iso": ""
+  },
+  "NR (4/20)": {
+    "iso": ""
+  },
+  "NR (3/20)": {
+    "iso": ""
+  },
+  "NR (2/20)": {
+    "iso": ""
+  },
+  "NR (j3/20)": {
+    "iso": ""
+  },
+  "TBD": {
+    "iso": ""
+  }
+}

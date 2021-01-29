@@ -1,3 +1,7 @@
+import Types from '~/assets/data/types.json'
+import AGCountries from '~/assets/data/ag_countries.json'
+import CountryISOs from '~/assets/data/country_isos.json'
+
 const siteURL = 'https://satdash.wpengine.com'
 const siteURLLocal = 'http://satellite-dashboard.local/'
 
@@ -30,6 +34,29 @@ const getDateForApi = (targetDate) => {
   )}-${padNumber(targetDate.getDate())}`
 }
 
+const statusTypes = {
+  'payload-active': {
+    label: 'Active Payload',
+    color: 'rgba(233, 131, 40, 1)'
+  },
+  'payload-inactive': {
+    label: 'Inactive Payload',
+    color: 'rgba(200, 56, 16, 1)'
+  },
+  'rocket-body': {
+    label: 'Rocket Body',
+    color: 'rgba(226, 212, 135, 1)'
+  },
+  debris: {
+    label: 'Debris',
+    color: 'rgba(56, 183, 252, 1)'
+  },
+  TBA: {
+    label: 'Uncategorized',
+    color: 'rgba(44, 92, 125, 1)'
+  }
+}
+
 export const state = () => ({
   satellites: {},
   orbits: {},
@@ -38,7 +65,9 @@ export const state = () => ({
   detailedSatellite: null,
   targetDate: new Date(new Date().setHours(0, 0, 0, 0)),
   selectedTimescale: timescales[1],
-  timescales
+  timescales,
+  statusTypes,
+  countriesOfJurisdiction: []
 })
 
 export const getters = {
@@ -56,6 +85,9 @@ export const getters = {
   },
   detailedSatellite: (state) => {
     return state.detailedSatellite
+  },
+  statusTypesKeys: (state) => {
+    return Object.keys(state.statusTypes)
   }
 }
 
@@ -80,6 +112,9 @@ export const mutations = {
   },
   updateDetailedSatellite: (state, satellite) => {
     state.detailedSatellite = satellite
+  },
+  updateCountriesOfJurisdiction: (state, countries) => {
+    state.countriesOfJurisdiction = countries
   }
 }
 
@@ -95,12 +130,14 @@ export const actions = {
 
       let items = {}
       let activeItems = []
+      let countries = new Set()
+      let countriesOfJurisdiction = new Set()
 
       /**
        * Todo:
        * Show manual overrides in ACF fields
-       * Match type/status with spreadsheet
        * Match country with spreadsheet
+       * Dynamically load in status & country spreadsheets
        */
 
       satellites = satellites
@@ -112,16 +149,56 @@ export const actions = {
           ...ag_meta
         }))
         .forEach((sat) => {
-          items[sat.acf.catalog_id] = sat
+          let status_type = Types[sat.acf.catalog_id]?.type || 'TBA'
+
+          if (status_type == 'payload') {
+            if (sat.Status == 'active') {
+              status_type = `${status_type}-active`
+            } else {
+              status_type = `${status_type}-inactive`
+            }
+          }
+
+          // Format country names into standard codes if we can.
+          let countryOfJurisdiction = formatCountries(sat.countryOfJurisdiction)
+          let countryOfJurisdictionIds = countryOfJurisdiction.map((d) => d.id)
+
+          let countryOfLaunch = formatCountries(sat.countryOfLaunch)
+
+          // Store the countryOfJurisdiction so we can filter on it later.
+          countryOfJurisdiction.forEach((country) => {
+            if (countries.has(country.id)) {
+              return
+            }
+            countries.add(country.id)
+            countriesOfJurisdiction.add({
+              value: country.id,
+              label: country.label
+            })
+          })
+
+          items[sat.acf.catalog_id] = {
+            ...sat,
+            countryOfJurisdiction,
+            countryOfLaunch,
+            countryOfJurisdictionIds,
+            Status: status_type
+          }
 
           // By default all items are active!
           activeItems.push(sat.acf.catalog_id)
         })
 
-      console.log('Get the satellites.')
+      countriesOfJurisdiction = [...countriesOfJurisdiction].sort((a, b) =>
+        a.label.localeCompare(b.label)
+      )
 
       commit('updateSatellites', Object.freeze(items))
       commit('updateActiveSatellites', activeItems)
+      commit(
+        'updateCountriesOfJurisdiction',
+        Object.freeze(countriesOfJurisdiction)
+      )
     } catch (err) {
       console.log(err)
     }
@@ -155,4 +232,27 @@ export const actions = {
       console.log(err)
     }
   }
+}
+
+function formatCountries(value) {
+  if (value === undefined) {
+    value = ''
+  }
+
+  let options = value.split('/')
+  let countries = []
+
+  for (let i = 0; i < options.length; i++) {
+    const option = options[i]
+
+    let id = AGCountries[option]?.iso || option
+    let label = CountryISOs[id] || id
+
+    countries.push({
+      id,
+      label
+    })
+  }
+
+  return countries
 }

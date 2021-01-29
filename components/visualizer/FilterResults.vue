@@ -60,6 +60,9 @@
             <div class="sat__id">{{ props.row.catalog_id }}</div>
           </div>
         </div>
+        <div v-else-if="props.column.field == 'country'">
+          {{ formatCountry(props.row.country) }}
+        </div>
         <div v-else-if="props.column.field == 'actions'" class="sat__actions">
           <Button :on-click="(e) => highlightOrbit(e, props.row.catalog_id)">
             <Icon id="orbit" name="orbit" />
@@ -144,6 +147,9 @@ export default {
     })
   },
   methods: {
+    formatCountry(country) {
+      return country.map((d) => d.id).join(' / ')
+    },
     highlightOrbit(e, catalog_id) {
       const { viewer } = cesium
       const entity = viewer.entities.getById(catalog_id)
