@@ -1,4 +1,6 @@
 import Types from '~/assets/data/types.json'
+import AGCountries from '~/assets/data/ag_countries.json'
+import CountryISOs from '~/assets/data/country_isos.json'
 
 const siteURL = 'https://satdash.wpengine.com'
 const siteURLLocal = 'http://satellite-dashboard.local/'
@@ -64,7 +66,8 @@ export const state = () => ({
   targetDate: new Date(new Date().setHours(0, 0, 0, 0)),
   selectedTimescale: timescales[1],
   timescales,
-  statusTypes
+  statusTypes,
+  countriesOfJurisdiction: []
 })
 
 export const getters = {
@@ -109,6 +112,9 @@ export const mutations = {
   },
   updateDetailedSatellite: (state, satellite) => {
     state.detailedSatellite = satellite
+  },
+  updateCountriesOfJurisdiction: (state, countries) => {
+    state.countriesOfJurisdiction = countries
   }
 }
 
@@ -124,15 +130,15 @@ export const actions = {
 
       let items = {}
       let activeItems = []
+      let countries = new Set()
+      let countriesOfJurisdiction = new Set()
 
       /**
        * Todo:
        * Show manual overrides in ACF fields
-       * Match type/status with spreadsheet
        * Match country with spreadsheet
+       * Dynamically load in status & country spreadsheets
        */
-
-      console.log(Types['10000'])
 
       satellites = satellites
         .filter((el) => el.status === 'publish')
@@ -153,8 +159,29 @@ export const actions = {
             }
           }
 
+          // Format country names into standard codes if we can.
+          let countryOfJurisdiction = formatCountries(sat.countryOfJurisdiction)
+          let countryOfJurisdictionIds = countryOfJurisdiction.map((d) => d.id)
+
+          let countryOfLaunch = formatCountries(sat.countryOfLaunch)
+
+          // Store the countryOfJurisdiction so we can filter on it later.
+          countryOfJurisdiction.forEach((country) => {
+            if (countries.has(country.id)) {
+              return
+            }
+            countries.add(country.id)
+            countriesOfJurisdiction.add({
+              value: country.id,
+              label: country.label
+            })
+          })
+
           items[sat.acf.catalog_id] = {
             ...sat,
+            countryOfJurisdiction,
+            countryOfLaunch,
+            countryOfJurisdictionIds,
             Status: status_type
           }
 
@@ -162,10 +189,16 @@ export const actions = {
           activeItems.push(sat.acf.catalog_id)
         })
 
-      console.log('Get the satellites.')
+      countriesOfJurisdiction = [...countriesOfJurisdiction].sort((a, b) =>
+        a.label.localeCompare(b.label)
+      )
 
       commit('updateSatellites', Object.freeze(items))
       commit('updateActiveSatellites', activeItems)
+      commit(
+        'updateCountriesOfJurisdiction',
+        Object.freeze(countriesOfJurisdiction)
+      )
     } catch (err) {
       console.log(err)
     }
@@ -199,4 +232,27 @@ export const actions = {
       console.log(err)
     }
   }
+}
+
+function formatCountries(value) {
+  if (value === undefined) {
+    value = ''
+  }
+
+  let options = value.split('/')
+  let countries = []
+
+  for (let i = 0; i < options.length; i++) {
+    const option = options[i]
+
+    let id = AGCountries[option]?.iso || option
+    let label = CountryISOs[id] || id
+
+    countries.push({
+      id,
+      label
+    })
+  }
+
+  return countries
 }

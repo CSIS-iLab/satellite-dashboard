@@ -108,8 +108,8 @@ export default {
       filterOptions: {
         Name: { value: 'Name', label: 'Name' },
         NoradId: { value: 'NoradId', label: 'Norad ID' },
-        countryOfJurisdiction: {
-          value: 'countryOfJurisdiction',
+        countryOfJurisdictionIds: {
+          value: 'countryOfJurisdictionIds',
           label: 'Country of Jurisdiction'
         },
         Purpose: { value: 'Purpose', label: 'Purpose' },
@@ -119,7 +119,7 @@ export default {
       activeFilterValues: {},
       visibleFilters: [],
       visibleFilterValues: {
-        countryOfJurisdiction: [],
+        countryOfJurisdictionIds: [],
         Name: [],
         NoradId: [],
         Purpose: [],
@@ -145,7 +145,9 @@ export default {
     },
     ...mapState({
       satellites: (state) => state.satellites.satellites,
-      statusTypes: (state) => state.satellites.statusTypes
+      statusTypes: (state) => state.satellites.statusTypes,
+      countriesOfJurisdiction: (state) =>
+        state.satellites.countriesOfJurisdiction
     }),
     ...mapGetters({
       activeSatellites: 'satellites/activeSatellites',
@@ -156,7 +158,6 @@ export default {
     }),
     filterValueOptions() {
       let filters = {
-        countryOfJurisdiction: new Set(),
         Purpose: new Set(),
         Users: new Set(),
         Name: new Set(),
@@ -165,18 +166,8 @@ export default {
 
       const satellites = Object.values(this.satellites)
 
-      const countries = [
-        ...new Set(
-          satellites
-            .map((d) => [d.countryOfJurisdiction, d.countryOfLaunch])
-            .flat()
-        )
-      ]
-      console.log(countries)
-
       for (let i = 0; i < satellites.length; i++) {
         const sat = satellites[i]
-        filters.countryOfJurisdiction.add(sat.countryOfJurisdiction)
         filters.Purpose.add(sat.Purpose)
         filters.Users.add(sat.Operator)
         filters.Name.add(sat.Name)
@@ -194,6 +185,9 @@ export default {
         value: d,
         label: this.statusTypes[d].label
       }))
+
+      // countryOfJurisdiction
+      filters.countryOfJurisdictionIds = this.countriesOfJurisdiction
 
       return filters
     },
@@ -246,8 +240,16 @@ export default {
       const filteredSatellites = Object.values(this.satellites)
         .filter(function(item) {
           for (var key in filters) {
-            if (item[key] !== undefined && filters[key].includes(item[key]))
+            if (item[key] !== undefined && filters[key].includes(item[key])) {
               return true
+            } else if (
+              item[key] !== undefined &&
+              filters[key].some((filterCountryId) =>
+                item[key].includes(filterCountryId)
+              )
+            ) {
+              return true
+            }
           }
           return false
         })
