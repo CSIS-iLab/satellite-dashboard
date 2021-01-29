@@ -83,18 +83,21 @@
           </p>
         </div>
         <div class="post__tag">
-          <h2 class="post__tag-header">Tags</h2>
-          <ul class="post__tag-list" role="list">
-            <li
-              v-for="keyword in keywords"
-              :key="keyword.value"
-              class="post__tag-name"
-            >
-              <nuxt-link :to="`/analysis/?${keyword.state}=${keyword.value}`">{{
-                keyword.label
-              }}</nuxt-link>
-            </li>
-          </ul>
+          <template v-if="keywords.length > 0">
+            <h2 class="post__tag-header">Tags</h2>
+            <ul class="post__tag-list" role="list">
+              <li
+                v-for="keyword in keywords"
+                :key="keyword.value"
+                class="post__tag-name"
+              >
+                <nuxt-link
+                  :to="`/analysis/?${keyword.state}=${keyword.value}`"
+                  >{{ keyword.label }}</nuxt-link
+                >
+              </li>
+            </ul>
+          </template>
         </div>
       </footer>
     </div>
@@ -127,7 +130,7 @@ export default {
       return Object.values(this.satellites)
     },
     relatedSatellites() {
-      if (!this.post.acf.related_satellites.length === -1) {
+      if (!Array.isArray(this.post.acf.related_satellites)) {
         return
       }
 
@@ -175,7 +178,7 @@ export default {
     },
     keywordsSatellites() {
       if (!this.post.acf.keywords_satellites) {
-        return
+        return []
       }
 
       let keywords = []
@@ -209,7 +212,7 @@ export default {
   methods: {
     getKeywords(taxonomy, state) {
       if (!this.post[taxonomy]) {
-        return
+        return []
       }
 
       const keywords = this.post[taxonomy].map((d) => ({
