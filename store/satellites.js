@@ -239,20 +239,12 @@ function formatCountries(value) {
     value = ''
   }
 
-  let options = value.split('/')
-  let countries = []
-
-  for (let i = 0; i < options.length; i++) {
-    const option = options[i]
-
-    let id = AGCountries[option]?.iso || option
-    let label = CountryISOs[id] || id
-
-    countries.push({
-      id,
-      label
-    })
-  }
+  let iso = AGCountries[value] || value
+  let options = iso.split('/').map((d) => d.trim())
+  let countries = options.map((option) => ({
+    id: option,
+    label: CountryISOs[option] || option
+  }))
 
   return countries
 }

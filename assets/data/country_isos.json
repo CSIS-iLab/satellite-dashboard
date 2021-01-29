@@ -217,5 +217,16 @@
   "YEM": "Yemen",
   "ZAF": "South Africa",
   "ZMB": "Zambia",
-  "ZWE": "Zimbabwe"
+  "ZWE": "Zimbabwe",
+  "INT": "Intelsat",
+  "NAT": "North Atlantic Treaty Organization (NATO)",
+  "ESA": "European Space Agency",
+  "EUT": "European Telecommunications Satellite Organization (EUTELSAT)",
+  "ASC": "Arab Satellite Communications Organization",
+  "SES": "SES (Société Européenne des Satellites)",
+  "ASI": "AsiaSat",
+  "INM": "Inmarsat",
+  "EUM": "European Organization for the Exploitation of Meteorological Satellites (EUMETSAT)",
+  "NR": "No Record",
+  "TBD": "Uncataloged"
 }
