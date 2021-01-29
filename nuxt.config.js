@@ -71,7 +71,12 @@ export default {
       ssr: false
     },
     { src: '~/plugins/vue-good-table', ssr: false },
-    { src: '~/plugins/vue-pluralize' }
+    { src: '~/plugins/vue-pluralize' },
+    { src: '~/plugins/server/posts.js' },
+    { src: '~/plugins/server/tags.js' },
+    { src: '~/plugins/server/categories.js' },
+    { src: '~/plugins/server/countries.js' },
+    { src: '~/plugins/server/users.js' }
   ],
   /*
    ** Nuxt.js dev-modules
@@ -152,6 +157,6 @@ export default {
     }
   },
   generate: {
-    routes: dynamicRoutes
+    // routes: dynamicRoutes // No longer need to specify this.
   }
 }
