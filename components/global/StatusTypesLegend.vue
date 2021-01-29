@@ -1,23 +1,23 @@
 <template>
   <ul class="status-types" role="list">
-    <li v-for="key in keys" :key="key" :data-status="key">
-      {{ types[key].label }}
+    <li v-for="key in statusTypesKeys" :key="key" :data-status="key">
+      {{ statusTypes[key].label }}
     </li>
   </ul>
 </template>
 
 <script>
-import StatusTypes from '~/assets/data/status_types.json'
+import { mapState, mapGetters } from 'vuex'
 
 export default {
   name: 'StatusTypesLegend',
   computed: {
-    types() {
-      return StatusTypes
-    },
-    keys() {
-      return Object.keys(this.types)
-    }
+    ...mapState({
+      statusTypes: (state) => state.satellites.statusTypes
+    }),
+    ...mapGetters({
+      statusTypesKeys: 'satellites/statusTypesKeys'
+    })
   }
 }
 </script>

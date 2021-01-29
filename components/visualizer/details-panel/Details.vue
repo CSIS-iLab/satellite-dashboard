@@ -12,7 +12,7 @@
             class="sat__basic sat__basic--status"
             :data-status="satellite.Status"
           >
-            {{ status }}
+            {{ statusTypes[satellite.Status].label }}
           </div>
         </dd>
       </div>
@@ -179,9 +179,6 @@ export default {
         SMA
       }
     },
-    status() {
-      return this.satellite.Status
-    },
     orbitSource() {
       return `${this.formatDate(
         this.satelliteAllOrbits[0].source.last_updated
@@ -191,7 +188,8 @@ export default {
       return this.formatDate(this.satelliteAllOrbits[0].epoch)
     },
     ...mapState({
-      orbits: (state) => state.satellites.orbits
+      orbits: (state) => state.satellites.orbits,
+      statusTypes: (state) => state.satellites.statusTypes
     })
   },
   methods: {

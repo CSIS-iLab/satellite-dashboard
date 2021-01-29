@@ -91,9 +91,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import { mapGetters } from 'vuex'
-import { mapMutations } from 'vuex'
+import { mapState, mapGetters, mapMutations } from 'vuex'
 import Button from '~/components/global/Button.vue'
 import Icon from '~/components/global/Icon.vue'
 import FilterResults from '~/components/visualizer/FilterResults.vue'
@@ -146,11 +144,13 @@ export default {
         .map((d) => this.filterOptions[d])
     },
     ...mapState({
-      satellites: (state) => state.satellites.satellites
+      satellites: (state) => state.satellites.satellites,
+      statusTypes: (state) => state.satellites.statusTypes
     }),
     ...mapGetters({
       activeSatellites: 'satellites/activeSatellites',
       numSatellites: 'satellites/activeSatellitesCount',
+      statusTypesKeys: 'satellites/statusTypesKeys',
       activeFilters: 'filters/activeFilters',
       numActiveFilters: 'filters/activeFiltersCount'
     }),
@@ -160,8 +160,7 @@ export default {
         Purpose: new Set(),
         Users: new Set(),
         Name: new Set(),
-        NoradId: new Set(),
-        Status: new Set()
+        NoradId: new Set()
       }
 
       const satellites = Object.values(this.satellites)
@@ -182,7 +181,6 @@ export default {
         filters.Users.add(sat.Operator)
         filters.Name.add(sat.Name)
         filters.NoradId.add(sat.NoradId)
-        filters.Status.add(sat.Status)
       }
 
       for (const key in filters) {
@@ -190,6 +188,12 @@ export default {
           .sort()
           .map((d) => ({ value: d, label: d }))
       }
+
+      // Status
+      filters.Status = this.statusTypesKeys.map((d) => ({
+        value: d,
+        label: this.statusTypes[d].label
+      }))
 
       return filters
     },
@@ -205,7 +209,7 @@ export default {
           catalog_id,
           Name,
           Status,
-          country: countryOfJurisdiction.substring(0, 3)
+          country: countryOfJurisdiction
         })
       }
 

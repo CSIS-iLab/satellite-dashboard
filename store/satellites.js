@@ -32,6 +32,29 @@ const getDateForApi = (targetDate) => {
   )}-${padNumber(targetDate.getDate())}`
 }
 
+const statusTypes = {
+  'payload-active': {
+    label: 'Active Payload',
+    color: 'rgba(233, 131, 40, 1)'
+  },
+  'payload-inactive': {
+    label: 'Inactive Payload',
+    color: 'rgba(200, 56, 16, 1)'
+  },
+  'rocket-body': {
+    label: 'Rocket Body',
+    color: 'rgba(226, 212, 135, 1)'
+  },
+  debris: {
+    label: 'Debris',
+    color: 'rgba(56, 183, 252, 1)'
+  },
+  TBA: {
+    label: 'Uncategorized',
+    color: 'rgba(44, 92, 125, 1)'
+  }
+}
+
 export const state = () => ({
   satellites: {},
   orbits: {},
@@ -40,7 +63,8 @@ export const state = () => ({
   detailedSatellite: null,
   targetDate: new Date(new Date().setHours(0, 0, 0, 0)),
   selectedTimescale: timescales[1],
-  timescales
+  timescales,
+  statusTypes
 })
 
 export const getters = {
@@ -58,6 +82,9 @@ export const getters = {
   },
   detailedSatellite: (state) => {
     return state.detailedSatellite
+  },
+  statusTypesKeys: (state) => {
+    return Object.keys(state.statusTypes)
   }
 }
 
@@ -116,27 +143,24 @@ export const actions = {
           ...ag_meta
         }))
         .forEach((sat) => {
-          let type_status = Types[sat.acf.catalog_id]?.type || 'TBA'
+          let status_type = Types[sat.acf.catalog_id]?.type || 'TBA'
 
-          if (type_status == 'payload') {
+          if (status_type == 'payload') {
             if (sat.Status == 'active') {
-              type_status = `${type_status}-active`
+              status_type = `${status_type}-active`
             } else {
-              type_status = `${type_status}-inactive`
+              status_type = `${status_type}-inactive`
             }
           }
 
           items[sat.acf.catalog_id] = {
             ...sat,
-            type_status
+            Status: status_type
           }
 
           // By default all items are active!
           activeItems.push(sat.acf.catalog_id)
         })
-
-      console.log(items['39508'])
-      console.log(items['23768'])
 
       console.log('Get the satellites.')
 
