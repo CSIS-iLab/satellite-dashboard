@@ -2,7 +2,10 @@ const siteURL = 'https://satdash.wpengine.com'
 
 export const state = () => ({
   posts: [],
-  tags: []
+  tags: [],
+  categories: [],
+  countries: [],
+  users: []
 })
 
 export const mutations = {
@@ -11,6 +14,15 @@ export const mutations = {
   },
   updateTags: (state, tags) => {
     state.tags = tags
+  },
+  updateCategories: (state, categories) => {
+    state.categories = categories
+  },
+  updateCountries: (state, countries) => {
+    state.countries = countries
+  },
+  updateUsers: (state, users) => {
+    state.users = users
   }
 }
 
@@ -35,7 +47,12 @@ export const actions = {
             modified,
             tags,
             content,
-            coauthors
+            coauthors_full,
+            meta,
+            acf,
+            categories,
+            country,
+            user
           }) => ({
             id,
             slug,
@@ -45,7 +62,12 @@ export const actions = {
             modified,
             tags,
             content,
-            authors: coauthors
+            authors: coauthors_full,
+            meta,
+            acf,
+            categories,
+            country,
+            user
           })
         )
 
@@ -73,6 +95,75 @@ export const actions = {
       }))
 
       commit('updateTags', tags)
+    } catch (err) {
+      console.log(err)
+    }
+  },
+  async getCategories({ state, commit }) {
+    if (state.categories.length) return
+
+    let allCategories = state.posts.reduce((acc, item) => {
+      return acc.concat(item.categories)
+    }, [])
+    allCategories = allCategories.join()
+
+    try {
+      let categories = await fetch(
+        `${siteURL}/wp-json/wp/v2/categories?page=1&per_page=40&include=${allCategories}`
+      ).then((res) => res.json())
+
+      categories = categories.map(({ id, name }) => ({
+        id,
+        name
+      }))
+
+      commit('updateCategories', categories)
+    } catch (err) {
+      console.log(err)
+    }
+  },
+  async getCountries({ state, commit }) {
+    if (state.countries.length) return
+
+    let allCountries = state.posts.reduce((acc, item) => {
+      return acc.concat(item.countries)
+    }, [])
+    allCountries = allCountries.join()
+
+    try {
+      let countries = await fetch(
+        `${siteURL}/wp-json/wp/v2/country?page=1&per_page=40&include=${allCountries}`
+      ).then((res) => res.json())
+
+      countries = countries.map(({ id, name }) => ({
+        id,
+        name
+      }))
+
+      commit('updateCountries', countries)
+    } catch (err) {
+      console.log(err)
+    }
+  },
+  async getUsers({ state, commit }) {
+    if (state.users.length) return
+
+    let allUsers = state.posts.reduce((acc, item) => {
+      return acc.concat(item.users)
+    }, [])
+    allUsers = allUsers.join()
+
+    try {
+      let users = await fetch(
+        `${siteURL}/wp-json/wp/v2/user?page=1&per_page=40&include=${allUsers}`
+      ).then((res) => res.json())
+
+      users = users.map(({ id, name }) => ({
+        id,
+        name
+      }))
+
+      commit('updateUsers', users)
     } catch (err) {
       console.log(err)
     }

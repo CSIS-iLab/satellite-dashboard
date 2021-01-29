@@ -10,43 +10,23 @@
 
   a {
     color: $color-slate-690;
+    text-decoration: underline;
+    text-decoration-color: $color-ltblue-175;
+    text-underline-offset: 0.2em;
 
     &:visited {
       color: $color-black-160;
     }
 
-    @include link-underline(
-      $color: $color-ltblue-175,
-      $thickness: -1px,
-      $hideOnHover: true
-    );
-
     &:hover {
       color: $color-orange-100;
-
-      @include link-underline(
-        $color: $color-orange-140,
-        $thickness: -1px,
-        $hideOnHover: false
-      );
+      text-decoration-color: $color-orange-140;
     }
 
     &:focus {
       color: $color-black-100;
       box-shadow: none;
     }
-  }
-
-  figure:not(.table) {
-    float: right;
-    clear: both;
-    margin-bottom: rem(32px);
-  }
-
-  .image {
-    // width: 33%;
-    max-width: rem(304px);
-    margin-left: rem(48px);
   }
 
   figcaption {
@@ -56,20 +36,13 @@
   }
 
   blockquote {
-    max-width: rem(304px);
-    margin: 0 auto;
-    padding: 0 !important;
-
-    @include breakpoint('medium') {
-      position: relative;
-      float: right;
-      clear: both;
-      margin-left: rem(48px);
-    }
+    position: relative;
+    @extend %post-component--aside;
 
     p {
       @extend %font-post-text-blockquote;
       width: 100%;
+      margin-bottom: rem(8);
 
       &::before {
         content: url('~assets/img/icon-quotes.svg');
@@ -151,6 +124,12 @@
     }
   }
 
+  .easy-footnote {
+    a {
+      text-decoration: none;
+    }
+  }
+
   ul,
   ol {
     @extend %font-post-text-lg-list;
@@ -162,8 +141,6 @@
   }
 
   ul {
-    list-style: none;
-
     li {
       &::before {
         content: '\2022';
@@ -171,4 +148,34 @@
       }
     }
   }
+}
+
+/*----------  Images  ----------*/
+.wp-block-image {
+  width: 100%;
+  max-width: $size__content-max-width;
+  margin: rem(24) auto;
+
+  img {
+    width: 100%;
+    height: auto;
+  }
+
+  .aligncenter {
+    @extend %post-component--center;
+  }
+
+  .alignright,
+  .alignleft {
+    @extend %post-component--aside;
+  }
+
+  .alignwide {
+    @extend %post-component--wide;
+  }
+}
+
+/*----------  Twitter  ----------*/
+.wp-block-embed-twitter {
+  @extend %post-component--aside;
 }

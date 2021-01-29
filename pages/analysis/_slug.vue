@@ -2,47 +2,60 @@
   <article class="post">
     <div class="container">
       <header class="post__header">
-        <!-- <span v-if="eventTypes.items[0]" class="post__category"
-          ><a href="#">{{ eventTypes.items[0].eventType.name }}</a></span
-        > -->
+        <ul v-if="category" class="post__category">
+          <li v-for="cat in category" :key="cat.id">
+            <nuxt-link :to="`/analysis/?categories=${cat.value}`">{{
+              cat.label
+            }}</nuxt-link>
+          </li>
+        </ul>
         <h1 class="post__title">{{ post.title.rendered }}</h1>
         <div class="post__meta">
-          <PostMeta :date="post.date" :authors="post.authors" />
+          <PostMeta
+            :date="post.date"
+            :authors="post.authors"
+            :modified="post.modified"
+          />
         </div>
         <!-- eslint-disable-next-line -->
         <div class="post__excerpt" v-html="post.excerpt.rendered"></div>
-        <!-- <table v-if="satellites.items[0]" class="post__sat-table">
+        <table v-if="relatedSatellites" class="post__sat-table">
           <thead>
             <tr>
               <th>Object Name</th>
               <th>Country</th>
-              <th class="desktop">User</th>
-              <th class="desktop">Operator</th>
+              <th class="desktop-only">User</th>
+              <th class="desktop-only">Operator</th>
               <th></th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="sat in satellites.items" :key="sat.id">
-              <td>{{ sat.satellite.launchVehicle }}</td>
-              <td>{{ sat.satellite.countryOfJurisdiction }}</td>
-              <td class="desktop">
-                NEED DATA FOR USER(IE GOV'T OR COMMERCIAL)
+            <tr v-for="sat in relatedSatellites" :key="sat.catalog_id">
+              <td>{{ sat.name }}</td>
+              <td>{{ sat.country }}</td>
+              <td class="desktop-only">{{ sat.user }}</td>
+              <td class="desktop-only">{{ sat.operator }}</td>
+              <td>
+                <nuxt-link :to="`/?satellites=${sat.catalog_id}`"
+                  >View</nuxt-link
+                >
               </td>
-              <td class="desktop">{{ operator }}</td>
-              <td><a href="#">NEED URL</a></td>
             </tr>
           </tbody>
-        </table> -->
+        </table>
       </header>
 
       <!-- eslint-disable-->
       <section
         class="post__content entry-content"
-        v-html="post.content.rendered"
+        v-html="postContent"
       ></section>
       <!-- eslint-enable-->
       <section class="post__further">
-        <p class="post__further-footnote">FOOTNOTES GO HERE</p>
+        <p class="post__further-footnote">
+          Footnotes & Further Reading will go here.
+        </p>
+        <!-- {{ post.meta.further_reading }} -->
         <!-- <template v-for="reading in furtherReadings">
           <h2 :key="reading.url" class="post__further-header">
             Further Reading
@@ -59,25 +72,32 @@
         </template> -->
       </section>
       <footer class="post__footer">
-        <!-- <div v-if="authors.items[0]" class="post__author-wrapper">
+        <div v-if="post.authors" class="post__author-wrapper">
           <p
-            v-for="author in authors.items"
-            :key="author.id"
+            v-for="author in post.authors"
+            :key="author.user_nicename"
             class="post__author-bio"
           >
-            <span class="post__author-name">{{ author.author.name }}</span>
-            {{ author.author.biography }}
+            <strong>{{ author.display_name }}</strong>
+            {{ author.description }}
           </p>
-        </div> -->
+        </div>
         <div class="post__tag">
-          <h2 class="post__tag-header">Tags</h2>
-          <!-- <ul class="post__tag-list">
-            <li v-for="t in tags.items" :key="t.id" class="post__tag-name">
-              <a href="#">
-                {{ t.tag.name }}
-              </a>
-            </li>
-          </ul> -->
+          <template v-if="keywords.length > 0">
+            <h2 class="post__tag-header">Tags</h2>
+            <ul class="post__tag-list" role="list">
+              <li
+                v-for="keyword in keywords"
+                :key="keyword.value"
+                class="post__tag-name"
+              >
+                <nuxt-link
+                  :to="`/analysis/?${keyword.state}=${keyword.value}`"
+                  >{{ keyword.label }}</nuxt-link
+                >
+              </li>
+            </ul>
+          </template>
         </div>
       </footer>
     </div>
@@ -85,6 +105,7 @@
   </article>
 </template>
 <script>
+import { mapState } from 'vuex'
 import PostMeta from '~/components/global/PostMeta.vue'
 // import Icon from '~/components/global/Icon.vue'
 
@@ -99,24 +120,109 @@ export default {
     }
   },
   computed: {
-    operator() {
-      if (this.satellites.items[0].satellite.operator === null) {
-        return 'N/A'
-      } else {
-        return this.satellites.items[0].satellite.operator
-      }
-    },
-    posts() {
-      return this.$store.state.analysis.posts
-    },
     post() {
       return this.posts.find((el) => el.slug === this.slug)
-    }
+    },
+    postContent() {
+      return `${this.post.content.rendered}<div class="clearfix"></div>`
+    },
+    allSatellitesMeta() {
+      return Object.values(this.satellites)
+    },
+    relatedSatellites() {
+      if (!Array.isArray(this.post.acf.related_satellites)) {
+        return
+      }
+
+      let satellites = []
+      this.post.acf.related_satellites.forEach((sat) => {
+        const { ID } = sat
+        const meta = this.allSatellitesMeta.find((d) => d.post_id === ID)
+
+        if (!meta) {
+          return
+        }
+
+        satellites.push({
+          catalog_id: meta.catalog_id,
+          name: meta.Name,
+          country:
+            meta.countryOfJurisdiction.map((d) => d.label).join(' / ') || 'N/A',
+          user: meta.User || 'N/A',
+          operator: meta.Operator || 'N/A'
+        })
+      })
+
+      return satellites
+    },
+    category() {
+      return this.getKeywords('categories', 'categories')
+    },
+    keywords() {
+      let keywords = [
+        ...this.keywordsSatellites,
+        ...this.keywordsTags,
+        ...this.keywordsCountries,
+        ...this.keywordsUsers
+      ]
+      return keywords
+    },
+    keywordsTags() {
+      return this.getKeywords('tags', 'tags')
+    },
+    keywordsCountries() {
+      return this.getKeywords('country', 'countries')
+    },
+    keywordsUsers() {
+      return this.getKeywords('user', 'users')
+    },
+    keywordsSatellites() {
+      if (!this.post.acf.keywords_satellites) {
+        return []
+      }
+
+      let keywords = []
+      this.post.acf.keywords_satellites.forEach((sat) => {
+        const { ID } = sat
+        const meta = this.allSatellitesMeta.find((d) => d.post_id === ID)
+
+        if (!meta) {
+          return
+        }
+
+        keywords.push({
+          value: ID,
+          label: meta.Name
+        })
+      })
+      return keywords
+    },
+    ...mapState({
+      posts: (state) => state.analysis.posts,
+      satellites: (state) => state.satellites.satellites,
+      tags: (state) => state.analysis.tags,
+      categories: (state) => state.analysis.categories,
+      countries: (state) => state.analysis.countries,
+      users: (state) => state.analysis.users
+    })
   },
-  created() {
-    this.$store.dispatch('analysis/getPosts')
-  },
+  // created() {
+  //   this.$store.dispatch('analysis/getPosts')
+  // },
   methods: {
+    getKeywords(taxonomy, state) {
+      if (!this.post[taxonomy]) {
+        return []
+      }
+
+      const keywords = this.post[taxonomy].map((d) => ({
+        value: d,
+        label: this[state].find((t) => t.id === d)?.name.trim(),
+        state
+      }))
+
+      return keywords
+    },
     formatDate(d) {
       let formattedDate = d
       if (d === this.postDate) {

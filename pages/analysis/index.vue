@@ -26,10 +26,10 @@ export default {
     posts() {
       return this.$store.state.analysis.posts
     }
-  },
-  created() {
-    this.$store.dispatch('analysis/getPosts')
   }
+  // created() {
+  //   this.$store.dispatch('analysis/getPosts')
+  // }
 }
 </script>
 

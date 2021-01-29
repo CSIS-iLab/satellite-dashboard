@@ -39,11 +39,20 @@
   }
 
   &__category {
+    margin: 0;
+    padding: 0;
     @extend %font-ui-text-base-oxygen;
     color: $color-orange-100;
     font-weight: bold;
     text-transform: uppercase;
     text-shadow: 0 rem(4px) rem(4px) rgba(0, 0, 0, 0.25);
+    list-style: none;
+
+    li + li {
+      &::before {
+        content: ', ';
+      }
+    }
   }
 
   &__title {
@@ -133,7 +142,7 @@
       text-transform: uppercase;
     }
 
-    .desktop {
+    .desktop-only {
       display: none;
 
       @include breakpoint('medium') {
@@ -162,9 +171,9 @@
   // Further reading section
 
   &__further {
-    @include full-width-background(rgba(245, 245, 245, 0.9), true);
     padding: 0 calc(50% - #{$size__content-max-width} / 2);
     background-color: rgba(245, 245, 245, 0.9);
+    @include full-width-background(rgba(245, 245, 245, 0.9), true);
 
     @include breakpoint('medium') {
       &::before,
@@ -258,10 +267,6 @@
         margin-bottom: rem(32px);
       }
     }
-
-    &-name {
-      font-weight: bold;
-    }
   }
 
   &__tag {
@@ -269,9 +274,15 @@
       margin-left: rem(32px);
     }
 
+    &-list {
+      margin: 0;
+      padding: 0;
+    }
+
     &-header {
       @extend %font-ui-text-base-oxygen;
       color: $color-white-150;
+      font-weight: 400;
       text-transform: capitalize;
     }
 
@@ -289,7 +300,7 @@
 
       &:not(:last-child)::after {
         content: ',';
-        padding-right: rem(4px);
+        padding-right: rem(8px);
       }
     }
   }
