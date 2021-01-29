@@ -72,6 +72,7 @@ export default {
     },
     { src: '~/plugins/vue-good-table', ssr: false },
     { src: '~/plugins/vue-pluralize' },
+    { src: '~/plugins/server/pages.js' },
     { src: '~/plugins/server/posts.js' },
     { src: '~/plugins/server/tags.js' },
     { src: '~/plugins/server/categories.js' },
