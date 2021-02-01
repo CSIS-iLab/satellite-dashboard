@@ -1,15 +1,6 @@
 const path = require('path')
 import Fiber from 'fibers'
 import Sass from 'sass'
-import axios from 'axios'
-
-let dynamicRoutes = () => {
-  return axios
-    .get('https://satdash.wpengine.com/wp-json/wp/v2/posts?page=1&per_page=20')
-    .then((res) => {
-      return res.data.map((post) => `/analysis/${post.slug}`)
-    })
-}
 
 const customSass = {
   implementation: Sass,
@@ -91,7 +82,7 @@ export default {
   /*
    ** Nuxt.js modules
    */
-  modules: ['@nuxtjs/pwa', '@nuxtjs/style-resources'],
+  modules: ['@nuxtjs/pwa', '@nuxtjs/style-resources', '@nuxtjs/axios'],
   styleResources: {
     scss: [
       './assets/css/abstracts/index.scss'

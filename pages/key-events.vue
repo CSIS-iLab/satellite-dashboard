@@ -13,11 +13,27 @@
         more about the Dashboard's methodology here.
       </p>
     </div>
-    <!-- eslint-disable-->
     <section class="post__content entry-content">
       <p>Coming soon.</p>
+      <vue-good-table
+        mode="remote"
+        :total-rows="totalRecords"
+        :is-loading.sync="isLoading"
+        :pagination-options="{
+          enabled: true,
+          mode: 'pages',
+          perPage: serverParams.perPage,
+          dropdownAllowAll: false
+        }"
+        :rows="rows"
+        :columns="columns"
+        style-class="vgt-table striped"
+        @on-page-change="onPageChange"
+        @on-sort-change="onSortChange"
+        @on-column-filter="onColumnFilter"
+        @on-per-page-change="onPerPageChange"
+      />
     </section>
-    <!-- eslint-enable -->
   </Page>
 </template>
 
@@ -28,6 +44,88 @@ export default {
   layout: 'layout',
   components: {
     Page
+  },
+  async fetch() {
+    const events = await this.$axios.$get(
+      'http://satellite-dashboard.local/wp-json/satdash/v1/close_approaches',
+      {
+        params: this.serverParams
+      }
+    )
+    console.log(events)
+    this.totalRecords = events.total_results
+    this.rows = events.rows
+  },
+  data() {
+    return {
+      isLoading: false,
+      columns: [
+        {
+          label: 'Event Date',
+          field: 'time_of_close_approach'
+        },
+        {
+          label: 'Name',
+          field: 'catalog_id_1'
+        },
+        {
+          label: 'Name',
+          field: 'catalog_id_2'
+        },
+        {
+          label: 'Est. Distance',
+          field: 'min_distance'
+        }
+      ],
+      rows: [],
+      totalRecords: 0,
+      serverParams: {
+        sort: {
+          field: 'time_of_close_approach',
+          type: 'desc'
+        },
+        page: 1,
+        perPage: 50
+      }
+    }
+  },
+  methods: {
+    updateParams(newProps) {
+      this.serverParams = Object.assign({}, this.serverParams, newProps)
+    },
+
+    onPageChange(params) {
+      this.updateParams({ page: params.currentPage })
+      this.loadItems()
+    },
+
+    onPerPageChange(params) {
+      this.updateParams({ perPage: params.currentPerPage })
+      this.loadItems()
+    },
+    onSortChange(params) {
+      console.log(params)
+      console.log(this.columns)
+      console.log(this.columns[params.columnIndex])
+      this.updateParams({
+        sort: [
+          {
+            type: params[0].type,
+            field: params[0].field
+          }
+        ]
+      })
+      this.loadItems()
+    },
+    onColumnFilter(params) {
+      this.updateParams(params)
+      this.loadItems()
+    },
+    // load items is what brings back the rows from server
+    loadItems() {
+      console.log('load items')
+      this.$fetch()
+    }
   }
 }
 </script>
