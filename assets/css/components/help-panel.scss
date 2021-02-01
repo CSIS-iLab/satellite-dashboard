@@ -1,0 +1,60 @@
+.help-panel__content {
+  text-align: left;
+}
+
+.help-title {
+  padding-top: 16px;
+  padding-bottom: 16px;
+  font-size: 20px;
+}
+
+.help-title-line {
+  border-top: 1px solid $color-white-150;
+}
+
+.help-panel__content {
+  margin-bottom: 12px;
+}
+
+.help-layout {
+  display: grid;
+  grid-gap: 16px;
+  grid-template-columns: 1fr 1fr;
+  margin-bottom: 32px;
+}
+
+.help-icon-layout {
+  display: grid;
+  grid-gap: 8px;
+  grid-template-columns: 0.25fr 1fr;
+  align-items: center;
+}
+
+.help-icon-desc {
+  max-width: 120px;
+}
+
+#pan-hand,
+#zoom-hand,
+#rotate-hand,
+#tilt-hand,
+#pan-mouse,
+#zoom-mouse,
+#rotate-mouse {
+  width: 40px;
+  height: 48px;
+}
+
+.tippy-popper {
+  background-color: $color-slate-700;
+  border-radius: 3px;
+}
+
+.tippy-backdrop {
+  background-color: $color-slate-700;
+}
+
+.tippy-tooltip {
+  padding-right: 32px;
+  padding-left: 32px;
+}
