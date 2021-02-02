@@ -97,6 +97,11 @@ export default {
     Icon,
     Toggle
   },
+  props: {
+    isOpen: {
+      type: Boolean
+    }
+  },
   data() {
     return {
       isEditable: false,
@@ -138,6 +143,11 @@ export default {
       }
 
       console.log('show everything')
+    },
+    focusedItems: function(val, oldVal) {
+      if (this.isOpen) {
+        this.updateVisibleSatellites([...this.focusedSatellites])
+      }
     }
   },
   methods: {
@@ -157,7 +167,6 @@ export default {
       }
 
       this.updateFocusedSatellites(newFocusedItems)
-      this.updateVisibleSatellites([...newFocusedItems])
       this.cancelEditing()
     },
     showSatelliteDetails(e, catalog_id) {

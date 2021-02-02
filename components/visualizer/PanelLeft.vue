@@ -30,7 +30,7 @@
         <FilterTab />
       </TabPanel>
       <TabPanel tab="list" class="panel panel--left" scope="panelLeft">
-        <FocusList />
+        <FocusList :is-open="activeTab === 'list'" />
       </TabPanel>
     </TabWrapper>
   </div>
