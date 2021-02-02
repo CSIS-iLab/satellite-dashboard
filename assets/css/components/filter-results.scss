@@ -1,160 +1,141 @@
-.filter-results {
-  position: relative;
-  display: grid;
-  grid-gap: rem(8);
-  grid-template-areas:
-    'total sort'
-    'table table';
-  grid-template-columns: auto min-content;
-  margin-top: rem(24);
-  padding-top: rem(24);
+.visualizer {
+  .filter-results {
+    position: relative;
+    display: grid;
+    grid-gap: rem(8);
+    grid-template-areas:
+      'total sort'
+      'table table';
+    grid-template-columns: auto min-content;
+    margin-top: rem(24);
+    padding-top: rem(24);
 
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: calc(var(--panel-padding-side) * -1);
-    left: calc(var(--panel-padding-side) * -1);
-    display: block;
-    height: 1px;
-    background: $color-white-125;
-  }
-
-  &__total {
-    grid-area: total;
-    @extend %font-ui-heading-section-sm;
-  }
-
-  &__sort {
-    grid-area: sort;
-  }
-
-  &__no-results {
-    grid-area: table;
-    margin-top: rem(16);
-    color: $color-white-150;
-  }
-
-  // Extend table to edge of panel.
-  .vgt-wrap {
-    grid-area: table;
-    margin: 0 calc(var(--panel-padding-side) * -1);
-
-    &__footer {
-      position: sticky;
-      bottom: 0;
-      background: $color-slate-300;
-      border: 0;
-      @include shadow(sm);
-    }
-  }
-
-  .vgt-table {
-    background: transparent;
-    border: 0;
-
-    /* stylelint-disable */
-    table,
-    thead th {
-      /* stylelint-enable */
-      background: transparent;
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: calc(var(--panel-padding-side) * -1);
+      left: calc(var(--panel-padding-side) * -1);
+      display: block;
+      height: 1px;
+      background: $color-white-125;
     }
 
-    /* stylelint-disable-next-line */
-    thead th {
-      --cell-vertical-padding: #{rem(16)};
+    &__total {
+      grid-area: total;
+      @extend %font-ui-heading-section-sm;
+    }
+
+    &__sort {
+      grid-area: sort;
+    }
+
+    &__no-results {
+      grid-area: table;
+      margin-top: rem(16);
       color: $color-white-150;
-      @extend %font-ui-text-base-oxygen;
-      border-bottom-color: $color-white-110;
     }
 
-    /* stylelint-disable-next-line */
-    tbody tr:nth-of-type(odd) {
-      background: $color-slate-700;
-    }
+    // Extend table to edge of panel.
+    .vgt-wrap {
+      grid-area: table;
+      margin: 0 calc(var(--panel-padding-side) * -1);
 
-    td {
-      --cell-vertical-padding: #{rem(12)};
-      color: $color-white-180;
-      @extend %font-ui-text-lg-oxygen;
-      border: 0;
-    }
-
-    th,
-    td {
-      padding: var(--cell-vertical-padding) 0;
-
-      /* stylelint-disable-next-line */
-      + th,
-      + td {
-        padding-right: 0;
-        padding-left: rem(16);
-      }
-
-      &:first-of-type {
-        padding-left: var(--panel-padding-side);
-      }
-
-      &:last-of-type {
-        padding-right: var(--panel-padding-side);
-      }
-    }
-  }
-
-  .footer {
-    &__row-count {
-      display: none;
-    }
-
-    &__navigation {
-      float: none !important;
-      text-align: center;
-
-      &__page-info {
-        color: $color-white-150;
-      }
-
-      &__page-info__current-entry {
-        margin: 0 rem(2);
-        padding: rem(2) rem(4);
-        color: $color-white-170;
-        background: $color-slate-800;
+      &__footer {
+        position: sticky;
+        bottom: 0;
+        background: $color-slate-300;
         border: 0;
-        border-radius: 3px;
+        @include shadow(sm);
+      }
+    }
+
+    .vgt-table {
+      /* stylelint-disable max-nesting-depth, selector-max-compound-selectors */
+      tbody tr:nth-of-type(odd) {
+        background: $color-slate-700;
       }
 
-      &__page-btn {
-        color: $color-white-160;
+      tbody tr:nth-of-type(even) {
+        background: transparent;
+      }
 
-        /* stylelint-disable-next-line */
-        &:not(.disabled):hover {
-          --chevron-color: #{$color-white-100};
-          color: $color-white-100;
+      th,
+      td {
+        &:first-of-type {
+          padding-left: var(--panel-padding-side);
+        }
+
+        &:last-of-type {
+          padding-right: var(--panel-padding-side);
         }
       }
 
-      &__page-btn .chevron {
-        display: inline-block;
-        width: 10px;
-        height: 10px;
-        margin: 0 rem(4);
-        border-right: 2px solid var(--chevron-color, $color-white-160);
-        border-bottom: 2px solid var(--chevron-color, $color-white-160);
-        transform: rotate(var(--chevron));
-        transition: border 0.3s ease-in-out;
+      thead th {
+        --cell-vertical-padding: #{rem(16)};
+      }
 
-        /* stylelint-disable-next-line */
-        &::after {
-          display: none;
+      td {
+        --cell-vertical-padding: #{rem(12)};
+      }
+      /* stylelint-enable */
+    }
+
+    .footer {
+      &__row-count {
+        display: none;
+      }
+
+      &__navigation {
+        float: none !important;
+        text-align: center;
+
+        /* stylelint-disable max-nesting-depth, selector-max-compound-selectors */
+        &__page-info {
+          color: $color-white-150;
         }
-      }
 
-      .left {
-        --chevron: -225deg;
-      }
+        &__page-info__current-entry {
+          margin: 0 rem(2);
+          padding: rem(2) rem(4);
+          color: $color-white-170;
+          background: $color-slate-800;
+          border: 0;
+          border-radius: 3px;
+        }
 
-      .right {
-        --chevron: -45deg;
+        &__page-btn {
+          color: $color-white-160;
+
+          &:not(.disabled):hover {
+            --chevron-color: #{$color-white-100};
+            color: $color-white-100;
+          }
+        }
+
+        &__page-btn .chevron {
+          display: inline-block;
+          width: 10px;
+          height: 10px;
+          margin: 0 rem(4);
+          border-right: 2px solid var(--chevron-color, $color-white-160);
+          border-bottom: 2px solid var(--chevron-color, $color-white-160);
+          transform: rotate(var(--chevron));
+          transition: border 0.3s ease-in-out;
+
+          &::after {
+            display: none;
+          }
+        }
+
+        .left {
+          --chevron: -225deg;
+        }
+
+        .right {
+          --chevron: -45deg;
+        }
+        /* stylelint-enable */
       }
     }
   }

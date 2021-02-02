@@ -186,7 +186,7 @@ export default {
 </script>
 
 <style lang="scss">
-// @import '../assets/css/components/form-input';
+@import '../assets/css/components/vgt-table';
 @import '../assets/css/components/filter-results';
 @import '../assets/css/components/satellite-block';
 </style>

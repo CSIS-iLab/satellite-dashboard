@@ -1,0 +1,16 @@
+.vgt-wrap .vgt-table {
+  th,
+  td {
+    &:first-of-type {
+      padding-left: rem(32);
+    }
+
+    &:last-of-type {
+      padding-right: rem(32);
+    }
+  }
+
+  td {
+    --cell-vertical-padding: #{rem(32)};
+  }
+}

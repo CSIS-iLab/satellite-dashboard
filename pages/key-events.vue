@@ -1,5 +1,5 @@
 <template>
-  <Page title="Key Events" :content-has-bg="false">
+  <Page title="Key Events">
     <div slot="header">
       <p class="page__desc">
         Key Events are automatically highilighted activities that are unique and
@@ -13,8 +13,7 @@
         more about the Dashboard's methodology here.
       </p>
     </div>
-    <section class="post__content entry-content">
-      <p>Coming soon.</p>
+    <section class="post__content">
       <vue-good-table
         mode="remote"
         :total-rows="totalRecords"
@@ -36,7 +35,16 @@
         @on-sort-change="onSortChange"
         @on-column-filter="onColumnFilter"
         @on-per-page-change="onPerPageChange"
-      />
+      >
+        <!-- <template slot="table-row" slot-scope="props">
+          <span v-if="props.column.field == 'time_of_close_approach'">
+            {{ formatDate(props.row.time_of_close_approach) }}
+          </span>
+          <span v-else>
+            {{ props.formattedRow[props.column.field] }}
+          </span>
+        </template> -->
+      </vue-good-table>
     </section>
   </Page>
 </template>
@@ -60,12 +68,16 @@ export default {
     this.rows = events.rows
   },
   data() {
+    const self = this
     return {
       isLoading: false,
       columns: [
         {
           label: 'Event Date',
-          field: 'time_of_close_approach'
+          field: 'time_of_close_approach',
+          formatFn: function(value) {
+            return self.formatDate(value)
+          }
         },
         {
           label: 'Name',
@@ -77,7 +89,10 @@ export default {
         },
         {
           label: 'Est. Distance',
-          field: 'min_distance'
+          field: 'min_distance',
+          formatFn: function(value) {
+            return Number(value).toLocaleString('en-US')
+          }
         }
       ],
       rows: [],
@@ -135,13 +150,30 @@ export default {
     loadItems() {
       console.log('load items')
       this.$fetch()
+    },
+    formatDate(date) {
+      const event = new Date(date)
+
+      const options = {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        timeZone: 'UTC',
+        timeZoneName: 'short',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+      }
+
+      return event.toLocaleString('en-US', options)
     }
   }
 }
 </script>
 
 <style lang="scss">
-@import '../assets/css/components/post-component';
+@import '../assets/css/components/vgt-table';
 @import '../assets/css/pages/post-content';
 @import '../assets/css/pages/page';
+@import '../assets/css/pages/key-events';
 </style>

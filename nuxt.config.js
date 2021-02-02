@@ -126,6 +126,9 @@ export default {
         }
       }
     },
+    splitChunks: {
+      layouts: true
+    },
     /*
      ** You can extend webpack config here
      */
