@@ -14,6 +14,40 @@
       </p>
     </div>
     <section class="post__content">
+      <div class="key-events__filters">
+        <div class="key-events__search">
+          <label for="search" class="form__label"
+            >Search by Object Name or ID</label
+          >
+          <input
+            id="search"
+            v-model="searchTerm"
+            class="form__input form__input--light"
+            type="text"
+            placeholder="Search"
+          />
+          <div class="key-events__search-btns">
+            <Button :on-click="clearSearch" :disabled="searchTerm == ''"
+              >Clear</Button
+            >
+            <Button class="btn--apply" :on-click="searchTable">
+              <Icon id="check" name="check" />
+              Apply
+            </Button>
+          </div>
+        </div>
+        <div class="key-events__date">
+          Date Picker
+        </div>
+        <ul class="key-events__legend" role="list">
+          <li>
+            <strong>{{ formatNumber(totalRecords) }}</strong> events
+          </li>
+          <li>
+            <strong style="font-style: italic;">P</strong>: Predicted Date
+          </li>
+        </ul>
+      </div>
       <vue-good-table
         mode="remote"
         :total-rows="totalRecords"
@@ -50,7 +84,10 @@
         <template slot="table-row" slot-scope="props">
           <!-- eslint-disable -->
           <template v-if="props.column.field == 'time_of_close_approach'">
-            <div v-html="formatDate(props.row.time_of_close_approach)"></div>
+            <div
+              v-html="formatDate(props.row.time_of_close_approach)"
+              :data-prediction="props.row.is_prediction == '1' ? true : false"
+            ></div>
           </template>
           <!-- eslint-enable -->
           <template
@@ -72,6 +109,9 @@
                 {{ props.formattedRow[props.column.field] }}
               </div>
             </div>
+          </template>
+          <template v-else-if="props.column.field === 'min_distance'">
+            {{ formatNumber(props.row.min_distance) }}
           </template>
           <ul
             v-else-if="props.column.field == 'actions'"
@@ -97,19 +137,19 @@
 <script>
 import { mapState } from 'vuex'
 import Page from '~/layout/page'
-// import Button from '~/components/global/Button.vue'
+import Button from '~/components/global/Button.vue'
 import Icon from '~/components/global/Icon.vue'
 
 export default {
   layout: 'layout',
   components: {
     Page,
-    // Button,
+    Button,
     Icon
   },
   async fetch() {
     const events = await this.$axios.$get(
-      'http://satellite-dashboard.local/wp-json/satdash/v1/close_approaches',
+      'https://satdash.wpengine.com/wp-json/satdash/v1/close_approaches',
       {
         params: this.serverParams
       }
@@ -120,6 +160,7 @@ export default {
   data() {
     return {
       isLoading: false,
+      searchTerm: '',
       columns: [
         {
           label: 'Event Date',
@@ -138,10 +179,7 @@ export default {
           label: 'Est. Distance',
           field: 'min_distance',
           sublabel: 'km',
-          tdClass: 'text--right',
-          formatFn: function(value) {
-            return Number(value).toLocaleString('en-US')
-          }
+          tdClass: 'text--right'
         },
         { label: '', field: 'actions', sortable: false }
       ],
@@ -226,6 +264,18 @@ export default {
       const formattedTime = event.toLocaleTimeString('en-US', timeOptions)
 
       return `${formattedDate}<div class="key-events__time">${formattedTime}</div>`
+    },
+    formatNumber(value) {
+      return Number(value).toLocaleString('en-US')
+    },
+    clearSearch() {
+      this.searchTerm = ''
+    },
+    searchTable() {
+      console.log('search the table')
+      // if searching for text, need to associate it with an id
+      // search is server side, send over parameters
+      // update API to accept search term
     }
   }
 }

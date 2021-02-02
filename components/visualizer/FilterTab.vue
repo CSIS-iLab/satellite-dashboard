@@ -73,7 +73,7 @@
         </client-only>
         <div v-show="numVisibleFilters" class="filters__buttons">
           <Button :on-click="removeAllFilters">Remove All</Button>
-          <Button :on-click="applyFilters" type="submit">
+          <Button class="btn--apply" :on-click="applyFilters" type="submit">
             <Icon id="check" name="check" /> Apply
           </Button>
           <Button :on-click="cancelFilters">Cancel</Button>

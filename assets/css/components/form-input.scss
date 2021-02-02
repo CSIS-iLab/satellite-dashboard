@@ -4,13 +4,37 @@
     justify-content: space-between;
     color: $color-white-160;
     @extend %font-ui-text-base-oxygen;
+
+    + .form__input {
+      margin-top: rem(4);
+    }
   }
 
   &__input {
+    width: 100%;
     padding: rem(10) rem(16) rem(12);
-    background: $color-slate-800;
+    color: var(--input-color, $color-white-180);
+    background: var(--input-bg, $color-slate-800);
     border: 0;
     border-radius: 3px;
+    transition: color 0.3s ease-in-out, background 0.3s ease-in-out;
+
+    &--light {
+      --input-bg: #{$color-slate-500};
+    }
+
+    &:hover {
+      --input-bg: #{$color-slate-900};
+    }
+
+    &:focus {
+      --input-bg: #{$color-slate-800};
+    }
+
+    &[disabled] {
+      --input-color: #{$color-white-150};
+      cursor: not-allowed;
+    }
   }
 
   .vs {

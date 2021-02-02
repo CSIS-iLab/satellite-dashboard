@@ -4,6 +4,37 @@
     color: $color-white-160;
     @extend %font-ui-text-sm-oxygen;
   }
+
+  &__filters {
+    display: grid;
+    margin-bottom: rem(32);
+    row-gap: rem(24);
+
+    @include breakpoint('medium') {
+      grid-template-columns: 2fr 1fr;
+      column-gap: rem(64);
+    }
+  }
+
+  &__search {
+    &-btns {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: rem(8);
+    }
+  }
+
+  &__legend {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    color: $color-white-180;
+    @extend %font-ui-heading-section-sm;
+
+    li + li {
+      margin-left: rem(32);
+    }
+  }
 }
 
 .page-layout {
@@ -16,6 +47,21 @@
     justify-content: center;
     margin: 0;
     padding: 0;
+  }
+
+  [data-prediction='true'] {
+    position: relative;
+    width: fit-content;
+
+    &::after {
+      content: 'P';
+      position: absolute;
+      top: 0;
+      left: 100%;
+      margin-left: rem(8);
+      font-weight: bold;
+      font-style: italic;
+    }
   }
 
   .vgt-table {
