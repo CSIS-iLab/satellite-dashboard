@@ -1,6 +1,7 @@
 .status-types {
   margin: 0;
   padding: 0;
+  @extend %font-ui-text-sm-good;
 
   li {
     position: relative;

@@ -9,12 +9,23 @@
     text-align: center;
   }
 
-  &__desc {
+  &__desc,
+  &__sub-desc {
     max-width: $size__content-max-width;
     margin-right: auto;
     margin-left: auto;
+  }
+
+  &__desc {
     color: $color-white-180;
     @extend %font-ui-text-lg-oxygen;
+    line-height: 1.75;
+  }
+
+  &__sub-desc {
+    margin-top: rem(16);
+    color: $color-white-140;
+    @extend %font-ui-text-base-oxygen;
   }
 
   &__content {

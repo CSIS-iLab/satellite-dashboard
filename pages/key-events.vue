@@ -1,17 +1,19 @@
 <template>
   <Page title="Key Events">
-    <div slot="header">
+    <div slot="header" class="page__top">
       <p class="page__desc">
         Key Events are automatically highilighted activities that are unique and
         likely to be of particular interest. Currently, this list only includes
         rendezvous and proximity operation activities in the geosynchronous
         region.
       </p>
-      <p class="page__desc">
+      <p class="page__sub-desc">
         The event summaries shown here are a function of the underlying data,
         which may be missing, incomplete, or have significant uncertainty. Learn
-        more about the Dashboard's methodology here.
+        more about the Dashboard's
+        <nuxt-link to="/methodology">methodology</nuxt-link> here.
       </p>
+      <StatusTypesLegend />
     </div>
     <section class="post__content">
       <div class="key-events__filters">
@@ -153,13 +155,15 @@ import { mapState } from 'vuex'
 import Page from '~/layout/page'
 import Button from '~/components/global/Button.vue'
 import Icon from '~/components/global/Icon.vue'
+import StatusTypesLegend from '~/components/global/StatusTypesLegend'
 
 export default {
   layout: 'layout',
   components: {
     Page,
     Button,
-    Icon
+    Icon,
+    StatusTypesLegend
   },
   async fetch() {
     const events = await this.$axios.$get(

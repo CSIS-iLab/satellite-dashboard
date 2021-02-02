@@ -41,7 +41,6 @@
     position: relative;
     grid-area: legend;
     padding: 0 0 0 rem(32);
-    @extend %font-ui-text-sm-good;
 
     @include breakpoint('xlarge') {
       background: $color-slate-700;

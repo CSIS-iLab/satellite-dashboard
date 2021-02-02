@@ -37,6 +37,26 @@
   }
 }
 
+.page__top {
+  display: grid;
+
+  @include breakpoint('medium') {
+    grid-template-columns: 2fr 1fr;
+    column-gap: rem(64);
+  }
+
+  .status-types {
+    color: $color-white-190;
+    column-count: 2;
+    column-gap: rem(16);
+
+    @include breakpoint('medium') {
+      grid-column: 2;
+      grid-row: 1;
+    }
+  }
+}
+
 .page-layout {
   .sat__basic--status::before {
     align-self: center;
