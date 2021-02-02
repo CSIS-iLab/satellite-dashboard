@@ -25,6 +25,10 @@
           perPage: serverParams.perPage,
           dropdownAllowAll: false
         }"
+        :sort-options="{
+          enabled: true,
+          initialSortBy: serverParams.sort
+        }"
         :rows="rows"
         :columns="columns"
         style-class="vgt-table striped"
@@ -52,7 +56,6 @@ export default {
         params: this.serverParams
       }
     )
-    console.log(events)
     this.totalRecords = events.total_results
     this.rows = events.rows
   },
@@ -80,10 +83,16 @@ export default {
       rows: [],
       totalRecords: 0,
       serverParams: {
-        sort: {
-          field: 'time_of_close_approach',
-          type: 'desc'
-        },
+        sort: [
+          {
+            field: 'time_of_close_approach',
+            type: 'desc'
+          },
+          {
+            field: 'min_distance',
+            type: 'asc'
+          }
+        ],
         page: 1,
         perPage: 50
       }
@@ -104,16 +113,17 @@ export default {
       this.loadItems()
     },
     onSortChange(params) {
-      console.log(params)
-      console.log(this.columns)
-      console.log(this.columns[params.columnIndex])
+      // Allow for sorting by multiple columns
+      let updatedSort = []
+      params.forEach((param) => {
+        updatedSort.push({
+          type: param.type,
+          field: param.field
+        })
+      })
+
       this.updateParams({
-        sort: [
-          {
-            type: params[0].type,
-            field: params[0].field
-          }
-        ]
+        sort: updatedSort
       })
       this.loadItems()
     },
