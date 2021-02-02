@@ -37,7 +37,21 @@
           </div>
         </div>
         <div class="key-events__date">
-          Date Picker
+          <label class="form__label">Search Events between these Dates</label>
+          <client-only>
+            <div class="timeline__date-label">
+              Date
+              <Icon id="calendar" name="calendar" />
+            </div>
+            <date-picker
+              v-model="selectedDate"
+              placeholder="MM/DD/YYYY"
+              format="MM/dd/yyyy"
+              calendar-class="datepicker__calendar"
+              input-class="datepicker__input"
+              @selected="filterDates"
+            />
+          </client-only>
         </div>
         <ul class="key-events__legend" role="list">
           <li>
@@ -161,6 +175,7 @@ export default {
     return {
       isLoading: false,
       searchTerm: '',
+      selectedDate: null,
       columns: [
         {
           label: 'Event Date',
@@ -276,6 +291,9 @@ export default {
       // if searching for text, need to associate it with an id
       // search is server side, send over parameters
       // update API to accept search term
+    },
+    filterDates() {
+      console.log('filter by date')
     }
   }
 }
