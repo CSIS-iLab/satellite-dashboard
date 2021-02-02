@@ -157,6 +157,7 @@ export default {
       }
 
       this.updateFocusedSatellites(newFocusedItems)
+      this.updateVisibleSatellites([...newFocusedItems])
       this.cancelEditing()
     },
     showSatelliteDetails(e, catalog_id) {
@@ -165,7 +166,8 @@ export default {
     },
     ...mapMutations({
       updateFocusedSatellites: 'satellites/updateFocusedSatellites',
-      updateDetailedSatellite: 'satellites/updateDetailedSatellite'
+      updateDetailedSatellite: 'satellites/updateDetailedSatellite',
+      updateVisibleSatellites: 'satellites/updateVisibleSatellites'
     })
   }
 }
