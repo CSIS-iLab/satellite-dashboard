@@ -77,7 +77,8 @@ export default {
     { src: '~/plugins/server/tags.js' },
     { src: '~/plugins/server/categories.js' },
     { src: '~/plugins/server/countries.js' },
-    { src: '~/plugins/server/users.js' }
+    { src: '~/plugins/server/users.js' },
+    { src: '~/plugins/server/glossary.js' }
   ],
   /*
    ** Nuxt.js dev-modules
