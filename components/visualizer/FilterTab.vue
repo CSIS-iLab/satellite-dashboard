@@ -3,6 +3,10 @@
     <h2 class="panel__title" :data-is-faded="isEditable">
       {{ numActiveFilters }} {{ 'filter' | pluralize(numActiveFilters) }}
     </h2>
+    <p>
+      Apply a filter to search for space objects. View an object in orbit using
+      the orbit icon. Pin an object to the focus list using the pin icon.
+    </p>
 
     <div class="filters">
       <form v-if="isEditable" class="form" @submit.prevent>
@@ -91,9 +95,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import { mapGetters } from 'vuex'
-import { mapMutations } from 'vuex'
+import { mapState, mapGetters, mapMutations } from 'vuex'
 import Button from '~/components/global/Button.vue'
 import Icon from '~/components/global/Icon.vue'
 import FilterResults from '~/components/visualizer/FilterResults.vue'
@@ -110,8 +112,8 @@ export default {
       filterOptions: {
         Name: { value: 'Name', label: 'Name' },
         NoradId: { value: 'NoradId', label: 'Norad ID' },
-        countryOfJurisdiction: {
-          value: 'countryOfJurisdiction',
+        countryOfJurisdictionIds: {
+          value: 'countryOfJurisdictionIds',
           label: 'Country of Jurisdiction'
         },
         Purpose: { value: 'Purpose', label: 'Purpose' },
@@ -121,7 +123,7 @@ export default {
       activeFilterValues: {},
       visibleFilters: [],
       visibleFilterValues: {
-        countryOfJurisdiction: [],
+        countryOfJurisdictionIds: [],
         Name: [],
         NoradId: [],
         Purpose: [],
@@ -147,33 +149,20 @@ export default {
     },
     filterValueOptions() {
       let filters = {
-        countryOfJurisdiction: new Set(),
         Purpose: new Set(),
         Users: new Set(),
         Name: new Set(),
-        NoradId: new Set(),
-        Status: new Set()
+        NoradId: new Set()
       }
 
       const satellites = Object.values(this.satellites)
 
-      const countries = [
-        ...new Set(
-          satellites
-            .map((d) => [d.countryOfJurisdiction, d.countryOfLaunch])
-            .flat()
-        )
-      ]
-      console.log(countries)
-
       for (let i = 0; i < satellites.length; i++) {
         const sat = satellites[i]
-        filters.countryOfJurisdiction.add(sat.countryOfJurisdiction)
         filters.Purpose.add(sat.Purpose)
         filters.Users.add(sat.Operator)
         filters.Name.add(sat.Name)
         filters.NoradId.add(sat.NoradId)
-        filters.Status.add(sat.Status)
       }
 
       for (const key in filters) {
@@ -181,6 +170,15 @@ export default {
           .sort()
           .map((d) => ({ value: d, label: d }))
       }
+
+      // Status
+      filters.Status = this.statusTypesKeys.map((d) => ({
+        value: d,
+        label: this.statusTypes[d].label
+      }))
+
+      // countryOfJurisdiction
+      filters.countryOfJurisdictionIds = this.countriesOfJurisdiction
 
       return filters
     },
@@ -196,7 +194,7 @@ export default {
           catalog_id,
           Name,
           Status,
-          country: countryOfJurisdiction.substring(0, 3)
+          country: countryOfJurisdiction
         })
       }
 
@@ -206,13 +204,17 @@ export default {
     ...mapState({
       satellites: (state) => state.satellites.satellites,
       filteredSatellites: (state) => state.satellites.filteredSatellites,
-      activeFilters: (state) => state.filters.activeFilters
+      activeFilters: (state) => state.filters.activeFilters,
+      statusTypes: (state) => state.satellites.statusTypes,
+      countriesOfJurisdiction: (state) =>
+        state.satellites.countriesOfJurisdiction
     }),
     ...mapGetters({
       satelliteCatalogIds: 'satellites/satelliteCatalogIds',
       numSatellites: 'satellites/filteredSatellitesCount',
-      numActiveFilters: 'filters/activeFiltersCount'
-    })
+      numActiveFilters: 'filters/activeFiltersCount',
+      statusTypesKeys: 'satellites/statusTypesKeys',
+    }}
   },
   methods: {
     editFilters() {
@@ -243,8 +245,16 @@ export default {
       const filteredSatellites = Object.values(this.satellites)
         .filter(function(item) {
           for (var key in filters) {
-            if (item[key] !== undefined && filters[key].includes(item[key]))
+            if (item[key] !== undefined && filters[key].includes(item[key])) {
               return true
+            } else if (
+              item[key] !== undefined &&
+              filters[key].some((filterCountryId) =>
+                item[key].includes(filterCountryId)
+              )
+            ) {
+              return true
+            }
           }
           return false
         })

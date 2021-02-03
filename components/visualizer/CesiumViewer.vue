@@ -40,8 +40,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import { mapMutations } from 'vuex'
+import { mapMutations, mapState, mapGetters } from 'vuex'
 import Button from '~/components/global/Button.vue'
 import Icon from '~/components/global/Icon.vue'
 import cesiumServiceProvider from '~/services/cesium-service'
@@ -59,6 +58,7 @@ const RadDeg = 180 / Math.PI
 const DegRad = Math.PI / 180
 
 let Cesium, viewer, pathMaterial
+let entityColors = {}
 
 export default {
   components: {
@@ -115,8 +115,13 @@ export default {
     }
   },
   computed: {
+    ...mapState({
+      satellites: (state) => state.satellites.satellites,
+      statusTypes: (state) => state.satellites.statusTypes
+    }),
     ...mapGetters({
-      satelliteCatalogIds: 'satellites/satelliteCatalogIds'
+      satelliteCatalogIds: 'satellites/satelliteCatalogIds',
+      statusTypesKeys: 'satellites/statusTypesKeys'
     })
   },
   watch: {
@@ -182,7 +187,21 @@ export default {
         }
       })
 
+      // Set colors for the types
       pathMaterial = new Cesium.PolylineArrowMaterialProperty(Cesium.Color.BLUE)
+
+      for (let i = 0; i < this.statusTypesKeys.length; i++) {
+        const type = this.statusTypesKeys[i]
+        const color = Cesium.Color.fromCssColorString(
+          this.statusTypes[type].color
+        )
+
+        entityColors[type] = {
+          point: color,
+          path: new Cesium.PolylineArrowMaterialProperty(color)
+        }
+      }
+
       /* if this.satellitesHaveLoaded is true then API beat Cesium to it
       and we didn't process data when watch handler fired */
       if (this.satellitesHaveLoaded) {
@@ -241,6 +260,8 @@ export default {
 
         const orbit = this.compileOrbits(orbits, CRFtoTRF, epjd)
 
+        const status = this.satellites[catalog_id].Status
+
         viewer.entities.add({
           id: catalog_id,
           // name: `${catalog_id}: ${name}`,
@@ -256,16 +277,14 @@ export default {
           ]),
           position: orbit,
           point: {
-            pixelSize: 7,
-            color: Cesium.Color.RED,
-            outlineColor: Cesium.Color.WHITE,
-            outlineWidth: 1
+            pixelSize: 6,
+            color: entityColors[status].point
           },
           path: {
             resolution: 2000,
-            material: pathMaterial,
-            width: 6,
-            show: i === 0
+            material: entityColors[status].path,
+            width: 4,
+            show: false
           }
         })
       })

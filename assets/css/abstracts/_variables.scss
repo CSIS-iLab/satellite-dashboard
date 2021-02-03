@@ -57,11 +57,11 @@ $color-blue-170: rgba(67, 85, 96, 0.7);
 $color-focus: rgba(82, 175, 225, 1);
 
 $status: (
-  active: rgba(233, 131, 40, 1),
-  inactive: rgba(200, 56, 16, 1),
-  rocketbody: rgba(226, 212, 135, 1),
+  payload-active: rgba(233, 131, 40, 1),
+  payload-inactive: rgba(200, 56, 16, 1),
+  rocket-body: rgba(226, 212, 135, 1),
   debris: rgba(56, 183, 252, 1),
-  uncategorized: rgba(44, 92, 125, 1)
+  TBA: rgba(44, 92, 125, 1)
 );
 
 /*----------  Fonts  ----------*/

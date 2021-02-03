@@ -33,10 +33,18 @@
           <Details :id="id" :satellite="satellite" />
         </TabPanel>
         <TabPanel tab="events" scope="detailsPanel">
-          Events goes here!
+          <p>
+            This object has no cataloged key events yet. Learn more about the
+            Dashboard's latest
+            <nuxt-link to="/key-events">key events</nuxt-link> here.
+          </p>
         </TabPanel>
         <TabPanel tab="analysis" scope="detailsPanel">
-          Analysis goes here!
+          <p>
+            This object does not appear in any Dashboard analysis pieces. See
+            the full <nuxt-link to="/analysis">analysis</nuxt-link> archive
+            here.
+          </p>
         </TabPanel>
       </div>
     </TabWrapper>

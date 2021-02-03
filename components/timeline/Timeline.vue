@@ -86,13 +86,7 @@
       </v-select>
     </div>
     <div class="timeline__legend">
-      <ul role="list">
-        <li data-status="active">Payload/active</li>
-        <li>Payload/inactive</li>
-        <li>Rocket Body</li>
-        <li>Debris</li>
-        <li>Uncategorized</li>
-      </ul>
+      <StatusTypesLegend />
     </div>
   </div>
 </template>
@@ -102,6 +96,7 @@ import { mapActions } from 'vuex'
 import { mapMutations } from 'vuex'
 import Button from '~/components/global/Button'
 import Icon from '~/components/global/Icon'
+import StatusTypesLegend from '~/components/global/StatusTypesLegend'
 
 import cesiumServiceProvider from '../../services/cesium-service'
 const cesiumService = cesiumServiceProvider()
@@ -130,7 +125,7 @@ const playbackSpeeds = [
 let cesium
 
 export default {
-  components: { Button, Icon },
+  components: { Button, Icon, StatusTypesLegend },
   props: {
     selectedDate: {
       type: Date,
@@ -202,7 +197,7 @@ export default {
       cesiumService.registerTimeline(timeline)
       timeline.resize()
       timeline.container.style.left = '0px'
-      viewer.clockViewModel.shouldAnimate = true
+      viewer.clockViewModel.shouldAnimate = false
       viewer.clock.onTick.addEventListener(() => {
         this.timelinePoint = Cesium.JulianDate.toDate(viewer.clock.currentTime)
       })
@@ -223,16 +218,23 @@ export default {
         .insertBefore(timeline.container, null)
       cesiumService.deregisterInstance()
     },
+    stopPlayback() {
+      this.isPlaying = false
+      const { viewer } = cesium
+      viewer.clockViewModel.shouldAnimate = false
+    },
     selectNewDate(date) {
-      console.log(date)
+      this.stopPlayback()
       this.updateTargetDate(date)
       this.getOrbits()
     },
     selectPlaybackSpeed(playbackSpeed) {
+      this.stopPlayback()
       const { viewer } = cesium
       viewer.clock.multiplier = playbackSpeed.value
     },
     selectTimescale(timescale) {
+      this.stopPlayback()
       this.updateSelectedTimescale(timescale)
       this.getOrbits()
     },

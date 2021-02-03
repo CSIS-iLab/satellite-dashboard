@@ -2,10 +2,9 @@
   <div class="focus-list">
     <h2 class="panel__title">Focus List</h2>
     <p>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-      veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-      commodo consequat.
+      Objects pinned to this list will appear in the visualization. Learn more
+      about an object by clicking its information icon. Edit this list to remove
+      an object.
     </p>
     <ul class="focus-list__options" role="list">
       <li>
