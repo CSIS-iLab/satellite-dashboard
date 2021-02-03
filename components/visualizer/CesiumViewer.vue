@@ -126,7 +126,7 @@ export default {
   },
   watch: {
     satelliteOrbits: 'processNewData',
-    visibleSatellites: 'processNewData'
+    visibleSatellites: 'toggleObjectVisibility'
   },
   beforeDestroy() {
     Cesium = null
@@ -165,9 +165,15 @@ export default {
       viewer.clock.clockRange = Cesium.ClockRange.CLAMP
 
       viewer.selectedEntityChanged.addEventListener((entity) => {
+        const entities = viewer.entities.values
+        entities.forEach((e) => {
+          e.path.show = false
+        })
+
         if (!entity) {
           return
         }
+
         entity.path.show = true
         this.showSatelliteDetails(entity.id)
       })
@@ -499,6 +505,12 @@ export default {
         viewer.trackedEntity = undefined
         viewer.trackedEntity = trackedEntity
       }
+    },
+    toggleObjectVisibility() {
+      const entities = viewer.entities.values
+      entities.forEach((entity) => {
+        entity.show = this.visibleSatellites.includes(entity.id)
+      })
     },
     toggleSunlight() {
       this.showSunlight = !this.showSunlight
