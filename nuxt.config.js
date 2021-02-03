@@ -13,10 +13,10 @@ let dynamicRoutes = () => {
 
 const customSass = {
   implementation: Sass,
-  webpackImporter: false,
+  // webpackImporter: false,
   sassOptions: {
     fiber: Fiber,
-    includePaths: ['node_modules']
+    includePaths: ['node_modules', 'node_modules/vue2-datepicker/scss/']
   },
   sourceMap: process.env.NODE_ENV === 'production'
 }

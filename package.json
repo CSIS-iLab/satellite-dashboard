@@ -34,7 +34,7 @@
     "vue-cesium": "^2.1.9",
     "vue-good-table": "^2.21.1",
     "vue-select": "^3.10.8",
-    "vuejs-datepicker": "^1.6.2"
+    "vue2-datepicker": "^3.8.2"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^2.0.0",
@@ -53,8 +53,8 @@
     "node-sass": "^4.13.1",
     "postcss-preset-env": "^6.7.0",
     "prettier": "^1.19.1",
-    "sass": "^1.26.3",
-    "sass-loader": "^8.0.2",
+    "sass": "^1.32.6",
+    "sass-loader": "^10.1.1",
     "stylelint": "^13.1.0",
     "stylelint-config-sass-guidelines": "^7.0.0",
     "stylelint-order": "^4.0.0",
