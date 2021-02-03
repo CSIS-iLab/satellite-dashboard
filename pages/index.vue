@@ -5,7 +5,7 @@
     <template v-else>
       <CesiumViewer
         :satellite-orbits="orbits"
-        :active-satellites="activeSatellites"
+        :visible-satellites="visibleSatellites"
         :selected-date="targetDate"
         :selected-timescale="selectedTimescale.value"
       />
@@ -27,7 +27,6 @@
 <script>
 import { mapActions } from 'vuex'
 import { mapState } from 'vuex'
-import { mapGetters } from 'vuex'
 import CesiumViewer from '~/components/visualizer/CesiumViewer'
 import PanelLeft from '~/components/visualizer/PanelLeft'
 import Timeline from '~/components/timeline/Timeline'
@@ -52,13 +51,11 @@ export default {
     ...mapState({
       satellites: (state) => state.satellites.satellites,
       orbits: (state) => state.satellites.orbits,
+      visibleSatellites: (state) => state.satellites.visibleSatellites,
+      detailedSatellite: (state) => state.satellites.detailedSatellite,
       targetDate: (state) => state.satellites.targetDate,
       timescales: (state) => state.satellites.timescales,
       selectedTimescale: (state) => state.satellites.selectedTimescale
-    }),
-    ...mapGetters({
-      activeSatellites: 'satellites/activeSatellites',
-      detailedSatellite: 'satellites/detailedSatellite'
     })
   },
   created() {

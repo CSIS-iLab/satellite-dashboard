@@ -70,7 +70,7 @@ export default {
       type: Object,
       default: () => {}
     },
-    activeSatellites: {
+    visibleSatellites: {
       type: Array,
       default: () => []
     },
@@ -120,12 +120,13 @@ export default {
       statusTypes: (state) => state.satellites.statusTypes
     }),
     ...mapGetters({
+      satelliteCatalogIds: 'satellites/satelliteCatalogIds',
       statusTypesKeys: 'satellites/statusTypesKeys'
     })
   },
   watch: {
-    // activeSatellites: 'processNewData'
-    satelliteOrbits: 'processNewData'
+    satelliteOrbits: 'processNewData',
+    visibleSatellites: 'toggleObjectVisibility'
   },
   beforeDestroy() {
     Cesium = null
@@ -164,9 +165,15 @@ export default {
       viewer.clock.clockRange = Cesium.ClockRange.CLAMP
 
       viewer.selectedEntityChanged.addEventListener((entity) => {
+        const entities = viewer.entities.values
+        entities.forEach((e) => {
+          e.path.show = false
+        })
+
         if (!entity) {
           return
         }
+
         entity.path.show = true
         this.showSatelliteDetails(entity.id)
       })
@@ -246,7 +253,7 @@ export default {
       // For each object, calculate its position & orbit
       // Calculations pulled from: https://github.com/ut-astria/AstriaGraph/blob/master/main.js & https://github.com/ut-astria/AstriaGraph/blob/master/celemech.js
 
-      this.activeSatellites.forEach((sat, i) => {
+      this.visibleSatellites.forEach((sat, i) => {
         if (!this.satelliteOrbits[sat]) {
           return
         }
@@ -494,10 +501,16 @@ export default {
 
       if (Cesium.defined(viewer.trackedEntity)) {
         // when tracking do not reset to default view but to default view of tracked entity
-        const trackedEntity = viewer.trackedEntity
+        // const trackedEntity = viewer.trackedEntity
         viewer.trackedEntity = undefined
-        viewer.trackedEntity = trackedEntity
+        // viewer.trackedEntity = trackedEntity
       }
+    },
+    toggleObjectVisibility() {
+      const entities = viewer.entities.values
+      entities.forEach((entity) => {
+        entity.show = this.visibleSatellites.includes(entity.id)
+      })
     },
     toggleSunlight() {
       this.showSunlight = !this.showSunlight

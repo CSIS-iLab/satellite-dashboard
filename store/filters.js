@@ -3,11 +3,8 @@ export const state = () => ({
 })
 
 export const getters = {
-  activeFilters: (state) => {
-    return state.activeFilters
-  },
-  activeFiltersCount: (state, getters) => {
-    return getters.activeFilters.length
+  activeFiltersCount: (state) => {
+    return state.activeFilters.length
   }
 }
 

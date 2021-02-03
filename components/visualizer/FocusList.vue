@@ -80,6 +80,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import { mapGetters } from 'vuex'
 import { mapMutations } from 'vuex'
 import Button from '~/components/global/Button.vue'
@@ -94,6 +95,11 @@ export default {
     Checkbox,
     Icon,
     Toggle
+  },
+  props: {
+    isOpen: {
+      type: Boolean
+    }
   },
   data() {
     return {
@@ -113,8 +119,10 @@ export default {
     numSelectedItems() {
       return this.selectedItems.length
     },
+    ...mapState({
+      focusedSatellites: (state) => state.satellites.focusedSatellites
+    }),
     ...mapGetters({
-      focusedSatellites: 'satellites/focusedSatellites',
       focusedSatellitesCount: 'satellites/focusedSatellitesCount'
     })
   },
@@ -134,6 +142,11 @@ export default {
       }
 
       console.log('show everything')
+    },
+    focusedItems: function(val, oldVal) {
+      if (this.isOpen) {
+        this.updateVisibleSatellites([...this.focusedSatellites])
+      }
     }
   },
   methods: {
@@ -161,7 +174,8 @@ export default {
     },
     ...mapMutations({
       updateFocusedSatellites: 'satellites/updateFocusedSatellites',
-      updateDetailedSatellite: 'satellites/updateDetailedSatellite'
+      updateDetailedSatellite: 'satellites/updateDetailedSatellite',
+      updateVisibleSatellites: 'satellites/updateVisibleSatellites'
     })
   }
 }
