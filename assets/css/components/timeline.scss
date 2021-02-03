@@ -152,6 +152,7 @@
     }
 
     &-current {
+      position: relative;
       @extend %font-ui-heading-section-sm;
 
       .icon {
@@ -249,123 +250,6 @@
 .cesium-viewer .cesium-widget-credits,
 .cesium-timeline-ticTiny {
   display: none !important;
-}
-
-/*----------  Date Picker  ----------*/
-.timeline__container {
-  .datepicker {
-    &__calendar {
-      bottom: 0;
-      padding: 1em;
-      background: $color-slate-700;
-      border: 0;
-      border-radius: 2px;
-    }
-
-    &__input {
-      width: 8em;
-      padding: 0 1em;
-      color: #fff;
-      background: #222;
-      border: 0;
-
-      &:focus {
-        background: #333;
-        outline: 0;
-      }
-    }
-  }
-
-  .vdp-datepicker {
-    position: absolute;
-    top: 0;
-    width: 100%;
-    text-align: center;
-
-    header {
-      color: $color-white-170;
-      @extend %font-ui-heading-section-md;
-      font-weight: 500;
-
-      /* stylelint-disable */
-      .prev::after,
-      .next::after {
-        /* stylelint-enable */
-        top: 45% !important;
-        display: inline-block;
-        width: 8px;
-        height: 8px;
-        border: 0;
-        border-right: 2px solid var(--arrow-color, $color-white-170);
-        border-bottom: 2px solid var(--arrow-color, $color-white-170);
-      }
-
-      /* stylelint-disable-next-line */
-      .prev::after {
-        transform: rotate(-225deg);
-      }
-
-      /* stylelint-disable-next-line */
-      .next::after {
-        transform: rotate(-45deg);
-      }
-
-      /* stylelint-disable-next-line */
-      span {
-        transition: color 0.3s ease-in-out;
-      }
-
-      /* stylelint-disable-next-line */
-      *:hover {
-        --arrow-color: #{$color-orange-100};
-        color: $color-orange-100;
-        background: transparent !important;
-      }
-    }
-
-    .cell {
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-      border: 1px solid transparent;
-    }
-
-    .day-header {
-      color: $color-white-150;
-      @extend %font-ui-text-base-good;
-      font-size: rem(14px) !important;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .day {
-      color: $color-white-160;
-      @extend %font-ui-text-base-oxygen;
-      line-height: 1;
-      border-radius: 50%;
-    }
-
-    .cell.selected {
-      color: $color-white-190;
-      background: $color-orange-100;
-    }
-
-    .cell:not(.blank):not(.disabled).day:hover,
-    .cell:not(.blank):not(.disabled).month:hover,
-    .cell:not(.blank):not(.disabled).year:hover {
-      background: $color-orangedull-150;
-      border-color: transparent;
-    }
-
-    .today {
-      color: $color-white-190;
-      border: 1px solid $color-orange-100;
-    }
-  }
-
-  input {
-    cursor: pointer;
-    opacity: 0;
-  }
 }
 
 /*----------  Dropdowns  ----------*/

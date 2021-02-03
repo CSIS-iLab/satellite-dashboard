@@ -50,10 +50,16 @@
               v-model="chosenDate"
               placeholder="MM/DD/YYYY"
               format="MM/dd/yyyy"
-              calendar-class="datepicker__calendar"
+              prefix-class="sd"
               input-class="datepicker__input"
-              @selected="selectNewDate"
-            />
+              @pick="selectNewDate"
+            >
+              <template v-slot:footer="{ emit }">
+                <Button class="btn--outlined" @click="emit(new Date())"
+                  >Today</Button
+                >
+              </template>
+            </date-picker>
           </client-only>
         </div>
         <Button
@@ -284,5 +290,6 @@ export default {
 
 <style lang="scss">
 @import 'vue-select/src/scss/vue-select';
+@import '~/assets/css/components/datepicker';
 @import '../assets/css/components/timeline';
 </style>
