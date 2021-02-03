@@ -8,26 +8,17 @@
       </ol>
     </div>
     <section class="post__content entry-content">
-      found letters:
-      {{ foundLetters }}
-      <br />
-      terms: {{ terms.sort() }}
-      <br />
-      terms by letter: {{ termsByLetter('t') }}
-      <br />
-      data formatted: {{ dataFormatted }}
-      <br />
-      all.apogee: {{ all.apogee }} <br />
       <section v-for="letter in foundLetters" :key="letter">
-        <h2 :id="letter">{{ letter }}</h2>
+        <h2 :id="letter">{{ letter.toUpperCase() }}</h2>
         <dl>
-          <!-- <div v-for="term in terms" :key="term.slug"> -->
           <div v-for="term in termsByLetter(letter)" :key="term.slug">
-            <dt>{{ term }}</dt>
+            <dt>{{ glossary[term].title }}</dt>
             <dd>
-              Definition<br />
-              Further Reading
+              {{ glossary[term].definition }}
+              <br />
+              Further Reading:
             </dd>
+            <a href="#top">Back to Top</a>
           </div>
         </dl>
       </section>
@@ -85,23 +76,8 @@ export default {
         .sort()
       return firstLetter
     },
-    dataFormatted() {
-      const foundTerms = {}
-      this.foundLetters.forEach((letter) => (foundTerms[letter] = []))
-      // const foundTerms = {
-      //   A: [{}, {}, {}],
-      //   B: []
-      // }
-
-      //do some magic here to create the new dictionary.
-      let helperFunction = this.glossary
-      return foundTerms
-    },
     terms() {
       return Object.keys(this.glossary)
-    },
-    all() {
-      return this.glossary
     },
     ...mapState({
       glossary: (state) => state.glossary.glossary
@@ -111,10 +87,6 @@ export default {
     termsByLetter(letter) {
       let terms = this.terms.filter((term) => term.charAt(0) == letter)
       return terms
-    },
-    testMethod() {
-      let testing = 1 + 10
-      return testing
     }
   }
 }
