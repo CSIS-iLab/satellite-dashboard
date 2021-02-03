@@ -8,13 +8,17 @@
       </ol>
     </div>
     <section class="post__content entry-content">
-      <section v-for="letter in foundLetters" :key="letter">
+      <section
+        v-for="letter in foundLetters"
+        :id="`${letter.toUpperCase()}`"
+        :key="letter"
+      >
         <h2 :id="letter">{{ letter.toUpperCase() }}</h2>
         <dl>
           <div v-for="term in termsByLetter(letter)" :key="term.slug">
             <dt>{{ glossary[term].title }}</dt>
             <dd>
-              {{ glossary[term].definition }}
+              {{ glossary[term].short_definition }}
               <br />
               Further Reading:
             </dd>
