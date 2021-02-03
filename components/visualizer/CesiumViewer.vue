@@ -501,9 +501,9 @@ export default {
 
       if (Cesium.defined(viewer.trackedEntity)) {
         // when tracking do not reset to default view but to default view of tracked entity
-        const trackedEntity = viewer.trackedEntity
+        // const trackedEntity = viewer.trackedEntity
         viewer.trackedEntity = undefined
-        viewer.trackedEntity = trackedEntity
+        // viewer.trackedEntity = trackedEntity
       }
     },
     toggleObjectVisibility() {

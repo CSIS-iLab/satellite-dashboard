@@ -116,8 +116,8 @@ export default {
       }
 
       if (viewer.selectedEntity == entity || viewer.trackedEntity == entity) {
-        viewer.selectedEntity = null
-        viewer.trackedEntity = null
+        viewer.selectedEntity = undefined
+        viewer.trackedEntity = undefined
         entity.path.show = false
         return
       }
