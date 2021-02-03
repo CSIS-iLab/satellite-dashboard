@@ -81,6 +81,7 @@ export const getters = {
   },
   focusedSatellitesCount: (state) => {
     return state.focusedSatellites.size
+  },
   statusTypesKeys: (state) => {
     return Object.keys(state.statusTypes)
   }
@@ -114,6 +115,7 @@ export const mutations = {
   },
   updateVisibleSatellitesType: (state, type) => {
     state.visibleSatellitesType = type
+  },
   updateCountriesOfJurisdiction: (state, countries) => {
     state.countriesOfJurisdiction = countries
   }

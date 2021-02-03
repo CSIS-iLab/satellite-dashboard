@@ -213,8 +213,8 @@ export default {
       satelliteCatalogIds: 'satellites/satelliteCatalogIds',
       numSatellites: 'satellites/filteredSatellitesCount',
       numActiveFilters: 'filters/activeFiltersCount',
-      statusTypesKeys: 'satellites/statusTypesKeys',
-    }}
+      statusTypesKeys: 'satellites/statusTypesKeys'
+    })
   },
   methods: {
     editFilters() {
