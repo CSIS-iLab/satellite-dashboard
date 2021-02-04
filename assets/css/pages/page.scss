@@ -1,6 +1,38 @@
 .page {
   &__header {
     @extend %page-header;
+
+    div {
+      display: flex;
+    }
+
+    ol {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      margin: 0 auto;
+      padding: rem(13) 0;
+    }
+
+    li + li {
+      margin-left: rem(12px);
+    }
+
+    a {
+      @extend %font-ui-heading-post-block-title;
+      color: $color-white-130;
+      font-size: rem(14px);
+      line-height: rem(18px);
+    }
+
+    a:disabled {
+      color: $color-white-130;
+    }
+
+    a:active,
+    a:hover {
+      color: $color-white-180;
+    }
   }
 
   &__title {

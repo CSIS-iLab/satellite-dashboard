@@ -13,18 +13,23 @@
         :id="`${letter.toUpperCase()}`"
         :key="letter"
       >
-        <h2 :id="letter">{{ letter.toUpperCase() }}</h2>
+        <h2 :id="letter">{{ letter }}</h2>
         <dl>
           <div v-for="term in termsByLetter(letter)" :key="term.slug">
-            <dt>{{ glossary[term].title }}</dt>
-            <dd>
+            <dt class="layout-glossary__title">{{ glossary[term].title }}</dt>
+            <dd class="layout-glossary__item">
               {{ glossary[term].short_definition }}
-              <br />
-              Further Reading:
             </dd>
-            <a href="#top">Back to Top</a>
+            <dt class="layout-glossary__further-reading">Further Reading:</dt>
+            <dd class="layout-glossary__item">
+              {{ glossary[term].short_definition }}
+            </dd>
           </div>
         </dl>
+        <a href="#top">
+          <Icon id="arrow-up" class="icon" name="arrow-up" />
+          Back to Top
+        </a>
       </section>
     </section>
   </Page>
@@ -32,12 +37,13 @@
 
 <script>
 import { mapState } from 'vuex'
-
+import Icon from '~/components/global/Icon.vue'
 import Page from '~/layout/page'
 export default {
   layout: 'layout',
   components: {
-    Page
+    Page,
+    Icon
   },
   data() {
     return {
@@ -74,7 +80,7 @@ export default {
   computed: {
     foundLetters() {
       // map & slice to get the first letter of each term. Then filter so we remove duplicates
-      let firstLetter = this.terms.map((term) => term.slice(0, 1))
+      let firstLetter = this.terms.map((term) => term.charAt(0))
       firstLetter = firstLetter
         .filter((a, b) => firstLetter.indexOf(a) === b)
         .sort()

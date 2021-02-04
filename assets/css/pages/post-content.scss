@@ -29,6 +29,27 @@
     }
   }
 
+  section {
+    a {
+      display: flex;
+      justify-content: center;
+      margin-top: rem(70px);
+      margin-bottom: rem(22px);
+      color: $color-blue-170;
+      text-align: center;
+      text-decoration: none;
+    }
+
+    .icon {
+      position: relative;
+      top: 8px;
+      margin-right: 4px;
+      margin-left: 4px;
+      color: $color-blue-170;
+      font-size: rem(14px);
+    }
+  }
+
   figcaption {
     @extend %font-post-text-sm;
     padding-top: rem(8px);
@@ -51,10 +72,66 @@
     }
   }
 
+  dl {
+    hr {
+      border: 1px solid $color-ltblue-175;
+    }
+  }
+
+  dt {
+    // margin-bottom: 0;
+  }
+
+  dd {
+    // margin-bottom: 0;
+  }
+
+  .layout-glossary {
+    margin: 0;
+
+    &__title {
+      margin-bottom: rem(4px);
+      @extend %font-post-heading-h2;
+      color: $color-black-100;
+      line-height: rem(29px);
+      @include font-size(24px);
+    }
+
+    &__further-reading {
+      color: $color-black-160;
+
+      dd {
+        // margin-bottom: 0;
+      }
+
+      &::after {
+        content: '';
+        display: flex;
+        margin-top: rem(32px);
+        margin-bottom: rem(32px);
+        border-bottom: 1px solid $color-ltblue-100;
+      }
+    }
+
+    &__item {
+      margin-bottom: rem(16px);
+      @extend %font-post-text-md;
+      color: $color-black-190;
+    }
+  }
+
+  hr {
+    margin: 10px;
+    border: 1px solid $color-ltblue-100;
+  }
+
   h2 {
     @extend %font-post-heading-h2;
-    margin-top: rem(56px);
+    margin-top: rem(80px);
     margin-bottom: rem(16px);
+    color: $color-black-190;
+    line-height: rem(48px);
+    text-transform: uppercase;
   }
 
   h3 {
