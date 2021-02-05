@@ -12,9 +12,17 @@
     &:not(:last-child)::after {
       content: '';
       display: flex;
+      max-width: $size__line-max-width;
       margin-top: rem(32px);
       margin-bottom: rem(32px);
       border-bottom: 1px solid $color-ltblue-175;
+
+      @include breakpoint('medium') {
+        max-width: $size__container-max-width;
+      }
+      @include breakpoint('large') {
+        max-width: $size__container-max-width;
+      }
     }
   }
 

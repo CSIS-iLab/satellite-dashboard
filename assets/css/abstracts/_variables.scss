@@ -78,8 +78,11 @@ $breakpoints: (
 );
 
 $size__container-max-width: 1000px;
+$size__container-min-width: 480px;
 $size__content-max-width: 680px;
 $size__header-height: 56px;
+$size__alphabet-max-width: 343px;
+$size__line-max-width: 437px;
 
 $z-index: (
   panel: 1,
