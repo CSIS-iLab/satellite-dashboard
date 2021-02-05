@@ -14,6 +14,10 @@
     text-decoration-color: $color-ltblue-175;
     text-underline-offset: 0.2em;
 
+    .icon {
+      transition: all 0.3s ease-in-out;
+    }
+
     &:visited {
       color: $color-black-160;
     }
@@ -21,6 +25,11 @@
     &:hover {
       color: $color-orange-100;
       text-decoration-color: $color-orange-140;
+
+      .icon {
+        color: $color-orange-100;
+        text-decoration-color: $color-orange-140;
+      }
     }
 
     &:focus {
@@ -30,6 +39,8 @@
   }
 
   section {
+    position: relative;
+
     a {
       display: flex;
       justify-content: center;
@@ -47,6 +58,17 @@
       margin-left: 4px;
       color: $color-blue-170;
       font-size: rem(14px);
+    }
+
+    &:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      left: 0;
+      display: flex;
+      width: 100%;
+      margin-top: rem(22px);
+      border-bottom: 1px solid $color-ltblue-100;
     }
   }
 
@@ -72,23 +94,7 @@
     }
   }
 
-  dl {
-    hr {
-      border: 1px solid $color-ltblue-175;
-    }
-  }
-
-  dt {
-    // margin-bottom: 0;
-  }
-
-  dd {
-    // margin-bottom: 0;
-  }
-
   .layout-glossary {
-    margin: 0;
-
     &__title {
       margin-bottom: rem(4px);
       @extend %font-post-heading-h2;
@@ -97,32 +103,35 @@
       @include font-size(24px);
     }
 
-    &__further-reading {
-      color: $color-black-160;
-
-      dd {
-        // margin-bottom: 0;
-      }
-
-      &::after {
-        content: '';
-        display: flex;
-        margin-top: rem(32px);
-        margin-bottom: rem(32px);
-        border-bottom: 1px solid $color-ltblue-100;
-      }
-    }
-
     &__item {
       margin-bottom: rem(16px);
       @extend %font-post-text-md;
       color: $color-black-190;
     }
-  }
 
-  hr {
-    margin: 10px;
-    border: 1px solid $color-ltblue-100;
+    &__further-reading {
+      @extend %font-post-heading-table-title;
+      color: $color-black-160;
+      font-weight: 600;
+      line-height: rem(20px);
+      text-transform: uppercase;
+      @include font-size(16px);
+    }
+
+    &__fr-item {
+      margin-bottom: rem(16px);
+      @extend %font-post-text-md;
+      padding-top: rem(4px);
+      color: $color-black-190;
+
+      &:not(:last-child)::after {
+        content: '';
+        display: flex;
+        margin-top: rem(70px);
+        margin-bottom: rem(32px);
+        border-bottom: 1px solid $color-ltblue-175;
+      }
+    }
   }
 
   h2 {

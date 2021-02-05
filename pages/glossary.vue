@@ -20,9 +20,11 @@
             <dd class="layout-glossary__item">
               {{ glossary[term].short_definition }}
             </dd>
-            <dt class="layout-glossary__further-reading">Further Reading:</dt>
-            <dd class="layout-glossary__item">
-              {{ glossary[term].short_definition }}
+            <dt class="layout-glossary__further-reading">
+              Further Reading
+            </dt>
+            <dd class="layout-glossary__fr-item">
+              This is here just to have some text
             </dd>
           </div>
         </dl>
