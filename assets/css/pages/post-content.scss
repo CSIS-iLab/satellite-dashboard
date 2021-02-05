@@ -17,11 +17,14 @@
       margin-bottom: rem(32px);
       border-bottom: 1px solid $color-ltblue-175;
 
+      @include breakpoint('small') {
+        max-width: 100%;
+      }
       @include breakpoint('medium') {
-        max-width: $size__container-max-width;
+        max-width: 100%;
       }
       @include breakpoint('large') {
-        max-width: $size__container-max-width;
+        max-width: 100%;
       }
     }
   }
