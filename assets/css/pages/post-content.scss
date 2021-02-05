@@ -8,6 +8,16 @@
     padding: 0 calc(50% - #{$size__content-max-width} / 2);
   }
 
+  div {
+    &:not(:last-child)::after {
+      content: '';
+      display: flex;
+      margin-top: rem(32px);
+      margin-bottom: rem(32px);
+      border-bottom: 1px solid $color-ltblue-175;
+    }
+  }
+
   a {
     color: $color-slate-690;
     text-decoration: underline;
@@ -67,7 +77,6 @@
       left: 0;
       display: flex;
       width: 100%;
-      margin-top: rem(22px);
       border-bottom: 1px solid $color-ltblue-100;
     }
   }
@@ -123,14 +132,6 @@
       @extend %font-post-text-md;
       padding-top: rem(4px);
       color: $color-black-190;
-
-      &:not(:last-child)::after {
-        content: '';
-        display: flex;
-        margin-top: rem(70px);
-        margin-bottom: rem(32px);
-        border-bottom: 1px solid $color-ltblue-175;
-      }
     }
   }
 
