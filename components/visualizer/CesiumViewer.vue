@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapMutations, mapState, mapGetters } from 'vuex'
 import Button from '~/components/global/Button.vue'
 import Icon from '~/components/global/Icon.vue'
 import HelpPanel from '~/components/visualizer/HelpPanel'
@@ -57,6 +57,7 @@ const RadDeg = 180 / Math.PI
 const DegRad = Math.PI / 180
 
 let Cesium, viewer, pathMaterial
+let entityColors = {}
 
 export default {
   components: {
@@ -65,11 +66,11 @@ export default {
     HelpPanel
   },
   props: {
-    satellites: {
+    satelliteOrbits: {
       type: Object,
       default: () => {}
     },
-    activeSatellites: {
+    visibleSatellites: {
       type: Array,
       default: () => []
     },
@@ -112,8 +113,19 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapState({
+      satellites: (state) => state.satellites.satellites,
+      statusTypes: (state) => state.satellites.statusTypes
+    }),
+    ...mapGetters({
+      satelliteCatalogIds: 'satellites/satelliteCatalogIds',
+      statusTypesKeys: 'satellites/statusTypesKeys'
+    })
+  },
   watch: {
-    activeSatellites: 'processNewData'
+    satelliteOrbits: 'processNewData',
+    visibleSatellites: 'toggleObjectVisibility'
   },
   beforeDestroy() {
     Cesium = null
@@ -152,9 +164,15 @@ export default {
       viewer.clock.clockRange = Cesium.ClockRange.CLAMP
 
       viewer.selectedEntityChanged.addEventListener((entity) => {
+        const entities = viewer.entities.values
+        entities.forEach((e) => {
+          e.path.show = false
+        })
+
         if (!entity) {
           return
         }
+
         entity.path.show = true
         this.showSatelliteDetails(entity.id)
       })
@@ -174,7 +192,21 @@ export default {
         }
       })
 
+      // Set colors for the types
       pathMaterial = new Cesium.PolylineArrowMaterialProperty(Cesium.Color.BLUE)
+
+      for (let i = 0; i < this.statusTypesKeys.length; i++) {
+        const type = this.statusTypesKeys[i]
+        const color = Cesium.Color.fromCssColorString(
+          this.statusTypes[type].color
+        )
+
+        entityColors[type] = {
+          point: color,
+          path: new Cesium.PolylineArrowMaterialProperty(color)
+        }
+      }
+
       /* if this.satellitesHaveLoaded is true then API beat Cesium to it
       and we didn't process data when watch handler fired */
       if (this.satellitesHaveLoaded) {
@@ -215,27 +247,29 @@ export default {
     displayObjects(Cesium, viewer) {
       let epjd = new Cesium.JulianDate()
       let CRFtoTRF = Cesium.Transforms.computeIcrfToFixedMatrix(this.SimStart)
-      let satCount = 0
       viewer.entities.removeAll()
 
       // For each object, calculate its position & orbit
       // Calculations pulled from: https://github.com/ut-astria/AstriaGraph/blob/master/main.js & https://github.com/ut-astria/AstriaGraph/blob/master/celemech.js
-      this.activeSatellites.forEach((sat, i) => {
-        const { catalog_id, orbits, source1 } = this.satellites[sat]
+
+      this.visibleSatellites.forEach((sat, i) => {
+        if (!this.satelliteOrbits[sat]) {
+          return
+        }
+
+        const { catalog_id, orbits } = this.satelliteOrbits[sat]
+
         if (!orbits) {
           return
         }
-        satCount++
-        const name = source1.Name
 
-        // Make a copy of the orbital parameters so we can modify it with our calculations.
-
-        // TODO: Change this so it looks at the correct orbit, not just the first one.
         const orbit = this.compileOrbits(orbits, CRFtoTRF, epjd)
+
+        const status = this.satellites[catalog_id].Status
 
         viewer.entities.add({
           id: catalog_id,
-          name: `${catalog_id}: ${name}`,
+          // name: `${catalog_id}: ${name}`,
           availability: new Cesium.TimeIntervalCollection([
             new Cesium.TimeInterval({
               start: this.SimStart,
@@ -248,16 +282,14 @@ export default {
           ]),
           position: orbit,
           point: {
-            pixelSize: 7,
-            color: Cesium.Color.RED,
-            outlineColor: Cesium.Color.WHITE,
-            outlineWidth: 1
+            pixelSize: 6,
+            color: entityColors[status].point
           },
           path: {
             resolution: 2000,
-            material: pathMaterial,
-            width: 6,
-            show: i === 0
+            material: entityColors[status].path,
+            width: 4,
+            show: false
           }
         })
       })
@@ -468,10 +500,16 @@ export default {
 
       if (Cesium.defined(viewer.trackedEntity)) {
         // when tracking do not reset to default view but to default view of tracked entity
-        const trackedEntity = viewer.trackedEntity
+        // const trackedEntity = viewer.trackedEntity
         viewer.trackedEntity = undefined
-        viewer.trackedEntity = trackedEntity
+        // viewer.trackedEntity = trackedEntity
       }
+    },
+    toggleObjectVisibility() {
+      const entities = viewer.entities.values
+      entities.forEach((entity) => {
+        entity.show = this.visibleSatellites.includes(entity.id)
+      })
     },
     toggleSunlight() {
       this.showSunlight = !this.showSunlight

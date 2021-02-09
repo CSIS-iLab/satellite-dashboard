@@ -1,0 +1,22 @@
+{
+  "payload-active": {
+    "label": "Active Payload",
+    "color": "233, 131, 40, 1"
+  },
+  "payload-inactive": {
+    "label": "Inactive Payload",
+    "color": "200, 56, 16, 1"
+  },
+  "rocket-body": {
+    "label": "Rocket Body",
+    "color": "226, 212, 135, 1"
+  },
+  "debris": {
+    "label": "Debris",
+    "color": "56, 183, 252, 1"
+  },
+  "TBA": {
+    "label": "Uncategorized",
+    "color": "44, 92, 125, 1"
+  }
+}

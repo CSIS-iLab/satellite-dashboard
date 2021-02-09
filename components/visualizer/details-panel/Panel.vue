@@ -33,10 +33,18 @@
           <Details :id="id" :satellite="satellite" />
         </TabPanel>
         <TabPanel tab="events" scope="detailsPanel">
-          Events goes here!
+          <p>
+            This object has no cataloged key events yet. Learn more about the
+            Dashboard's latest
+            <nuxt-link to="/key-events">key events</nuxt-link> here.
+          </p>
         </TabPanel>
         <TabPanel tab="analysis" scope="detailsPanel">
-          Analysis goes here!
+          <p>
+            This object does not appear in any Dashboard analysis pieces. See
+            the full <nuxt-link to="/analysis">analysis</nuxt-link> archive
+            here.
+          </p>
         </TabPanel>
       </div>
     </TabWrapper>
@@ -44,7 +52,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapState } from 'vuex'
 import { mapMutations } from 'vuex'
 import Button from '~/components/global/Button'
 import Details from '~/components/visualizer/details-panel/Details.vue'
@@ -84,13 +92,13 @@ export default {
   },
   computed: {
     satelliteName() {
-      return this.satellite.meta.Name
+      return this.satellite.Name
     },
     satelliteIsInFocused() {
       return this.focusedSatellites.has(this.id)
     },
-    ...mapGetters({
-      focusedSatellites: 'satellites/focusedSatellites'
+    ...mapState({
+      focusedSatellites: (state) => state.satellites.focusedSatellites
     })
   },
   mounted() {
@@ -108,8 +116,8 @@ export default {
       }
 
       if (viewer.selectedEntity == entity || viewer.trackedEntity == entity) {
-        viewer.selectedEntity = null
-        viewer.trackedEntity = null
+        viewer.selectedEntity = undefined
+        viewer.trackedEntity = undefined
         entity.path.show = false
         return
       }

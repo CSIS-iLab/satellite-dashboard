@@ -50,10 +50,16 @@
               v-model="chosenDate"
               placeholder="MM/DD/YYYY"
               format="MM/dd/yyyy"
-              calendar-class="datepicker__calendar"
+              prefix-class="sd"
               input-class="datepicker__input"
-              @selected="selectNewDate"
-            />
+              @pick="selectNewDate"
+            >
+              <template v-slot:footer="{ emit }">
+                <Button class="btn--outlined" @click="emit(new Date())"
+                  >Today</Button
+                >
+              </template>
+            </date-picker>
           </client-only>
         </div>
         <Button
@@ -86,20 +92,17 @@
       </v-select>
     </div>
     <div class="timeline__legend">
-      <ul role="list">
-        <li data-status="active">Payload/active</li>
-        <li>Payload/inactive</li>
-        <li>Rocket Body</li>
-        <li>Debris</li>
-        <li>Uncategorized</li>
-      </ul>
+      <StatusTypesLegend />
     </div>
   </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+import { mapMutations } from 'vuex'
 import Button from '~/components/global/Button'
 import Icon from '~/components/global/Icon'
+import StatusTypesLegend from '~/components/global/StatusTypesLegend'
 
 import cesiumServiceProvider from '../../services/cesium-service'
 const cesiumService = cesiumServiceProvider()
@@ -128,7 +131,7 @@ const playbackSpeeds = [
 let cesium
 
 export default {
-  components: { Button, Icon },
+  components: { Button, Icon, StatusTypesLegend },
   props: {
     selectedDate: {
       type: Date,
@@ -200,7 +203,7 @@ export default {
       cesiumService.registerTimeline(timeline)
       timeline.resize()
       timeline.container.style.left = '0px'
-      viewer.clockViewModel.shouldAnimate = true
+      viewer.clockViewModel.shouldAnimate = false
       viewer.clock.onTick.addEventListener(() => {
         this.timelinePoint = Cesium.JulianDate.toDate(viewer.clock.currentTime)
       })
@@ -221,18 +224,25 @@ export default {
         .insertBefore(timeline.container, null)
       cesiumService.deregisterInstance()
     },
+    stopPlayback() {
+      this.isPlaying = false
+      const { viewer } = cesium
+      viewer.clockViewModel.shouldAnimate = false
+    },
     selectNewDate(date) {
-      console.log(date)
-      this.$store.commit('satellites/updateTargetDate', date)
-      this.$store.dispatch('satellites/getSatellites')
+      this.stopPlayback()
+      this.updateTargetDate(date)
+      this.getOrbits()
     },
     selectPlaybackSpeed(playbackSpeed) {
+      this.stopPlayback()
       const { viewer } = cesium
       viewer.clock.multiplier = playbackSpeed.value
     },
     selectTimescale(timescale) {
-      this.$store.commit('satellites/updateSelectedTimescale', timescale)
-      this.$store.dispatch('satellites/getSatellites')
+      this.stopPlayback()
+      this.updateSelectedTimescale(timescale)
+      this.getOrbits()
     },
     playOrPause() {
       if (!cesium) {
@@ -266,12 +276,20 @@ export default {
       }
 
       this.selectNewDate(newDate)
-    }
+    },
+    ...mapActions({
+      getOrbits: 'satellites/getOrbits'
+    }),
+    ...mapMutations({
+      updateSelectedTimescale: 'satellites/updateSelectedTimescale',
+      updateTargetDate: 'satellites/updateTargetDate'
+    })
   }
 }
 </script>
 
 <style lang="scss">
 @import 'vue-select/src/scss/vue-select';
+@import '~/assets/css/components/datepicker';
 @import '../assets/css/components/timeline';
 </style>

@@ -4,8 +4,8 @@
     <template v-if="loading"> Loading... </template>
     <template v-else>
       <CesiumViewer
-        :satellites="satellites"
-        :active-satellites="activeSatellites"
+        :satellite-orbits="orbits"
+        :visible-satellites="visibleSatellites"
         :selected-date="targetDate"
         :selected-timescale="selectedTimescale.value"
       />
@@ -25,7 +25,8 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapActions } from 'vuex'
+import { mapState } from 'vuex'
 import CesiumViewer from '~/components/visualizer/CesiumViewer'
 import PanelLeft from '~/components/visualizer/PanelLeft'
 import Timeline from '~/components/timeline/Timeline'
@@ -44,34 +45,30 @@ export default {
     }
   },
   computed: {
-    satellites() {
-      return this.$store.state.satellites.satellites
-    },
-    targetDate() {
-      return this.$store.state.satellites.targetDate
-    },
-    timescales() {
-      return this.$store.state.satellites.timescales
-    },
-    selectedTimescale() {
-      return this.$store.state.satellites.selectedTimescale
-    },
     detailedSatelliteInfo() {
       return this.satellites[this.detailedSatellite]
     },
-    ...mapGetters({
-      activeSatellites: 'satellites/activeSatellites',
-      detailedSatellite: 'satellites/detailedSatellite'
+    ...mapState({
+      satellites: (state) => state.satellites.satellites,
+      orbits: (state) => state.satellites.orbits,
+      visibleSatellites: (state) => state.satellites.visibleSatellites,
+      detailedSatellite: (state) => state.satellites.detailedSatellite,
+      targetDate: (state) => state.satellites.targetDate,
+      timescales: (state) => state.satellites.timescales,
+      selectedTimescale: (state) => state.satellites.selectedTimescale
     })
   },
   created() {
-    this.$store.dispatch('satellites/getSatellites')
+    this.getOrbits()
     this.loading = false
   },
   methods: {
     openFilters() {
       console.log('open filters')
-    }
+    },
+    ...mapActions({
+      getOrbits: 'satellites/getOrbits'
+    })
   }
 }
 </script>

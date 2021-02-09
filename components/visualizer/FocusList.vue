@@ -2,10 +2,9 @@
   <div class="focus-list">
     <h2 class="panel__title">Focus List</h2>
     <p>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-      veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-      commodo consequat.
+      Objects pinned to this list will appear in the visualization. Learn more
+      about an object by clicking its information icon. Edit this list to remove
+      an object.
     </p>
     <ul class="focus-list__options" role="list">
       <li>
@@ -53,10 +52,10 @@
         v-for="item in focusedItems"
         :key="item"
         class="sat__basic sat__basic--status"
-        :data-status="satellites[item].meta.Status"
+        :data-status="satellites[item].Status"
       >
         <div class="sat__name">
-          {{ satellites[item].meta.Name }}
+          {{ satellites[item].Name }}
         </div>
         <div class="sat__id">{{ satellites[item].catalog_id }}</div>
         <div class="sat__actions">
@@ -71,7 +70,7 @@
             :id="item"
             v-model="selectedItems"
             :value="item"
-            :label="`Remove ${satellites[item].meta.Name} from focus list.`"
+            :label="`Remove ${satellites[item].Name} from focus list.`"
             :hide-label="true"
           />
         </div>
@@ -81,6 +80,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import { mapGetters } from 'vuex'
 import { mapMutations } from 'vuex'
 import Button from '~/components/global/Button.vue'
@@ -95,6 +95,11 @@ export default {
     Checkbox,
     Icon,
     Toggle
+  },
+  props: {
+    isOpen: {
+      type: Boolean
+    }
   },
   data() {
     return {
@@ -114,8 +119,10 @@ export default {
     numSelectedItems() {
       return this.selectedItems.length
     },
+    ...mapState({
+      focusedSatellites: (state) => state.satellites.focusedSatellites
+    }),
     ...mapGetters({
-      focusedSatellites: 'satellites/focusedSatellites',
       focusedSatellitesCount: 'satellites/focusedSatellitesCount'
     })
   },
@@ -135,6 +142,11 @@ export default {
       }
 
       console.log('show everything')
+    },
+    focusedItems: function(val, oldVal) {
+      if (this.isOpen) {
+        this.updateVisibleSatellites([...this.focusedSatellites])
+      }
     }
   },
   methods: {
@@ -162,7 +174,8 @@ export default {
     },
     ...mapMutations({
       updateFocusedSatellites: 'satellites/updateFocusedSatellites',
-      updateDetailedSatellite: 'satellites/updateDetailedSatellite'
+      updateDetailedSatellite: 'satellites/updateDetailedSatellite',
+      updateVisibleSatellites: 'satellites/updateVisibleSatellites'
     })
   }
 }

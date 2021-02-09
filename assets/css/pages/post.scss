@@ -39,11 +39,20 @@
   }
 
   &__category {
+    margin: 0;
+    padding: 0;
     @extend %font-ui-text-base-oxygen;
     color: $color-orange-100;
     font-weight: bold;
     text-transform: uppercase;
     text-shadow: 0 rem(4px) rem(4px) rgba(0, 0, 0, 0.25);
+    list-style: none;
+
+    li + li {
+      &::before {
+        content: ', ';
+      }
+    }
   }
 
   &__title {
@@ -133,7 +142,7 @@
       text-transform: uppercase;
     }
 
-    .desktop {
+    .desktop-only {
       display: none;
 
       @include breakpoint('medium') {
@@ -162,9 +171,9 @@
   // Further reading section
 
   &__further {
-    @include full-width-background(rgba(245, 245, 245, 0.9), true);
     padding: 0 calc(50% - #{$size__content-max-width} / 2);
     background-color: rgba(245, 245, 245, 0.9);
+    @include full-width-background(rgba(245, 245, 245, 0.9), true);
 
     @include breakpoint('medium') {
       &::before,
@@ -249,18 +258,34 @@
   }
 
   &__author {
+    &-wrapper {
+      margin: 0;
+      padding: 0;
+    }
+
     &-bio {
       @extend %font-post-text-md;
-      margin-bottom: rem(24px);
       color: $color-white-180;
 
-      @include breakpoint('medium') {
-        margin-bottom: rem(32px);
+      a {
+        text-decoration: underline;
+        text-decoration-color: $color-ltblue-175;
+        text-underline-offset: 0.2em;
+
+        /* stylelint-disable-next-line */
+        &:hover {
+          color: $color-white-100;
+          text-decoration: none;
+        }
       }
     }
 
-    &-name {
-      font-weight: bold;
+    li + li {
+      margin-top: rem(24);
+
+      @include breakpoint('medium') {
+        margin-top: rem(32);
+      }
     }
   }
 
@@ -269,18 +294,23 @@
       margin-left: rem(32px);
     }
 
+    &-list {
+      margin: 0;
+      padding: 0;
+    }
+
     &-header {
+      margin-bottom: rem(4);
       @extend %font-ui-text-base-oxygen;
       color: $color-white-150;
-      text-transform: capitalize;
+      font-weight: 400;
+      text-transform: uppercase;
     }
 
     &-name {
       @extend %font-post-text-md;
       display: inline-block;
       color: $color-white-190;
-      font-weight: bold;
-      text-transform: uppercase;
       text-decoration: none;
 
       &:hover {
@@ -289,7 +319,7 @@
 
       &:not(:last-child)::after {
         content: ',';
-        padding-right: rem(4px);
+        padding-right: rem(8px);
       }
     }
   }

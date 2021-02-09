@@ -1,0 +1,105 @@
+$namespace: 'sd'; // change the 'mx' to 'xmx'. then <date-picker prefix-class="xmx" />
+
+$default-color: $color-white-160;
+$primary-color: $color-orange-100;
+$calendar-hover-color: $color-white-100;
+$calendar-hover-background-color: $color-orangedull-150;
+$today-color: $color-white-180;
+
+/* stylelint-disable-next-line */
+@import '~vue2-datepicker/scss/index.scss';
+
+.#{$namespace}-input-wrapper {
+  opacity: 0;
+
+  i {
+    display: none;
+  }
+}
+
+.#{$namespace}-datepicker {
+  position: absolute;
+  top: 0;
+  width: 100%;
+
+  input {
+    width: 100%;
+    cursor: pointer;
+  }
+
+  &-main {
+    padding: rem(8);
+    line-height: 1;
+    background: $color-slate-700;
+    border: 0;
+    border-radius: 2px;
+    transform: translate(-32%, -10%);
+  }
+
+  &-footer {
+    text-align: center;
+    border-top: 0;
+  }
+
+  &-popup .#{$namespace}-table {
+    &-date {
+      th {
+        color: $color-white-150;
+        @extend %font-ui-text-base-good;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      td {
+        @extend %font-ui-text-base-oxygen;
+      }
+
+      .today {
+        border: 1px solid $color-orange-100;
+      }
+    }
+
+    .cell {
+      transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+
+      &.not-current-month {
+        color: $color-white-130;
+      }
+    }
+  }
+
+  &-popup .#{$namespace}-calendar-panel-date .cell {
+    border-radius: 50%;
+  }
+
+  &-popup .#{$namespace}-btn {
+    transition: color 0.3s ease-in-out;
+  }
+
+  &-popup .#{$namespace}-calendar {
+    &-header-label {
+      display: inline-block;
+      margin-top: rem(3);
+    }
+
+    &-header-label button {
+      color: $color-white-170;
+      @extend %font-ui-heading-section-md;
+      font-weight: 500;
+
+      &:hover {
+        color: $color-orange-100;
+      }
+    }
+  }
+}
+
+.#{$namespace}-icon-left:before,
+.#{$namespace}-icon-right:before,
+.#{$namespace}-icon-double-left:before,
+.#{$namespace}-icon-double-right:before,
+.#{$namespace}-icon-double-left:after,
+.#{$namespace}-icon-double-right:after {
+  width: 12px;
+  height: 12px;
+  border-width: 3px 0 0 3px;
+}

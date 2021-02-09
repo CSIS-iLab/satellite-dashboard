@@ -13,10 +13,10 @@ let dynamicRoutes = () => {
 
 const customSass = {
   implementation: Sass,
-  webpackImporter: false,
+  // webpackImporter: false,
   sassOptions: {
     fiber: Fiber,
-    includePaths: ['node_modules']
+    includePaths: ['node_modules', 'node_modules/vue2-datepicker/scss/']
   },
   sourceMap: process.env.NODE_ENV === 'production'
 }
@@ -71,8 +71,14 @@ export default {
       ssr: false
     },
     { src: '~/plugins/vue-good-table', ssr: false },
+    { src: '~/plugins/vue-tippy', ssr: false },
     { src: '~/plugins/vue-pluralize' },
-    { src: '~/plugins/vue-tippy', ssr: false }
+    { src: '~/plugins/server/pages.js' },
+    { src: '~/plugins/server/posts.js' },
+    { src: '~/plugins/server/tags.js' },
+    { src: '~/plugins/server/categories.js' },
+    { src: '~/plugins/server/countries.js' },
+    { src: '~/plugins/server/users.js' }
   ],
   /*
    ** Nuxt.js dev-modules
@@ -153,6 +159,6 @@ export default {
     }
   },
   generate: {
-    routes: dynamicRoutes
+    // routes: dynamicRoutes // No longer need to specify this.
   }
 }

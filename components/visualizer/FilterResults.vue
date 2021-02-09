@@ -16,8 +16,8 @@
       </v-select>
     </div>
     <p v-if="totalResults === 0" class="filter-results__no-results">
-      No objects with found that satisfied the filters applied. Try changing
-      your selections or removing a filter.
+      There are no objects in our database that match the selected filters. Try
+      changing your selections or removing a filter.
     </p>
     <vue-good-table
       v-if="totalResults > 0"
@@ -60,6 +60,9 @@
             <div class="sat__id">{{ props.row.catalog_id }}</div>
           </div>
         </div>
+        <div v-else-if="props.column.field == 'country'">
+          {{ formatCountry(props.row.country) }}
+        </div>
         <div v-else-if="props.column.field == 'actions'" class="sat__actions">
           <Button :on-click="(e) => highlightOrbit(e, props.row.catalog_id)">
             <Icon id="orbit" name="orbit" />
@@ -86,7 +89,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapState } from 'vuex'
 import { mapMutations } from 'vuex'
 import Button from '~/components/global/Button.vue'
 import Icon from '~/components/global/Icon.vue'
@@ -134,8 +137,8 @@ export default {
     focusedItems() {
       return new Set(this.focusedSatellites)
     },
-    ...mapGetters({
-      focusedSatellites: 'satellites/focusedSatellites'
+    ...mapState({
+      focusedSatellites: (state) => state.satellites.focusedSatellites
     })
   },
   mounted() {
@@ -144,6 +147,9 @@ export default {
     })
   },
   methods: {
+    formatCountry(country) {
+      return country.map((d) => d.id).join(' / ')
+    },
     highlightOrbit(e, catalog_id) {
       const { viewer } = cesium
       const entity = viewer.entities.getById(catalog_id)
