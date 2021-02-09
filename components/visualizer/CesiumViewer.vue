@@ -422,7 +422,7 @@ export default {
       )
       positionSamples.setInterpolationOptions({
         interpolationAlgorithm: Cesium.LagrangePolynomialApproximation,
-        interpolationDegree: 1
+        interpolationDegree: 2
       })
 
       const duration = this.SimInt
