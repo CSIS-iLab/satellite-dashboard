@@ -72,16 +72,14 @@
         </template> -->
       </section>
       <footer class="post__footer">
-        <div v-if="post.authors" class="post__author-wrapper">
-          <p
+        <ul v-if="post.authors" class="post__author-wrapper" role="list">
+          <li
             v-for="author in post.authors"
             :key="author.user_nicename"
             class="post__author-bio"
-          >
-            <strong>{{ author.display_name }}</strong>
-            {{ author.description }}
-          </p>
-        </div>
+            v-html="author.description"
+          ></li>
+        </ul>
         <div class="post__tag">
           <template v-if="keywords.length > 0">
             <h2 class="post__tag-header">Tags</h2>

@@ -24,6 +24,7 @@ module.exports = {
     'no-unused-vars': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'vue/component-name-in-template-casing': ['error', 'PascalCase'],
     'vue/max-attributes-per-line': 'off',
+    'vue/no-v-html': 'off',
     'prettier/prettier': ['error', { semi: false }]
   }
 }

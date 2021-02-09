@@ -258,13 +258,33 @@
   }
 
   &__author {
+    &-wrapper {
+      margin: 0;
+      padding: 0;
+    }
+
     &-bio {
       @extend %font-post-text-md;
-      margin-bottom: rem(24px);
       color: $color-white-180;
 
+      a {
+        text-decoration: underline;
+        text-decoration-color: $color-ltblue-175;
+        text-underline-offset: 0.2em;
+
+        /* stylelint-disable-next-line */
+        &:hover {
+          color: $color-white-100;
+          text-decoration: none;
+        }
+      }
+    }
+
+    li + li {
+      margin-top: rem(24);
+
       @include breakpoint('medium') {
-        margin-bottom: rem(32px);
+        margin-top: rem(32);
       }
     }
   }
@@ -280,18 +300,17 @@
     }
 
     &-header {
+      margin-bottom: rem(4);
       @extend %font-ui-text-base-oxygen;
       color: $color-white-150;
       font-weight: 400;
-      text-transform: capitalize;
+      text-transform: uppercase;
     }
 
     &-name {
       @extend %font-post-text-md;
       display: inline-block;
       color: $color-white-190;
-      font-weight: bold;
-      text-transform: uppercase;
       text-decoration: none;
 
       &:hover {
