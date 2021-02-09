@@ -3,14 +3,12 @@
     <div slot="header">
       <ol role="list">
         <li v-for="letter in alphabet" :key="letter">
-          <a
-            v-if="foundLetters.includes(letter)"
-            :href="`#${letter}`"
-            :aria-label="`Jump to ${letter} words`"
-          >
-            {{ letter }}
-          </a>
-          <a v-else>{{ letter }}</a>
+          <template v-if="foundLetters.includes(letter)">
+            <a :href="`#${letter}`" :aria-label="`Jump to ${letter} words`">
+              {{ letter }}
+            </a>
+          </template>
+          <template v-else>{{ letter }}</template>
         </li>
       </ol>
     </div>
@@ -94,7 +92,9 @@ export default {
         .filter((a, b) => firstLetter.indexOf(a) === b)
         .sort()
       // return firstLetter
-      return [...new Set(this.terms.map((term) => term.charAt(0)))].sort()
+      return [
+        ...new Set(this.terms.map((term) => term.charAt(0).toUpperCase())) // I capitalized this so `foundLetters` is all caps.
+      ].sort()
     },
     terms() {
       return Object.keys(this.glossary)
