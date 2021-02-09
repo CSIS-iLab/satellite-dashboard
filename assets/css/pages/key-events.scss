@@ -11,7 +11,7 @@
     row-gap: rem(24);
 
     @include breakpoint('medium') {
-      grid-template-columns: 2fr 1fr;
+      grid-template-columns: 3fr 1fr;
       column-gap: rem(64);
     }
   }
@@ -21,6 +21,37 @@
       display: flex;
       justify-content: flex-end;
       margin-top: rem(8);
+    }
+  }
+
+  &__date {
+    .form__label {
+      margin-bottom: rem(8);
+    }
+
+    .sd-icon-calendar,
+    .sd-icon-clear {
+      top: var(--top, 50%);
+      right: unset;
+      left: rem(8);
+      color: $color-white-170;
+      font-size: 1.5em;
+
+      &:hover {
+        color: $color-white-100;
+      }
+    }
+
+    .sd-icon-calendar {
+      --top: 45%;
+    }
+
+    .sd-icon-clear {
+      --top: 48%;
+    }
+
+    .datepicker__input {
+      padding-left: rem(40);
     }
   }
 

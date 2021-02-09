@@ -41,18 +41,25 @@
         <div class="key-events__date">
           <label class="form__label">Search Events between these Dates</label>
           <client-only>
-            <div class="timeline__date-label">
-              Date
-              <Icon id="calendar" name="calendar" />
-            </div>
             <date-picker
               v-model="selectedDate"
-              placeholder="MM/DD/YYYY"
-              format="MM/dd/yyyy"
-              calendar-class="datepicker__calendar"
-              input-class="datepicker__input"
-              @selected="filterDates"
-            />
+              placeholder="Select Date Range"
+              format="MMM D, YYYY"
+              prefix-class="sd"
+              input-class="datepicker__input form__input form__input--light"
+              range
+              range-separator=" - "
+              @pick="filterDates"
+            >
+              <template v-slot:footer="{ emit }">
+                <Button class="btn--outlined" @click="emit(new Date())"
+                  >Today</Button
+                >
+              </template>
+              <template v-slot:icon-calendar>
+                <Icon id="calendar" name="calendar" />
+              </template>
+            </date-picker>
           </client-only>
         </div>
         <ul class="key-events__legend" role="list">
@@ -305,6 +312,7 @@ export default {
 
 <style lang="scss">
 @import '../assets/css/components/vgt-table';
+@import '~/assets/css/components/datepicker';
 @import '../assets/css/components/satellite-block';
 @import '../assets/css/pages/post-content';
 @import '../assets/css/pages/page';

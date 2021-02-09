@@ -9,19 +9,7 @@ $today-color: $color-white-180;
 /* stylelint-disable-next-line */
 @import '~vue2-datepicker/scss/index.scss';
 
-.#{$namespace}-input-wrapper {
-  opacity: 0;
-
-  i {
-    display: none;
-  }
-}
-
 .#{$namespace}-datepicker {
-  position: absolute;
-  top: 0;
-  width: 100%;
-
   input {
     width: 100%;
     cursor: pointer;
