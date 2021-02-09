@@ -8,27 +8,6 @@
     padding: 0 calc(50% - #{$size__content-max-width} / 2);
   }
 
-  div {
-    &:not(:last-child)::after {
-      content: '';
-      display: flex;
-      max-width: $size__line-max-width;
-      margin-top: rem(32px);
-      margin-bottom: rem(32px);
-      border-bottom: 1px solid $color-ltblue-175;
-
-      @include breakpoint('small') {
-        max-width: 100%;
-      }
-      @include breakpoint('medium') {
-        max-width: 100%;
-      }
-      @include breakpoint('large') {
-        max-width: 100%;
-      }
-    }
-  }
-
   a {
     color: $color-slate-690;
     text-decoration: underline;

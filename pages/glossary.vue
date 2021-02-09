@@ -3,7 +3,14 @@
     <div slot="header">
       <ol role="list">
         <li v-for="letter in alphabet" :key="letter">
-          <a :href="`#${letter}`">{{ letter }}</a>
+          <a
+            v-if="foundLetters.includes(letter)"
+            :href="`#${letter}`"
+            :aria-label="`Jump to ${letter} words`"
+          >
+            {{ letter }}
+          </a>
+          <a v-else>{{ letter }}</a>
         </li>
       </ol>
     </div>
@@ -86,7 +93,8 @@ export default {
       firstLetter = firstLetter
         .filter((a, b) => firstLetter.indexOf(a) === b)
         .sort()
-      return firstLetter
+      // return firstLetter
+      return [...new Set(this.terms.map((term) => term.charAt(0)))].sort()
     },
     terms() {
       return Object.keys(this.glossary)
@@ -106,6 +114,7 @@ export default {
 
 <style lang="scss">
 @import '../assets/css/components/post-component';
+@import '../assets/css/pages/glossary';
 @import '../assets/css/pages/post-content';
 @import '../assets/css/pages/page';
 </style>
