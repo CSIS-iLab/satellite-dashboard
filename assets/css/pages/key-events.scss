@@ -1,3 +1,13 @@
+.page--key-events {
+  .page__title {
+    margin-bottom: rem(16);
+  }
+
+  .status-types {
+    margin-top: rem(16);
+  }
+}
+
 .key-events {
   &__time {
     margin-top: rem(2);
@@ -116,7 +126,12 @@
   }
 
   .vgt-table {
+    width: unset;
     table-layout: fixed;
+
+    @include breakpoint('medium') {
+      width: 100%;
+    }
 
     /* stylelint-disable-next-line */
     thead th {
@@ -156,6 +171,15 @@
     /* stylelint-disable-next-line */
     tbody tr:hover td {
       background: $color-slate-200;
+    }
+  }
+
+  .vgt-responsive,
+  .vgt-fixed-header {
+    overflow-x: scroll;
+
+    @include breakpoint('medium') {
+      overflow-x: auto;
     }
   }
 
