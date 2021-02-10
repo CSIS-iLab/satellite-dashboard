@@ -41,7 +41,6 @@
     position: relative;
     grid-area: legend;
     padding: 0 0 0 rem(32);
-    @extend %font-ui-text-sm-good;
 
     @include breakpoint('xlarge') {
       background: $color-slate-700;
@@ -318,5 +317,24 @@
       font-size: 0.5em;
       transform: translateY(-50%);
     }
+  }
+}
+
+/*----------  Date Picker  ----------*/
+.visualizer {
+  $namespace: 'sd';
+
+  .#{$namespace}-input-wrapper {
+    opacity: 0;
+
+    i {
+      display: none;
+    }
+  }
+
+  .#{$namespace}-datepicker {
+    position: absolute;
+    top: 0;
+    width: 100%;
   }
 }

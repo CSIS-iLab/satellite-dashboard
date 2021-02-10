@@ -14,6 +14,11 @@ export default {
   components: {
     Header,
     Footer
+  },
+  head: {
+    bodyAttrs: {
+      class: ''
+    }
   }
 }
 </script>

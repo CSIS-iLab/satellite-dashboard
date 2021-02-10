@@ -1,0 +1,127 @@
+.vgt-wrap .vgt-table {
+  background: transparent;
+  border: 0;
+
+  .text--right {
+    text-align: right;
+  }
+
+  /* stylelint-disable */
+  table,
+  thead th {
+    /* stylelint-enable */
+    background: transparent;
+  }
+
+  /* stylelint-disable-next-line */
+  thead th {
+    color: $color-white-150;
+    @extend %font-ui-text-base-oxygen;
+    border-bottom-color: $color-white-110;
+  }
+
+  /* stylelint-disable */
+  th.sortable {
+    &::before {
+      border-top-color: $color-white-130;
+    }
+    &::after {
+      border-bottom-color: $color-white-130;
+    }
+  }
+
+  th.sorting-desc {
+    &::before {
+      border-top-color: $color-white-180;
+    }
+  }
+
+  th.sorting-asc {
+    &::after {
+      border-bottom-color: $color-white-180;
+    }
+  }
+  /* stylelint-enable */
+
+  /* stylelint-disable-next-line */
+  tbody tr:nth-of-type(odd) {
+    background: $color-slate-600;
+  }
+
+  /* stylelint-disable-next-line */
+  tbody tr:nth-of-type(even) {
+    background: $color-slate-400;
+  }
+
+  td {
+    color: $color-white-180;
+    @extend %font-ui-text-lg-oxygen;
+    border: 0;
+    transition: background 0.3s ease-in-out;
+  }
+
+  th,
+  td {
+    padding: var(--cell-vertical-padding, rem(12)) 0;
+
+    /* stylelint-disable-next-line */
+    + th,
+    + td {
+      padding-right: 0;
+      padding-left: rem(16);
+    }
+  }
+}
+
+.vgt-wrap__footer {
+  .footer {
+    &__navigation {
+      /* stylelint-disable max-nesting-depth, selector-max-compound-selectors */
+      &__page-info {
+        color: $color-white-150;
+      }
+
+      &__page-info__current-entry {
+        margin: 0 rem(2);
+        padding: rem(2) rem(4);
+        color: $color-white-170;
+        background: $color-slate-800;
+        border: 0;
+        border-radius: 3px;
+      }
+
+      &__page-btn {
+        color: $color-white-160;
+
+        &:not(.disabled):hover {
+          --chevron-color: #{$color-white-100};
+          color: $color-white-100;
+        }
+      }
+
+      &__page-btn .chevron {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        margin: 0 rem(4);
+        border-right: 2px solid var(--chevron-color, $color-white-160);
+        border-bottom: 2px solid var(--chevron-color, $color-white-160);
+        transform: rotate(var(--chevron));
+        transition: border 0.3s ease-in-out;
+
+        &::after {
+          display: none;
+        }
+      }
+
+      .left {
+        --chevron: -225deg;
+      }
+
+      .right {
+        --chevron: -45deg;
+      }
+      /* stylelint-enable */
+    }
+  }
+}

@@ -84,4 +84,16 @@
     color: $color-white-140;
     border-radius: 50px;
   }
+
+  &--apply {
+    &:hover .icon {
+      color: $color-orange-100;
+    }
+
+    .icon {
+      color: $color-orange-180;
+      font-size: 0.75em;
+      transition: color 0.3s ease-in-out;
+    }
+  }
 }
