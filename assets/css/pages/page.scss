@@ -1,53 +1,6 @@
 .page {
   &__header {
     @extend %page-header;
-
-    ol {
-      display: grid;
-      grid-template-columns: repeat(13, 1fr);
-      margin: 0;
-      padding: rem(13) 0;
-
-      li:first-child {
-        margin-left: rem(12px);
-      }
-
-      @include breakpoint('medium') {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        margin: 0;
-        padding: rem(13) 0;
-      }
-
-      @include breakpoint('large') {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        margin: 0;
-        padding: rem(13) 0;
-      }
-    }
-
-    li + li {
-      margin-left: rem(12px);
-    }
-
-    a {
-      @extend %font-ui-heading-post-block-title;
-      color: $color-white-130;
-      font-size: rem(14px);
-      line-height: rem(18px);
-    }
-
-    a:disabled {
-      color: $color-white-130;
-    }
-
-    a:active,
-    a:hover {
-      color: $color-white-180;
-    }
   }
 
   &__title {

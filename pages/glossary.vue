@@ -18,25 +18,28 @@
         :id="`${letter.toUpperCase()}`"
         :key="letter"
       >
-        <h2 :id="letter">{{ letter }}</h2>
+        <h2 :id="letter" class="found-letters">{{ letter }}</h2>
         <dl>
-          <div v-for="term in termsByLetter(letter)" :key="term.slug">
-            <dt class="layout-glossary__title">{{ glossary[term].title }}</dt>
-            <dd class="layout-glossary__item">
+          <div
+            v-for="term in termsByLetter(letter.toLowerCase())"
+            :key="term.slug"
+            class="glossary"
+          >
+            <dt class="glossary__title">{{ glossary[term].title }}</dt>
+            <dd class="glossary__item">
               {{ glossary[term].short_definition }}
-            </dd>
-            <dt class="layout-glossary__further-reading">
-              Further Reading
-            </dt>
-            <dd class="layout-glossary__fr-item">
-              This is here just to have some text
+              <div class="glossary__further-reading">
+                Further Reading
+              </div>
+              Further reading content here.
             </dd>
           </div>
         </dl>
-        <a href="#top">
+        <a href="#top" class="back-top">
           <Icon id="arrow-up" class="icon" name="arrow-up" />
           Back to Top
         </a>
+        <!-- <hr class="end-section" /> -->
       </section>
     </section>
   </Page>
@@ -86,12 +89,6 @@ export default {
   },
   computed: {
     foundLetters() {
-      // map & slice to get the first letter of each term. Then filter so we remove duplicates
-      let firstLetter = this.terms.map((term) => term.charAt(0))
-      firstLetter = firstLetter
-        .filter((a, b) => firstLetter.indexOf(a) === b)
-        .sort()
-      // return firstLetter
       return [
         ...new Set(this.terms.map((term) => term.charAt(0).toUpperCase())) // I capitalized this so `foundLetters` is all caps.
       ].sort()
@@ -106,7 +103,8 @@ export default {
   methods: {
     termsByLetter(letter) {
       let terms = this.terms.filter((term) => term.charAt(0) == letter)
-      return terms
+      // return terms
+      return [...this.terms.filter((term) => term.charAt(0) == letter)]
     }
   }
 }
