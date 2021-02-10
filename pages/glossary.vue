@@ -35,7 +35,6 @@
           <Icon id="arrow-up" class="icon" name="arrow-up" />
           Back to Top
         </a>
-        <!-- <hr class="end-section" /> -->
       </section>
     </section>
   </Page>
@@ -85,15 +84,10 @@ export default {
   },
   computed: {
     foundLetters() {
-      // return [
-      //   ...new Set(this.terms.map((term) => term.charAt(0).toUpperCase()))
-      // ].sort()
-      // Objects are not inherently ordered, so we do want to do another sort just to make sure our letters are in the right order.
       return Object.keys(this.groupedTerms).sort()
     },
     groupedTerms() {
       let groupedTerms = {}
-      // For each term, get the first letter & capitalize it. If it doesn't already exist in our groupedTerms object, add it. Then add each term as an element to the letter's array so we can loop over it later. Because we pre-sorted the terms, we know they'll be add to the array in alphabetical order.
       this.terms.forEach((term) => {
         let firstLetter = term.charAt(0).toUpperCase()
         if (!groupedTerms[firstLetter]) {
@@ -113,8 +107,6 @@ export default {
   },
   methods: {
     termsByLetter(letter) {
-      let terms = this.terms.filter((term) => term.charAt(0) == letter)
-      // return terms
       return [...this.terms.filter((term) => term.charAt(0) == letter)]
     }
   }
