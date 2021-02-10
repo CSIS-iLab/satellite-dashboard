@@ -7,8 +7,13 @@
     </template>
 
     <TabWrapper v-model="activeTab" scope="helpPanel">
+      <div class="help__btn-right">
+        <Button class="btn--icon btn--close help__close">
+          <Icon id="close-large" name="close-large" />
+        </Button>
+      </div>
       <header class="help-panel__header">
-        <TabList label="Controller" scope="helpPanel">
+        <TabList label="Controller" scope="helpPanel" class="help__buttons">
           <TabActivator tab="about" scope="helpPanel">
             About the interface
           </TabActivator>
@@ -18,65 +23,72 @@
         </TabList>
       </header>
 
-      <div class="help-panel__content">
+      <div class="help__panel-content">
         <TabPanel tab="about" scope="helpPanel">
-          <h4 class="help-title">Pan</h4>
-          <div class="help-layout">
-            <div class="help-icon-layout">
-              <Icon id="pan-hand" name="pan-hand" />
-              <span class="help-icon-desc">
-                Drag one finger
-              </span>
+          <dl>
+            <div>
+              <dt class="help__title">Pan</dt>
+              <div class="help__layout">
+                <dd class="help__icon-layout">
+                  <Icon id="pan-hand" name="pan-hand" /><span
+                    class="help__icon-desc"
+                    >Drag one finger</span
+                  >
+                </dd>
+                <dd class="help__icon-layout">
+                  <Icon id="pan-mouse" name="pan-mouse" /><span
+                    class="help__icon-desc"
+                    >Left click + drag</span
+                  >
+                </dd>
+              </div>
             </div>
-            <div class="help-icon-layout">
-              <Icon id="pan-mouse" name="pan-mouse" />
-              <span class="help-icon-desc">
-                Left click + drag
-              </span>
+            <div>
+              <dt class="help__title help__title-line">Zoom</dt>
+              <div class="help__layout">
+                <dd class="help__icon-layout">
+                  <Icon id="zoom-hand" name="zoom-hand" /><span
+                    class="help__icon-desc"
+                    >Pinch Fingers</span
+                  >
+                </dd>
+                <dd class="help__icon-layout">
+                  <Icon id="zoom-mouse" name="zoom-mouse" /><span
+                    class="help__icon-desc"
+                    >Right click + drag, or scroll</span
+                  >
+                </dd>
+              </div>
             </div>
-          </div>
-
-          <h4 class="help-title help-title-line">Zoom</h4>
-          <div class="help-layout">
-            <div class="help-icon-layout">
-              <Icon id="zoom-hand" name="zoom-hand" />
-              <span class="help-icon-desc">
-                Pinch fingers
-              </span>
+            <div>
+              <dt class="help__title help__title-line">Rotate</dt>
+              <div class="help__layout">
+                <dd class="help__icon-layout">
+                  <Icon id="rotate-hand" name="rotate-hand" /><span
+                    class="help__icon-desc"
+                    >Drag fingers in different directions</span
+                  >
+                </dd>
+                <dd class="help__icon-layout">
+                  <Icon id="rotate-mouse" name="rotate-mouse" /><span
+                    class="help__icon-desc"
+                    >Middle click + drag or CTRL + Left/Right click + drag</span
+                  >
+                </dd>
+              </div>
             </div>
-            <div class="help-icon-layout">
-              <Icon id="zoom-mouse" name="zoom-mouse" />
-              <span class="help-icon-desc">
-                Right click + drag, or scroll
-              </span>
+            <div>
+              <dt class="help__title help__title-line">Tilt</dt>
+              <div class="help__layout">
+                <dd class="help__icon-layout">
+                  <Icon id="tilt-hand" name="tilt-hand" /><span
+                    class="help__icon-desc"
+                    >Drag two fingers</span
+                  >
+                </dd>
+              </div>
             </div>
-          </div>
-
-          <h4 class="help-title help-title-line">Rotate</h4>
-          <div class="help-layout">
-            <div class="help-icon-layout">
-              <Icon id="rotate-hand" name="rotate-hand" />
-              <span class="help-icon-desc">
-                Drag fingers in different directions
-              </span>
-            </div>
-            <div class="help-icon-layout">
-              <Icon id="rotate-mouse" name="rotate-mouse" />
-              <span class="help-icon-desc">
-                Middle click + drag or CTRL + Left/Right click + drag
-              </span>
-            </div>
-          </div>
-
-          <h4 class="help-title help-title-line">Tilt</h4>
-          <div class="help-layout">
-            <div class="help-icon-layout">
-              <Icon id="tilt-hand" name="tilt-hand" />
-              <span class="help-icon-desc">
-                Drag two fingers
-              </span>
-            </div>
-          </div>
+          </dl>
         </TabPanel>
         <TabPanel tab="view" scope="helpPanel">
           Changing the view goes here.

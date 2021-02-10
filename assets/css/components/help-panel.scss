@@ -1,46 +1,82 @@
-.help-panel__content {
-  text-align: left;
+.help {
+  &__panel-content {
+    margin-bottom: 44px;
+    padding-right: 32px;
+    padding-left: 32px;
+    text-align: left;
+  }
+
+  &__title {
+    padding-top: 16px;
+    padding-bottom: 16px;
+    @include font-size(20px);
+  }
+
+  &__title-line {
+    border-top: 1px solid $color-white-150;
+  }
+
+  &__layout {
+    display: grid;
+    grid-gap: 16px;
+    grid-template-columns: 1fr 1fr;
+    margin-bottom: 32px;
+  }
+
+  &__icon-layout {
+    display: grid;
+    grid-gap: 8px;
+    grid-template-columns: 0.25fr 1fr;
+    align-items: center;
+  }
+
+  &__icon-desc {
+    max-width: 120px;
+  }
+
+  &__buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-left: 32px;
+  }
+
+  &__btn-right {
+    text-align: right;
+  }
+
+  &__close {
+    color: $color-white-160;
+    @include font-size(15px);
+    background: $color-slate-700;
+    border: 0;
+    border-radius: 0;
+
+    &:hover {
+      color: $color-white-100;
+    }
+  }
 }
 
-.help-title {
-  padding-top: 16px;
-  padding-bottom: 16px;
-  font-size: 20px;
+.help-panel__header {
+  max-width: 290px;
 }
 
-.help-title-line {
-  border-top: 1px solid $color-white-150;
+#view-activator,
+#about-activator {
+  max-width: 138px;
+  padding: 0;
+  color: $color-white-160;
+  @include font-size(15px);
+  background: $color-slate-700;
+  border: 0;
+  border-radius: 0;
+
+  &:hover {
+    color: $color-white-100;
+  }
 }
 
-.help-panel__content {
-  margin-bottom: 12px;
-}
-
-.help-layout {
-  display: grid;
-  grid-gap: 16px;
-  grid-template-columns: 1fr 1fr;
-  margin-bottom: 32px;
-}
-
-.help-icon-layout {
-  display: grid;
-  grid-gap: 8px;
-  grid-template-columns: 0.25fr 1fr;
-  align-items: center;
-}
-
-.help-icon-desc {
-  max-width: 120px;
-}
-
-#pan-hand,
-#zoom-hand,
-#rotate-hand,
-#tilt-hand,
-#pan-mouse,
-#zoom-mouse,
-#rotate-mouse {
+.help__icon-layout .icon {
   width: 40px;
   height: 48px;
 }
@@ -52,9 +88,4 @@
 
 .tippy-backdrop {
   background-color: $color-slate-700;
-}
-
-.tippy-tooltip {
-  padding-right: 32px;
-  padding-left: 32px;
 }
