@@ -13,16 +13,12 @@
       </ol>
     </div>
     <section class="post__content entry-content">
-      <section
-        v-for="letter in foundLetters"
-        :id="`${letter.toUpperCase()}`"
-        :key="letter"
-      >
+      <section v-for="letter in foundLetters" :id="`${letter}`" :key="letter">
         <h2 :id="letter" class="found-letters">{{ letter }}</h2>
         <dl>
           <div
-            v-for="term in termsByLetter(letter.toLowerCase())"
-            :key="term.slug"
+            v-for="term in groupedTerms[letter]"
+            :key="term"
             class="glossary"
           >
             <dt class="glossary__title">{{ glossary[term].title }}</dt>
@@ -89,12 +85,27 @@ export default {
   },
   computed: {
     foundLetters() {
-      return [
-        ...new Set(this.terms.map((term) => term.charAt(0).toUpperCase())) // I capitalized this so `foundLetters` is all caps.
-      ].sort()
+      // return [
+      //   ...new Set(this.terms.map((term) => term.charAt(0).toUpperCase()))
+      // ].sort()
+      // Objects are not inherently ordered, so we do want to do another sort just to make sure our letters are in the right order.
+      return Object.keys(this.groupedTerms).sort()
+    },
+    groupedTerms() {
+      let groupedTerms = {}
+      // For each term, get the first letter & capitalize it. If it doesn't already exist in our groupedTerms object, add it. Then add each term as an element to the letter's array so we can loop over it later. Because we pre-sorted the terms, we know they'll be add to the array in alphabetical order.
+      this.terms.forEach((term) => {
+        let firstLetter = term.charAt(0).toUpperCase()
+        if (!groupedTerms[firstLetter]) {
+          groupedTerms[firstLetter] = []
+        }
+
+        groupedTerms[firstLetter].push(term)
+      })
+      return groupedTerms
     },
     terms() {
-      return Object.keys(this.glossary)
+      return Object.keys(this.glossary).sort()
     },
     ...mapState({
       glossary: (state) => state.glossary.glossary
