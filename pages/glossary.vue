@@ -14,7 +14,7 @@
     </div>
     <section class="post__content entry-content">
       <section v-for="letter in foundLetters" :id="`${letter}`" :key="letter">
-        <h2 :id="letter" class="found-letters">{{ letter }}</h2>
+        <h2 :id="letter" class="alphabet-nav">{{ letter }}</h2>
         <dl>
           <div
             v-for="term in groupedTerms[letter]"
