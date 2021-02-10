@@ -171,10 +171,22 @@ export default {
         })
 
         if (!entity) {
+          viewer.trackedEntity = undefined
           return
         }
 
         entity.path.show = true
+        viewer.trackedEntity = entity
+        const entityPosition = viewer.scene.mapProjection.ellipsoid.cartesianToCartographic(
+          entity.position.getValue(viewer.clock.currentTime)
+        )
+        entityPosition.height = entityPosition.height + this.defaultZoomAmount
+        const cameraPosition = viewer.scene.mapProjection.ellipsoid.cartographicToCartesian(
+          entityPosition
+        )
+        viewer.camera.flyTo({
+          destination: cameraPosition
+        })
         this.showSatelliteDetails(entity.id)
       })
 
@@ -182,7 +194,7 @@ export default {
       so that it does not track the Earth's rotation, and we see the
       Earth rotating from a fixed position */
       viewer.scene.postUpdate.addEventListener((scene, time) => {
-        if (scene.mode !== Cesium.SceneMode.SCENE3D) {
+        if (viewer.trackedEntity || scene.mode !== Cesium.SceneMode.SCENE3D) {
           return
         }
         const icrfToFixed = Cesium.Transforms.computeIcrfToFixedMatrix(time)
@@ -276,7 +288,7 @@ export default {
               start: this.SimStart,
               stop: Cesium.JulianDate.addSeconds(
                 this.SimStop,
-                this.SimInt * 0.01, // add 1% to ensure satellites don't disappear when Cesium goes slightly beyond
+                this.SimInt * 0.1, // add 10% to ensure satellites don't disappear when Cesium goes slightly beyond
                 new Cesium.JulianDate()
               )
             })
@@ -287,7 +299,7 @@ export default {
             color: entityColors[status].point
           },
           path: {
-            resolution: 2000,
+            resolution: 400,
             material: entityColors[status].path,
             width: 4,
             show: false
@@ -410,7 +422,7 @@ export default {
       )
       positionSamples.setInterpolationOptions({
         interpolationAlgorithm: Cesium.LagrangePolynomialApproximation,
-        interpolationDegree: 1
+        interpolationDegree: 2
       })
 
       const duration = this.SimInt
@@ -423,6 +435,7 @@ export default {
       calculations are evenly spaced */
       const paddedOrbits = []
       let lastMatch = 0
+      let finalElement
       for (let day = 0; day < numDays; day++) {
         const targetDate = Cesium.JulianDate.toDate(
           Cesium.JulianDate.addDays(this.SimStart, day, new Cesium.JulianDate())
@@ -433,10 +446,14 @@ export default {
           lastMatch++
         }
         paddedOrbits.push(orbit)
+        finalElement = orbit
       }
 
       const orbitalFragmentSize = duration / paddedOrbits.length
       let step = (duration / 360) * 1000
+
+      //tack on an extra one so visibility doesn't cut off
+      paddedOrbits.push(finalElement)
 
       paddedOrbits.forEach((orbit, i, a) => {
         const elems = Object.assign({}, orbit.elements)
@@ -445,10 +462,9 @@ export default {
           orbitalFragmentSize * i,
           new Cesium.JulianDate()
         )
-        const padFactor = i === a.length - 1 ? 1.01 : 1
         const fragmentEnd = Cesium.JulianDate.addSeconds(
           this.SimStart,
-          orbitalFragmentSize * (i + 1) * padFactor,
+          orbitalFragmentSize * (i + 1),
           new Cesium.JulianDate()
         )
 

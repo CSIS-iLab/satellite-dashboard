@@ -117,13 +117,13 @@ export default {
 
       if (viewer.selectedEntity == entity || viewer.trackedEntity == entity) {
         viewer.selectedEntity = undefined
-        viewer.trackedEntity = undefined
+        //viewer.trackedEntity = undefined
         entity.path.show = false
         return
       }
 
       viewer.selectedEntity = entity
-      viewer.trackedEntity = entity
+      //viewer.trackedEntity = entity
     },
     toggleFocusState() {
       let newFocusedItems = new Set(this.focusedSatellites)
