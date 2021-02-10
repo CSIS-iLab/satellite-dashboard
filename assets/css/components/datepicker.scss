@@ -52,6 +52,10 @@ $today-color: $color-white-180;
       &.not-current-month {
         color: $color-white-130;
       }
+
+      &.in-range {
+        background: $color-orange-140;
+      }
     }
   }
 

@@ -49,13 +49,8 @@
               input-class="datepicker__input form__input form__input--light"
               range
               range-separator=" - "
-              @pick="filterDates"
+              @input="filterDates"
             >
-              <template v-slot:footer="{ emit }">
-                <Button class="btn--outlined" @click="emit(new Date())"
-                  >Today</Button
-                >
-              </template>
               <template v-slot:icon-calendar>
                 <Icon id="calendar" name="calendar" />
               </template>
@@ -174,7 +169,7 @@ export default {
   },
   async fetch() {
     const events = await this.$axios.$get(
-      'https://satdash.wpengine.com/wp-json/satdash/v1/close_approaches',
+      'http://satellite-dashboard.local/wp-json/satdash/v1/close_approaches',
       {
         params: this.serverParams
       }
@@ -304,7 +299,23 @@ export default {
       // update API to accept search term
     },
     filterDates() {
-      console.log('filter by date')
+      // Reset the date if we didn't select a date range
+      if (this.selectedDate[0] === null) {
+        this.updateParams({ startDate: null, endDate: null })
+        this.loadItems()
+        return
+      }
+
+      const dates = this.selectedDate.map((d) => {
+        const month = (d.getMonth() + 1).toString().padStart(2, '0')
+        const day = d
+          .getDate()
+          .toString()
+          .padStart(2, '0')
+        return `${d.getFullYear()}-${month}-${day}`
+      })
+      this.updateParams({ startDate: dates[0], endDate: dates[1] })
+      this.loadItems()
     }
   }
 }
