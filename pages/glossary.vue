@@ -1,8 +1,8 @@
 <template>
-  <Page title="Glossary" :content-has-bg="true">
+  <Page title="Glossary" :content-has-bg="true" class="glossary">
     <div slot="header">
       <ol role="list">
-        <li v-for="letter in alphabet" :key="letter">
+        <li v-for="letter in alphabet" :key="letter" class="alphabet-nav">
           <template v-if="foundLetters.includes(letter)">
             <a :href="`#${letter}`" :aria-label="`Jump to ${letter} words`">
               {{ letter }}
@@ -14,17 +14,17 @@
     </div>
     <section class="post__content entry-content">
       <section v-for="letter in foundLetters" :id="`${letter}`" :key="letter">
-        <h2 :id="letter" class="alphabet-nav">{{ letter }}</h2>
+        <h2 :id="letter" class="alphabet-in-section">{{ letter }}</h2>
         <dl>
           <div
             v-for="term in groupedTerms[letter]"
             :key="term"
-            class="glossary"
+            class="glossary-term"
           >
-            <dt class="glossary__title">{{ glossary[term].title }}</dt>
-            <dd class="glossary__item">
+            <dt class="glossary-term__title">{{ glossary[term].title }}</dt>
+            <dd class="glossary-term__item">
               {{ glossary[term].short_definition }}
-              <div class="glossary__further-reading">
+              <div class="glossary-term__further-reading">
                 Further Reading
               </div>
               Further reading content here.
@@ -104,11 +104,6 @@ export default {
     ...mapState({
       glossary: (state) => state.glossary.glossary
     })
-  },
-  methods: {
-    termsByLetter(letter) {
-      return [...this.terms.filter((term) => term.charAt(0) == letter)]
-    }
   }
 }
 </script>

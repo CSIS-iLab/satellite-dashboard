@@ -1,120 +1,117 @@
-a {
-  @extend %font-ui-heading-post-block-title;
-  color: $color-white-180;
-  @include font-size(14px);
-  line-height: rem(18px);
-}
-
-a:active,
-a:hover {
-  color: $color-white-180;
-}
-
-li + li {
-  margin-left: rem(12px);
-}
-
-ol {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  margin: 0;
-  padding: rem(13) 0;
-  @extend %font-ui-heading-post-block-title;
-  color: $color-white-130;
-  @include font-size(14px);
-  line-height: rem(18px);
-}
-
-section {
-  position: relative;
-
-  &:not(:last-child)::after {
-    content: '';
-    position: absolute;
-    right: 0;
-    left: 0;
-    display: flex;
-    width: 100%;
-    border-bottom: 1px solid $color-ltblue-100;
+.glossary {
+  li + li {
+    margin-left: rem(12px);
   }
-}
 
-.back-top {
-  @extend %font-ui-heading-section-sm;
-  @include font-size(14px);
-  display: flex;
-  justify-content: center;
-  margin-top: rem(70px);
-  margin-bottom: rem(22px);
-  color: $color-blue-170;
-  line-height: rem(18px);
-  text-transform: uppercase;
-  text-decoration: none;
+  ol {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 0;
+    padding: rem(13) 0;
+    @extend %font-ui-text-base-good;
+    color: $color-white-130;
+  }
 
-  &:hover {
-    color: $color-orange-100;
+  section {
+    position: relative;
 
-    .icon {
-      color: $color-orange-100;
+    &:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      left: 0;
+      display: flex;
+      width: 100%;
+      border-bottom: 1px solid $color-ltblue-100;
     }
   }
 
-  .icon {
-    position: relative;
-    margin-right: 4px;
-    margin-left: 4px;
-    color: $color-blue-170;
-    @include font-size(14px);
-    transition: all 0.3s ease-in-out;
+  .alphabet-nav {
+    a {
+      color: $color-white-180;
+    }
+
+    a:active,
+    a:hover {
+      color: $color-white-180;
+    }
   }
-}
 
-.alphabet-nav {
-  @extend %font-post-heading-h2;
-  margin-top: rem(54px);
-  margin-bottom: rem(12px);
-
-  color: $color-black-190;
-  line-height: rem(48px);
-  text-transform: uppercase;
-}
-
-div .glossary:not(:last-child) {
-  margin-top: rem(32px);
-  margin-bottom: rem(32px);
-  border-bottom: 1px solid $color-ltblue-175;
-}
-
-.glossary {
-  &__title {
-    margin-bottom: rem(4px);
+  .alphabet-in-section {
     @extend %font-post-heading-h2;
-    color: $color-black-100;
-    line-height: rem(29px);
-    @include font-size(24px);
-  }
-
-  &__item {
-    margin-bottom: rem(16px);
-    @extend %font-post-text-md;
+    margin-top: rem(54px);
+    margin-bottom: rem(12px);
     color: $color-black-190;
-  }
-
-  &__further-reading {
-    @extend %font-post-heading-table-title;
-    margin-top: rem(16px);
-    margin-bottom: rem(4px);
-    color: $color-black-160;
-    font-weight: 600;
-    line-height: rem(20px);
     text-transform: uppercase;
-    @include font-size(16px);
   }
-}
 
-.page {
-  &__content {
-    padding-top: rem(26px) !important;
+  .back-top {
+    @extend %font-ui-heading-section-sm;
+    @include font-size(14px);
+    display: flex;
+    justify-content: center;
+    margin-top: rem(70px);
+    margin-bottom: rem(22px);
+    color: $color-blue-170;
+    line-height: rem(18px);
+    text-transform: uppercase;
+    text-decoration: none;
+
+    &:hover {
+      color: $color-orange-100;
+
+      .icon {
+        color: $color-orange-100;
+      }
+    }
+
+    .icon {
+      position: relative;
+      margin-right: 4px;
+      margin-left: 4px;
+      color: $color-blue-170;
+      @include font-size(14px);
+      transition: all 0.3s ease-in-out;
+    }
+  }
+
+  .glossary-term {
+    &__title {
+      margin-bottom: rem(4px);
+      @extend %font-post-heading-h2;
+      color: $color-black-100;
+      line-height: rem(29px);
+      @include font-size(24px);
+    }
+
+    &__item {
+      margin-bottom: rem(16px);
+      @extend %font-post-text-md;
+      color: $color-black-190;
+    }
+
+    &__further-reading {
+      @extend %font-post-heading-table-title;
+      margin-top: rem(16px);
+      margin-bottom: rem(4px);
+      color: $color-black-160;
+      font-weight: 600;
+      line-height: rem(20px);
+      text-transform: uppercase;
+      @include font-size(16px);
+    }
+
+    &:not(:last-child) {
+      margin-top: rem(32px);
+      margin-bottom: rem(32px);
+      border-bottom: 1px solid $color-ltblue-175;
+    }
+  }
+
+  .page {
+    &__content {
+      padding-top: rem(26px);
+    }
   }
 }
