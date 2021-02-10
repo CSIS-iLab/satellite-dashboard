@@ -17,17 +17,33 @@
     </div>
     <section class="post__content">
       <div class="key-events__filters">
-        <div class="key-events__search">
+        <div class="key-events__search form">
           <label for="search" class="form__label"
             >Search by Object Name or ID</label
           >
-          <input
-            id="search"
-            v-model="searchTerm"
-            class="form__input form__input--light"
-            type="text"
-            placeholder="Search"
-          />
+          <client-only>
+            <v-select
+              id="search"
+              :value="searchTerm"
+              multiple
+              placeholder="Search"
+              class="form__input form__input--light"
+              :clearable="false"
+              :options="availableSatellites"
+              :filter-by="filterByTerm"
+              @input="updateSearchTerm"
+            >
+              <template #open-indicator="{ attributes }">
+                <span v-bind="attributes">
+                  <Icon id="plus" name="plus" />
+                  <Icon id="minus" name="minus" />
+                </span>
+              </template>
+              <template #option="{ label }">
+                <Icon id="check" name="check" />{{ label }}
+              </template>
+            </v-select>
+          </client-only>
           <div class="key-events__search-btns">
             <Button :on-click="clearSearch" :disabled="searchTerm == ''"
               >Clear</Button
@@ -59,101 +75,104 @@
         </div>
         <ul class="key-events__legend" role="list">
           <li>
-            <strong>{{ formatNumber(totalRecords) }}</strong> events
+            <strong>{{ formatNumber(totalRecords) }}</strong>
+            {{ 'event' | pluralize(totalRecords) }}
           </li>
           <li>
             <strong style="font-style: italic;">P</strong>: Predicted Date
           </li>
         </ul>
       </div>
-      <vue-good-table
-        mode="remote"
-        :total-rows="totalRecords"
-        :is-loading.sync="isLoading"
-        max-height="700px"
-        :fixed-header="true"
-        :pagination-options="{
-          enabled: totalRecords > serverParams.perPage ? true : false,
-          mode: 'pages',
-          perPage: serverParams.perPage,
-          pageLabel: 'Page',
-          dropdownAllowAll: false
-        }"
-        :sort-options="{
-          enabled: true,
-          initialSortBy: serverParams.sort
-        }"
-        :rows="rows"
-        :columns="columns"
-        style-class="vgt-table striped"
-        @on-page-change="onPageChange"
-        @on-sort-change="onSortChange"
-        @on-column-filter="onColumnFilter"
-        @on-per-page-change="onPerPageChange"
-      >
-        <template slot="table-column" slot-scope="props">
-          <template v-if="props.column.sublabel">
-            {{ props.column.label }} <span>{{ props.column.sublabel }}</span>
+      <client-only>
+        <vue-good-table
+          mode="remote"
+          :total-rows="totalRecords"
+          :is-loading.sync="isLoading"
+          max-height="700px"
+          :fixed-header="true"
+          :pagination-options="{
+            enabled: totalRecords > serverParams.perPage ? true : false,
+            mode: 'pages',
+            perPage: serverParams.perPage,
+            pageLabel: 'Page',
+            dropdownAllowAll: false
+          }"
+          :sort-options="{
+            enabled: true,
+            initialSortBy: serverParams.sort
+          }"
+          :rows="rows"
+          :columns="columns"
+          style-class="vgt-table striped"
+          @on-page-change="onPageChange"
+          @on-sort-change="onSortChange"
+          @on-column-filter="onColumnFilter"
+          @on-per-page-change="onPerPageChange"
+        >
+          <template slot="table-column" slot-scope="props">
+            <template v-if="props.column.sublabel">
+              {{ props.column.label }} <span>{{ props.column.sublabel }}</span>
+            </template>
+            <template v-else>
+              {{ props.column.label }}
+            </template>
           </template>
-          <template v-else>
-            {{ props.column.label }}
-          </template>
-        </template>
-        <template slot="table-row" slot-scope="props">
-          <!-- eslint-disable -->
-          <template v-if="props.column.field == 'time_of_close_approach'">
-            <div
-              v-html="formatDate(props.row.time_of_close_approach)"
-              :data-prediction="props.row.is_prediction == '1' ? true : false"
-            ></div>
-          </template>
-          <!-- eslint-enable -->
-          <template
-            v-else-if="
-              props.column.field === 'catalog_id_1' ||
-                props.column.field === 'catalog_id_2'
-            "
-          >
-            <div
-              class="sat__basic sat__basic--status"
-              :data-status="
-                satellites[props.formattedRow[props.column.field]].Status
+          <template slot="table-row" slot-scope="props">
+            <!-- eslint-disable -->
+            <template v-if="props.column.field == 'time_of_close_approach'">
+              <div
+                v-html="formatDate(props.row.time_of_close_approach)"
+                :data-prediction="props.row.is_prediction == '1' ? true : false"
+              ></div>
+            </template>
+            <!-- eslint-enable -->
+            <template
+              v-else-if="
+                props.column.field === 'catalog_id_1' ||
+                  props.column.field === 'catalog_id_2'
               "
             >
-              <div class="sat__name">
-                {{ satellites[props.formattedRow[props.column.field]].Name }}
+              <div
+                class="sat__basic sat__basic--status"
+                :data-status="
+                  satellites[props.formattedRow[props.column.field]].Status
+                "
+              >
+                <div class="sat__name">
+                  {{ satellites[props.formattedRow[props.column.field]].Name }}
+                </div>
+                <div class="sat__id">
+                  {{ props.formattedRow[props.column.field] }}
+                </div>
               </div>
-              <div class="sat__id">
-                {{ props.formattedRow[props.column.field] }}
-              </div>
-            </div>
+            </template>
+            <template v-else-if="props.column.field === 'min_distance'">
+              {{ formatNumber(props.row.min_distance) }}
+            </template>
+            <ul
+              v-else-if="props.column.field == 'actions'"
+              class="sat__actions"
+              role="list"
+            >
+              <li>
+                <Icon id="orbit" name="orbit" />
+              </li>
+              <li>
+                <Icon id="graph" name="graph" />
+              </li>
+            </ul>
+            <template v-else>
+              {{ props.formattedRow[props.column.field] }}
+            </template>
           </template>
-          <template v-else-if="props.column.field === 'min_distance'">
-            {{ formatNumber(props.row.min_distance) }}
-          </template>
-          <ul
-            v-else-if="props.column.field == 'actions'"
-            class="sat__actions"
-            role="list"
-          >
-            <li>
-              <Icon id="orbit" name="orbit" />
-            </li>
-            <li>
-              <Icon id="graph" name="graph" />
-            </li>
-          </ul>
-          <template v-else>
-            {{ props.formattedRow[props.column.field] }}
-          </template>
-        </template>
-      </vue-good-table>
+        </vue-good-table>
+      </client-only>
     </section>
   </Page>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import Page from '~/layout/page'
 import Button from '~/components/global/Button.vue'
 import Icon from '~/components/global/Icon.vue'
@@ -169,7 +188,7 @@ export default {
   },
   async fetch() {
     const events = await this.$axios.$get(
-      'http://satellite-dashboard.local/wp-json/satdash/v1/close_approaches',
+      'https://satdash.wpengine.com/wp-json/satdash/v1/close_approaches',
       {
         params: this.serverParams
       }
@@ -180,7 +199,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      searchTerm: '',
+      searchTerm: [],
       selectedDate: null,
       columns: [
         {
@@ -223,8 +242,32 @@ export default {
     }
   },
   computed: {
+    availableSatellites() {
+      const list = this.satelliteCatalogIds
+        .map((sat) => {
+          const { catalog_id, Name } = this.satellites[sat]
+
+          let nameLowerCase
+          if (Name) {
+            nameLowerCase = Name.toLowerCase()
+          }
+
+          let term = `${(catalog_id + nameLowerCase).replace(/\s/g, '')}`
+
+          return {
+            value: catalog_id,
+            label: Name || 'Test',
+            term
+          }
+        })
+        .sort((a, b) => a.label.localeCompare(b.label))
+      return list
+    },
     ...mapState({
       satellites: (state) => state.satellites.satellites
+    }),
+    ...mapGetters({
+      satelliteCatalogIds: 'satellites/satelliteCatalogIds'
     })
   },
   methods: {
@@ -262,7 +305,6 @@ export default {
     },
     // load items is what brings back the rows from server
     loadItems() {
-      console.log('load items')
       this.$fetch()
     },
     formatDate(date) {
@@ -290,13 +332,22 @@ export default {
       return Number(value).toLocaleString('en-US')
     },
     clearSearch() {
-      this.searchTerm = ''
+      this.searchTerm = []
+      this.updateParams({ catalog_id: null })
+      this.loadItems()
+    },
+    updateSearchTerm(value) {
+      this.searchTerm = value
     },
     searchTable() {
-      console.log('search the table')
-      // if searching for text, need to associate it with an id
-      // search is server side, send over parameters
-      // update API to accept search term
+      const ids = this.searchTerm.map((d) => d.value)
+      this.updateParams({ catalog_id: ids })
+      this.loadItems()
+    },
+    filterByTerm: (option, label, search) => {
+      let temp = search.toLowerCase()
+      // return option.term.toLowerCase().indexOf(temp) > -1
+      return option.term.includes(temp)
     },
     filterDates() {
       // Reset the date if we didn't select a date range
@@ -324,6 +375,7 @@ export default {
 <style lang="scss">
 @import '../assets/css/components/vgt-table';
 @import '~/assets/css/components/datepicker';
+@import '../assets/css/components/form-input';
 @import '../assets/css/components/satellite-block';
 @import '../assets/css/pages/post-content';
 @import '../assets/css/pages/page';
