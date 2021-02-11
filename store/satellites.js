@@ -163,6 +163,10 @@ export const actions = {
           }
 
           // Format country names into standard codes if we can.
+          if (!sat.countryOfJurisdiction) {
+            sat.countryOfJurisdiction = 'TBD'
+          }
+
           let countryOfJurisdiction = formatCountries(sat.countryOfJurisdiction)
           let countryOfJurisdictionIds = countryOfJurisdiction.map((d) => d.id)
 
