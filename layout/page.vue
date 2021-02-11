@@ -22,9 +22,12 @@ export default {
       default: false
     }
   },
-  head: {
-    bodyAttrs: {
-      class: 'page-layout'
+  head() {
+    return {
+      title: this.title,
+      bodyAttrs: {
+        class: `page-layout page--${this.$route.name}`
+      }
     }
   }
 }
