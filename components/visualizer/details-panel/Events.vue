@@ -98,7 +98,7 @@ export default {
   },
   async fetch() {
     const events = await this.$axios.$get(
-      'https://satdash.wpengine.com/wp-json/satdash/v1/close_approaches/2207'
+      `https://satdash.wpengine.com/wp-json/satdash/v1/close_approaches/${this.id}`
     )
     this.events = events
   },
@@ -145,7 +145,6 @@ export default {
           ...info
         }
       })
-      console.log(formattedEvents)
       return formattedEvents
     },
     totalFilteredEvents() {
