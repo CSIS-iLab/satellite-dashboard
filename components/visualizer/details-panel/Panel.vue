@@ -33,11 +33,7 @@
           <Details :id="id" :satellite="satellite" />
         </TabPanel>
         <TabPanel tab="events" scope="detailsPanel">
-          <p>
-            This object has no cataloged key events yet. Learn more about the
-            Dashboard's latest
-            <nuxt-link to="/key-events">key events</nuxt-link> here.
-          </p>
+          <Events :id="id" :name="satelliteName" />
         </TabPanel>
         <TabPanel tab="analysis" scope="detailsPanel">
           <p>
@@ -56,6 +52,7 @@ import { mapState } from 'vuex'
 import { mapMutations } from 'vuex'
 import Button from '~/components/global/Button'
 import Details from '~/components/visualizer/details-panel/Details.vue'
+import Events from '~/components/visualizer/details-panel/Events.vue'
 import Icon from '~/components/global/Icon'
 import { TabActivator, TabList, TabPanel, TabWrapper } from '@a11y-kit/vue-tabs'
 
@@ -67,6 +64,7 @@ export default {
   components: {
     Button,
     Details,
+    Events,
     Icon,
     TabActivator,
     TabList,
