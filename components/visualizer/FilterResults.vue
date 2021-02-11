@@ -1,6 +1,8 @@
 <template>
   <div class="filter-results">
-    <h3 class="filter-results__total">{{ totalResults }} results</h3>
+    <h3 class="filter-results__total">
+      {{ totalResults }} {{ 'result' | pluralize(totalResults) }}
+    </h3>
     <div class="filter-results__sort form">
       <v-select
         v-model="currentSort"

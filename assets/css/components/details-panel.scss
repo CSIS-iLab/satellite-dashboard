@@ -118,11 +118,19 @@
   }
 
   &__desc {
+    margin: rem(8) 0 rem(16);
+    color: $color-white-170;
+    @extend %font-ui-text-base-oxygen;
+  }
+
+  &__small-desc {
     margin-bottom: rem(16);
     color: $color-white-140;
     @extend %font-ui-text-sm-oxygen;
   }
+}
 
+.details-details {
   .sat__basic--status {
     --marker-size: 8px;
     --marker-top: 0;
@@ -137,5 +145,12 @@
     text-transform: uppercase;
     background: var(--status-bg);
     border-radius: 50px;
+  }
+}
+
+.details-events {
+  &__total {
+    color: $color-white-170;
+    @extend %font-ui-heading-section-sm;
   }
 }

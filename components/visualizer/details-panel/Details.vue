@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="details-details">
     <dl class="details__basic">
       <div v-for="item in info.basic" :key="item.value">
         <dt>{{ item.label }}</dt>
@@ -36,7 +36,9 @@
     <div v-if="hasOrbit">
       <hr />
       <h3>Orbit</h3>
-      <p class="details-panel__desc">Last updated from {{ orbitSource }}</p>
+      <p class="details-panel__small-desc">
+        Last updated from {{ orbitSource }}
+      </p>
       <dl class="details__orbit">
         <div v-for="item in info.orbit" :key="item.value">
           <!-- eslint-disable -->
