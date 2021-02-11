@@ -1,10 +1,10 @@
 <template>
-  <div class="details__events">
+  <div class="details-events">
     <h3>Historical Longitudes</h3>
     <p class="details-panel__desc">Coming soon.</p>
     <hr />
     <h3>Close Approaches</h3>
-    <template v-if="numEvents === 0">
+    <template v-if="totalEvents === 0">
       <p class="details-panel__desc">
         This object has no cataloged key events yet. Learn more about the
         Dashboard's latest
@@ -17,9 +17,40 @@
         range of <strong>{{ name }}</strong
         >.
       </p>
+      <form class="form details-events__form" @submit.prevent>
+        <input
+          id="distance_range"
+          v-model="maxDistance"
+          type="range"
+          name="distance"
+          min="10"
+          max="150"
+          step="1"
+        />
+
+        <label for="distance" class="visually-hidden"
+          >Max Close Approach Distance (km):</label
+        >
+        <input
+          id="distance"
+          v-model="maxDistance"
+          class="form__input form__input--sm details-events__input"
+          type="number"
+          name="distance"
+          min="10"
+          max="150"
+          step="any"
+        />
+
+        <Button class="btn--apply" :on-click="updateMaxDistance">
+          <Icon id="check" name="check" />
+          Apply
+        </Button>
+      </form>
       <div class="details-events__totals">
         <h4 class="details-events__total">
-          {{ numEvents }} {{ 'result' | pluralize(numEvents) }}
+          {{ totalFilteredEvents }}
+          {{ 'result' | pluralize(totalFilteredEvents) }}
         </h4>
         <!-- <div class="details-events__sort form">
           <v-select
@@ -36,7 +67,7 @@
           </v-select>
         </div> -->
       </div>
-      <CloseApproachesList :events="formattedEvents" />
+      <CloseApproachesList :events="filteredEvents" />
     </template>
   </div>
 </template>
@@ -44,10 +75,14 @@
 <script>
 import { mapState } from 'vuex'
 import CloseApproachesList from '~/components/visualizer/CloseApproachesList.vue'
+import Button from '~/components/global/Button.vue'
+import Icon from '~/components/global/Icon.vue'
 
 export default {
   components: {
-    CloseApproachesList
+    CloseApproachesList,
+    Button,
+    Icon
   },
   props: {
     id: {
@@ -71,6 +106,8 @@ export default {
     return {
       activeTab: 'events',
       events: [],
+      maxDistance: 50,
+      appliedMaxDistance: 50,
       currentSort: 'min_distance',
       sortOptions: [
         { value: 'min_distance', label: 'Distance' },
@@ -79,7 +116,7 @@ export default {
     }
   },
   computed: {
-    numEvents() {
+    totalEvents() {
       return this.events.length
     },
     // Add the name & status for satellites. Filter out the satellite's whose details we're viewing.
@@ -111,9 +148,22 @@ export default {
       console.log(formattedEvents)
       return formattedEvents
     },
+    totalFilteredEvents() {
+      return this.filteredEvents.length
+    },
+    filteredEvents() {
+      return this.formattedEvents.filter(
+        (d) => d.min_distance_km <= this.appliedMaxDistance
+      )
+    },
     ...mapState({
       satellites: (state) => state.satellites.satellites
     })
+  },
+  methods: {
+    updateMaxDistance() {
+      this.appliedMaxDistance = this.maxDistance
+    }
   }
 }
 </script>

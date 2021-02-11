@@ -18,7 +18,7 @@
     padding-bottom: rem(4);
     overflow: auto;
     color: $color-white-180;
-    background: $color-slate-385;
+    background: $color-slate-390;
   }
 
   &__header,
@@ -152,5 +152,90 @@
   &__total {
     color: $color-white-170;
     @extend %font-ui-heading-section-sm;
+  }
+
+  &__form {
+    display: grid;
+    grid-template-columns: auto max-content;
+    gap: rem(8);
+    margin-bottom: rem(40);
+
+    .btn--apply {
+      grid-column: 1 / -1;
+      justify-self: center;
+    }
+  }
+
+  &__input {
+    max-width: rem(50px);
+    overflow: hidden;
+  }
+
+  /*----------  Range Slider  ----------*/
+
+  @mixin input-range-track {
+    height: rem(4);
+    background: $color-blue-100;
+    appearance: none;
+  }
+
+  @mixin input-range-progress {
+    height: rem(4);
+    background: #1e3650;
+    border-radius: 0;
+  }
+
+  @mixin input-range-thumb {
+    width: rem(17);
+    height: rem(17);
+    margin-top: rem(-8);
+    background: radial-gradient(
+      circle,
+      $color-blue-100 40%,
+      $color-offwhite 40%
+    );
+    border-radius: 50%;
+    cursor: pointer;
+    appearance: none;
+  }
+
+  input[type='range'] {
+    width: 100%;
+    background: transparent;
+    appearance: none;
+  }
+
+  input[type='range']::-webkit-slider-runnable-track {
+    @include input-range-track();
+  }
+
+  input[type='range']::-moz-range-track {
+    @include input-range-track();
+  }
+
+  input[type='range']::-moz-range-progress {
+    @include input-range-progress();
+  }
+
+  input[type='range']::-ms-track {
+    @include input-range-track();
+    color: transparent;
+    border: 0;
+  }
+
+  input[type='range']::-ms-fill-lower {
+    @include input-range-track();
+  }
+
+  input[type='range']::-webkit-slider-thumb {
+    @include input-range-thumb();
+  }
+
+  input[type='range']::-moz-range-thumb {
+    @include input-range-thumb();
+  }
+
+  input[type='range']::-ms-thumb {
+    @include input-range-thumb();
   }
 }
