@@ -1,32 +1,79 @@
 .help {
   &__panel-content {
-    margin-bottom: 44px;
-    padding-right: 32px;
-    padding-left: 32px;
+    margin-bottom: rem(44);
+    padding-right: rem(32);
+    padding-left: rem(32);
     text-align: left;
   }
 
   &__title {
-    padding-top: 16px;
-    padding-bottom: 16px;
+    grid-column: 1 / -1;
+    padding-top: rem(16);
+    padding-bottom: rem(16);
     @include font-size(20px);
+  }
+
+  &__tab-selector {
+    width: fit-content;
+    @include font-size(15px);
+    padding: 0;
+    color: $color-white-150;
+    @extend %font-ui-text-lg-oxygen;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    cursor: pointer;
+    transition: color 0.3s ease-in-out;
+
+    &:hover {
+      color: $color-white-100;
+    }
+
+    &--close {
+      margin: 0 0 0 auto;
+      color: $color-white-140;
+    }
+
+    &::after {
+      content: '';
+      display: block;
+      width: rem(32);
+      height: 1px;
+      margin-top: rem(8);
+      background: $color-white-170;
+      transform: scaleX(0);
+      transform-origin: left center;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    &[aria-selected='true'] {
+      color: $color-white-180;
+
+      &::after {
+        transform: scaleX(1);
+      }
+    }
+
+    + .ak-vt__activator {
+      margin-left: rem(12);
+    }
   }
 
   &__title-line {
     border-top: 1px solid $color-white-150;
   }
 
-  &__layout {
+  &__term {
     display: grid;
-    grid-gap: 16px;
-    grid-template-columns: 1fr 1fr;
-    margin-bottom: 32px;
+    grid-template-columns: repeat(2, 1fr);
+    margin-bottom: rem(32);
+    column-gap: rem(16);
   }
 
   &__icon-layout {
     display: grid;
     grid-gap: 8px;
-    grid-template-columns: 0.25fr 1fr;
+    grid-template-columns: 1fr 3fr;
     align-items: center;
   }
 
@@ -37,7 +84,11 @@
   &__buttons {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    padding-left: 32px;
+    margin-top: rem(32);
+
+    #about-activator {
+      padding-left: rem(32);
+    }
   }
 
   &__btn-right {
@@ -55,30 +106,24 @@
       color: $color-white-100;
     }
   }
-}
 
-.help-panel__header {
-  max-width: 290px;
-}
-
-#view-activator,
-#about-activator {
-  max-width: 138px;
-  padding: 0;
-  color: $color-white-160;
-  @include font-size(15px);
-  background: $color-slate-700;
-  border: 0;
-  border-radius: 0;
-
-  &:hover {
-    color: $color-white-100;
+  &__icon-layout .icon {
+    width: 40px;
+    height: 48px;
   }
 }
 
-.help__icon-layout .icon {
-  width: 40px;
-  height: 48px;
+.ak-vt {
+  &__activator {
+    padding: 0;
+    color: $color-white-150;
+    @extend %font-ui-text-lg-oxygen;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    cursor: pointer;
+    transition: color 0.3s ease-in-out;
+  }
 }
 
 .tippy-popper {
@@ -87,5 +132,5 @@
 }
 
 .tippy-backdrop {
-  background-color: $color-slate-700;
+  background: transparent;
 }
