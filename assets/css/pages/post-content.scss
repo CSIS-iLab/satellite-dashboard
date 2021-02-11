@@ -8,7 +8,7 @@
     padding: 0 calc(50% - #{$size__content-max-width} / 2);
   }
 
-  a {
+  a:not([class]) {
     color: $color-slate-690;
     text-decoration: underline;
     text-decoration-color: $color-ltblue-175;
@@ -51,7 +51,7 @@
     }
   }
 
-  h2 {
+  h2:not([class]) {
     @extend %font-post-heading-h2;
     margin-top: rem(56px);
     margin-bottom: rem(16px);
