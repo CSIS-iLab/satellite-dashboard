@@ -24,10 +24,12 @@
             <dt class="glossary-term__title">{{ glossary[term].title }}</dt>
             <dd class="glossary-term__item">
               {{ glossary[term].short_definition }}
-              <div class="glossary-term__further-reading">
-                Further Reading
-              </div>
-              <div v-html="glossary[term].further_reading"></div>
+              <template v-if="glossary[term].further_reading != ''">
+                <div class="glossary-term__further-reading">
+                  Further Reading
+                </div>
+                <div v-html="glossary[term].further_reading"></div>
+              </template>
             </dd>
           </div>
         </dl>
