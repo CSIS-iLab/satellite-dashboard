@@ -439,9 +439,9 @@ export default {
       for (let day = 0; day < numDays; day++) {
         const targetDate = Cesium.JulianDate.toDate(
           Cesium.JulianDate.addDays(this.SimStart, day, new Cesium.JulianDate())
-        ).setHours(0, 0, 0, 0)
+        )
         const orbit = orbits[lastMatch]
-        const epochDate = new Date(orbit.elements.Epoch).setHours(0, 0, 0, 0)
+        const epochDate = new Date(orbit.elements.Epoch)
         if (epochDate.valueOf() === targetDate.valueOf() && orbits[day + 1]) {
           lastMatch++
         }
