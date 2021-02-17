@@ -1,5 +1,5 @@
 <template>
-  <tippy trigger="click" interactive>
+  <tippy trigger="click" interactive @init="onTippyInit">
     <template v-slot:trigger>
       <button class="btn btn--controls btn--help">
         <Icon id="help" name="help" />
@@ -7,11 +7,9 @@
     </template>
 
     <TabWrapper v-model="activeTab" scope="helpPanel">
-      <!-- <div class="help__btn-right">
-        <Button class="btn--icon help__close" @click="activeTab = ''">
-          <Icon id="close-large" name="close-large" />
-        </Button>
-      </div> -->
+      <Button class="btn btn--icon help__close" @click="closePanel">
+        <Icon id="close-large" name="close-large" />
+      </Button>
       <header>
         <TabList label="Controller" scope="helpPanel" class="help__buttons">
           <TabActivator
@@ -96,7 +94,6 @@
 
 <script>
 import { TabActivator, TabList, TabPanel, TabWrapper } from '@a11y-kit/vue-tabs'
-import { tippy } from 'vue-tippy'
 import Icon from '~/components/global/Icon.vue'
 
 export default {
@@ -110,14 +107,20 @@ export default {
   },
   data() {
     return {
-      activeTab: 'about'
+      activeTab: 'about',
+      tippyRef: null
+    }
+  },
+  methods: {
+    onTippyInit(el) {
+      this.tippyRef = el
+    },
+    closePanel() {
+      if (this.tippyRef) {
+        this.tippyRef.hide()
+      }
     }
   }
-  // methods: {
-  //   closePanel() {
-
-  //   }
-  // }
 }
 </script>
 
