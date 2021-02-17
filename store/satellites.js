@@ -57,6 +57,22 @@ const statusTypes = {
   }
 }
 
+// let today = new Date()
+// const year = today.getFullYear()
+// const month = today.getMonth()
+// const day = today.getDate()
+// const hours = today.getHours()
+// const minutes = today.getMinutes()
+// const seconds = today.getSeconds()
+// const milliseconds = today.getMilliseconds()
+// console.log(today)
+
+// const utcDate1 = new Date(
+//   Date.UTC(year, month, day, hours, minutes, seconds, milliseconds)
+// )
+// // const utcDate1 = today
+// console.log(utcDate1)
+
 export const state = () => ({
   satellites: {},
   orbits: {},
@@ -65,7 +81,10 @@ export const state = () => ({
   visibleSatellites: [],
   visibleSatellitesType: 'catalog',
   detailedSatellite: null,
-  targetDate: new Date(new Date().setHours(0, 0, 0, 0)),
+  // targetDate: new Date(new Date().setHours(0, 0, 0, 0)),
+  targetDate: new Date(),
+  // targetDate: utcDate1,
+  // targetDate: new Date()
   selectedTimescale: timescales[1],
   timescales,
   statusTypes,
