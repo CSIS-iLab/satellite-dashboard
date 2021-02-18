@@ -1,8 +1,8 @@
 <template>
   <Page title="Glossary" :content-has-bg="true" class="glossary">
     <div slot="header">
-      <ol role="list">
-        <li v-for="letter in alphabet" :key="letter" class="alphabet-nav">
+      <ol role="list" class="glossary__navigation">
+        <li v-for="letter in alphabet" :key="letter">
           <template v-if="foundLetters.includes(letter)">
             <a :href="`#${letter}`" :aria-label="`Jump to ${letter} words`">
               {{ letter }}
@@ -24,10 +24,15 @@
             <dt class="glossary-term__title">{{ glossary[term].title }}</dt>
             <dd class="glossary-term__item">
               {{ glossary[term].short_definition }}
-              <div class="glossary-term__further-reading">
-                Further Reading
-              </div>
-              Further reading content here.
+              <template v-if="glossary[term].further_reading != ''">
+                <div class="glossary-term__further-reading-title">
+                  Further Reading
+                </div>
+                <div
+                  class="glossary-term__further-reading-item"
+                  v-html="glossary[term].further_reading"
+                ></div>
+              </template>
             </dd>
           </div>
         </dl>

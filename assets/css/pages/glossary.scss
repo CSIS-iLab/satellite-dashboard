@@ -1,18 +1,4 @@
 .glossary {
-  li + li {
-    margin-left: rem(12px);
-  }
-
-  ol {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    margin: 0;
-    padding: rem(13) 0;
-    @extend %font-ui-text-base-good;
-    color: $color-white-130;
-  }
-
   section {
     position: relative;
 
@@ -27,7 +13,15 @@
     }
   }
 
-  .alphabet-nav {
+  &__navigation {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 0;
+    padding: rem(13) 0;
+    @extend %font-ui-text-base-good;
+    color: $color-white-130;
+
     a {
       color: $color-white-180;
     }
@@ -35,6 +29,10 @@
     a:active,
     a:hover {
       color: $color-white-180;
+    }
+
+    li {
+      margin-left: rem(12px);
     }
   }
 
@@ -91,9 +89,9 @@
       color: $color-black-190;
     }
 
-    &__further-reading {
+    &__further-reading-title {
       @extend %font-post-heading-table-title;
-      margin-top: rem(16px);
+      margin-top: rem(24px);
       margin-bottom: rem(4px);
       color: $color-black-160;
       font-weight: 600;
@@ -102,10 +100,22 @@
       @include font-size(16px);
     }
 
+    &__further-reading-item {
+      li {
+        @extend %font-post-text-md;
+        @include font-size(15px);
+      }
+    }
+
     &:not(:last-child) {
       margin-top: rem(32px);
       margin-bottom: rem(32px);
       border-bottom: 1px solid $color-ltblue-175;
+    }
+
+    ul {
+      padding-left: 0;
+      list-style: none;
     }
   }
 
