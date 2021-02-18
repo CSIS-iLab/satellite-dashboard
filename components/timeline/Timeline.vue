@@ -156,7 +156,7 @@ export default {
       chosenTimescale: this.selectedTimescale,
       isPlaying: false,
       playbackSpeeds: playbackSpeeds,
-      chosenPlaybackSpeed: playbackSpeeds[0],
+      chosenPlaybackSpeed: playbackSpeeds[2],
       timelinePoint: this.selectedDate,
       dateOptions: {
         year: 'numeric',

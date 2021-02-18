@@ -111,6 +111,27 @@
     &-scrub {
       position: relative;
       height: rem(40);
+      background: $color-slate-700;
+
+      &::before,
+      &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        z-index: 1;
+        width: 10%;
+        background: linear-gradient(
+          270deg,
+          rgba(0, 0, 2, 0.0001) 1.14%,
+          #000005 100%
+        );
+      }
+
+      &::after {
+        right: 0;
+        transform: rotate(-180deg);
+      }
     }
   }
 
@@ -182,33 +203,17 @@
 .cesium-timeline-main,
 .cesium-timeline-bar {
   height: 100% !important;
+  overflow: visible !important;
 }
 
 .cesium-timeline-main {
+  width: 80%;
+  margin: 0 auto;
   border: 0 !important;
-
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    z-index: 1;
-    width: 10%;
-    background: linear-gradient(
-      270deg,
-      rgba(0, 0, 2, 0.0001) 1.14%,
-      #000005 100%
-    );
-  }
-
-  &::after {
-    right: 0;
-    transform: rotate(-180deg);
-  }
 }
 
 .cesium-timeline-bar {
+  margin: 0 auto;
   color: $color-white-180 !important;
   @extend %font-ui-text-sm-good;
   background: $color-slate-700 !important;
