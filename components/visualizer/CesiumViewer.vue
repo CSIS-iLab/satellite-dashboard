@@ -16,6 +16,7 @@
       </Button>
       <HelpPanel />
     </ul>
+    <!-- <client-only> -->
     <vc-viewer
       ref="vcViewer"
       :animation="animation"
@@ -34,6 +35,7 @@
         <vc-provider-imagery-ion :asset-id="3845"></vc-provider-imagery-ion>
       </vc-layer-imagery> -->
     </vc-viewer>
+    <!-- </client-only> -->
   </div>
 </template>
 

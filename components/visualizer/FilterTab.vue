@@ -21,34 +21,36 @@
               <Icon id="trash" name="trash" />
             </Button>
           </label>
-          <v-select
-            :id="'filter__' + filter"
-            v-model="visibleFilterValues[filter]"
-            class="form__input"
-            :options="filterValueOptions[filter]"
-            :reduce="(option) => option.value"
-            placeholder="Type to search"
-            multiple
-            required
-          >
-            <template #open-indicator="{ attributes }">
-              <span v-bind="attributes">
-                <Icon id="plus" name="plus" />
-                <Icon id="minus" name="minus" />
-              </span>
-            </template>
-            <template #search="{ attributes, events }">
-              <input
-                class="vs__search"
-                :required="!visibleFilterValues[filter]"
-                v-bind="attributes"
-                v-on="events"
-              />
-            </template>
-            <template #option="{ label }">
-              <Icon id="check" name="check" />{{ label }}
-            </template>
-          </v-select>
+          <client-only>
+            <v-select
+              :id="'filter__' + filter"
+              v-model="visibleFilterValues[filter]"
+              class="form__input"
+              :options="filterValueOptions[filter]"
+              :reduce="(option) => option.value"
+              placeholder="Type to search"
+              multiple
+              required
+            >
+              <template #open-indicator="{ attributes }">
+                <span v-bind="attributes">
+                  <Icon id="plus" name="plus" />
+                  <Icon id="minus" name="minus" />
+                </span>
+              </template>
+              <template #search="{ attributes, events }">
+                <input
+                  class="vs__search"
+                  :required="!visibleFilterValues[filter]"
+                  v-bind="attributes"
+                  v-on="events"
+                />
+              </template>
+              <template #option="{ label }">
+                <Icon id="check" name="check" />{{ label }}
+              </template>
+            </v-select>
+          </client-only>
         </div>
 
         <client-only>
