@@ -2,23 +2,25 @@
   <div class="timeline__container">
     <div class="timeline__speed">
       <label for="timeline-speed" class="timeline__control-label">Speed</label>
-      <v-select
-        id="timeline-speed"
-        v-model="chosenPlaybackSpeed"
-        :clearable="false"
-        :options="playbackSpeeds"
-        :searchable="false"
-        @input="selectPlaybackSpeed"
-      >
-        <template #open-indicator="{ attributes }">
-          <span v-bind="attributes">
-            <Icon id="triangle-down" name="triangle-down" />
-          </span>
-        </template>
-        <template #option="{ label }">
-          <Icon id="check" name="check" />{{ label }}
-        </template>
-      </v-select>
+      <client-only>
+        <v-select
+          id="timeline-speed"
+          v-model="chosenPlaybackSpeed"
+          :clearable="false"
+          :options="playbackSpeeds"
+          :searchable="false"
+          @input="selectPlaybackSpeed"
+        >
+          <template #open-indicator="{ attributes }">
+            <span v-bind="attributes">
+              <Icon id="triangle-down" name="triangle-down" />
+            </span>
+          </template>
+          <template #option="{ label }">
+            <Icon id="check" name="check" />{{ label }}
+          </template>
+        </v-select>
+      </client-only>
     </div>
     <div class="timeline__control">
       <Button
@@ -74,22 +76,24 @@
     </div>
     <div class="timeline__scale">
       <label for="timeline-scale" class="timeline__control-label">Scale</label>
-      <v-select
-        id="timeline-scale"
-        v-model="chosenTimescale"
-        :clearable="false"
-        :options="timescales"
-        @input="selectTimescale"
-      >
-        <template #open-indicator="{ attributes }">
-          <span v-bind="attributes">
-            <Icon id="triangle-down" name="triangle-down" />
-          </span>
-        </template>
-        <template #option="{ label }">
-          <Icon id="check" name="check" />{{ label }}
-        </template>
-      </v-select>
+      <client-only>
+        <v-select
+          id="timeline-scale"
+          v-model="chosenTimescale"
+          :clearable="false"
+          :options="timescales"
+          @input="selectTimescale"
+        >
+          <template #open-indicator="{ attributes }">
+            <span v-bind="attributes">
+              <Icon id="triangle-down" name="triangle-down" />
+            </span>
+          </template>
+          <template #option="{ label }">
+            <Icon id="check" name="check" />{{ label }}
+          </template>
+        </v-select>
+      </client-only>
     </div>
     <div class="timeline__legend">
       <StatusTypesLegend />

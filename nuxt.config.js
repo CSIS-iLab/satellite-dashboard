@@ -51,18 +51,18 @@ export default {
   plugins: [
     {
       src: '@/plugins/vue-cesium.js',
-      ssr: false
+      mode: 'client'
     },
     {
       src: '@/plugins/vue-datepicker',
-      ssr: false
+      mode: 'client'
     },
     {
       src: '@/plugins/vue-select',
-      ssr: false
+      mode: 'client'
     },
-    { src: '~/plugins/vue-good-table', ssr: false },
-    { src: '~/plugins/vue-tippy', ssr: false },
+    { src: '~/plugins/vue-good-table', mode: 'client' },
+    { src: '~/plugins/vue-tippy', mode: 'client' },
     { src: '~/plugins/vue-pluralize' },
     { src: '~/plugins/server/pages.js' },
     { src: '~/plugins/server/posts.js' },
