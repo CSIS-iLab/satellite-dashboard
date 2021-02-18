@@ -36,9 +36,7 @@
     <div v-if="hasOrbit">
       <hr />
       <h3>Orbit</h3>
-      <p class="details-panel__small-desc">
-        Last updated from {{ orbitSource }}
-      </p>
+      <p class="details-panel__small-desc">Last updated on {{ orbitSource }}</p>
       <dl class="details__orbit">
         <div v-for="item in info.orbit" :key="item.value">
           <!-- eslint-disable -->
@@ -77,7 +75,7 @@ export default {
       info: {
         basic: [
           { value: 'Name', label: 'Alternate Name(s)' },
-          { value: 'CatalogId', label: 'ID' }
+          { value: 'CatalogId', label: 'NORAD ID (SATCAT)' }
         ],
         advanced: [
           { value: 'Purpose', label: 'Purpose' },
@@ -103,8 +101,7 @@ export default {
           { value: 'LaunchSite', label: 'Launch Site' },
           { value: 'LaunchVehicle', label: 'Launch Vehicle' },
           { value: 'Contractor', label: 'Contractor' },
-          { value: 'Lifetime', label: 'Lifetime' },
-          { value: 'NoradId', label: 'NORAD ID (SATCAT)' }
+          { value: 'Lifetime', label: 'Lifetime' }
         ],
         orbit: [
           { value: 'Apogee', label: 'Apogee Altitude (km)' },
@@ -112,11 +109,14 @@ export default {
           { value: 'Perigee', label: 'Perigee Altitude (km)' },
           { value: 'Ecc', label: 'Eccentricity' },
           { value: 'Inc', label: 'Inclination' },
-          { value: 'Longitude', label: 'Longitude' },
+          // { value: 'Longitude', label: 'Longitude' },
           { value: 'MeanMotion', label: 'Mean Motion (&deg/s)' },
           { value: 'OrbitalPeriod', label: 'Orbital Period' },
           { value: 'OrbitalSpeed', label: 'Mean Orbital Speed (km/s)' },
-          { value: 'SMA', label: 'Semi-major axis (km)' }
+          { value: 'SMA', label: 'Semi-major axis (km)' },
+          { value: 'RAAN', label: 'RAAN' },
+          { value: 'Epoch', label: 'Epoch' },
+          { value: 'Source', label: 'Source' }
         ]
       },
       earthRadius: 6378136.3, // m
@@ -156,6 +156,11 @@ export default {
         4
       )}&deg;`
 
+      const RAAN = `${this.formatNumbers(
+        (this.orbitalElements.RAAN * 180) / Math.PI,
+        4
+      )}&deg;`
+
       const Ecc = `${this.formatNumbers(this.orbitalElements.Ecc, 4)}&deg;`
 
       const Inc = `${this.formatNumbers(
@@ -192,6 +197,10 @@ export default {
           1
         )} km/s`
 
+      const Epoch = this.formatDate(this.orbitalElements.Epoch)
+
+      const Source = this.satelliteAllOrbits[0].source.name
+
       return {
         Apogee,
         ArgP,
@@ -202,7 +211,10 @@ export default {
         MeanMotion,
         OrbitalPeriod: OrbitalPeriodDisplay,
         OrbitalSpeed,
-        SMA
+        SMA,
+        RAAN,
+        Epoch,
+        Source
       }
     },
     orbitSource() {
