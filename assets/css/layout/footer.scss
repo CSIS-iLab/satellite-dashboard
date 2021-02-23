@@ -6,6 +6,7 @@
   color: $color-white-180;
   column-gap: rem(54px);
   @extend %font-ui-text-base-oxygen;
+  background: $color-slate-700;
 
   // Breakpoint into desktop
   @include breakpoint('medium') {
