@@ -1,0 +1,38 @@
+.tooltip {
+  &-theme {
+    padding: rem(16);
+    text-align: left;
+    background: $color-slate-700;
+    transform: none !important;
+
+    .tippy-arrow {
+      border-bottom: 8px solid $color-slate-700 !important;
+    }
+  }
+
+  &__term {
+    margin-bottom: rem(4);
+    font-weight: bold;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+
+  &__term,
+  &__term-def {
+    color: $color-white-170;
+    @extend %font-ui-text-base-oxygen;
+  }
+
+  &__term-def {
+    margin-bottom: rem(8);
+  }
+
+  &__read-more {
+    color: $color-white-160;
+    @extend %font-ui-text-base-good;
+
+    .icon {
+      font-size: 0.75em;
+    }
+  }
+}
