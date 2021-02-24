@@ -21,7 +21,9 @@
             :key="term"
             class="glossary-term"
           >
-            <dt class="glossary-term__title">{{ glossary[term].title }}</dt>
+            <dt :id="term" class="glossary-term__title">
+              {{ glossary[term].title }}
+            </dt>
             <dd class="glossary-term__item">
               {{ glossary[term].short_definition }}
               <template v-if="glossary[term].further_reading != ''">
