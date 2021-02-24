@@ -1,5 +1,8 @@
 <template>
   <div class="details-details">
+    <GlossaryTooltip id="alternate-name" :show-info="true"
+      >Test tooltip</GlossaryTooltip
+    ><br />
     <GlossaryTooltip id="alternate-name">Test tooltip</GlossaryTooltip>
     <dl class="details__basic">
       <div v-for="item in info.basic" :key="item.value">

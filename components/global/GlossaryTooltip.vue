@@ -1,15 +1,21 @@
 <template>
   <client-only>
     <tippy
+      class="tooltip__container"
       interactive
       placement="top"
       theme="dark tooltip"
       max-width="230px"
+      interactive-border="4"
       arrow
     >
       <template v-slot:trigger>
-        <button>
+        <button
+          class="tooltip__trigger"
+          :class="{ 'tooltip__trigger--text': !showInfo }"
+        >
           <slot></slot>
+          <Icon v-if="showInfo" id="info" name="info" />
         </button>
       </template>
 
@@ -36,6 +42,11 @@ export default {
     id: {
       type: String,
       required: true
+    },
+    showInfo: {
+      type: Boolean,
+      required: false,
+      default: false
     }
   },
   computed: {

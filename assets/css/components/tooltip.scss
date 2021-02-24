@@ -1,4 +1,29 @@
 .tooltip {
+  &__container {
+    display: inline-block;
+
+    > div {
+      display: inline-block;
+    }
+  }
+
+  &__trigger {
+    display: inherit;
+    margin: 0;
+    padding: 0;
+    color: inherit;
+    background: transparent;
+    border: 0;
+    appearance: none;
+
+    &--text {
+      text-decoration: underline;
+      text-decoration-style: dashed;
+      text-underline-offset: 0.1em;
+      text-decoration-color: $color-orange-100;
+    }
+  }
+
   &-theme {
     padding: rem(16);
     text-align: left;
