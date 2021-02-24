@@ -128,6 +128,23 @@
     color: $color-white-140;
     @extend %font-ui-text-sm-oxygen;
   }
+
+  &__comments {
+    margin: 0;
+    padding: 0;
+    color: $color-white-180;
+    @extend %font-ui-text-lg-oxygen;
+
+    li {
+      margin-top: rem(16);
+    }
+
+    &-date {
+      margin-top: rem(8);
+      color: $color-white-140;
+      @extend %font-ui-text-sm-oxygen;
+    }
+  }
 }
 
 .details-details {

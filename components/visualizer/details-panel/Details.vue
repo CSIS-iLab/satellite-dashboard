@@ -74,9 +74,24 @@
       </dl>
     </div>
     <!-- <hr />
-    <h3>ITU Filings</h3>
-    <hr />
-    <h3>Comments</h3> -->
+    <h3>ITU Filings</h3> -->
+    <template v-if="satellite.acf.comments">
+      <hr />
+      <h3>Comments</h3>
+      <ul
+        v-for="comment in satellite.acf.comments"
+        :key="comment.date"
+        class="details-panel__comments"
+        role="list"
+      >
+        <li>
+          <div v-html="comment.description"></div>
+          <div class="details-panel__comments-date">
+            {{ formatDate(comment.date, true) }}
+          </div>
+        </li>
+      </ul>
+    </template>
   </div>
 </template>
 
@@ -307,10 +322,10 @@ export default {
     formatCountries(countryField) {
       return countryField.map((d) => d.label).join(' / ')
     },
-    formatDate(date) {
+    formatDate(date, dateOnly = false) {
       const event = new Date(date)
 
-      const options = {
+      let options = {
         year: 'numeric',
         month: 'short',
         day: 'numeric',
@@ -319,6 +334,16 @@ export default {
         hour: '2-digit',
         minute: '2-digit',
         second: '2-digit'
+      }
+
+      if (dateOnly) {
+        options = {
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric'
+        }
+
+        return event.toLocaleDateString('en-US', options)
       }
 
       return event.toLocaleString('en-US', options)
