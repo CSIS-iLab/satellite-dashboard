@@ -3,7 +3,6 @@
     <tippy
       interactive
       placement="top"
-      trigger="click"
       theme="dark tooltip"
       max-width="230px"
       arrow
@@ -16,10 +15,10 @@
 
       <h2 class="tooltip__term">{{ term.title }}</h2>
       <p class="tooltip__term-def">{{ term.short_definition }}</p>
-      <nuxt-link :to="termURL" class="tooltip__read-more">
+      <a :href="termURL" class="tooltip__read-more">
         Read More
         <Icon id="chevron-right" name="chevron-right" />
-      </nuxt-link>
+      </a>
     </tippy>
   </client-only>
 </template>
