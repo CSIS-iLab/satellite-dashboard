@@ -55,8 +55,6 @@ export default {
   },
   computed: {
     term() {
-      console.log(this.id)
-      console.log(this.glossary[this.id])
       return this.glossary[this.id]
     },
     termURL() {
