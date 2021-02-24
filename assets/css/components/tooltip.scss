@@ -29,10 +29,6 @@
     text-align: left;
     background: $color-slate-700;
     transform: none !important;
-
-    .tippy-arrow {
-      border-bottom: 8px solid $color-slate-700 !important;
-    }
   }
 
   &__term {
@@ -60,4 +56,12 @@
       font-size: 0.75em;
     }
   }
+}
+
+[x-placement^='top'] .tooltip-theme .tippy-arrow {
+  border-top: 8px solid $color-slate-700;
+}
+
+[x-placement^='bottom'] .tooltip-theme .tippy-arrow {
+  border-bottom: 8px solid $color-slate-700;
 }

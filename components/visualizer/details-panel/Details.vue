@@ -1,12 +1,17 @@
 <template>
   <div class="details-details">
-    <GlossaryTooltip id="alternate-name" :show-info="true"
-      >Test tooltip</GlossaryTooltip
-    ><br />
-    <GlossaryTooltip id="alternate-name">Test tooltip</GlossaryTooltip>
     <dl class="details__basic">
       <div v-for="item in info.basic" :key="item.value">
-        <dt>{{ item.label }}</dt>
+        <dt>
+          <GlossaryTooltip
+            v-if="item.tooltip"
+            :id="item.tooltip"
+            :show-info="true"
+          >
+            {{ item.label }}
+          </GlossaryTooltip>
+          <template v-else>{{ item.label }}</template>
+        </dt>
         <dd>{{ satellite[item.value] || 'N/A' }}</dd>
       </div>
       <div>
@@ -24,7 +29,16 @@
     <hr />
     <dl class="details__advanced">
       <div v-for="item in info.advanced" :key="item.value">
-        <dt>{{ item.label }}</dt>
+        <dt>
+          <GlossaryTooltip
+            v-if="item.tooltip"
+            :id="item.tooltip"
+            :show-info="true"
+          >
+            {{ item.label }}
+          </GlossaryTooltip>
+          <template v-else>{{ item.label }}</template>
+        </dt>
         <dd>
           <template
             v-if="item.customFormatter && typeof item.formatter === 'function'"
@@ -44,7 +58,16 @@
       <dl class="details__orbit">
         <div v-for="item in info.orbit" :key="item.value">
           <!-- eslint-disable -->
-          <dt v-html="item.label"></dt>
+          <dt>
+            <GlossaryTooltip
+              v-if="item.tooltip"
+              :id="item.tooltip"
+              :show-info="true"
+            >
+              <span v-html="item.label"></span>
+            </GlossaryTooltip>
+            <span v-else v-html="item.label"></span>
+          </dt>
           <dd v-html="formattedOrbitData[item.value]"></dd>
           <!-- eslint-enable -->
         </div>
@@ -78,47 +101,93 @@ export default {
     return {
       info: {
         basic: [
-          { value: 'Name', label: 'Alternate Name(s)' },
-          { value: 'CatalogId', label: 'NORAD ID (SATCAT)' }
+          {
+            value: 'Name',
+            label: 'Alternate Name(s)',
+            tooltip: 'alternate-name'
+          },
+          {
+            value: 'CatalogId',
+            label: 'NORAD ID (SATCAT)',
+            tooltip: 'norad-id-satellite-catalog-number'
+          }
         ],
         advanced: [
-          { value: 'Purpose', label: 'Purpose' },
-          { value: 'Type', label: 'Type' },
+          { value: 'Purpose', label: 'Purpose', tooltip: 'purpose' },
+          { value: 'Type', label: 'Type', tooltip: 'type' },
           {
             value: 'countryOfJurisdiction',
             label: 'Country of Jurisdiction',
+            tooltip: 'country-of-jurisdiction',
             customFormatter: true,
             formatter: function(value) {
               return self.formatCountries(value)
             }
           },
-          { value: 'Operator', label: 'Operator' },
-          { value: 'LaunchDate', label: 'Launch Date' },
+          { value: 'Operator', label: 'Operator', tooltip: 'operator' },
+          { value: 'LaunchDate', label: 'Launch Date', tooltip: 'launch-date' },
           {
             value: 'countryOfLaunch',
             label: 'Country of Launch Site',
+            tooltip: 'country-of-launch-site',
             customFormatter: true,
             formatter: function(value) {
               return self.formatCountries(value)
             }
           },
-          { value: 'LaunchSite', label: 'Launch Site' },
-          { value: 'LaunchVehicle', label: 'Launch Vehicle' },
-          { value: 'Contractor', label: 'Contractor' },
-          { value: 'Lifetime', label: 'Lifetime' }
+          { value: 'LaunchSite', label: 'Launch Site', tooltip: 'launch-site' },
+          {
+            value: 'LaunchVehicle',
+            label: 'Launch Vehicle',
+            tooltip: 'launch-vehicle'
+          },
+          { value: 'Contractor', label: 'Contractor', tooltip: 'contractor' },
+          { value: 'Lifetime', label: 'Lifetime', tooltip: 'lifetime' }
         ],
         orbit: [
-          { value: 'Apogee', label: 'Apogee Altitude (km)' },
-          { value: 'ArgP', label: 'Argument of perigee' },
-          { value: 'Perigee', label: 'Perigee Altitude (km)' },
-          { value: 'Ecc', label: 'Eccentricity' },
-          { value: 'Inc', label: 'Inclination' },
-          // { value: 'Longitude', label: 'Longitude' },
-          { value: 'MeanMotion', label: 'Mean Motion (&deg/s)' },
-          { value: 'OrbitalPeriod', label: 'Orbital Period' },
-          { value: 'OrbitalSpeed', label: 'Mean Orbital Speed (km/s)' },
-          { value: 'SMA', label: 'Semi-major axis (km)' },
-          { value: 'RAAN', label: 'RAAN' },
+          {
+            value: 'Apogee',
+            label: 'Apogee Altitude (km)',
+            tooltip: 'apogee-altitude'
+          },
+          {
+            value: 'ArgP',
+            label: 'Argument of perigee',
+            tooltip: 'argument-of-perigee'
+          },
+          {
+            value: 'Perigee',
+            label: 'Perigee Altitude (km)',
+            tooltip: 'perigee-altitude'
+          },
+          { value: 'Ecc', label: 'Eccentricity', tooltip: 'eccentricity' },
+          { value: 'Inc', label: 'Inclination', tooltip: 'inclination-2' },
+          // { value: 'Longitude', label: 'Longitude', tooltip: 'longitude },
+          {
+            value: 'MeanMotion',
+            label: 'Mean Motion (&deg/s)',
+            tooltip: 'mean-motion'
+          },
+          {
+            value: 'OrbitalPeriod',
+            label: 'Orbital Period',
+            tooltip: 'orbital-period'
+          },
+          {
+            value: 'OrbitalSpeed',
+            label: 'Mean Orbital Speed (km/s)',
+            tooltip: 'orbital-speed'
+          },
+          {
+            value: 'SMA',
+            label: 'Semi-major axis (km)',
+            tooltip: 'semi-major-axis'
+          },
+          {
+            value: 'RAAN',
+            label: 'RAAN',
+            tooltip: 'right-ascension-of-the-ascending-node-raan'
+          },
           { value: 'Epoch', label: 'Epoch' },
           { value: 'Source', label: 'Source' }
         ]
