@@ -120,9 +120,6 @@ export default {
     postContent() {
       return `${this.post.content.rendered}<div class="clearfix"></div>`
     },
-    allSatellitesMeta() {
-      return Object.values(this.satellites)
-    },
     relatedSatellites() {
       if (!Array.isArray(this.post.acf.related_satellites)) {
         return
@@ -130,8 +127,7 @@ export default {
 
       let satellites = []
       this.post.acf.related_satellites.forEach((sat) => {
-        const { ID } = sat
-        const meta = this.allSatellitesMeta.find((d) => d.post_id === ID)
+        const meta = this.satellites[sat.acf.catalog_id]
 
         if (!meta) {
           return
@@ -178,7 +174,7 @@ export default {
       let keywords = []
       this.post.acf.keywords_satellites.forEach((sat) => {
         const { ID } = sat
-        const meta = this.allSatellitesMeta.find((d) => d.post_id === ID)
+        const meta = this.satellites[sat.acf.catalog_id]
 
         if (!meta) {
           return
