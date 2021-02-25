@@ -2,13 +2,7 @@
   <article class="post">
     <div class="container">
       <header class="post__header">
-        <ul v-if="category" class="post__category">
-          <li v-for="cat in category" :key="cat.id">
-            <nuxt-link :to="`/analysis/?categories=${cat.value}`">{{
-              cat.label
-            }}</nuxt-link>
-          </li>
-        </ul>
+        <PostCategories :categories="category" />
         <h1 class="post__title">{{ post.title.rendered }}</h1>
         <div class="post__meta">
           <PostMeta
@@ -105,11 +99,13 @@
 <script>
 import { mapState } from 'vuex'
 import PostMeta from '~/components/global/PostMeta.vue'
+import PostCategories from '~/components/global/PostCategories.vue'
 // import Icon from '~/components/global/Icon.vue'
 
 export default {
   components: {
     // Icon
+    PostCategories,
     PostMeta
   },
   data() {

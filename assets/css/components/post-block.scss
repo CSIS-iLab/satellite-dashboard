@@ -3,7 +3,7 @@
   padding: 0;
 
   &--compact {
-    li + li {
+    > li + li {
       position: relative;
       margin-top: rem(32);
       padding-top: rem(16);
@@ -21,7 +21,7 @@
   }
 
   &--full {
-    li + li {
+    > li + li {
       margin-top: rem(64);
     }
   }
