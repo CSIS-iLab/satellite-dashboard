@@ -20,16 +20,17 @@
         :id="detailedSatellite"
         :satellite="detailedSatelliteInfo"
       />
+      <UpdatePanel />
     </template>
   </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
-import { mapState } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 import CesiumViewer from '~/components/visualizer/CesiumViewer'
 import PanelLeft from '~/components/visualizer/PanelLeft'
 import Timeline from '~/components/timeline/Timeline'
+import UpdatePanel from '~/components/visualizer/UpdatesPanel'
 
 export default {
   layout: 'visualizer',
@@ -37,7 +38,8 @@ export default {
     CesiumViewer,
     DetailsPanel: () => import('~/components/visualizer/details-panel/Panel'),
     PanelLeft,
-    Timeline
+    Timeline,
+    UpdatePanel
   },
   data() {
     return {

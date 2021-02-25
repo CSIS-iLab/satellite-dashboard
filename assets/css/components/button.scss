@@ -36,12 +36,19 @@
   &--contained {
     color: $color-white-170;
     background-color: $color-slate-200;
-    border-radius: 50px;
 
     &:hover {
       color: $color-white-190;
       background-color: $color-slate-100;
     }
+  }
+
+  &--contained-round {
+    border-radius: 50px;
+  }
+
+  &--curved {
+    border-radius: 3px;
   }
 
   &--round {
