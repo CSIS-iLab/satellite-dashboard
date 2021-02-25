@@ -1,5 +1,5 @@
 <template>
-  <article class="post-component post-component--wide post-block">
+  <article class="post-component post-block">
     <!-- <div v-if="data.eventTypes.items[0]" class="post-block__category">
       {{ data.eventTypes.items[0].eventType.name }}
     </div> -->
@@ -23,14 +23,7 @@ export default {
     data: {
       type: Object,
       default() {
-        return {
-          eventTypes: '',
-          title: '',
-          postDate: '',
-          authors: '',
-          excerpt: '',
-          slug: ''
-        }
+        return {}
       }
     }
   },
@@ -50,9 +43,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-@import '../assets/css/components/post-component';
-@import '../assets/css/components/post-block';
-@import '../assets/css/components/post-meta';
-</style>

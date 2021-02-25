@@ -8,19 +8,19 @@
         space security.
       </p>
     </div>
-    <PostBlock v-for="post in posts" :key="post.id" :data="post" />
+    <PostList :posts="posts" size="wide" :is-compact="false" />
   </Page>
 </template>
 
 <script>
 import Page from '~/layout/page'
-import PostBlock from '~/components/global/PostBlock.vue'
+import PostList from '~/components/global/PostList.vue'
 
 export default {
   layout: 'layout',
   components: {
     Page,
-    PostBlock
+    PostList
   },
   computed: {
     posts() {

@@ -15,7 +15,7 @@
 
   &__content {
     padding-top: rem(32);
-    padding-bottom: rem(4);
+    padding-bottom: rem(32);
     overflow: auto;
     color: $color-white-180;
     background: $color-slate-395;
@@ -105,16 +105,15 @@
     border: 0;
   }
 
-  dl {
-    /* stylelint-disable-next-line */
-    > * + * {
-      margin-top: rem(12);
-    }
-  }
+  a {
+    text-decoration: underline;
+    text-decoration-color: $color-ltblue-175;
+    text-underline-offset: 0.2em;
 
-  dt {
-    color: $color-white-150;
-    @extend %font-ui-text-base-oxygen;
+    &:hover,
+    &:focus {
+      color: $color-white-190;
+    }
   }
 
   &__desc {
@@ -162,6 +161,18 @@
     text-transform: uppercase;
     background: var(--status-bg);
     border-radius: 50px;
+  }
+
+  dl {
+    /* stylelint-disable-next-line */
+    > * + * {
+      margin-top: rem(12);
+    }
+  }
+
+  dt {
+    color: $color-white-150;
+    @extend %font-ui-text-base-oxygen;
   }
 }
 
