@@ -8,7 +8,7 @@
       Latest Updates
     </Button>
     <TabWrapper v-show="panelIsOpen" v-model="activeTab" scope="latestUpdates">
-      <header class="details-panel__header">
+      <header class="updates-panel__header">
         <Button class="btn--close" :on-click="closePanel">
           <Icon id="close-large" name="close-large" />
           Close
@@ -24,7 +24,7 @@
         </TabList>
       </header>
 
-      <div class="details-panel__content">
+      <div class="updates-panel__content">
         <TabPanel tab="events" scope="latestUpdates">
           <p>
             Learn more about the latest instances of unsual satellite behavior.
@@ -45,7 +45,7 @@
             All Analysis
             <Icon id="chevron-right" name="chevron-right" />
           </nuxt-link>
-          <!-- <Analysis :id="id" /> -->
+          <PostList :posts="latestPosts" />
         </TabPanel>
       </div>
     </TabWrapper>
@@ -53,19 +53,17 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 import Button from '~/components/global/Button'
-// import Events from '~/components/visualizer/details-panel/Events.vue'
-// import Analysis from '~/components/visualizer/details-panel/Analysis.vue'
 import Icon from '~/components/global/Icon'
+import PostList from '~/components/global/PostList.vue'
 import { TabActivator, TabList, TabPanel, TabWrapper } from '@a11y-kit/vue-tabs'
 
 export default {
   components: {
-    // Analysis,
     Button,
-    // Events,
     Icon,
+    PostList,
     TabActivator,
     TabList,
     TabPanel,
@@ -78,8 +76,8 @@ export default {
     }
   },
   computed: {
-    ...mapState({
-      focusedSatellites: (state) => state.satellites.focusedSatellites
+    ...mapGetters({
+      latestPosts: 'analysis/latestPosts'
     })
   },
   methods: {

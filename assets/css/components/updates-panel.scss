@@ -29,10 +29,29 @@
     padding: calc(#{$size__header-height} + #{rem(50)}) rem(32)
       calc(#{$size__header-height} + #{rem(50)}) rem(96);
     background: $color-black-190;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 100%;
+      width: rem(72);
+      background: linear-gradient(
+        90deg,
+        rgba(0, 0, 0, 0.81) 26.56%,
+        rgba(0, 0, 0, 0) 100%
+      );
+    }
   }
 
   .ak-vt__panel {
     @extend %font-ui-text-base-oxygen;
+  }
+
+  &__content {
+    height: 100%;
+    overflow: auto;
   }
 
   p {
@@ -44,6 +63,7 @@
     gap: rem(6);
     align-items: center;
     margin-top: rem(16);
+    margin-bottom: rem(32);
     text-transform: uppercase;
 
     &,

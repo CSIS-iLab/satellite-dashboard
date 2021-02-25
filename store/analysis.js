@@ -8,6 +8,12 @@ export const state = () => ({
   users: []
 })
 
+export const getters = {
+  latestPosts: (state) => {
+    return state.posts.slice(0, 4)
+  }
+}
+
 export const mutations = {
   updatePosts: (state, posts) => {
     state.posts = posts
