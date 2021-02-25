@@ -122,7 +122,7 @@ export default {
             tooltip: 'alternate-name'
           },
           {
-            value: 'CatalogId',
+            value: 'NoradId',
             label: 'NORAD ID (SATCAT)',
             tooltip: 'norad-id-satellite-catalog-number'
           }
