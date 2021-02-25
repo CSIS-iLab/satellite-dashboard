@@ -36,11 +36,7 @@
           <Events :id="id" :name="satelliteName" />
         </TabPanel>
         <TabPanel tab="analysis" scope="detailsPanel">
-          <p>
-            This object does not appear in any Dashboard analysis pieces. See
-            the full <nuxt-link to="/analysis">analysis</nuxt-link> archive
-            here.
-          </p>
+          <Analysis :id="id" />
         </TabPanel>
       </div>
     </TabWrapper>
@@ -53,6 +49,7 @@ import { mapMutations } from 'vuex'
 import Button from '~/components/global/Button'
 import Details from '~/components/visualizer/details-panel/Details.vue'
 import Events from '~/components/visualizer/details-panel/Events.vue'
+import Analysis from '~/components/visualizer/details-panel/Analysis.vue'
 import Icon from '~/components/global/Icon'
 import { TabActivator, TabList, TabPanel, TabWrapper } from '@a11y-kit/vue-tabs'
 
@@ -62,6 +59,7 @@ let cesium
 
 export default {
   components: {
+    Analysis,
     Button,
     Details,
     Events,

@@ -1,58 +1,61 @@
 <template>
-  <article class="post-component post-component--wide post-block">
-    <!-- <div v-if="data.eventTypes.items[0]" class="post-block__category">
-      {{ data.eventTypes.items[0].eventType.name }}
-    </div> -->
+  <article class="post-component post-block">
+    <PostCategories :categories="categoriesList" />
     <h2 class="post-block__title">
-      <nuxt-link :to="nestedSlug" append>{{ data.title.rendered }}</nuxt-link>
+      <nuxt-link :to="nestedSlug" append>{{ post.title.rendered }}</nuxt-link>
     </h2>
-    <PostMeta :date="data.date" :authors="data.authors" />
+    <PostMeta :date="post.date" :authors="post.authors" />
     <!-- eslint-disable-next-line -->
-    <div class="post-block__excerpt" v-html="data.excerpt.rendered"></div>
+    <div class="post-block__excerpt" v-html="post.excerpt.rendered"></div>
   </article>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+import PostCategories from '~/components/global/PostCategories.vue'
 import PostMeta from '~/components/global/PostMeta.vue'
 
 export default {
   components: {
+    PostCategories,
     PostMeta
   },
   props: {
-    data: {
+    post: {
       type: Object,
       default() {
-        return {
-          eventTypes: '',
-          title: '',
-          postDate: '',
-          authors: '',
-          excerpt: '',
-          slug: ''
-        }
+        return {}
       }
     }
   },
   computed: {
     nestedSlug() {
-      return `${this.data.slug}`
+      return `${this.post.slug}`
     },
     formatDate() {
-      let date = new Date(this.data.date)
+      let date = new Date(this.post.date)
       const options = {
         year: 'numeric',
         month: 'short',
         day: 'numeric'
       }
       return date.toLocaleDateString('en', options)
-    }
+    },
+    categoriesList() {
+      if (!this.post.categories) {
+        return []
+      }
+
+      const keywords = this.post.categories.map((d) => ({
+        value: d,
+        label: this.categories.find((t) => t.id === d)?.name.trim()
+      }))
+
+      return keywords
+    },
+    ...mapState({
+      categories: (state) => state.analysis.categories
+    })
   }
 }
 </script>
-
-<style lang="scss">
-@import '../assets/css/components/post-component';
-@import '../assets/css/components/post-block';
-@import '../assets/css/components/post-meta';
-</style>

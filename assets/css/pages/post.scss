@@ -48,6 +48,10 @@
     text-shadow: 0 rem(4px) rem(4px) rgba(0, 0, 0, 0.25);
     list-style: none;
 
+    li {
+      display: inline;
+    }
+
     li + li {
       &::before {
         content: ', ';
