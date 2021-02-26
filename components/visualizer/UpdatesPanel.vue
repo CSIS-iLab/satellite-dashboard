@@ -15,10 +15,18 @@
         </Button>
         <h2 class="panel__title">Latest Updates</h2>
         <TabList label="Controller" scope="latestUpdates">
-          <TabActivator tab="events" scope="latestUpdates">
+          <TabActivator
+            tab="events"
+            scope="latestUpdates"
+            class="tab--horizontal"
+          >
             Key Events
           </TabActivator>
-          <TabActivator tab="analysis" scope="latestUpdates">
+          <TabActivator
+            tab="analysis"
+            scope="latestUpdates"
+            class="tab--horizontal"
+          >
             Analysis
           </TabActivator>
         </TabList>
@@ -109,5 +117,6 @@ export default {
 
 <style lang="scss">
 @import '../assets/css/components/panel';
+@import '../assets/css/components/tabs';
 @import '../assets/css/components/updates-panel';
 </style>
