@@ -1,11 +1,21 @@
 <template>
-  <ol
-    v-if="events.length"
-    class="details-events__list close-approaches__list"
-    role="list"
-  >
-    <li v-for="event in events" :key="event.id" class="close-approaches__item">
-      <div class="close-approaches__item-title">
+  <ol v-if="events.length" class="close-approaches__list" role="list">
+    <li
+      v-for="event in formattedEvents"
+      :key="event.id"
+      class="close-approaches__item"
+    >
+      <div v-if="showEventType" class="close-approaches__item-title">
+        <span v-if="event.is_prediction == 1">Predicted</span>
+        {{ event.orbit }} Close Approach
+      </div>
+      <div
+        :class="[
+          showEventType
+            ? 'close-approaches__item-meta'
+            : 'close-approaches__item-title'
+        ]"
+      >
         {{ formatNumber(event.min_distance_km, 1) }}km
       </div>
       <div class="close-approaches__item-meta">
@@ -60,13 +70,46 @@ export default {
     events: {
       type: Array,
       required: true
+    },
+    showEventType: {
+      type: Boolean,
+      required: false,
+      default: false
     }
   },
   computed: {
+    formattedEvents() {
+      let formattedEvents = this.events.map((event) => {
+        const { catalog_id_1, catalog_id_2, min_distance, ...info } = event
+
+        let objects = []
+        let ids = [catalog_id_1, catalog_id_2]
+
+        for (let i = 0; i < ids.length; i++) {
+          const id = ids[i]
+          const { Name, Status, countryOfJurisdiction } = this.satellites[id]
+
+          objects.push({
+            catalog_id: id,
+            Name,
+            Status,
+            countryOfJurisdiction
+          })
+        }
+
+        return {
+          objects,
+          min_distance_km: +min_distance / 1000,
+          ...info
+        }
+      })
+      return formattedEvents
+    },
     focusedItems() {
       return new Set(this.focusedSatellites)
     },
     ...mapState({
+      satellites: (state) => state.satellites.satellites,
       focusedSatellites: (state) => state.satellites.focusedSatellites
     })
   },
@@ -121,3 +164,7 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+@import '~/assets/css/components/close-approaches';
+</style>

@@ -69,7 +69,10 @@
           </v-select>
         </div>
       </div>
-      <CloseApproachesList :events="filteredEvents" />
+      <CloseApproachesList
+        :events="filteredEvents"
+        class="details-events__list"
+      />
     </template>
   </div>
 </template>
@@ -179,7 +182,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-@import '~/assets/css/components/close-approaches';
-</style>
