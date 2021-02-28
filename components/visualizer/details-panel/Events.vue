@@ -60,7 +60,7 @@
             :options="sortOptions"
             :searchable="false"
             :value="sortOptions.value"
-            @input="pick"
+            @input="updateCurrentSort"
           >
             <template #selected-option="{ label }">
               <Icon id="sort" name="sort" />
@@ -176,9 +176,8 @@ export default {
       this.appliedMaxDistance = this.maxDistance
     },
 
-    pick(value) {
+    updateCurrentSort(value) {
       let selected = value.value
-      let filteredEventsSorted = this.filteredEvents
       if (selected === 'time_of_close_approach') {
         return (this.currentSort = selected)
       }
