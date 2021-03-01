@@ -50,4 +50,10 @@
       justify-content: flex-end;
     }
   }
+
+  &__predicted {
+    display: inline-block;
+    margin-right: rem(6);
+    font-style: italic;
+  }
 }

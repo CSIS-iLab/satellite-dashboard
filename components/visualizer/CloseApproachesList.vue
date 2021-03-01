@@ -6,7 +6,6 @@
       class="close-approaches__item"
     >
       <div v-if="showEventType" class="close-approaches__item-title">
-        <span v-if="event.is_prediction == 1">Predicted</span>
         {{ event.orbit }} Close Approach
       </div>
       <div
@@ -19,6 +18,11 @@
         {{ formatNumber(event.min_distance_km, 1) }}km
       </div>
       <div class="close-approaches__item-meta">
+        <strong
+          v-if="event.is_prediction == 1"
+          class="close-approaches__predicted"
+          >P</strong
+        >
         {{ formatDate(event.time_of_close_approach) }}
       </div>
       <ul class="close-approaches__objects" role="list">

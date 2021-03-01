@@ -37,6 +37,8 @@
           <p>
             Learn more about the latest instances of unsual satellite behavior.
             Select an event for more details.
+            <strong style="font-style: italic;">P</strong> indicates events
+            predicted to occur.
           </p>
           <nuxt-link to="/key-events" class="updates-panel__page-link">
             All Key Events

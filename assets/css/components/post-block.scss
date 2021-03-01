@@ -35,7 +35,7 @@
     --margin: 0;
   }
 
-  &__category {
+  .post__category {
     color: $color-orange-180;
     @extend %font-ui-text-base-oxygen;
     font-weight: bold;
