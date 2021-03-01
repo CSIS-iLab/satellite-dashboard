@@ -234,7 +234,9 @@ export default {
         return
       }
       console.log('processing new data')
-      const jNow = Cesium.JulianDate.fromDate(this.selectedDate)
+      const jNow = Cesium.JulianDate.fromDate(
+        new Date(this.selectedDate.setHours(0, 0, 0))
+      )
       this.SimInt = this.selectedTimescale
       this.SimStart = jNow
       this.SimStop = Cesium.JulianDate.addSeconds(
@@ -260,7 +262,6 @@ export default {
     },
     displayObjects(Cesium, viewer) {
       let epjd = new Cesium.JulianDate()
-      let CRFtoTRF = Cesium.Transforms.computeIcrfToFixedMatrix(this.SimStart)
       viewer.entities.removeAll()
 
       // For each object, calculate its position & orbit
@@ -277,7 +278,7 @@ export default {
           return
         }
 
-        const orbit = this.compileOrbits(orbits, CRFtoTRF, epjd)
+        const orbit = this.compileOrbits(orbits, epjd)
 
         const status = this.satellites[catalog_id].Status
 
@@ -375,7 +376,7 @@ export default {
       return NaN
     },
     // Reference: https://github.com/ut-astria/AstriaGraph/blob/master/main.js#L242
-    calcOrbit(CRFtoTRF, elems, positionSamples, startTime, endTime, step) {
+    calcOrbit(elems, positionSamples, startTime, endTime, step) {
       let car = new Cesium.Cartographic()
       let Y = new Cesium.Cartesian3()
       let sta
@@ -392,11 +393,11 @@ export default {
         u.MeanAnom = (u.MeanAnom + u.mmo * secondsAdvanced) % TwoPi
         if (u.MeanAnom === 0) {
           sta = this.eltocart(Cesium, u, false, 1e-6, 100)
-          Cesium.Matrix3.multiplyByVector(CRFtoTRF, sta.pos, Y)
+          Y = sta.pos
         } else {
           // do other stuff
           sta = this.eltocart(Cesium, u, true, 1e-6, 100)
-          Cesium.Matrix3.multiplyByVector(CRFtoTRF, sta, Y)
+          Y = sta
         }
 
         viewer.scene.mapProjection.ellipsoid.cartesianToCartographic(Y, car)
@@ -417,7 +418,7 @@ export default {
       }
       return positionSamples
     },
-    compileOrbits(orbits, CRFtoTRF, epjd) {
+    compileOrbits(orbits, epjd) {
       const positionSamples = new Cesium.SampledPositionProperty(
         Cesium.ReferenceFrame.INERTIAL
       )
@@ -476,14 +477,7 @@ export default {
         elems.MeanAnom = (elems.MeanAnom + elems.mmo * t * 86400) % TwoPi
 
         // Calculate Orbit
-        this.calcOrbit(
-          CRFtoTRF,
-          elems,
-          positionSamples,
-          fragmentStart,
-          fragmentEnd,
-          step
-        )
+        this.calcOrbit(elems, positionSamples, fragmentStart, fragmentEnd, step)
       })
 
       return positionSamples
