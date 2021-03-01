@@ -70,6 +70,7 @@
         </div>
       </div>
       <CloseApproachesList
+        :id="id"
         :events="filteredEvents"
         class="details-events__list"
       />
@@ -125,33 +126,33 @@ export default {
       return this.events.length
     },
     // Add the name & status for satellites. Filter out the satellite's whose details we're viewing.
-    formattedEvents() {
-      let formattedEvents = this.events.map((event) => {
-        const { catalog_id_1, catalog_id_2, min_distance, ...info } = event
+    // formattedEvents() {
+    //   let formattedEvents = this.events.map((event) => {
+    //     const { catalog_id_1, catalog_id_2, min_distance, ...info } = event
 
-        let objects = []
-        let ids = [catalog_id_1, catalog_id_2].filter((d) => d !== this.id)
+    //     let objects = []
+    //     let ids = [catalog_id_1, catalog_id_2].filter((d) => d !== this.id)
 
-        for (let i = 0; i < ids.length; i++) {
-          const id = ids[i]
-          const { Name, Status, countryOfJurisdiction } = this.satellites[id]
+    //     for (let i = 0; i < ids.length; i++) {
+    //       const id = ids[i]
+    //       const { Name, Status, countryOfJurisdiction } = this.satellites[id]
 
-          objects.push({
-            catalog_id: id,
-            Name,
-            Status,
-            countryOfJurisdiction
-          })
-        }
+    //       objects.push({
+    //         catalog_id: id,
+    //         Name,
+    //         Status,
+    //         countryOfJurisdiction
+    //       })
+    //     }
 
-        return {
-          objects,
-          min_distance_km: +min_distance / 1000,
-          ...info
-        }
-      })
-      return formattedEvents
-    },
+    //     return {
+    //       objects,
+    //       min_distance_km: +min_distance / 1000,
+    //       ...info
+    //     }
+    //   })
+    //   return formattedEvents
+    // },
     totalFilteredEvents() {
       return this.filteredEvents.length
     },

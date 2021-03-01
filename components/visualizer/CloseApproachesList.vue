@@ -79,15 +79,24 @@ export default {
       type: Boolean,
       required: false,
       default: false
+    },
+    id: {
+      type: String,
+      required: false,
+      default: null
     }
   },
   computed: {
     formattedEvents() {
       let formattedEvents = this.events.map((event) => {
-        const { catalog_id_1, catalog_id_2, min_distance, ...info } = event
+        const { catalog_id_1, catalog_id_2, ...info } = event
 
         let objects = []
         let ids = [catalog_id_1, catalog_id_2]
+
+        if (this.id) {
+          ids = ids.filter((d) => d !== this.id)
+        }
 
         for (let i = 0; i < ids.length; i++) {
           const id = ids[i]
@@ -103,7 +112,6 @@ export default {
 
         return {
           objects,
-          min_distance_km: +min_distance / 1000,
           ...info
         }
       })

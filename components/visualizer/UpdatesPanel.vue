@@ -1,5 +1,5 @@
 <template>
-  <div class="panel panel--right updates-panel">
+  <div class="updates-panel">
     <Button
       class="btn--contained btn--curved btn--updates-panel"
       :on-click="openPanel"
