@@ -149,7 +149,13 @@
 }
 
 .details-events {
+  &__totals {
+    display: flex;
+    align-items: center;
+  }
+
   &__total {
+    display: flex;
     color: $color-white-170;
     @extend %font-ui-heading-section-sm;
   }
@@ -163,6 +169,17 @@
     .btn--apply {
       grid-column: 1 / -1;
       justify-self: center;
+    }
+  }
+
+  &__sort {
+    display: flex;
+    margin-left: rem(85px);
+  }
+
+  .vs {
+    &__actions {
+      display: none;
     }
   }
 

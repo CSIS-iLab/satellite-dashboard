@@ -59,8 +59,8 @@
             :clearable="false"
             :options="sortOptions"
             :searchable="false"
-            :value="sortOptions.value"
-            @input="updateCurrentSort"
+            :value="currentSort"
+            :reduce="(sortOptions) => sortOptions.value"
           >
             <template #selected-option="{ label }">
               <Icon id="sort" name="sort" />
@@ -110,9 +110,9 @@ export default {
       events: [],
       maxDistance: 50,
       appliedMaxDistance: 50,
-      currentSort: 'min_distance',
+      currentSort: 'min_distance_km',
       sortOptions: [
-        { value: 'min_distance', label: 'Distance' },
+        { value: 'min_distance_km', label: 'Distance' },
         { value: 'time_of_close_approach', label: 'Date' }
       ]
     }
@@ -153,18 +153,19 @@ export default {
       return this.filteredEvents.length
     },
     filteredEvents() {
-      let selected = this.currentSort
       let events = this.formattedEvents.filter(
         (d) => d.min_distance_km <= this.appliedMaxDistance
       )
 
-      if (selected === 'time_of_close_approach') {
-        events.sort((a, b) => new Date(a[selected]) - new Date(b[selected]))
-      }
-
-      if (selected === 'min_distance') {
+      if (this.currentSort === 'time_of_close_approach') {
+        events.sort(
+          (a, b) =>
+            new Date(a[this.currentSort]) - new Date(b[this.currentSort])
+        )
+      } else if (this.currentSort === 'min_distance_km') {
         events.sort((a, b) => a.min_distance_km - b.min_distance_km)
       }
+
       return events
     },
     ...mapState({
@@ -174,17 +175,6 @@ export default {
   methods: {
     updateMaxDistance() {
       this.appliedMaxDistance = this.maxDistance
-    },
-
-    updateCurrentSort(value) {
-      let selected = value.value
-      if (selected === 'time_of_close_approach') {
-        return (this.currentSort = selected)
-      }
-
-      if (selected === 'min_distance') {
-        return (this.currentSort = selected)
-      }
     }
   }
 }
