@@ -1,8 +1,8 @@
 <template>
   <div class="visualizer-content">
-    <!-- <PanelLeft /> -->
     <template v-if="loading"> Loading... </template>
     <template v-else>
+      <PanelLeft />
       <CesiumViewer
         :satellite-orbits="orbits"
         :visible-satellites="visibleSatellites"
@@ -28,7 +28,7 @@
 <script>
 import { mapActions, mapState } from 'vuex'
 import CesiumViewer from '~/components/visualizer/CesiumViewer'
-// import PanelLeft from '~/components/visualizer/PanelLeft'
+import PanelLeft from '~/components/visualizer/PanelLeft'
 import Timeline from '~/components/timeline/Timeline'
 import UpdatePanel from '~/components/visualizer/UpdatesPanel'
 
@@ -37,7 +37,7 @@ export default {
   components: {
     CesiumViewer,
     DetailsPanel: () => import('~/components/visualizer/details-panel/Panel'),
-    // PanelLeft,
+    PanelLeft,
     Timeline,
     UpdatePanel
   },

@@ -1,6 +1,8 @@
 .site-header {
   position: fixed;
   top: 0;
+  right: 0;
+  left: 0;
   @include z-index(header);
   display: flex;
   justify-content: space-between;
@@ -10,6 +12,7 @@
   pointer-events: none;
 
   .page-layout & {
+    position: sticky;
     background: linear-gradient(180deg, #14171a 50%, rgba(20, 23, 26, 0) 100%);
     pointer-events: all;
   }
