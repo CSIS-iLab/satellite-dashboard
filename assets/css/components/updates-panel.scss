@@ -1,7 +1,10 @@
+$size__updates-bottom-pos: 100px;
+
 .updates-panel {
   position: absolute;
-  bottom: 100px;
-  left: 100px;
+  // Offset this so the button isn't hidden behind the timeline's blurred background.
+  bottom: calc(#{$size__updates-bottom-pos} + #{rem(13)});
+  left: rem($size__left-panel-tab-width);
 
   .btn--updates-panel {
     display: flex;
@@ -26,7 +29,7 @@
   .ak-vt__wrapper {
     position: fixed;
     top: 0;
-    bottom: 0;
+    bottom: $size__updates-bottom-pos;
     left: 0;
     width: 100%;
     max-width: 400px;

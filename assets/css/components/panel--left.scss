@@ -54,7 +54,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      width: rem(48);
+      width: rem($size__left-panel-tab-width);
       min-height: rem(56);
       margin-bottom: rem(41);
       padding-top: rem(24);
