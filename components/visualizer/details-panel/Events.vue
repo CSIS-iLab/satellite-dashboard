@@ -52,20 +52,22 @@
           {{ totalFilteredEvents }}
           {{ 'result' | pluralize(totalFilteredEvents) }}
         </h4>
-        <!-- <div class="details-events__sort form">
+        <div class="details-events__sort form">
           <v-select
             v-model="currentSort"
             class="dropdown--simple"
             :clearable="false"
             :options="sortOptions"
             :searchable="false"
+            :value="currentSort"
+            :reduce="(sortOptions) => sortOptions.value"
           >
             <template #selected-option="{ label }">
               <Icon id="sort" name="sort" />
               {{ label }}
             </template>
           </v-select>
-        </div> -->
+        </div>
       </div>
       <CloseApproachesList :events="filteredEvents" />
     </template>
@@ -108,9 +110,9 @@ export default {
       events: [],
       maxDistance: 50,
       appliedMaxDistance: 50,
-      currentSort: 'min_distance',
+      currentSort: 'min_distance_km',
       sortOptions: [
-        { value: 'min_distance', label: 'Distance' },
+        { value: 'min_distance_km', label: 'Distance' },
         { value: 'time_of_close_approach', label: 'Date' }
       ]
     }
@@ -151,9 +153,20 @@ export default {
       return this.filteredEvents.length
     },
     filteredEvents() {
-      return this.formattedEvents.filter(
+      let events = this.formattedEvents.filter(
         (d) => d.min_distance_km <= this.appliedMaxDistance
       )
+
+      if (this.currentSort === 'time_of_close_approach') {
+        events.sort(
+          (a, b) =>
+            new Date(a[this.currentSort]) - new Date(b[this.currentSort])
+        )
+      } else if (this.currentSort === 'min_distance_km') {
+        events.sort((a, b) => a[this.currentSort] - b[this.currentSort])
+      }
+
+      return events
     },
     ...mapState({
       satellites: (state) => state.satellites.satellites
