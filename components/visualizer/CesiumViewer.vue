@@ -537,10 +537,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-.viewer {
-  width: 100%;
-  height: 66vh;
-}
-</style>
