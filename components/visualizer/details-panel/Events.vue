@@ -163,7 +163,7 @@ export default {
             new Date(a[this.currentSort]) - new Date(b[this.currentSort])
         )
       } else if (this.currentSort === 'min_distance_km') {
-        events.sort((a, b) => a.min_distance_km - b.min_distance_km)
+        events.sort((a, b) => a[this.currentSort] - b[this.currentSort])
       }
 
       return events

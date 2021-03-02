@@ -151,6 +151,7 @@
 .details-events {
   &__totals {
     display: flex;
+    justify-content: space-between;
     align-items: center;
   }
 
@@ -174,12 +175,16 @@
 
   &__sort {
     display: flex;
-    margin-left: rem(85px);
+    margin-left: rem(16);
   }
 
   .vs {
     &__actions {
       display: none;
+    }
+
+    &__selected-options {
+      padding: 0;
     }
   }
 
