@@ -16,14 +16,14 @@
             <TabActivator
               tab="about"
               scope="helpPanel"
-              class="help__tab-selector"
+              class="help__tab-selector tab--horizontal"
             >
               About the interface
             </TabActivator>
             <TabActivator
               tab="view"
               scope="helpPanel"
-              class="help__tab-selector"
+              class="help__tab-selector tab--horizontal"
             >
               Changing the view
             </TabActivator>

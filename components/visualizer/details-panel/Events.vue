@@ -69,7 +69,11 @@
           </v-select>
         </div>
       </div>
-      <CloseApproachesList :events="filteredEvents" />
+      <CloseApproachesList
+        :id="id"
+        :events="filteredEvents"
+        class="details-events__list"
+      />
     </template>
   </div>
 </template>
@@ -121,39 +125,11 @@ export default {
     totalEvents() {
       return this.events.length
     },
-    // Add the name & status for satellites. Filter out the satellite's whose details we're viewing.
-    formattedEvents() {
-      let formattedEvents = this.events.map((event) => {
-        const { catalog_id_1, catalog_id_2, min_distance, ...info } = event
-
-        let objects = []
-        let ids = [catalog_id_1, catalog_id_2].filter((d) => d !== this.id)
-
-        for (let i = 0; i < ids.length; i++) {
-          const id = ids[i]
-          const { Name, Status, countryOfJurisdiction } = this.satellites[id]
-
-          objects.push({
-            catalog_id: id,
-            Name,
-            Status,
-            countryOfJurisdiction
-          })
-        }
-
-        return {
-          objects,
-          min_distance_km: +min_distance / 1000,
-          ...info
-        }
-      })
-      return formattedEvents
-    },
     totalFilteredEvents() {
       return this.filteredEvents.length
     },
     filteredEvents() {
-      let events = this.formattedEvents.filter(
+      let events = this.events.filter(
         (d) => d.min_distance_km <= this.appliedMaxDistance
       )
 
@@ -179,7 +155,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-@import '~/assets/css/components/close-approaches';
-</style>

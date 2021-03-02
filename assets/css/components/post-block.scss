@@ -35,7 +35,7 @@
     --margin: 0;
   }
 
-  &__category {
+  .post__category {
     color: $color-orange-180;
     @extend %font-ui-text-base-oxygen;
     font-weight: bold;
@@ -53,7 +53,11 @@
     @extend %font-ui-heading-post-block-title;
 
     &:hover {
-      color: $color-white-100;
+      color: $color-orangedull-100;
+
+      a {
+        text-decoration-color: $color-orange-140;
+      }
     }
 
     @include breakpoint('medium') {

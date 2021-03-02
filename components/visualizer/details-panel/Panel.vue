@@ -16,13 +16,25 @@
         </div>
         <h2 class="panel__title">{{ satelliteName }}</h2>
         <TabList label="Controller" scope="detailsPanel">
-          <TabActivator tab="details" scope="detailsPanel">
+          <TabActivator
+            tab="details"
+            scope="detailsPanel"
+            class="tab--horizontal"
+          >
             Details
           </TabActivator>
-          <TabActivator tab="events" scope="detailsPanel">
+          <TabActivator
+            tab="events"
+            scope="detailsPanel"
+            class="tab--horizontal"
+          >
             Key Events
           </TabActivator>
-          <TabActivator tab="analysis" scope="detailsPanel">
+          <TabActivator
+            tab="analysis"
+            scope="detailsPanel"
+            class="tab--horizontal"
+          >
             Analysis
           </TabActivator>
         </TabList>
@@ -146,6 +158,7 @@ export default {
 
 <style lang="scss">
 @import '../assets/css/components/panel';
+@import '../assets/css/components/tabs';
 @import '../assets/css/components/details-panel';
 @import '../assets/css/components/badge';
 </style>

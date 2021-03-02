@@ -32,7 +32,7 @@
       <strong>{{ numSelectedItems }}</strong
       >&nbsp; selected
       <Button
-        class="btn--sm btn--contained btn--remove"
+        class="btn--sm btn--contained btn--contained-round btn--remove"
         :on-click="removeFromFocused"
       >
         Remove
