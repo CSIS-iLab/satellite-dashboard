@@ -1,42 +1,60 @@
 <template>
-  <div class="modal-backdrop">
-    <div
-      class="modal"
-      role="dialog"
-      aria-labelledby="modalTitle"
-      aria-describedby="modalDescription"
-    >
-      <header class="modal-header">
-        <slot name="header">
-          This is the default tile!
+  <transition name="modal-fade">
+    <div class="modal-backdrop">
+      <div
+        class="modal"
+        role="dialog"
+        aria-labelledby="modalTitle"
+        aria-describedby="modalDescription"
+      >
+        <header id="modalTitle" class="modal__header">
+          <slot name="header">
+            This is the default tile!
+            <Button
+              type="button"
+              class="modal__btn-close"
+              aria-label="Close modal"
+              :on-click="closeModal"
+            >
+              <Icon id="close-small" name="close-small" />
+            </Button>
+          </slot>
+        </header>
+        <section id="modalDescription" class="modal__body">
+          <slot name="body">
+            I'm the default body!
+          </slot>
+        </section>
+        <footer class="modal__footer">
+          <slot name="footer">
+            THIS IS THE FOOOOTER!
 
-          <button type="button" class="btn-close" @click="close">
-            x
-          </button>
-        </slot>
-      </header>
-      <section class="modal-body">
-        <slot name="body">
-          I'm the default body!
-        </slot>
-      </section>
-      <footer class="modal-footer">
-        <slot name="footer">
-          I'm the default footer!
-
-          <button type="button" class="btn-green" @click="close">
-            Close me!
-          </button>
-        </slot>
-      </footer>
+            <Button
+              type="button"
+              class="modal__btn-slate"
+              aria-label="Close modal"
+              :on-click="close"
+            >
+              Close
+              <Icon id="close-small" name="close-small" />
+            </Button>
+          </slot>
+        </footer>
+      </div>
     </div>
-  </div>
+  </transition>
 </template>
 
 <script>
+import Icon from '~/components/global/Icon.vue'
+import Button from '~/components/global/Button.vue'
+
 export default {
   name: 'Modal',
-
+  components: {
+    Icon,
+    Button
+  },
   methods: {
     close() {
       this.$emit('close')

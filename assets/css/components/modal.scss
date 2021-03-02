@@ -4,55 +4,91 @@
   right: 0;
   bottom: 0;
   left: 0;
+  z-index: 1;
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: rgba(0, 0, 0, 0.3);
 }
 
+.modal-fade-enter,
+.modal-fade-leave-active {
+  opacity: 0;
+}
+
+.modal-fade-enter-active,
+.modal-fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+
 .modal {
   display: flex;
   flex-direction: column;
   overflow-x: auto;
-  background: #fff;
-  box-shadow: 2px 2px 20px 1px;
-}
+  background: $color-slate-300;
+  border-radius: 3px;
 
-.modal-header,
-.modal-footer {
-  display: flex;
-  padding: 15px;
-}
+  &__header,
+  &__footer {
+    display: flex;
+  }
 
-.modal-header {
-  justify-content: space-between;
-  color: #4aae9b;
-  border-bottom: 1px solid #eee;
-}
+  &__header {
+    justify-content: space-between;
+    padding: rem(16) rem(20);
+    color: $color-white-160;
+    border-bottom: 1px solid $color-white-110;
+    @extend %font-ui-text-lg-good;
+  }
 
-.modal-footer {
-  justify-content: flex-end;
-  border-top: 1px solid #eee;
-}
+  &__footer {
+    justify-content: space-between;
+    align-items: center;
+    padding: rem(16) rem(32);
+    color: $color-white-150;
+    text-transform: uppercase;
+    background-color: $color-slate-400;
+    @extend %font-ui-text-base-good;
+  }
 
-.modal-body {
-  position: relative;
-  padding: 20px 10px;
-}
+  &__body {
+    position: relative;
+    padding: 20px 10px;
+    color: $color-white-150;
+    @extend %font-ui-text-base-good;
+  }
 
-.btn-close {
-  padding: 20px;
-  color: #4aae9b;
-  font-weight: bold;
-  font-size: 20px;
-  background: transparent;
-  border: 0;
-  cursor: pointer;
-}
+  &__btn-close {
+    padding: 0;
+    color: $color-white-160;
+    background: transparent;
+    border: 0;
+  }
 
-.btn-green {
-  color: #fff;
-  background: #4aae9b;
-  border: 1px solid #4aae9b;
-  border-radius: 2px;
+  &__btn {
+    display: flex;
+    align-items: center;
+    margin: 0 rem(8);
+    padding: rem(6) rem(12);
+    color: $color-white-170;
+    background: $color-slate-700;
+    border-radius: 3px;
+    @extend %font-ui-text-base-good;
+  }
+
+  &__right {
+    display: flex;
+    align-items: center;
+
+    &::before {
+      content: 'Download';
+      align-items: center;
+      margin-right: rem(16);
+      text-transform: uppercase;
+    }
+  }
+
+  &__left {
+    display: flex;
+  }
 }
