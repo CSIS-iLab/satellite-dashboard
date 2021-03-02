@@ -83,14 +83,15 @@ $size__container-max-width: 1000px;
 $size__content-max-width: 680px;
 $size__header-height: 56px;
 $size__left-panel-tab-width: 48px;
+$size__updates-bottom-pos: 100px;
+$size__viewer-controls-top: 24px;
 
 $z-index: (
-  panel: 1,
-  viewerControls: 1,
-  time: 2,
-  header: 2,
-  panelLeftTabs: 3,
-  nav: 4
+  panel: 2,
+  viewerControls: 2,
+  header: 3,
+  panelLeftTabs: 4,
+  nav: 5
 );
 
 $shadows: (

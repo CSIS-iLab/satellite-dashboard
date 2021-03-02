@@ -1,10 +1,14 @@
 .panel--right {
   position: fixed;
-  top: 2rem;
+  top: calc(#{rem(72)} + #{rem($size__viewer-controls-top)});
   right: 2rem;
+  bottom: calc(#{$size__updates-bottom-pos} + #{rem(32)});
+  display: flex;
+  flex-direction: column;
   width: 360px;
-  max-height: 66vh;
-  overflow: auto;
+  overflow: hidden;
+  border-radius: rem(8);
+  @include shadow(lg);
 }
 
 .details-panel {
@@ -14,6 +18,7 @@
   }
 
   &__content {
+    flex-grow: 1;
     padding-top: rem(32);
     padding-bottom: rem(32);
     overflow: auto;

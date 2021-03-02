@@ -31,7 +31,7 @@
 
   &-controls {
     position: absolute;
-    top: rem(24);
+    top: rem($size__viewer-controls-top);
     right: rem(32);
     @include z-index(viewerControls);
     display: flex;
