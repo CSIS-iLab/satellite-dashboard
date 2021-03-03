@@ -6,6 +6,11 @@
 }
 
 .panel-left {
+  .panel__content {
+    height: 100%;
+    overflow-y: auto;
+  }
+
   .ak-vt {
     &__wrapper {
       position: fixed;
@@ -123,11 +128,6 @@
         brightness(94%) contrast(93%);
     }
     /* stylelint-enable */
-
-    &__panel {
-      height: 100%;
-      overflow: scroll;
-    }
   }
 
   .btn--panel-close {
