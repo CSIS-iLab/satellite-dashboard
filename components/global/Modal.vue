@@ -12,9 +12,9 @@
             This is the default tile!
             <Button
               type="button"
-              class="modal__btn-close"
+              class="modal__btn-close-icon"
               aria-label="Close modal"
-              :on-click="closeModal"
+              :on-click="close"
             >
               <Icon id="close-small" name="close-small" />
             </Button>
@@ -31,7 +31,7 @@
 
             <Button
               type="button"
-              class="modal__btn-slate"
+              class="modal__btn-footer"
               aria-label="Close modal"
               :on-click="close"
             >

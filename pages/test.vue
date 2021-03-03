@@ -8,7 +8,7 @@
         Lorem Ipsum
         <Button
           type="button"
-          class="modal__btn-close"
+          class="modal__btn-close-icon"
           aria-label="Close modal"
           :on-click="closeModal"
         >
@@ -24,16 +24,16 @@
         </p>
       </template>
       <template v-slot:footer>
-        <div class="modal__left">
-          <Button type="button" class="modal__btn" aria-label="Print">
+        <div class="modal__footer-left">
+          <Button type="button" class="modal__btn-footer" aria-label="Print">
             <Icon id="printer" name="printer" />
             Printer
           </Button>
         </div>
-        <div class="modal__right">
+        <div class="modal__footer-right">
           <Button
             type="button"
-            class="modal__btn"
+            class="modal__btn-footer"
             aria-label="Close modal"
             :on-click="closeModal"
           >
@@ -41,7 +41,7 @@
           </Button>
           <Button
             type="button"
-            class="modal__btn"
+            class="modal__btn-footer"
             aria-label="Close modal"
             :on-click="closeModal"
           >
@@ -49,7 +49,7 @@
           </Button>
           <Button
             type="button"
-            class="modal__btn"
+            class="modal__btn-footer"
             aria-label="Close modal"
             :on-click="closeModal"
           >
