@@ -46,9 +46,14 @@
       ></section>
       <!-- eslint-enable-->
       <section class="post__further">
-        <p class="post__further-footnote">
-          Footnotes & Further Reading will go here.
-        </p>
+        <p>Footnotes & Further Reading will go here.</p>
+        <!--
+          here is the loop for the re(gibberish)gex where I
+          I need to get the title out.
+         -->
+        <template v-for="(note, index) in post.footnote">
+          <p :key="index" class="post__further-footnote" v-html="note"></p>
+        </template>
         <!-- {{ post.meta.further_reading }} -->
         <!-- <template v-for="reading in furtherReadings">
           <h2 :key="reading.url" class="post__further-header">
