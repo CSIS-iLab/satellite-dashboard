@@ -1,7 +1,13 @@
 const siteURL = 'https://satdash.wpengine.com'
 // eslint-disable-next-line no-useless-escape
-const regex = /<span[^>]*>(.*?)<\/span>/gm
+// const regex = /<span[^>]*>(.*?)<\/span>/gm
+const regex = /<span\s(?:class='easy-footnote')>(.*)<\/span>/gm
 // const regex = /span\s(?:class='easy-footnote')>(.*)<\/span>/gm
+
+// let title_regex = /title=['"](.*)['"]/
+// /* console.log(content.rendered.match(title_regex)) */
+// let titleRes = test[1].match(title_regex)[1]
+// console.log(titleRes)
 
 export const state = () => ({
   posts: [],

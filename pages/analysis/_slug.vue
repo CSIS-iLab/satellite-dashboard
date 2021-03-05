@@ -122,6 +122,22 @@ export default {
     post() {
       return this.posts.find((el) => el.slug === this.slug)
     },
+    footNote() {
+      let titleRegex = /title=['"](.*)['"]/gm
+      const regex = /<span\s(?:class='easy-footnote')>(.*)<\/span>/gm
+      let footnote = []
+      this.post.footnote.forEach((item) => {
+        if (item.match(titleRegex)) {
+          footnote.push(item.match(titleRegex).toString())
+        }
+      })
+      console.log(footnote)
+      // return footnote
+      // console.log(content.rendered.match(title_regex))
+      // let titleRes = test[1].match(title_regex)[1]
+      // console.log(titleRes)
+      return this.post
+    },
     postContent() {
       return `${this.post.content.rendered}<div class="clearfix"></div>`
     },
