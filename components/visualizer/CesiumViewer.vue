@@ -157,9 +157,9 @@ export default {
       globe.nightFadeOutDistance = 1000000
       globe.nightFadeInDistance = 8000000
 
-      scene.skyBox = new Cesium.SkyBox({
-        show: false
-      })
+      // scene.skyBox = new Cesium.SkyBox({
+      //   show: false
+      // })
 
       viewer.camera.defaultZoomAmount = this.defaultZoomAmount
 
