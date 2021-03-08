@@ -1,5 +1,6 @@
 const siteURL = 'https://satdash.wpengine.com'
-
+// eslint-disable-next-line no-useless-escape
+const regex = /<span\s(?:class='easy-footnote')>(.*)<\/span>/gm
 export const state = () => ({
   posts: [],
   tags: [],
@@ -73,7 +74,8 @@ export const actions = {
             acf,
             categories,
             country,
-            user
+            user,
+            footnote: content.rendered.match(regex)
           })
         )
 

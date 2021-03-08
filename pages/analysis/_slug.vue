@@ -46,24 +46,28 @@
       ></section>
       <!-- eslint-enable-->
       <section class="post__further">
-        <p class="post__further-footnote">
-          Footnotes will go here.
-        </p>
-        <h2 class="post__further-header">
-          Further Reading
-        </h2>
-        <template v-for="reading in post.acf.further_reading">
-          <div :key="reading.url" class="post__further-article">
-            <a :href="reading.url" class="post__further-link">
-              {{ reading.publication_name }}
-              <span class="post__further-source">{{
-                reading.publication_organization
-              }}</span>
-            </a>
-            <a :href="reading.url" class="post__further-circle">
-              <Icon class="post__further-icon" name="external-link" />
-            </a>
-          </div>
+        <template v-if="post.footnote">
+          <template v-for="(note, index) in footNote">
+            <p :key="index" class="post__further-footnote" v-html="note"></p>
+          </template>
+        </template>
+        <template v-if="post.acf.further_reading">
+          <h2 class="post__further-header">
+            Further Reading
+          </h2>
+          <template v-for="reading in post.acf.further_reading">
+            <div :key="reading.url" class="post__further-article">
+              <a :href="reading.url" class="post__further-link">
+                {{ reading.publication_name }}
+                <span class="post__further-source">{{
+                  reading.publication_organization
+                }}</span>
+              </a>
+              <a :href="reading.url" class="post__further-circle">
+                <Icon class="post__further-icon" name="external-link" />
+              </a>
+            </div>
+          </template>
         </template>
       </section>
       <footer class="post__footer">
@@ -102,6 +106,7 @@ import { mapState } from 'vuex'
 import PostMeta from '~/components/global/PostMeta.vue'
 import PostCategories from '~/components/global/PostCategories.vue'
 import Icon from '~/components/global/Icon.vue'
+import { decode } from 'html-entities'
 
 export default {
   components: {
@@ -117,6 +122,11 @@ export default {
   computed: {
     post() {
       return this.posts.find((el) => el.slug === this.slug)
+    },
+    footNote() {
+      return this.post.footnote.map((item) =>
+        decode(item.match(/title=['"](.*)['"]/)[1])
+      )
     },
     postContent() {
       return `${this.post.content.rendered}<div class="clearfix"></div>`
