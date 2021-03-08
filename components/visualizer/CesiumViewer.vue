@@ -1,13 +1,13 @@
 <template>
   <div ref="viewerContainer" class="viewer">
     <ul class="viewer-controls" role="list">
-      <Button class="btn--controls btn--zoom" :on-click="zoomIn">
+      <Button class="btn--controls btn--zoom" :on-click="zoomOut">
         <Icon id="minus" name="minus" />
       </Button>
       <Button class="btn--controls btn--zoom" :on-click="zoomReset">
         <Icon id="world" name="world" />
       </Button>
-      <Button class="btn--controls btn--zoom" :on-click="zoomOut">
+      <Button class="btn--controls btn--zoom" :on-click="zoomIn">
         <Icon id="plus" name="plus" />
       </Button>
       <Button class="btn--controls btn--sun" :on-click="toggleSunlight">
