@@ -25,6 +25,7 @@
       :fullscreen-button="fullscreenButton"
       :info-box="infoBox"
       :camera="camera"
+      :context-options="contextOptions"
       @ready="ready"
     >
       <!-- <vc-layer-imagery
@@ -112,6 +113,11 @@ export default {
           lat: 5,
           height: 100000000
         }
+      },
+      contextOptions: {
+        webgl: {
+          alpha: true
+        }
       }
     }
   },
@@ -157,9 +163,11 @@ export default {
       globe.nightFadeOutDistance = 1000000
       globe.nightFadeInDistance = 8000000
 
-      // scene.skyBox = new Cesium.SkyBox({
-      //   show: false
-      // })
+      scene.skyBox = new Cesium.SkyBox({
+        show: false
+      })
+
+      scene.backgroundColor = Cesium.Color.TRANSPARENT
 
       viewer.camera.defaultZoomAmount = this.defaultZoomAmount
 

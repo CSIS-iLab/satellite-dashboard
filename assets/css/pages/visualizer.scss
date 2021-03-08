@@ -9,6 +9,14 @@
   display: none;
 }
 
+.visualizer {
+  background-color: $color-black-100;
+  background-image: url('~assets/img/sky-bg.jpg');
+  background-repeat: no-repeat;
+  background-position: 99% 50%;
+  background-size: cover;
+}
+
 .visualizer-content {
   display: flex;
   flex-direction: column;
