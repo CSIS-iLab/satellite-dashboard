@@ -1,5 +1,5 @@
 <template>
-  <div class="focus-list">
+  <div class="focus-list panel__content">
     <h2 class="panel__title">Focus List</h2>
     <p>
       Objects pinned to this list will appear in the visualization. Learn more
