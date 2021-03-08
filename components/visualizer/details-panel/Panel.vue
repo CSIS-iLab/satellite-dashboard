@@ -1,58 +1,56 @@
 <template>
-  <div class="panel panel--right details-panel">
-    <TabWrapper v-model="activeTab" scope="detailsPanel">
-      <header class="details-panel__header">
-        <div class="details-panel__controls">
-          <Button class="btn--icon btn--zoom" :on-click="highlightOrbit">
-            <Icon id="target" name="target" />
-          </Button>
-          <Button class="btn--icon btn--pin" :on-click="toggleFocusState">
-            <Icon v-show="satelliteIsInFocused" id="pin" name="pin" />
-            <Icon v-show="!satelliteIsInFocused" id="unpin" name="unpin" />
-          </Button>
-          <Button class="btn--icon btn--close" :on-click="closePanel">
-            <Icon id="close-large" name="close-large" />
-          </Button>
-        </div>
-        <h2 class="panel__title">{{ satelliteName }}</h2>
-        <TabList label="Controller" scope="detailsPanel">
-          <TabActivator
-            tab="details"
-            scope="detailsPanel"
-            class="tab--horizontal"
-          >
-            Details
-          </TabActivator>
-          <TabActivator
-            tab="events"
-            scope="detailsPanel"
-            class="tab--horizontal"
-          >
-            Key Events
-          </TabActivator>
-          <TabActivator
-            tab="analysis"
-            scope="detailsPanel"
-            class="tab--horizontal"
-          >
-            Analysis
-          </TabActivator>
-        </TabList>
-      </header>
-
-      <div class="details-panel__content">
-        <TabPanel tab="details" scope="detailsPanel">
-          <Details :id="id" :satellite="satellite" />
-        </TabPanel>
-        <TabPanel tab="events" scope="detailsPanel">
-          <Events :id="id" :name="satelliteName" />
-        </TabPanel>
-        <TabPanel tab="analysis" scope="detailsPanel">
-          <Analysis :id="id" />
-        </TabPanel>
+  <TabWrapper
+    v-model="activeTab"
+    scope="detailsPanel"
+    class="panel panel--right details-panel"
+  >
+    <header class="details-panel__header">
+      <div class="details-panel__controls">
+        <Button class="btn--icon btn--zoom" :on-click="highlightOrbit">
+          <Icon id="target" name="target" />
+        </Button>
+        <Button class="btn--icon btn--pin" :on-click="toggleFocusState">
+          <Icon v-show="satelliteIsInFocused" id="pin" name="pin" />
+          <Icon v-show="!satelliteIsInFocused" id="unpin" name="unpin" />
+        </Button>
+        <Button class="btn--icon btn--close" :on-click="closePanel">
+          <Icon id="close-large" name="close-large" />
+        </Button>
       </div>
-    </TabWrapper>
-  </div>
+      <h2 class="panel__title">{{ satelliteName }}</h2>
+      <TabList label="Controller" scope="detailsPanel">
+        <TabActivator
+          tab="details"
+          scope="detailsPanel"
+          class="tab--horizontal"
+        >
+          Details
+        </TabActivator>
+        <TabActivator tab="events" scope="detailsPanel" class="tab--horizontal">
+          Key Events
+        </TabActivator>
+        <TabActivator
+          tab="analysis"
+          scope="detailsPanel"
+          class="tab--horizontal"
+        >
+          Analysis
+        </TabActivator>
+      </TabList>
+    </header>
+
+    <div class="details-panel__content">
+      <TabPanel tab="details" scope="detailsPanel">
+        <Details :id="id" :satellite="satellite" />
+      </TabPanel>
+      <TabPanel tab="events" scope="detailsPanel">
+        <Events :id="id" :name="satelliteName" />
+      </TabPanel>
+      <TabPanel tab="analysis" scope="detailsPanel">
+        <Analysis :id="id" />
+      </TabPanel>
+    </div>
+  </TabWrapper>
 </template>
 
 <script>

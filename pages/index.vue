@@ -1,8 +1,8 @@
 <template>
-  <div>
-    <PanelLeft />
+  <div class="visualizer-content">
     <template v-if="loading"> Loading... </template>
     <template v-else>
+      <PanelLeft />
       <CesiumViewer
         :satellite-orbits="orbits"
         :visible-satellites="visibleSatellites"
