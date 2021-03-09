@@ -47,9 +47,15 @@
       <!-- eslint-enable-->
       <section class="post__further">
         <template v-if="post.footnote">
-          <template v-for="(note, index) in footNote">
-            <p :key="index" class="post__further-footnote" v-html="note"></p>
-          </template>
+          <ol>
+            <template v-for="(note, index) in footNote">
+              <li
+                :key="index"
+                class="post__further-footnote"
+                v-html="note"
+              ></li>
+            </template>
+          </ol>
         </template>
         <template v-if="post.acf.further_reading">
           <h2 class="post__further-header">
@@ -124,9 +130,10 @@ export default {
       return this.posts.find((el) => el.slug === this.slug)
     },
     footNote() {
-      return this.post.footnote.map((item) =>
-        decode(item.match(/title=['"](.*)['"]/)[1])
+      let footNote = this.post.footnote.filter((item) =>
+        item.match(/<span\s(?:class='easy-footnote')>(.*)<\/span>/)
       )
+      return footNote.map((item) => decode(item.match(/title=['"](.*)['"]/)[1]))
     },
     postContent() {
       return `${this.post.content.rendered}<div class="clearfix"></div>`

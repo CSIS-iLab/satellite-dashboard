@@ -1,6 +1,6 @@
 const siteURL = 'https://satdash.wpengine.com'
 // eslint-disable-next-line no-useless-escape
-const regex = /<span\s(?:class='easy-footnote')>(.*)<\/span>/gm
+const regex = /<span[^>]*>(.*?)<\/span>/gm
 export const state = () => ({
   posts: [],
   tags: [],
