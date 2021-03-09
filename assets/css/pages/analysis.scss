@@ -1,0 +1,13 @@
+.analysis {
+  &__notes {
+    margin: 0 auto rem(32) auto;
+    padding: rem(64) 0 rem(56) 0;
+    border-bottom: rem(1px) solid $color-black-120;
+  }
+
+  &__further-footnote {
+    margin-top: rem(10);
+    @extend %font-post-text-footnote-list;
+    color: $color-black-160;
+  }
+}

@@ -47,11 +47,11 @@
       <!-- eslint-enable-->
       <section class="post__further">
         <template v-if="post.footnote">
-          <ol>
+          <ol class="analysis__notes">
             <template v-for="(note, index) in footNote">
               <li
                 :key="index"
-                class="post__further-footnote"
+                class="analysis__further-footnote"
                 v-html="note"
               ></li>
             </template>
