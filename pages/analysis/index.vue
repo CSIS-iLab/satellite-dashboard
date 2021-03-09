@@ -8,31 +8,116 @@
         space security.
       </p>
     </div>
+    <form class="form" @submit.prevent>
+      Keywords<br />
+      <div v-for="filter in filterOptions" :key="filter.value">
+        <label :for="'filter__' + filter.value" class="form__label">
+          {{ filter.label }}
+        </label>
+        <client-only>
+          <v-select
+            :id="'filter__' + filter.value"
+            v-model="appliedFilterValues[filter.value]"
+            :options="filterOptionValues[filter.value]"
+            label="name"
+            :reduce="(option) => option.id"
+            class="form__input"
+            placeholder="All"
+            multiple
+          >
+            <template #open-indicator="{ attributes }">
+              <span v-bind="attributes">
+                <Icon id="plus" name="plus" />
+                <Icon id="minus" name="minus" />
+              </span>
+            </template>
+            <template #option="{ name }">
+              <Icon id="check" name="check" />{{ name }}
+            </template>
+          </v-select>
+        </client-only>
+      </div>
+      <div class="key-events__search-btns">
+        <Button :on-click="resetFilters">Remove All</Button>
+        <Button class="btn--apply" :on-click="filterPosts">
+          <Icon id="check" name="check" />
+          Apply
+        </Button>
+      </div>
+    </form>
     <PostList :posts="posts" size="wide" :is-compact="false" />
   </Page>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+import Button from '~/components/global/Button.vue'
+import Icon from '~/components/global/Icon.vue'
 import Page from '~/layout/page'
 import PostList from '~/components/global/PostList.vue'
 
 export default {
   layout: 'layout',
   components: {
+    Button,
+    Icon,
     Page,
     PostList
+  },
+  data: function() {
+    return {
+      filterOptions: [
+        { value: 'categories', label: 'Event Type' },
+        {
+          value: 'satellites',
+          label: 'Object Name'
+        },
+        { value: 'country', label: 'Country' },
+        { value: 'user', label: 'User' }
+      ],
+      appliedFilterValues: {
+        categories: [],
+        satellites: [],
+        country: [],
+        user: []
+      }
+    }
   },
   computed: {
     posts() {
       return this.$store.state.analysis.posts
+    },
+    filterOptionValues() {
+      return {
+        categories: this.categories,
+        satellites: [{ value: 'test', name: 'label' }],
+        country: this.countries,
+        user: this.users
+      }
+    },
+    ...mapState({
+      categories: (state) => state.analysis.categories,
+      countries: (state) => state.analysis.countries,
+      tags: (state) => state.analysis.tags,
+      users: (state) => state.analysis.users
+    })
+  },
+  methods: {
+    filterPosts() {
+      console.log('filter the posts')
+    },
+    resetFilters() {
+      for (const key in this.appliedFilterValues) {
+        if (Object.hasOwnProperty.call(this.appliedFilterValues, key)) {
+          this.appliedFilterValues[key] = []
+        }
+      }
     }
   }
-  // created() {
-  //   this.$store.dispatch('analysis/getPosts')
-  // }
 }
 </script>
 
 <style lang="scss">
+@import '../assets/css/components/form-input';
 @import '../assets/css/pages/analysis';
 </style>
