@@ -45,7 +45,7 @@
         </Button>
       </div>
     </form>
-    <PostList :posts="posts" size="wide" :is-compact="false" />
+    <PostList :posts="sortedPosts" size="wide" :is-compact="false" />
   </Page>
 </template>
 
@@ -80,31 +80,61 @@ export default {
         satellites: [],
         country: [],
         user: []
-      }
+      },
+      filteredPosts: []
     }
   },
   computed: {
-    posts() {
-      return this.$store.state.analysis.posts
+    sortedPosts() {
+      return this.filteredPosts.length > 0 ? this.filteredPosts : this.posts
     },
     filterOptionValues() {
       return {
         categories: this.categories,
-        satellites: [{ value: 'test', name: 'label' }],
+        satellites: this.satelliteOptions,
         country: this.countries,
         user: this.users
       }
     },
+    satelliteOptions() {
+      const satellites = this.posts
+        .filter((post) => post.satellites.length)
+        .map((post) => post.satellites)
+        .flat()
+        .filter((sat, i, ar) => ar.indexOf(sat) === i)
+        .map((sat) => ({
+          id: sat,
+          name: this.satellites[sat].Name
+        }))
+        .sort((a, b) => a.name.localeCompare(b.name))
+
+      return satellites
+    },
     ...mapState({
       categories: (state) => state.analysis.categories,
       countries: (state) => state.analysis.countries,
+      posts: (state) => state.analysis.posts,
+      satellites: (state) => state.satellites.satellites,
       tags: (state) => state.analysis.tags,
       users: (state) => state.analysis.users
     })
   },
   methods: {
     filterPosts() {
-      console.log('filter the posts')
+      const filtered = this.posts.filter((post) => {
+        for (var key in this.appliedFilterValues) {
+          if (
+            post[key] !== undefined &&
+            this.appliedFilterValues[key].some((filterId) =>
+              post[key].includes(filterId)
+            )
+          ) {
+            return true
+          }
+        }
+        return false
+      })
+      this.filteredPosts = filtered
     },
     resetFilters() {
       for (const key in this.appliedFilterValues) {
@@ -112,6 +142,8 @@ export default {
           this.appliedFilterValues[key] = []
         }
       }
+
+      this.filterPosts()
     }
   }
 }
