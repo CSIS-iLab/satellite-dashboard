@@ -7,11 +7,12 @@
 .analysis {
   &__search {
     display: grid;
+    gap: rem(24);
     margin-bottom: rem(32);
 
     @include breakpoint('medium') {
-      grid-gap: rem(32);
       grid-template-columns: repeat(4, 1fr);
+      gap: rem(32);
     }
 
     &-item {
