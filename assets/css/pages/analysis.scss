@@ -1,6 +1,13 @@
+.page--analysis {
+  .page__content {
+    padding-top: 0;
+  }
+}
+
 .analysis {
   &__search {
     display: grid;
+    margin-bottom: rem(32);
 
     @include breakpoint('medium') {
       grid-gap: rem(32);
@@ -19,5 +26,12 @@
       grid-column: 1 / -1;
       justify-self: center;
     }
+  }
+
+  &__results {
+    padding-bottom: rem(8);
+    color: $color-white-190;
+    @extend %font-ui-heading-section-sm;
+    border-bottom: 1px solid $color-white-115;
   }
 }

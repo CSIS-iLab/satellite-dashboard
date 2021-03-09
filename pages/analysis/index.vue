@@ -57,6 +57,10 @@
         </Button>
       </div>
     </form>
+    <div class="analysis__results">
+      {{ totalSortedPosts }}
+      {{ 'result' | pluralize(totalSortedPosts) }}
+    </div>
     <PostList :posts="sortedPosts" size="wide" :is-compact="false" />
   </Page>
 </template>
@@ -103,6 +107,9 @@ export default {
   computed: {
     sortedPosts() {
       return this.filteredPosts.length > 0 ? this.filteredPosts : this.posts
+    },
+    totalSortedPosts() {
+      return this.sortedPosts.length
     },
     filterOptionValues() {
       return {
