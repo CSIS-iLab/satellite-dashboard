@@ -1,5 +1,7 @@
 const siteURL = 'https://satdash.wpengine.com'
 
+import { squash } from '~/services/squash'
+
 export const state = () => ({
   posts: [],
   tags: [],
@@ -75,7 +77,8 @@ export const actions = {
               categories,
               country,
               user,
-              satellites: getSatellites(acf)
+              satellites: getSatellites(acf),
+              searchable: searchableContent(title, content)
             }
           }
         )
@@ -177,6 +180,11 @@ export const actions = {
       console.log(err)
     }
   }
+}
+
+function searchableContent(title, content) {
+  const text = `${title.rendered} ${content.rendered}`
+  return squash(text)
 }
 
 function getSatellites(acf) {

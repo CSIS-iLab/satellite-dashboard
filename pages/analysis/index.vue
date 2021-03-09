@@ -8,8 +8,7 @@
         space security.
       </p>
     </div>
-    <form class="form" @submit.prevent>
-      Keywords<br />
+    <form class="form analysis__search" @submit.prevent>
       <div v-for="filter in filterOptions" :key="filter.value">
         <label :for="'filter__' + filter.value" class="form__label">
           {{ filter.label }}
@@ -20,10 +19,17 @@
             v-model="appliedFilterValues[filter.value]"
             :options="filterOptionValues[filter.value]"
             label="name"
-            :reduce="(option) => option.id"
-            class="form__input"
+            class="form__input form__input--light"
             placeholder="All"
             multiple
+            :taggable="filter.taggable"
+            :create-option="
+              (option) => ({
+                id: option.toLowerCase().replace(/\s+/g, ''),
+                name: option
+              })
+            "
+            :reduce="(option) => option.id"
           >
             <template #open-indicator="{ attributes }">
               <span v-bind="attributes">
@@ -37,7 +43,7 @@
           </v-select>
         </client-only>
       </div>
-      <div class="key-events__search-btns">
+      <div class="analysis__search-btns">
         <Button :on-click="resetFilters">Remove All</Button>
         <Button class="btn--apply" :on-click="filterPosts">
           <Icon id="check" name="check" />
@@ -67,21 +73,25 @@ export default {
   data: function() {
     return {
       filterOptions: [
-        { value: 'categories', label: 'Event Type' },
+        { value: 'keywords', label: 'Keywords', taggable: true },
+        { value: 'categories', label: 'Event Type', taggable: false },
         {
           value: 'satellites',
-          label: 'Object Name'
+          label: 'Object Name',
+          taggable: false
         },
-        { value: 'country', label: 'Country' },
-        { value: 'user', label: 'User' }
+        { value: 'country', label: 'Country', taggable: false },
+        { value: 'user', label: 'User', taggable: false }
       ],
       appliedFilterValues: {
+        keywords: [],
         categories: [],
         satellites: [],
         country: [],
         user: []
       },
-      filteredPosts: []
+      filteredPosts: [],
+      keywords: null
     }
   },
   computed: {
@@ -90,6 +100,7 @@ export default {
     },
     filterOptionValues() {
       return {
+        keywords: this.tags,
         categories: this.categories,
         satellites: this.satelliteOptions,
         country: this.countries,
@@ -123,6 +134,19 @@ export default {
     filterPosts() {
       const filtered = this.posts.filter((post) => {
         for (var key in this.appliedFilterValues) {
+          // Keywords can come from a given list or be a general input. If from a given list, search our list of tags, otherwise, search our searchable string.
+          if (
+            key === 'keywords' &&
+            (this.appliedFilterValues[key].some((filterId) =>
+              post.tags.includes(filterId)
+            ) ||
+              this.appliedFilterValues[key].some((filterId) =>
+                post.searchable.includes(filterId)
+              ))
+          ) {
+            return true
+          }
+
           if (
             post[key] !== undefined &&
             this.appliedFilterValues[key].some((filterId) =>
