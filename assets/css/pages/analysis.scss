@@ -1,0 +1,23 @@
+.analysis {
+  &__search {
+    display: grid;
+
+    @include breakpoint('medium') {
+      grid-gap: rem(32);
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    &-item {
+      &:first-child {
+        @include breakpoint('medium') {
+          grid-column: 1 / -1;
+        }
+      }
+    }
+
+    &-btns {
+      grid-column: 1 / -1;
+      justify-self: center;
+    }
+  }
+}

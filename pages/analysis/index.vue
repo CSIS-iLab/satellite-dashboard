@@ -9,7 +9,11 @@
       </p>
     </div>
     <form class="form analysis__search" @submit.prevent>
-      <div v-for="filter in filterOptions" :key="filter.value">
+      <div
+        v-for="filter in filterOptions"
+        :key="filter.value"
+        class="analysis__search-item"
+      >
         <label :for="'filter__' + filter.value" class="form__label">
           {{ filter.label }}
         </label>
@@ -44,7 +48,9 @@
         </client-only>
       </div>
       <div class="analysis__search-btns">
-        <Button :on-click="resetFilters">Remove All</Button>
+        <Button :on-click="resetFilters" :disabled="isRemovedDisabled"
+          >Remove All</Button
+        >
         <Button class="btn--apply" :on-click="filterPosts">
           <Icon id="check" name="check" />
           Apply
@@ -91,7 +97,7 @@ export default {
         user: []
       },
       filteredPosts: [],
-      keywords: null
+      isRemovedDisabled: true
     }
   },
   computed: {
@@ -159,6 +165,7 @@ export default {
         return false
       })
       this.filteredPosts = filtered
+      this.isRemovedDisabled = false
     },
     resetFilters() {
       for (const key in this.appliedFilterValues) {
@@ -168,6 +175,7 @@ export default {
       }
 
       this.filterPosts()
+      this.isRemovedDisabled = true
     }
   }
 }
