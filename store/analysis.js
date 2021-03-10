@@ -1,5 +1,7 @@
 const siteURL = 'https://satdash.wpengine.com'
 
+import { squash } from '~/services/squash'
+
 export const state = () => ({
   posts: [],
   tags: [],
@@ -59,22 +61,26 @@ export const actions = {
             categories,
             country,
             user
-          }) => ({
-            id,
-            slug,
-            title,
-            excerpt,
-            date,
-            modified,
-            tags,
-            content,
-            authors: coauthors_full,
-            meta,
-            acf,
-            categories,
-            country,
-            user
-          })
+          }) => {
+            return {
+              id,
+              slug,
+              title,
+              excerpt,
+              date,
+              modified,
+              tags,
+              content,
+              authors: coauthors_full,
+              meta,
+              acf,
+              categories,
+              country,
+              user,
+              satellites: getSatellites(acf),
+              searchable: searchableContent(title, content)
+            }
+          }
         )
 
       commit('updatePosts', posts)
@@ -174,4 +180,18 @@ export const actions = {
       console.log(err)
     }
   }
+}
+
+function searchableContent(title, content) {
+  const text = `${title.rendered} ${content.rendered}`
+  return squash(text)
+}
+
+function getSatellites(acf) {
+  let satellites = [acf.keywords_satellites, acf.related_satellites].flat()
+
+  return satellites
+    .filter((sat) => sat) // removes false or undefined results
+    .map((sat) => sat.acf.catalog_id)
+    .filter((sat, i, ar) => ar.indexOf(sat) === i)
 }

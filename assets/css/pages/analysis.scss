@@ -1,0 +1,42 @@
+.page--analysis {
+  .page__content {
+    padding-top: 0;
+  }
+}
+
+.analysis {
+  &__search {
+    display: grid;
+    gap: rem(24);
+    margin-bottom: rem(32);
+
+    @include breakpoint('medium') {
+      grid-template-columns: repeat(4, 1fr);
+      gap: rem(32);
+    }
+
+    &-item {
+      &:first-child {
+        @include breakpoint('medium') {
+          grid-column: 1 / -1;
+        }
+      }
+    }
+
+    &-btns {
+      grid-column: 1 / -1;
+      justify-self: center;
+    }
+  }
+
+  &__results {
+    display: flex;
+    gap: rem(16);
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: rem(8);
+    color: $color-white-190;
+    @extend %font-ui-heading-section-sm;
+    border-bottom: 1px solid $color-white-115;
+  }
+}
