@@ -1,5 +1,3 @@
-const siteURL = 'https://satdash.wpengine.com'
-
 import { squash } from '~/services/squash'
 
 export const state = () => ({
@@ -39,9 +37,9 @@ export const actions = {
     if (state.posts.length) return
 
     try {
-      let posts = await fetch(
-        `${siteURL}/wp-json/wp/v2/posts?page=1&per_page=20`
-      ).then((res) => res.json())
+      let posts = await this.$axios.$get(
+        '/wp-json/wp/v2/posts?page=1&per_page=100'
+      )
 
       posts = posts
         .filter((el) => el.status === 'publish')
@@ -97,9 +95,9 @@ export const actions = {
     allTags = allTags.join()
 
     try {
-      let tags = await fetch(
-        `${siteURL}/wp-json/wp/v2/tags?page=1&per_page=40&include=${allTags}`
-      ).then((res) => res.json())
+      let tags = await this.$axios.$get(
+        `/wp-json/wp/v2/tags?page=1&per_page=40&include=${allTags}`
+      )
 
       tags = tags.map(({ id, name }) => ({
         id,
@@ -120,9 +118,9 @@ export const actions = {
     allCategories = allCategories.join()
 
     try {
-      let categories = await fetch(
-        `${siteURL}/wp-json/wp/v2/categories?page=1&per_page=40&include=${allCategories}`
-      ).then((res) => res.json())
+      let categories = await this.$axios.$get(
+        `/wp-json/wp/v2/categories?page=1&per_page=40&include=${allCategories}`
+      )
 
       categories = categories.map(({ id, name }) => ({
         id,
@@ -143,9 +141,9 @@ export const actions = {
     allCountries = allCountries.join()
 
     try {
-      let countries = await fetch(
-        `${siteURL}/wp-json/wp/v2/country?page=1&per_page=40&include=${allCountries}`
-      ).then((res) => res.json())
+      let countries = await this.$axios.$get(
+        `/wp-json/wp/v2/country?page=1&per_page=40&include=${allCountries}`
+      )
 
       countries = countries.map(({ id, name }) => ({
         id,
@@ -166,9 +164,9 @@ export const actions = {
     allUsers = allUsers.join()
 
     try {
-      let users = await fetch(
-        `${siteURL}/wp-json/wp/v2/user?page=1&per_page=40&include=${allUsers}`
-      ).then((res) => res.json())
+      let users = await this.$axios.$get(
+        `/wp-json/wp/v2/user?page=1&per_page=40&include=${allUsers}`
+      )
 
       users = users.map(({ id, name }) => ({
         id,
