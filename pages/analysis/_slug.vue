@@ -228,7 +228,7 @@ export default {
   },
   head() {
     return {
-      title: this.post.title.rendered,
+      // title: this.post.title.rendered,
       bodyAttrs: {
         class: 'page-layout'
       }

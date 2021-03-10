@@ -1,6 +1,7 @@
 const path = require('path')
 import Fiber from 'fibers'
 import Sass from 'sass'
+import axiosRetry from 'axios-retry'
 
 const customSass = {
   implementation: Sass,
@@ -18,7 +19,7 @@ export default {
    ** Headers of the page
    */
   head: {
-    titleTemplate: '%s | Satellite Dashboard',
+    titleTemplate: 'Satellite Dashboard',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -93,6 +94,14 @@ export default {
       // './assets/css/abstracts/_mixins.scss',
       // './assets/css/abstracts/_placeholders.scss'
     ]
+  },
+  // Axios module configuration (https://axios.nuxtjs.org/options)
+  axios: {
+    baseURL: 'https://satdash.wpengine.com',
+    retry: {
+      retries: 10,
+      retryDelay: axiosRetry.exponentialDelay
+    }
   },
   /*
    ** Build configuration

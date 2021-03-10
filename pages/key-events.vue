@@ -188,7 +188,7 @@ export default {
   },
   async fetch() {
     const events = await this.$axios.$get(
-      'https://satdash.wpengine.com/wp-json/satdash/v1/close_approaches',
+      '/wp-json/satdash/v1/close_approaches',
       {
         params: this.serverParams
       }
