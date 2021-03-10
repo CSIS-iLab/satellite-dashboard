@@ -84,10 +84,9 @@
                 :key="keyword.value"
                 class="post__tag-name"
               >
-                <nuxt-link
-                  :to="`/analysis/?${keyword.state}=${keyword.value}`"
-                  >{{ keyword.label }}</nuxt-link
-                >
+                <nuxt-link :to="`/analysis/?${keyword.url}=${keyword.value}`">{{
+                  keyword.label
+                }}</nuxt-link>
               </li>
             </ul>
           </template>
@@ -147,7 +146,7 @@ export default {
       return satellites
     },
     category() {
-      return this.getKeywords('categories', 'categories')
+      return this.getKeywords('categories', 'categories', 'categories')
     },
     keywords() {
       let keywords = [
@@ -159,13 +158,13 @@ export default {
       return keywords
     },
     keywordsTags() {
-      return this.getKeywords('tags', 'tags')
+      return this.getKeywords('tags', 'tags', 'keywords')
     },
     keywordsCountries() {
-      return this.getKeywords('country', 'countries')
+      return this.getKeywords('country', 'countries', 'country')
     },
     keywordsUsers() {
-      return this.getKeywords('user', 'users')
+      return this.getKeywords('user', 'users', 'user')
     },
     keywordsSatellites() {
       if (!this.post.acf.keywords_satellites) {
@@ -182,8 +181,9 @@ export default {
         }
 
         keywords.push({
-          value: ID,
-          label: meta.Name
+          value: sat.acf.catalog_id,
+          label: meta.Name,
+          url: 'satellites'
         })
       })
       return keywords
@@ -197,11 +197,8 @@ export default {
       users: (state) => state.analysis.users
     })
   },
-  // created() {
-  //   this.$store.dispatch('analysis/getPosts')
-  // },
   methods: {
-    getKeywords(taxonomy, state) {
+    getKeywords(taxonomy, state, url) {
       if (!this.post[taxonomy]) {
         return []
       }
@@ -209,7 +206,8 @@ export default {
       const keywords = this.post[taxonomy].map((d) => ({
         value: d,
         label: this[state].find((t) => t.id === d)?.name.trim(),
-        state
+        state,
+        url
       }))
 
       return keywords

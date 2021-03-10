@@ -144,7 +144,13 @@ export default {
     })
   },
   mounted() {
-    console.log(this.$route)
+    const queryArgs = this.$route.query
+    for (let key in this.appliedFilterValues) {
+      if (queryArgs[key]) {
+        const value = key === 'satellites' ? queryArgs[key] : +queryArgs[key]
+        this.appliedFilterValues[key].push(value)
+      }
+    }
   },
   methods: {
     filterPosts() {
