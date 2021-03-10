@@ -60,6 +60,25 @@
     <div class="analysis__results">
       {{ totalSortedPosts }}
       {{ 'result' | pluralize(totalSortedPosts) }}
+
+      <div class="analysis__sort form">
+        <client-only>
+          <v-select
+            v-model="currentSort"
+            class="dropdown--simple"
+            :clearable="false"
+            :options="sortOptions"
+            :searchable="false"
+            :value="currentSort"
+            :reduce="(sortOptions) => sortOptions.value"
+          >
+            <template #selected-option="{ label }">
+              <Icon id="sort" name="sort" />
+              {{ label }}
+            </template>
+          </v-select>
+        </client-only>
+      </div>
     </div>
     <PostList :posts="sortedPosts" size="wide" :is-compact="false" />
   </Page>
@@ -100,13 +119,28 @@ export default {
         country: [],
         user: []
       },
-      filteredPosts: [],
-      isRemovedDisabled: true
+      isRemovedDisabled: true,
+      currentSort: 'date_desc',
+      sortOptions: [
+        { value: 'date_asc', label: 'Oldest' },
+        { value: 'date_desc', label: 'Newest' }
+      ]
     }
   },
   computed: {
+    filteredPosts() {
+      return [...this.posts]
+    },
     sortedPosts() {
-      return this.filteredPosts.length > 0 ? this.filteredPosts : this.posts
+      let sortedPosts = [...this.filteredPosts]
+
+      sortedPosts.sort((a, b) => new Date(b.date) - new Date(a.date))
+
+      if (this.currentSort == 'date_asc') {
+        sortedPosts.reverse()
+      }
+
+      return sortedPosts
     },
     totalSortedPosts() {
       return this.sortedPosts.length
