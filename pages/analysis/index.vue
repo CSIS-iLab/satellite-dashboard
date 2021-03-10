@@ -58,8 +58,8 @@
       </div>
     </form>
     <div class="analysis__results">
-      {{ totalSortedPosts }}
-      {{ 'result' | pluralize(totalSortedPosts) }}
+      {{ totalPosts }}
+      {{ 'result' | pluralize(totalPosts) }}
 
       <div class="analysis__sort form">
         <client-only>
@@ -71,6 +71,7 @@
             :searchable="false"
             :value="currentSort"
             :reduce="(sortOptions) => sortOptions.value"
+            @input="sortPosts"
           >
             <template #selected-option="{ label }">
               <Icon id="sort" name="sort" />
@@ -80,7 +81,7 @@
         </client-only>
       </div>
     </div>
-    <PostList :posts="sortedPosts" size="wide" :is-compact="false" />
+    <PostList :posts="filteredPosts" size="wide" :is-compact="false" />
   </Page>
 </template>
 
@@ -119,6 +120,7 @@ export default {
         country: [],
         user: []
       },
+      filteredPosts: [...this.$store.state.analysis.posts],
       isRemovedDisabled: true,
       currentSort: 'date_desc',
       sortOptions: [
@@ -128,22 +130,8 @@ export default {
     }
   },
   computed: {
-    filteredPosts() {
-      return [...this.posts]
-    },
-    sortedPosts() {
-      let sortedPosts = [...this.filteredPosts]
-
-      sortedPosts.sort((a, b) => new Date(b.date) - new Date(a.date))
-
-      if (this.currentSort == 'date_asc') {
-        sortedPosts.reverse()
-      }
-
-      return sortedPosts
-    },
-    totalSortedPosts() {
-      return this.sortedPosts.length
+    totalPosts() {
+      return this.filteredPosts.length
     },
     filterOptionValues() {
       return {
@@ -217,6 +205,13 @@ export default {
       this.filteredPosts = filtered
       this.isRemovedDisabled = false
     },
+    sortPosts(value) {
+      this.filteredPosts.sort((a, b) => new Date(b.date) - new Date(a.date))
+
+      if (value == 'date_asc') {
+        this.filteredPosts.reverse()
+      }
+    },
     resetFilters() {
       for (const key in this.appliedFilterValues) {
         if (Object.hasOwnProperty.call(this.appliedFilterValues, key)) {
@@ -224,7 +219,7 @@ export default {
         }
       }
 
-      this.filterPosts()
+      this.filteredPosts = [...this.posts]
       this.isRemovedDisabled = true
     }
   }
