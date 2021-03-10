@@ -127,10 +127,26 @@ export const actions = {
    */
   async getSatellites({ state, commit }) {
     try {
-      let satellites = await fetch(
-        `${siteURL}/wp-json/wp/v2/satellites?show_all=true`
-      ).then((res) => res.json())
+      const url = `${siteURLLocal}/wp-json/wp/v2/satellites?count=500`
 
+      // Get first page of results & return headers with total pages of satellite objects
+      const firstPage = await fetch(`${url}&page=1`).then((res) => ({
+        totalPages: +res.headers.get('x-wp-totalpages'),
+        data: res.json()
+      }))
+
+      // Get the remaining satellites' data by fetching each additional page.
+      let requestURLs = []
+      for (let i = 2; i <= firstPage.totalPages; i++) {
+        requestURLs.push(`${url}&page=${i}`)
+      }
+
+      let satellites = await (await fetchAll(requestURLs))
+        .map((request) => request.data)
+        .flat()
+        .concat(firstPage.data)
+
+      // Organize Satellite Data
       let items = {}
       let visibleItems = []
       let countries = new Set()
@@ -239,6 +255,17 @@ export const actions = {
       console.log(err)
     }
   }
+}
+
+async function fetchAll(urls) {
+  return Promise.all(
+    urls.map((url) =>
+      fetch(url)
+        .then((r) => r.json())
+        .then((data) => ({ data, url }))
+        .catch((error) => ({ error, url }))
+    )
+  )
 }
 
 function formatCountries(value) {

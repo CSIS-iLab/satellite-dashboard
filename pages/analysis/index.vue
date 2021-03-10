@@ -143,6 +143,9 @@ export default {
       users: (state) => state.analysis.users
     })
   },
+  mounted() {
+    console.log(this.$route)
+  },
   methods: {
     filterPosts() {
       const filtered = this.posts.filter((post) => {
