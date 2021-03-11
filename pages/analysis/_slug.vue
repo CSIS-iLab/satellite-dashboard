@@ -46,24 +46,35 @@
       ></section>
       <!-- eslint-enable-->
       <section class="post__further">
-        <p class="post__further-footnote">
-          Footnotes will go here.
-        </p>
-        <h2 class="post__further-header">
-          Further Reading
-        </h2>
-        <template v-for="reading in post.acf.further_reading">
-          <div :key="reading.url" class="post__further-article">
-            <a :href="reading.url" class="post__further-link">
-              {{ reading.publication_name }}
-              <span class="post__further-source">{{
-                reading.publication_organization
-              }}</span>
-            </a>
-            <a :href="reading.url" class="post__further-circle">
-              <Icon class="post__further-icon" name="external-link" />
-            </a>
-          </div>
+        <ol v-if="post.footnotes" class="post__further-notes">
+          <li
+            v-for="(note, index) in post.footnotes"
+            :key="index"
+            class="post__further-footnote"
+            v-html="note"
+          ></li>
+        </ol>
+        <template v-if="post.acf.further_reading">
+          <h2 class="post__further-header">
+            Further Reading
+          </h2>
+          <ul role="list">
+            <li
+              v-for="reading in post.acf.further_reading"
+              :key="reading.url"
+              class="post__further-article"
+            >
+              <a :href="reading.url" class="post__further-link">
+                {{ reading.publication_name }}
+                <span class="post__further-source">{{
+                  reading.publication_organization
+                }}</span>
+              </a>
+              <a :href="reading.url" class="post__further-circle">
+                <Icon class="post__further-icon" name="external-link" />
+              </a>
+            </li>
+          </ul>
         </template>
       </section>
       <footer class="post__footer">

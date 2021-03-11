@@ -1,3 +1,4 @@
+import { decode } from 'html-entities'
 import { squash } from '~/services/squash'
 
 export const state = () => ({
@@ -75,6 +76,7 @@ export const actions = {
               categories,
               country,
               user,
+              footnotes: formatFootnotes(content.rendered),
               satellites: getSatellites(acf),
               searchable: searchableContent(title, content)
             }
@@ -178,6 +180,21 @@ export const actions = {
       console.log(err)
     }
   }
+}
+
+function formatFootnotes(content) {
+  // eslint-disable-next-line no-useless-escape
+  const regex = /<span[^>]*>(.*?)<\/span>/gm
+  const footnotes = content.match(regex)
+  let formattedFootnotes = null
+  if (footnotes && footnotes.length) {
+    formattedFootnotes = footnotes
+      .filter((item) =>
+        item.match(/<span\s(?:class='easy-footnote')>(.*)<\/span>/)
+      )
+      .map((item) => decode(item.match(/title=['"](.*)['"]/)[1]))
+  }
+  return formattedFootnotes
 }
 
 function searchableContent(title, content) {
