@@ -170,6 +170,12 @@ export default {
       return this.timelinePoint.toLocaleDateString('en-US', this.dateOptions)
     }
   },
+  watch: {
+    '$route.query.date': 'handleDateQuery'
+  },
+  created() {
+    //this.handleDateQuery()
+  },
   mounted() {
     cesiumService.getInstance().then((cesiumInstance) => {
       cesium = cesiumInstance
@@ -219,6 +225,17 @@ export default {
     })
   },
   methods: {
+    handleDateQuery() {
+      const { date } = this.$route.query
+      if (!date) {
+        return
+      }
+      const selectedDate = new Date(date)
+      if (isNaN(selectedDate.valueOf())) {
+        return
+      }
+      this.selectNewDate(selectedDate)
+    },
     beforeViewerDestroy() {
       const { cesiumInstance } = cesiumService
       const { viewer } = cesiumInstance
@@ -230,6 +247,9 @@ export default {
     },
     stopPlayback() {
       this.isPlaying = false
+      if (!cesium) {
+        return
+      }
       const { viewer } = cesium
       viewer.clockViewModel.shouldAnimate = false
     },

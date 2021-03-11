@@ -128,7 +128,7 @@ export default {
   watch: {
     satelliteOrbits: 'processNewData',
     visibleSatellites: 'toggleObjectVisibility',
-    '$route.query': 'handleQueryString'
+    '$route.query.time': 'handleTimeQuery'
   },
   beforeDestroy() {
     Cesium = null
@@ -141,6 +141,21 @@ export default {
     })
   },
   methods: {
+    handleTimeQuery() {
+      if (!viewer || !Cesium) {
+        return
+      }
+      if (this.$route.query.time) {
+        const hours = parseFloat(this.$route.query.time)
+        viewer.clock.currentTime = Cesium.JulianDate.addSeconds(
+          this.SimStart,
+          hours * 60 * 60,
+          new Cesium.JulianDate()
+        )
+      } else {
+        viewer.clock.currentTime = this.SimStart
+      }
+    },
     ready(cesiumInstance) {
       console.log('is ready')
       // Set up the Cesium Viewer
@@ -228,12 +243,6 @@ export default {
         this.processNewData()
       }
     },
-    handleQueryString() {
-      if (!this.satellitesHaveLoaded) {
-        return
-      }
-      this.processNewData()
-    },
     processNewData() {
       // in case cesium hasn't loaded yet
       this.satellitesHaveLoaded = true
@@ -256,7 +265,9 @@ export default {
       cesiumService.getTimeline().then((timeline) => {
         timeline.zoomTo(this.SimStart, this.SimStop)
       })
-      if (this.$route.query.time) {
+      this.handleTimeQuery()
+      //viewer.clock.currentTime = this.SimStart
+      /*if (this.$route.query.time) {
         const hours = parseFloat(this.$route.query.time)
         viewer.clock.currentTime = Cesium.JulianDate.addSeconds(
           this.SimStart,
@@ -265,7 +276,7 @@ export default {
         )
       } else {
         viewer.clock.currentTime = this.SimStart
-      }
+      }*/
       // Set up the current time and then load in the satellite objects.
       Cesium.Transforms.preloadIcrfFixed(
         new Cesium.TimeInterval({
@@ -283,13 +294,8 @@ export default {
       // For each object, calculate its position & orbit
       // Calculations pulled from: https://github.com/ut-astria/AstriaGraph/blob/master/main.js & https://github.com/ut-astria/AstriaGraph/blob/master/celemech.js
 
-      let satIds
-      if (this.$route.query.satids) {
-        satIds = this.$route.query.satids.split(',')
-      }
-
       this.visibleSatellites.forEach((sat, i) => {
-        if (!this.satelliteOrbits[sat] || (satIds && !satIds.includes(sat))) {
+        if (!this.satelliteOrbits[sat]) {
           return
         }
 

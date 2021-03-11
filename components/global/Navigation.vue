@@ -1,8 +1,6 @@
 <template>
   <div class="nav" :class="parentClass">
-    <h2 v-if="parentClass == 'nav--footer'">
-      Navigate
-    </h2>
+    <h2 v-if="parentClass == 'nav--footer'">Navigate</h2>
     <ul class="nav__list" role="list">
       <li
         v-for="item in items"
@@ -11,6 +9,12 @@
         class="nav__item"
       >
         <nuxt-link :to="item.url">{{ item.title }}</nuxt-link>
+      </li>
+      <li>
+        <nuxt-link :to="'?satids=41543,28629&date=2021-03-02&time=13'">
+          Test Q string
+        </nuxt-link>
+        <nuxt-link :to="'/'"> clear Q string </nuxt-link>
       </li>
     </ul>
   </div>
