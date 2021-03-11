@@ -1,4 +1,5 @@
-const siteURL = 'https://satdash.wpengine.com'
+import { decode } from 'html-entities'
+import { squash } from '~/services/squash'
 
 export const state = () => ({
   posts: [],
@@ -37,9 +38,9 @@ export const actions = {
     if (state.posts.length) return
 
     try {
-      let posts = await fetch(
-        `${siteURL}/wp-json/wp/v2/posts?page=1&per_page=20`
-      ).then((res) => res.json())
+      let posts = await this.$axios.$get(
+        '/wp-json/wp/v2/posts?page=1&per_page=100'
+      )
 
       posts = posts
         .filter((el) => el.status === 'publish')
@@ -59,22 +60,27 @@ export const actions = {
             categories,
             country,
             user
-          }) => ({
-            id,
-            slug,
-            title,
-            excerpt,
-            date,
-            modified,
-            tags,
-            content,
-            authors: coauthors_full,
-            meta,
-            acf,
-            categories,
-            country,
-            user
-          })
+          }) => {
+            return {
+              id,
+              slug,
+              title,
+              excerpt,
+              date,
+              modified,
+              tags,
+              content,
+              authors: coauthors_full,
+              meta,
+              acf,
+              categories,
+              country,
+              user,
+              footnotes: formatFootnotes(content.rendered),
+              satellites: getSatellites(acf),
+              searchable: searchableContent(title, content)
+            }
+          }
         )
 
       commit('updatePosts', posts)
@@ -91,9 +97,9 @@ export const actions = {
     allTags = allTags.join()
 
     try {
-      let tags = await fetch(
-        `${siteURL}/wp-json/wp/v2/tags?page=1&per_page=40&include=${allTags}`
-      ).then((res) => res.json())
+      let tags = await this.$axios.$get(
+        `/wp-json/wp/v2/tags?page=1&per_page=40&include=${allTags}`
+      )
 
       tags = tags.map(({ id, name }) => ({
         id,
@@ -114,9 +120,9 @@ export const actions = {
     allCategories = allCategories.join()
 
     try {
-      let categories = await fetch(
-        `${siteURL}/wp-json/wp/v2/categories?page=1&per_page=40&include=${allCategories}`
-      ).then((res) => res.json())
+      let categories = await this.$axios.$get(
+        `/wp-json/wp/v2/categories?page=1&per_page=40&include=${allCategories}`
+      )
 
       categories = categories.map(({ id, name }) => ({
         id,
@@ -137,9 +143,9 @@ export const actions = {
     allCountries = allCountries.join()
 
     try {
-      let countries = await fetch(
-        `${siteURL}/wp-json/wp/v2/country?page=1&per_page=40&include=${allCountries}`
-      ).then((res) => res.json())
+      let countries = await this.$axios.$get(
+        `/wp-json/wp/v2/country?page=1&per_page=40&include=${allCountries}`
+      )
 
       countries = countries.map(({ id, name }) => ({
         id,
@@ -160,9 +166,9 @@ export const actions = {
     allUsers = allUsers.join()
 
     try {
-      let users = await fetch(
-        `${siteURL}/wp-json/wp/v2/user?page=1&per_page=40&include=${allUsers}`
-      ).then((res) => res.json())
+      let users = await this.$axios.$get(
+        `/wp-json/wp/v2/user?page=1&per_page=40&include=${allUsers}`
+      )
 
       users = users.map(({ id, name }) => ({
         id,
@@ -174,4 +180,33 @@ export const actions = {
       console.log(err)
     }
   }
+}
+
+function formatFootnotes(content) {
+  // eslint-disable-next-line no-useless-escape
+  const regex = /<span[^>]*>(.*?)<\/span>/gm
+  const footnotes = content.match(regex)
+  let formattedFootnotes = null
+  if (footnotes && footnotes.length) {
+    formattedFootnotes = footnotes
+      .filter((item) =>
+        item.match(/<span\s(?:class='easy-footnote')>(.*)<\/span>/)
+      )
+      .map((item) => decode(item.match(/title=['"](.*)['"]/)[1]))
+  }
+  return formattedFootnotes
+}
+
+function searchableContent(title, content) {
+  const text = `${title.rendered} ${content.rendered}`
+  return squash(text)
+}
+
+function getSatellites(acf) {
+  let satellites = [acf.keywords_satellites, acf.related_satellites].flat()
+
+  return satellites
+    .filter((sat) => sat) // removes false or undefined results
+    .map((sat) => sat.acf.catalog_id)
+    .filter((sat, i, ar) => ar.indexOf(sat) === i)
 }

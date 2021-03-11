@@ -1,0 +1,96 @@
+.modal {
+  display: flex;
+  flex-direction: column;
+  overflow-x: auto;
+  background: $color-slate-300;
+  border-radius: 3px;
+
+  &-backdrop {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.3);
+  }
+
+  &-fade-enter,
+  &-fade-leave-active {
+    opacity: 0;
+  }
+
+  &-fade-enter-active,
+  &-fade-leave-active {
+    transition: opacity 0.5s ease;
+  }
+
+  &__header,
+  &__footer {
+    display: flex;
+  }
+
+  &__header {
+    justify-content: space-between;
+    padding: rem(16) rem(20);
+    color: $color-white-160;
+    border-bottom: 1px solid $color-white-110;
+    @extend %font-ui-text-lg-good;
+  }
+
+  &__body {
+    position: relative;
+    padding: rem(20) rem(10);
+    color: $color-white-150;
+    @extend %font-ui-text-base-good;
+  }
+
+  &__footer {
+    justify-content: space-between;
+    align-items: center;
+    padding: rem(16) rem(32);
+    color: $color-white-150;
+    text-transform: uppercase;
+    background-color: $color-slate-400;
+    @extend %font-ui-text-base-good;
+
+    &-right {
+      display: flex;
+      align-items: center;
+
+      &::before {
+        content: 'Download';
+        align-items: center;
+        margin-right: rem(16);
+        text-transform: uppercase;
+      }
+    }
+
+    &-left {
+      display: flex;
+    }
+  }
+
+  &__btn {
+    &-close-icon {
+      padding: 0;
+      color: $color-white-160;
+      background: transparent;
+      border: 0;
+    }
+
+    &-footer {
+      display: flex;
+      align-items: center;
+      margin: 0 rem(8);
+      padding: rem(6) rem(12);
+      color: $color-white-170;
+      background: $color-slate-700;
+      border-radius: 3px;
+      @extend %font-ui-text-base-good;
+    }
+  }
+}

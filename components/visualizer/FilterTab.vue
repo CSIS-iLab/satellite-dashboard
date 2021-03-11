@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="panel__content">
     <h2 class="panel__title" :data-is-faded="isEditable">
       {{ numActiveFilters }} {{ 'filter' | pluralize(numActiveFilters) }}
     </h2>

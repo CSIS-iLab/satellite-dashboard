@@ -1,7 +1,8 @@
 .updates-panel {
   position: absolute;
-  bottom: 100px;
-  left: 100px;
+  // Offset this so the button isn't hidden behind the timeline's blurred background.
+  bottom: calc(#{$size__updates-bottom-pos} + #{rem(13)});
+  left: rem($size__left-panel-tab-width);
 
   .btn--updates-panel {
     display: flex;
@@ -26,12 +27,14 @@
   .ak-vt__wrapper {
     position: fixed;
     top: 0;
+    // bottom: $size__updates-bottom-pos;
     bottom: 0;
     left: 0;
+    display: flex;
+    flex-direction: column;
     width: 100%;
     max-width: 400px;
-    padding: calc(#{$size__header-height} + #{rem(50)}) rem(32)
-      calc(#{$size__header-height} + #{rem(50)}) rem(96);
+    padding: calc(#{$size__header-height} + #{rem(50)}) rem(32) 0 rem(96);
     background: $color-black-190;
 
     &::after {
@@ -54,8 +57,10 @@
   }
 
   &__content {
-    height: 100%;
+    flex-grow: 1;
     margin-top: rem(24);
+    // margin-bottom: calc(#{$size__updates-bottom-pos} + #{rem(50)});
+    margin-bottom: calc(#{rem($size__updates-bottom-pos)} - #{rem(30)});
     overflow: auto;
   }
 

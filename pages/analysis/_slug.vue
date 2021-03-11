@@ -46,24 +46,36 @@
       ></section>
       <!-- eslint-enable-->
       <section class="post__further">
-        <p class="post__further-footnote">
-          Footnotes & Further Reading will go here.
-        </p>
-        <!-- {{ post.meta.further_reading }} -->
-        <!-- <template v-for="reading in furtherReadings">
-          <h2 :key="reading.url" class="post__further-header">
+        <ol v-if="post.footnotes" class="post__further-notes">
+          <li
+            v-for="(note, index) in post.footnotes"
+            :key="index"
+            class="post__further-footnote"
+            v-html="note"
+          ></li>
+        </ol>
+        <template v-if="post.acf.further_reading">
+          <h2 class="post__further-header">
             Further Reading
           </h2>
-          <div :key="reading.url" class="post__further-article">
-            <a :href="reading.url" class="post__further-link">
-              {{ reading.name }}
-              <span class="post__further-source">{{ reading.author }}</span>
-            </a>
-            <a :href="reading.url" class="post__further-circle">
-              <Icon class="post__further-icon" name="external-link" />
-            </a>
-          </div>
-        </template> -->
+          <ul role="list">
+            <li
+              v-for="reading in post.acf.further_reading"
+              :key="reading.url"
+              class="post__further-article"
+            >
+              <a :href="reading.url" class="post__further-link">
+                {{ reading.publication_name }}
+                <span class="post__further-source">{{
+                  reading.publication_organization
+                }}</span>
+              </a>
+              <a :href="reading.url" class="post__further-circle">
+                <Icon class="post__further-icon" name="external-link" />
+              </a>
+            </li>
+          </ul>
+        </template>
       </section>
       <footer class="post__footer">
         <ul v-if="post.authors" class="post__author-wrapper" role="list">
@@ -83,10 +95,9 @@
                 :key="keyword.value"
                 class="post__tag-name"
               >
-                <nuxt-link
-                  :to="`/analysis/?${keyword.state}=${keyword.value}`"
-                  >{{ keyword.label }}</nuxt-link
-                >
+                <nuxt-link :to="`/analysis/?${keyword.url}=${keyword.value}`">{{
+                  keyword.label
+                }}</nuxt-link>
               </li>
             </ul>
           </template>
@@ -100,11 +111,11 @@
 import { mapState } from 'vuex'
 import PostMeta from '~/components/global/PostMeta.vue'
 import PostCategories from '~/components/global/PostCategories.vue'
-// import Icon from '~/components/global/Icon.vue'
+import Icon from '~/components/global/Icon.vue'
 
 export default {
   components: {
-    // Icon
+    Icon,
     PostCategories,
     PostMeta
   },
@@ -146,7 +157,7 @@ export default {
       return satellites
     },
     category() {
-      return this.getKeywords('categories', 'categories')
+      return this.getKeywords('categories', 'categories', 'categories')
     },
     keywords() {
       let keywords = [
@@ -158,13 +169,13 @@ export default {
       return keywords
     },
     keywordsTags() {
-      return this.getKeywords('tags', 'tags')
+      return this.getKeywords('tags', 'tags', 'keywords')
     },
     keywordsCountries() {
-      return this.getKeywords('country', 'countries')
+      return this.getKeywords('country', 'countries', 'country')
     },
     keywordsUsers() {
-      return this.getKeywords('user', 'users')
+      return this.getKeywords('user', 'users', 'user')
     },
     keywordsSatellites() {
       if (!this.post.acf.keywords_satellites) {
@@ -181,8 +192,9 @@ export default {
         }
 
         keywords.push({
-          value: ID,
-          label: meta.Name
+          value: sat.acf.catalog_id,
+          label: meta.Name,
+          url: 'satellites'
         })
       })
       return keywords
@@ -196,11 +208,8 @@ export default {
       users: (state) => state.analysis.users
     })
   },
-  // created() {
-  //   this.$store.dispatch('analysis/getPosts')
-  // },
   methods: {
-    getKeywords(taxonomy, state) {
+    getKeywords(taxonomy, state, url) {
       if (!this.post[taxonomy]) {
         return []
       }
@@ -208,7 +217,8 @@ export default {
       const keywords = this.post[taxonomy].map((d) => ({
         value: d,
         label: this[state].find((t) => t.id === d)?.name.trim(),
-        state
+        state,
+        url
       }))
 
       return keywords

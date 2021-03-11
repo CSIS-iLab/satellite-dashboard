@@ -34,7 +34,7 @@
     @include breakpoint('medium') {
       display: grid;
       grid-template-columns: 2fr 1fr;
-      column-gap: rem(42px);
+      column-gap: rem(42);
     }
   }
 
@@ -45,7 +45,7 @@
     color: $color-orange-100;
     font-weight: bold;
     text-transform: uppercase;
-    text-shadow: 0 rem(4px) rem(4px) rgba(0, 0, 0, 0.25);
+    text-shadow: 0 rem(4) rem(4) rgba(0, 0, 0, 0.25);
     list-style: none;
 
     li {
@@ -73,11 +73,11 @@
       display: block;
       grid-column: 2;
       grid-row: 1 / span 4;
-      padding-left: rem(32px);
+      padding-left: rem(32);
     }
 
     li {
-      margin-bottom: rem(16px);
+      margin-bottom: rem(16);
     }
 
     span {
@@ -103,14 +103,14 @@
 
   &__excerpt {
     @extend %font-ui-text-lg-oxygen;
-    margin-top: rem(8px);
+    margin-top: rem(8);
     color: $color-white-180;
   }
 
   &__sat-table {
     @extend %font-ui-text-base-oxygen;
     width: 100%;
-    margin-top: rem(24px);
+    margin-top: rem(24);
     border-collapse: collapse;
 
     thead {
@@ -124,10 +124,10 @@
 
     th,
     td {
-      padding: rem(16px) rem(24px) rem(16px) 0;
+      padding: rem(16) rem(24) rem(16) 0;
 
       &:first-child {
-        padding-left: rem(24px);
+        padding-left: rem(24);
       }
     }
 
@@ -186,30 +186,36 @@
       }
     }
 
-    &-footnote {
-      @extend %font-post-text-footnote-list;
-      padding: rem(64px) 0 rem(56px) 0;
-      color: $color-black-160;
+    &-notes {
+      margin: 0 auto rem(32) auto;
+      padding: rem(64) 0 rem(56) 0;
       border-bottom: rem(1px) solid $color-black-120;
+    }
+
+    &-footnote {
+      margin-top: rem(10);
+      @extend %font-post-text-footnote-list;
+      color: $color-black-160;
     }
 
     &-header {
       @extend %font-ui-heading-section-lg;
-      margin: rem(32px) 0 rem(16px) 0;
+      margin: rem(32) 0 rem(16) 0;
       color: $color-slate-800;
     }
 
     &-article {
       @extend %font-post-text-lg-list;
       display: flex;
+      gap: rem(24);
       justify-content: space-between;
-      align-items: center;
+      align-items: flex-start;
       height: 100%;
-      padding-bottom: rem(8px);
+      padding-bottom: rem(8);
       color: $color-black-190;
 
       &:last-child {
-        padding-bottom: rem(64px);
+        padding-bottom: rem(64);
       }
     }
 
@@ -218,17 +224,18 @@
 
       &::before {
         content: '|';
-        margin: 0 rem(8px);
+        margin: 0 rem(8);
       }
     }
 
     &-circle {
       --color3: #{$color-blue-170};
       display: flex;
+      flex: 0 0 auto;
       justify-content: center;
       align-items: center;
-      width: rem(40px);
-      height: rem(40px);
+      width: rem(40);
+      height: rem(40);
       font-size: 1.2em;
       border: 1px solid $color-ltblue-175;
       border-radius: 50%;
@@ -246,18 +253,22 @@
       border: hidden;
       border-color: $color-ltblue-130;
     }
+
+    ul {
+      padding: 0;
+    }
   }
 
   // Post footer
 
   &__footer {
-    padding: rem(24px) 0;
+    padding: rem(24) 0;
 
     @include breakpoint('medium') {
       display: grid;
       grid-template-columns: 2fr 1fr;
-      padding: rem(56px) 0 rem(48px) 0;
-      column-gap: rem(40px);
+      padding: rem(56) 0 rem(48) 0;
+      column-gap: rem(40);
     }
   }
 
@@ -295,7 +306,7 @@
 
   &__tag {
     @include breakpoint('medium') {
-      margin-left: rem(32px);
+      margin-left: rem(32);
     }
 
     &-list {
@@ -323,7 +334,7 @@
 
       &:not(:last-child)::after {
         content: ',';
-        padding-right: rem(8px);
+        padding-right: rem(8);
       }
     }
   }
@@ -342,7 +353,7 @@
     &-block {
       display: table;
       width: 100vw;
-      height: rem(240px);
+      height: rem(240);
       overflow: hidden;
       text-align: center;
       background-color: $color-slate-200;
@@ -361,12 +372,12 @@
     &-link {
       z-index: 2;
       display: table-cell;
-      padding: rem(24px) rem(32px);
+      padding: rem(24) rem(32);
       vertical-align: middle;
 
       &:hover .post__related-title {
         color: $color-white-100;
-        transform: translate(0, rem(-4px));
+        transform: translate(0, rem(-4));
         transition: all 0.3s ease-in-out;
       }
     }
@@ -378,7 +389,7 @@
 
     &-title,
     &-author {
-      padding-bottom: rem(8px);
+      padding-bottom: rem(8);
     }
 
     &-author,

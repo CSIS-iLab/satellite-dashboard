@@ -1,5 +1,3 @@
-const siteURL = 'https://satdash.wpengine.com'
-
 export const state = () => ({
   glossary: {}
 })
@@ -15,9 +13,9 @@ export const actions = {
     if (state.glossary.length) return
 
     try {
-      let glossary = await fetch(
-        `${siteURL}/wp-json/wp/v2/glossary?page=1&per_page=100`
-      ).then((res) => res.json())
+      let glossary = await this.$axios.$get(
+        '/wp-json/wp/v2/glossary?page=1&per_page=100'
+      )
 
       let glossaryObj = {}
 

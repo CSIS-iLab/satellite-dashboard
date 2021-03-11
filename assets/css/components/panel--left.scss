@@ -1,11 +1,18 @@
 .panel--left {
-  padding: rem(56) var(--panel-padding-side) 0;
+  height: 100%;
+  padding: rem(56) 0 0;
   color: $color-white-170;
   @extend %font-ui-text-base-oxygen;
   background: $color-slate-600;
 }
 
 .panel-left {
+  .panel__content {
+    height: 100%;
+    padding: 0 var(--panel-padding-side);
+    overflow-y: auto;
+  }
+
   .ak-vt {
     &__wrapper {
       position: fixed;
@@ -54,7 +61,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      width: rem(48);
+      width: rem($size__left-panel-tab-width);
       min-height: rem(56);
       margin-bottom: rem(41);
       padding-top: rem(24);
@@ -123,11 +130,6 @@
         brightness(94%) contrast(93%);
     }
     /* stylelint-enable */
-
-    &__panel {
-      height: 100%;
-      overflow: scroll;
-    }
   }
 
   .btn--panel-close {

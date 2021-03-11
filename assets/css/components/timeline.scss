@@ -4,6 +4,7 @@
     --padding-sides: #{rem(32)};
     --padding-bottom: #{rem(20)};
     position: relative;
+    z-index: 1;
     display: grid;
     grid-template-areas:
       'control player player player'
