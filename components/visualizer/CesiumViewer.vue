@@ -1,13 +1,13 @@
 <template>
   <div ref="viewerContainer" class="viewer">
     <ul class="viewer-controls" role="list">
-      <Button class="btn--controls btn--zoom" :on-click="zoomIn">
+      <Button class="btn--controls btn--zoom" :on-click="zoomOut">
         <Icon id="minus" name="minus" />
       </Button>
       <Button class="btn--controls btn--zoom" :on-click="zoomReset">
         <Icon id="world" name="world" />
       </Button>
-      <Button class="btn--controls btn--zoom" :on-click="zoomOut">
+      <Button class="btn--controls btn--zoom" :on-click="zoomIn">
         <Icon id="plus" name="plus" />
       </Button>
       <Button class="btn--controls btn--sun" :on-click="toggleSunlight">
@@ -157,9 +157,9 @@ export default {
       globe.nightFadeOutDistance = 1000000
       globe.nightFadeInDistance = 8000000
 
-      scene.skyBox = new Cesium.SkyBox({
-        show: false
-      })
+      // scene.skyBox = new Cesium.SkyBox({
+      //   show: false
+      // })
 
       viewer.camera.defaultZoomAmount = this.defaultZoomAmount
 
@@ -537,10 +537,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-.viewer {
-  width: 100%;
-  height: 66vh;
-}
-</style>

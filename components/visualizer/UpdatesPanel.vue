@@ -90,9 +90,9 @@ export default {
     TabWrapper
   },
   async fetch() {
-    this.events = await fetch(
-      'https://satdash.wpengine.com/wp-json/satdash/v1/close_approaches/latest/'
-    ).then((res) => res.json())
+    this.events = await this.$axios.$get(
+      '/wp-json/satdash/v1/close_approaches/latest/'
+    )
   },
   data() {
     return {

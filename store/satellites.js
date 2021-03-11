@@ -126,11 +126,32 @@ export const actions = {
    * Pulls Satellite from WordPress database and stores them in state so they can be filtered.
    */
   async getSatellites({ state, commit }) {
-    try {
-      let satellites = await fetch(
-        `${siteURL}/wp-json/wp/v2/satellites?show_all=true`
-      ).then((res) => res.json())
+    if (Object.keys(state.satellites).length) return
 
+    try {
+      const url = '/wp-json/wp/v2/satellites?count=250'
+
+      // Get first page of results & return headers with total pages of satellite objects
+      const firstPage = await this.$axios.get(`${url}&page=1`).then((res) => ({
+        totalPages: +res.headers['x-wp-totalpages'],
+        data: res.data
+      }))
+
+      // Get the remaining satellites' data by fetching each additional page.
+      let requestURLs = []
+      for (let i = 2; i <= firstPage.totalPages; i++) {
+        requestURLs.push(`${siteURL}${url}&page=${i}`)
+      }
+
+      let satellites = await fetchAll(requestURLs)
+
+      satellites = satellites
+        .map((request) => request.data)
+        .flat()
+        .concat(firstPage.data)
+      // console.log(satellites)
+
+      // Organize Satellite Data
       let items = {}
       let visibleItems = []
       let countries = new Set()
@@ -144,7 +165,9 @@ export const actions = {
        */
 
       satellites = satellites
-        .filter((el) => el.status === 'publish')
+        .filter((el) => {
+          return el && el.status === 'publish'
+        })
         .map(({ id, ag_meta, acf }) => ({
           post_id: id,
           catalog_id: acf.catalog_id,
@@ -221,11 +244,11 @@ export const actions = {
         endDate.getSeconds() + state.selectedTimescale.value - 1
       ) // minus 1 second so we don't get n + 1 days
 
-      let orbits = await fetch(
-        `${siteURL}/wp-json/satdash/v1/satellites/orbits/?startDate=${getDateForApi(
+      let orbits = await this.$axios.$get(
+        `/wp-json/satdash/v1/satellites/orbits/?startDate=${getDateForApi(
           state.targetDate
         )}&endDate=${getDateForApi(endDate)}`
-      ).then((res) => res.json())
+      )
 
       if (Array.isArray(orbits)) {
         return
@@ -239,6 +262,17 @@ export const actions = {
       console.log(err)
     }
   }
+}
+
+async function fetchAll(urls) {
+  return Promise.all(
+    urls.map((url) =>
+      fetch(url)
+        .then((r) => r.json())
+        .then((data) => ({ data, url }))
+        .catch((error) => ({ error, url }))
+    )
+  )
 }
 
 function formatCountries(value) {
