@@ -46,23 +46,24 @@
       ></section>
       <!-- eslint-enable-->
       <section class="post__further">
-        <template v-if="post.footnote">
-          <ol class="analysis__notes">
-            <template v-for="(note, index) in footNote">
-              <li
-                :key="index"
-                class="analysis__further-footnote"
-                v-html="note"
-              ></li>
-            </template>
-          </ol>
-        </template>
+        <ol v-if="post.footnotes" class="post__further-notes">
+          <li
+            v-for="(note, index) in footnotes"
+            :key="index"
+            class="post__further-footnote"
+            v-html="note"
+          ></li>
+        </ol>
         <template v-if="post.acf.further_reading">
           <h2 class="post__further-header">
             Further Reading
           </h2>
-          <template v-for="reading in post.acf.further_reading">
-            <div :key="reading.url" class="post__further-article">
+          <ul role="list">
+            <li
+              v-for="reading in post.acf.further_reading"
+              :key="reading.url"
+              class="post__further-article"
+            >
               <a :href="reading.url" class="post__further-link">
                 {{ reading.publication_name }}
                 <span class="post__further-source">{{
@@ -72,8 +73,8 @@
               <a :href="reading.url" class="post__further-circle">
                 <Icon class="post__further-icon" name="external-link" />
               </a>
-            </div>
-          </template>
+            </li>
+          </ul>
         </template>
       </section>
       <footer class="post__footer">
@@ -129,11 +130,13 @@ export default {
     post() {
       return this.posts.find((el) => el.slug === this.slug)
     },
-    footNote() {
-      let footNote = this.post.footnote.filter((item) =>
+    footnotes() {
+      let footnotes = this.post.footnotes.filter((item) =>
         item.match(/<span\s(?:class='easy-footnote')>(.*)<\/span>/)
       )
-      return footNote.map((item) => decode(item.match(/title=['"](.*)['"]/)[1]))
+      return footnotes.map((item) =>
+        decode(item.match(/title=['"](.*)['"]/)[1])
+      )
     },
     postContent() {
       return `${this.post.content.rendered}<div class="clearfix"></div>`

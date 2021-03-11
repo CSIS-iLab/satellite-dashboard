@@ -75,7 +75,7 @@ export const actions = {
             categories,
             country,
             user,
-            footnote: content.rendered.match(regex)
+            footnotes: content.rendered.match(regex)
           })
         )
 

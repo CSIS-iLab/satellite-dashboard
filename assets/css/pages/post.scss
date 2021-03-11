@@ -186,11 +186,16 @@
       }
     }
 
-    &-footnote {
-      @extend %font-post-text-footnote-list;
+    &-notes {
+      margin: 0 auto rem(32) auto;
       padding: rem(64) 0 rem(56) 0;
-      color: $color-black-160;
       border-bottom: rem(1px) solid $color-black-120;
+    }
+
+    &-footnote {
+      margin-top: rem(10);
+      @extend %font-post-text-footnote-list;
+      color: $color-black-160;
     }
 
     &-header {
@@ -247,6 +252,10 @@
       background-color: $color-ltblue-130;
       border: hidden;
       border-color: $color-ltblue-130;
+    }
+
+    ul {
+      padding: 0;
     }
   }
 
