@@ -280,7 +280,7 @@ export default {
 
         const orbit = this.compileOrbits(orbits, epjd)
 
-        const status = this.satellites[catalog_id].Status
+        const { Name, Status } = this.satellites[catalog_id]
 
         viewer.entities.add({
           id: catalog_id,
@@ -298,13 +298,28 @@ export default {
           position: orbit,
           point: {
             pixelSize: 6,
-            color: entityColors[status].point
+            color: entityColors[Status].point
           },
           path: {
             resolution: 400,
-            material: entityColors[status].path,
+            material: entityColors[Status].path,
             width: 4,
             show: false
+          },
+          label: {
+            id: catalog_id,
+            text: Name,
+            font: '12px sans-serif',
+            fillColor: new Cesium.Color(1, 1, 1, 0.6),
+            backgroundColor: new Cesium.Color.fromCssColorString(
+              'rgba(22, 25, 28, 0.95)'
+            ),
+            backgroundPadding: new Cesium.Cartesian2(8, 8),
+            showBackground: true,
+            show: false,
+            horizontalOrigin: Cesium.HorizontalOrigin.LEFT,
+            verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+            pixelOffset: new Cesium.Cartesian2(4, -8)
           }
         })
       })
