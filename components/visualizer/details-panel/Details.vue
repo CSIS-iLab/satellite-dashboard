@@ -177,7 +177,7 @@ export default {
           },
           { value: 'Ecc', label: 'Eccentricity', tooltip: 'eccentricity' },
           { value: 'Inc', label: 'Inclination', tooltip: 'inclination-2' },
-          // { value: 'Longitude', label: 'Longitude', tooltip: 'longitude },
+          { value: 'Longitude', label: 'Longitude', tooltip: 'longitude' },
           {
             value: 'MeanMotion',
             label: 'Mean Motion (&deg/s)',
@@ -285,6 +285,8 @@ export default {
           1
         )} km/s`
 
+      const Longitude = this.orbitalElements.Longitude.label
+
       const Epoch = this.formatDate(this.orbitalElements.Epoch)
 
       const Source = this.satelliteAllOrbits[0].source.name
@@ -295,7 +297,7 @@ export default {
         Perigee,
         Ecc,
         Inc,
-        Longitude: null,
+        Longitude,
         MeanMotion,
         OrbitalPeriod: OrbitalPeriodDisplay,
         OrbitalSpeed,
