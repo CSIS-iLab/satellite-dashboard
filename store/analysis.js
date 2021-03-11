@@ -76,7 +76,7 @@ export const actions = {
               categories,
               country,
               user,
-              footnotes: formatFootnotes(content.rendered)
+              footnotes: formatFootnotes(content.rendered),
               satellites: getSatellites(acf),
               searchable: searchableContent(title, content)
             }
