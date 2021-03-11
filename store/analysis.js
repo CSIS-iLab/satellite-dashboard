@@ -1,4 +1,7 @@
+import { decode } from 'html-entities'
+
 const siteURL = 'https://satdash.wpengine.com'
+
 // eslint-disable-next-line no-useless-escape
 const regex = /<span[^>]*>(.*?)<\/span>/gm
 export const state = () => ({
@@ -75,7 +78,7 @@ export const actions = {
             categories,
             country,
             user,
-            footnotes: content.rendered.match(regex)
+            footnotes: formatFootnotes(content.rendered)
           })
         )
 
@@ -176,4 +179,19 @@ export const actions = {
       console.log(err)
     }
   }
+}
+
+function formatFootnotes(content) {
+  // eslint-disable-next-line no-useless-escape
+  const regex = /<span[^>]*>(.*?)<\/span>/gm
+  const footnotes = content.match(regex)
+  let formattedFootnotes = null
+  if (footnotes && footnotes.length) {
+    formattedFootnotes = footnotes
+      .filter((item) =>
+        item.match(/<span\s(?:class='easy-footnote')>(.*)<\/span>/)
+      )
+      .map((item) => decode(item.match(/title=['"](.*)['"]/)[1]))
+  }
+  return formattedFootnotes
 }

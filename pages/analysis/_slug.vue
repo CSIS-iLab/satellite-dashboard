@@ -48,7 +48,7 @@
       <section class="post__further">
         <ol v-if="post.footnotes" class="post__further-notes">
           <li
-            v-for="(note, index) in footnotes"
+            v-for="(note, index) in post.footnotes"
             :key="index"
             class="post__further-footnote"
             v-html="note"
@@ -113,7 +113,6 @@ import { mapState } from 'vuex'
 import PostMeta from '~/components/global/PostMeta.vue'
 import PostCategories from '~/components/global/PostCategories.vue'
 import Icon from '~/components/global/Icon.vue'
-import { decode } from 'html-entities'
 
 export default {
   components: {
@@ -129,14 +128,6 @@ export default {
   computed: {
     post() {
       return this.posts.find((el) => el.slug === this.slug)
-    },
-    footnotes() {
-      let footnotes = this.post.footnotes.filter((item) =>
-        item.match(/<span\s(?:class='easy-footnote')>(.*)<\/span>/)
-      )
-      return footnotes.map((item) =>
-        decode(item.match(/title=['"](.*)['"]/)[1])
-      )
     },
     postContent() {
       return `${this.post.content.rendered}<div class="clearfix"></div>`
