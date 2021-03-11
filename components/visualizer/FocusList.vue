@@ -9,13 +9,6 @@
     <ul class="focus-list__options" role="list">
       <li>
         <Toggle
-          id="hide_unlisted"
-          v-model="hideUnlisted"
-          label="Hide unlisted objects"
-        />
-      </li>
-      <li>
-        <Toggle
           id="hide_object_labels"
           v-model="hideObjectLabels"
           label="Hide object labels"
@@ -127,14 +120,6 @@ export default {
     })
   },
   watch: {
-    hideUnlisted: function(val, oldVal) {
-      if (val) {
-        console.log('hide anything not in the focus list')
-        return
-      }
-
-      console.log('show everything')
-    },
     hideObjectLabels: function(val, oldVal) {
       if (val) {
         console.log('hide anything not in the focus list')

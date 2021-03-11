@@ -176,6 +176,7 @@ export default {
 
         if (!entity) {
           viewer.trackedEntity = undefined
+          this.zoomReset()
           return
         }
 
