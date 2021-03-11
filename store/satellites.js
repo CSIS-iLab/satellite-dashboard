@@ -237,7 +237,12 @@ export const actions = {
   /**
    * Pulls Satellite Orbit Information from WordPress database. Pulls based on given date range.
    */
-  async getOrbits({ state, commit }) {
+  async getOrbits({ state, commit }, payload) {
+    if (payload && payload.timestamp) {
+      const date = new Date(payload.timestamp * 1000)
+      commit('updateTargetDate', date)
+    }
+
     try {
       const endDate = new Date(state.targetDate)
       endDate.setSeconds(
