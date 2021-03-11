@@ -25,6 +25,7 @@
       :fullscreen-button="fullscreenButton"
       :info-box="infoBox"
       :camera="camera"
+      :selection-indicator="selectionIndicator"
       @ready="ready"
     >
       <!-- <vc-layer-imagery
@@ -100,6 +101,7 @@ export default {
       SimStop: null,
       showSunlight: true,
       satellitesHaveLoaded: false,
+      selectionIndicator: false,
       defaultZoomAmount: 15000000,
       defaultPosition: {
         lng: -80,
@@ -169,6 +171,7 @@ export default {
         const entities = viewer.entities.values
         entities.forEach((e) => {
           e.path.show = false
+          e.label.show = false
         })
 
         if (!entity) {
@@ -176,6 +179,7 @@ export default {
           return
         }
 
+        entity.label.show = true
         entity.path.show = true
         viewer.trackedEntity = entity
         const entityPosition = viewer.scene.mapProjection.ellipsoid.cartesianToCartographic(
