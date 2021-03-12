@@ -101,7 +101,7 @@ export default {
       SimStop: null,
       showSunlight: true,
       satellitesHaveLoaded: false,
-      selectionIndicator: false,
+      selectionIndicator: true,
       defaultZoomAmount: 15000000,
       defaultPosition: {
         lng: -80,
@@ -180,7 +180,9 @@ export default {
           return
         }
 
-        entity.label.show = true
+        // Update selection indicator to show entity name.
+        viewer.selectionIndicator.viewModel.selectionIndicatorElement.innerHTML = `${entity.name}`
+
         entity.path.show = true
         viewer.trackedEntity = entity
         const entityPosition = viewer.scene.mapProjection.ellipsoid.cartesianToCartographic(
@@ -289,7 +291,7 @@ export default {
 
         viewer.entities.add({
           id: catalog_id,
-          // name: `${catalog_id}: ${name}`,
+          name: Name,
           availability: new Cesium.TimeIntervalCollection([
             new Cesium.TimeInterval({
               start: this.SimStart,
@@ -310,21 +312,6 @@ export default {
             material: entityColors[Status].path,
             width: 4,
             show: false
-          },
-          label: {
-            id: catalog_id,
-            text: Name,
-            font: '12px sans-serif',
-            fillColor: new Cesium.Color(1, 1, 1, 0.6),
-            backgroundColor: new Cesium.Color.fromCssColorString(
-              'rgba(22, 25, 28, 0.95)'
-            ),
-            backgroundPadding: new Cesium.Cartesian2(8, 8),
-            showBackground: true,
-            show: false,
-            horizontalOrigin: Cesium.HorizontalOrigin.LEFT,
-            verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
-            pixelOffset: new Cesium.Cartesian2(4, -8)
           }
         })
       })

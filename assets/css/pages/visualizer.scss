@@ -88,3 +88,13 @@
     }
   }
 }
+
+.cesium-viewer-selectionIndicatorContainer .cesium-selection-wrapper {
+  width: unset;
+  height: unset;
+  padding: rem(8);
+  @extend %font-ui-text-sm-oxygen;
+  color: $color-white-160;
+  background: $color-slate-695;
+  @include shadow('xsm');
+}
