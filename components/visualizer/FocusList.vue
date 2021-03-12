@@ -109,6 +109,9 @@ export default {
       hideObjectLabels: false
     }
   },
+  mounted() {
+    this.handleQueryString()
+  },
   computed: {
     focusedItems() {
       return new Set(this.focusedSatellites)
@@ -152,7 +155,7 @@ export default {
       this.updateVisibleSatellites(visibleSatellites)
       /*}*/
     },
-    '$route.query': 'handleQueryString'
+    '$route.query.satids': 'handleQueryString'
   },
   methods: {
     editFocusList() {

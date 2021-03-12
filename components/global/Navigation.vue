@@ -11,9 +11,22 @@
         <nuxt-link :to="item.url">{{ item.title }}</nuxt-link>
       </li>
       <li>
-        <nuxt-link :to="'?satids=41543,28629&date=2021-03-02&time=13'">
+        <nuxt-link
+          :to="'?satids=41543,28629&date=2021-03-02&time=43200&timescale=day'"
+        >
           Test Q string
         </nuxt-link>
+      </li>
+      <li>
+        <nuxt-link
+          :to="
+            '?satids=11570,21052,16667&date=2021-02-28&time=86400&timescale=week'
+          "
+        >
+          Test Q string
+        </nuxt-link>
+      </li>
+      <li>
         <nuxt-link :to="'/'"> clear Q string </nuxt-link>
       </li>
     </ul>

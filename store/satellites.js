@@ -15,14 +15,17 @@ const oneMonth = oneWeek * 4
 
 const timescales = [
   {
+    id: 'day',
     label: 'Day',
     value: oneDay
   },
   {
+    id: 'week',
     label: 'Week',
     value: oneWeek
   },
   {
+    id: 'month',
     label: 'Month',
     value: oneMonth
   }
@@ -237,7 +240,11 @@ export const actions = {
   /**
    * Pulls Satellite Orbit Information from WordPress database. Pulls based on given date range.
    */
-  async getOrbits({ state, commit }) {
+  async getOrbits({ state, commit }, payload) {
+    if (payload && payload.date) {
+      const date = new Date(payload.date)
+      commit('updateTargetDate', date)
+    }
     try {
       const endDate = new Date(state.targetDate)
       endDate.setSeconds(

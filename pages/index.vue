@@ -61,7 +61,11 @@ export default {
     })
   },
   created() {
-    this.getOrbits()
+    if (this.$route.query.date) {
+      this.getOrbits({ date: this.$route.query.date })
+    } else {
+      this.getOrbits()
+    }
     this.loading = false
   },
   methods: {

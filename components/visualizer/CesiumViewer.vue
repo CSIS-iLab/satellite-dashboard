@@ -146,10 +146,13 @@ export default {
         return
       }
       if (this.$route.query.time) {
-        const hours = parseFloat(this.$route.query.time)
+        const seconds = parseInt(this.$route.query.time)
+        if (isNaN(seconds)) {
+          viewer.clock.currentTime = this.SimStart
+        }
         viewer.clock.currentTime = Cesium.JulianDate.addSeconds(
           this.SimStart,
-          hours * 60 * 60,
+          seconds,
           new Cesium.JulianDate()
         )
       } else {
@@ -266,17 +269,6 @@ export default {
         timeline.zoomTo(this.SimStart, this.SimStop)
       })
       this.handleTimeQuery()
-      //viewer.clock.currentTime = this.SimStart
-      /*if (this.$route.query.time) {
-        const hours = parseFloat(this.$route.query.time)
-        viewer.clock.currentTime = Cesium.JulianDate.addSeconds(
-          this.SimStart,
-          hours * 60 * 60,
-          new Cesium.JulianDate()
-        )
-      } else {
-        viewer.clock.currentTime = this.SimStart
-      }*/
       // Set up the current time and then load in the satellite objects.
       Cesium.Transforms.preloadIcrfFixed(
         new Cesium.TimeInterval({
@@ -545,10 +537,17 @@ export default {
       }
     },
     toggleObjectVisibility() {
+      if (!viewer) {
+        return
+      }
       const entities = viewer.entities.values
       entities.forEach((entity) => {
         entity.show = this.visibleSatellites.includes(entity.id)
       })
+      if (this.visibleSatellites.length > entities.length) {
+        // we need to restore the lost entities
+        this.displayObjects(Cesium, viewer)
+      }
     },
     toggleSunlight() {
       this.showSunlight = !this.showSunlight
