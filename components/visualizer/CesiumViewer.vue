@@ -101,7 +101,7 @@ export default {
       SimStop: null,
       showSunlight: true,
       satellitesHaveLoaded: false,
-      selectionIndicator: true,
+      selectionIndicator: false,
       defaultZoomAmount: 15000000,
       defaultPosition: {
         lng: -80,
@@ -159,31 +159,89 @@ export default {
       globe.nightFadeOutDistance = 1000000
       globe.nightFadeInDistance = 8000000
 
-      // scene.skyBox = new Cesium.SkyBox({
-      //   show: false
-      // })
-
       viewer.camera.defaultZoomAmount = this.defaultZoomAmount
 
       viewer.clock.clockRange = Cesium.ClockRange.CLAMP
 
-      viewer.selectedEntityChanged.addEventListener((entity) => {
-        const entities = viewer.entities.values
-        entities.forEach((e) => {
-          e.path.show = false
-          e.label.show = false
+      var scratch3dPosition = new Cesium.Cartesian3()
+      var scratch2dPosition = new Cesium.Cartesian2()
+      var isEntityVisible = true
+
+      // Create a sample HTML element in the document.
+      let entityLabel = document.createElement('div')
+      entityLabel.classList.add('cesium__entity-label')
+
+      let highlightedEntities = []
+
+      // Every animation frame, update the HTML element position from the entity.
+      viewer.clock.onTick.addEventListener(function(clock) {
+        var position3d
+        var position2d
+
+        highlightedEntities.forEach((entity) => {
+          let label
+          // Not all entities have a position, need to check.
+          if (entity && entity.position) {
+            position3d = entity.position.getValue(
+              clock.currentTime,
+              scratch3dPosition
+            )
+            label = document.getElementById(`entity-${entity.id}`)
+          }
+
+          // Moving entities don't have a position for every possible time, need to check.
+          if (position3d) {
+            position2d = Cesium.SceneTransforms.wgs84ToWindowCoordinates(
+              viewer.scene,
+              position3d,
+              scratch2dPosition
+            )
+          }
+
+          // Having a position doesn't guarantee it's on screen, need to check.
+          if (position2d) {
+            // Set the HTML position to match the entity's position.
+            label.style.left = position2d.x + 'px'
+            label.style.top = position2d.y + 'px'
+
+            // Reveal HTML when entity comes on screen
+            if (!isEntityVisible) {
+              isEntityVisible = true
+              label.style.display = 'block'
+            }
+          } else if (isEntityVisible) {
+            // Hide HTML when entity goes off screen or loses its position.
+            isEntityVisible = false
+            label.style.display = 'none'
+          }
         })
+      })
 
-        if (!entity) {
-          viewer.trackedEntity = undefined
-          this.zoomReset()
-          return
+      // If the mouse is over the billboard, change its scale and color
+      function selectEntity(event) {
+        const picked = viewer.scene.pick(event.position)
+        if (Cesium.defined(picked)) {
+          const entity = Cesium.defaultValue(picked.id, picked.primitive.id)
+          if (entity instanceof Cesium.Entity) {
+            // TODO: remove from highlighted if the user clicks on it again
+            highlightedEntities.push(entity)
+            viewer.selectedEntity = entity
+            entity.path.show = true
+
+            let label = entityLabel.cloneNode()
+            label.id = `entity-${entity.id}`
+            label.innerHTML = entity.name
+            viewer.container.appendChild(label)
+          }
         }
+      }
 
-        // Update selection indicator to show entity name.
-        viewer.selectionIndicator.viewModel.selectionIndicatorElement.innerHTML = `${entity.name}`
+      viewer.cesiumWidget.screenSpaceEventHandler.setInputAction(
+        selectEntity,
+        Cesium.ScreenSpaceEventType.LEFT_CLICK
+      )
 
-        entity.path.show = true
+      viewer.selectedEntityChanged.addEventListener((entity) => {
         viewer.trackedEntity = entity
         const entityPosition = viewer.scene.mapProjection.ellipsoid.cartesianToCartographic(
           entity.position.getValue(viewer.clock.currentTime)
