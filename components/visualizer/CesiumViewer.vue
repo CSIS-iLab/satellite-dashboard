@@ -168,6 +168,10 @@ export default {
       var isEntityVisible = true
 
       // Create a sample HTML element in the document.
+      let labelContainer = document.createElement('div')
+      labelContainer.classList.add('cesium__entity-label-container')
+      viewer.container.appendChild(labelContainer)
+
       let entityLabel = document.createElement('div')
       entityLabel.classList.add('cesium__entity-label')
 
@@ -233,8 +237,6 @@ export default {
               // Update highlightedEntries & add label when the selectedEntity changes to make behavior consistent across viewer & buttons on panels.
               viewer.selectedEntity = entity
             }
-
-            console.log(highlightedEntities)
           }
         }
       }
@@ -245,8 +247,6 @@ export default {
       )
 
       viewer.selectedEntityChanged.addEventListener((entity) => {
-        console.log(entity)
-
         if (!entity) {
           return
         }
@@ -257,7 +257,7 @@ export default {
         let label = entityLabel.cloneNode()
         label.id = `entity-${entity.id}`
         label.innerHTML = entity.name
-        viewer.container.appendChild(label)
+        labelContainer.appendChild(label)
 
         viewer.trackedEntity = entity
         const entityPosition = viewer.scene.mapProjection.ellipsoid.cartesianToCartographic(

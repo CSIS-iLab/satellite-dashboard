@@ -112,6 +112,9 @@ export default {
     numSelectedItems() {
       return this.selectedItems.length
     },
+    objectLabels() {
+      return document.querySelector('.cesium__entity-label-container')
+    },
     ...mapState({
       focusedSatellites: (state) => state.satellites.focusedSatellites
     }),
@@ -120,13 +123,8 @@ export default {
     })
   },
   watch: {
-    hideObjectLabels: function(val, oldVal) {
-      if (val) {
-        console.log('hide anything not in the focus list')
-        return
-      }
-
-      console.log('show everything')
+    hideObjectLabels: function(val) {
+      this.objectLabels.classList.toggle('is-hidden', val)
     },
     focusedItems: function(val, oldVal) {
       if (this.isOpen) {

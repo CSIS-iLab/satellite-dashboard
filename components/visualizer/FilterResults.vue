@@ -164,14 +164,7 @@ export default {
         return
       }
 
-      if (viewer.selectedEntity == entity || viewer.trackedEntity == entity) {
-        viewer.selectedEntity = null
-        //viewer.trackedEntity = null
-        return
-      }
-
       viewer.selectedEntity = entity
-      //viewer.trackedEntity = entity
     },
     checkItemFocusedState(catalog_id) {
       return this.focusedItems.has(catalog_id)
