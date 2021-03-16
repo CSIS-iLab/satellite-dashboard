@@ -91,6 +91,8 @@
 
 .cesium__entity-label {
   position: absolute;
+  top: 0;
+  left: 0;
   padding: rem(8);
   @extend %font-ui-text-sm-oxygen;
   color: $color-white-160;

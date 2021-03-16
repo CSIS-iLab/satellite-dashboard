@@ -201,8 +201,7 @@ export default {
           // Having a position doesn't guarantee it's on screen, need to check.
           if (position2d) {
             // Set the HTML position to match the entity's position.
-            label.style.left = position2d.x + 'px'
-            label.style.top = position2d.y + 'px'
+            label.style.transform = `translate(${position2d.x}px, ${position2d.y}px)`
 
             // Reveal HTML when entity comes on screen
             if (!isEntityVisible) {
