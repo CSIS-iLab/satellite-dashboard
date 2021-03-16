@@ -223,20 +223,18 @@ export default {
           const entity = Cesium.defaultValue(picked.id, picked.primitive.id)
           if (entity instanceof Cesium.Entity) {
             if (highlightedEntities.has(entity)) {
+              viewer.selectedEntity = false
+              viewer.trackedEntity = false
+
               highlightedEntities.delete(entity)
-              viewer.selectEntity = false
               entity.path.show = false
               document.getElementById(`entity-${entity.id}`).remove()
             } else {
-              highlightedEntities.add(entity)
+              // Update highlightedEntries & add label when the selectedEntity changes to make behavior consistent across viewer & buttons on panels.
               viewer.selectedEntity = entity
-              entity.path.show = true
-
-              let label = entityLabel.cloneNode()
-              label.id = `entity-${entity.id}`
-              label.innerHTML = entity.name
-              viewer.container.appendChild(label)
             }
+
+            console.log(highlightedEntities)
           }
         }
       }
@@ -247,9 +245,19 @@ export default {
       )
 
       viewer.selectedEntityChanged.addEventListener((entity) => {
+        console.log(entity)
+
         if (!entity) {
           return
         }
+
+        highlightedEntities.add(entity)
+        entity.path.show = true
+
+        let label = entityLabel.cloneNode()
+        label.id = `entity-${entity.id}`
+        label.innerHTML = entity.name
+        viewer.container.appendChild(label)
 
         viewer.trackedEntity = entity
         const entityPosition = viewer.scene.mapProjection.ellipsoid.cartesianToCartographic(
