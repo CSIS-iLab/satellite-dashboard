@@ -146,9 +146,9 @@ export default {
         return
       }
       if (this.$route.query.time) {
-        const seconds = parseInt(this.$route.query.time)
+        let seconds = parseInt(this.$route.query.time)
         if (isNaN(seconds)) {
-          viewer.clock.currentTime = this.SimStart
+          seconds = 0
         }
         viewer.clock.currentTime = Cesium.JulianDate.addSeconds(
           this.SimStart,
