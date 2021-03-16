@@ -171,7 +171,7 @@ export default {
       let entityLabel = document.createElement('div')
       entityLabel.classList.add('cesium__entity-label')
 
-      let highlightedEntities = []
+      let highlightedEntities = new Set()
 
       // Every animation frame, update the HTML element position from the entity.
       viewer.clock.onTick.addEventListener(function(clock) {
@@ -216,21 +216,27 @@ export default {
         })
       })
 
-      // If the mouse is over the billboard, change its scale and color
+      // Toggle an entity's path & label if we click on it.
       function selectEntity(event) {
         const picked = viewer.scene.pick(event.position)
         if (Cesium.defined(picked)) {
           const entity = Cesium.defaultValue(picked.id, picked.primitive.id)
           if (entity instanceof Cesium.Entity) {
-            // TODO: remove from highlighted if the user clicks on it again
-            highlightedEntities.push(entity)
-            viewer.selectedEntity = entity
-            entity.path.show = true
+            if (highlightedEntities.has(entity)) {
+              highlightedEntities.delete(entity)
+              viewer.selectEntity = false
+              entity.path.show = false
+              document.getElementById(`entity-${entity.id}`).remove()
+            } else {
+              highlightedEntities.add(entity)
+              viewer.selectedEntity = entity
+              entity.path.show = true
 
-            let label = entityLabel.cloneNode()
-            label.id = `entity-${entity.id}`
-            label.innerHTML = entity.name
-            viewer.container.appendChild(label)
+              let label = entityLabel.cloneNode()
+              label.id = `entity-${entity.id}`
+              label.innerHTML = entity.name
+              viewer.container.appendChild(label)
+            }
           }
         }
       }
@@ -241,6 +247,10 @@ export default {
       )
 
       viewer.selectedEntityChanged.addEventListener((entity) => {
+        if (!entity) {
+          return
+        }
+
         viewer.trackedEntity = entity
         const entityPosition = viewer.scene.mapProjection.ellipsoid.cartesianToCartographic(
           entity.position.getValue(viewer.clock.currentTime)
