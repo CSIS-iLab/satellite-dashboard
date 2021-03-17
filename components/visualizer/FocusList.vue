@@ -144,10 +144,18 @@ export default {
       console.log('show everything')
     },
     focusedItems: function(val, oldVal) {
-      if (this.isOpen) {
-        this.updateVisibleSatellites([...this.focusedSatellites])
-      }
-    }
+      /*if (this.isOpen) {*/
+      const visibleSatellites =
+        this.focusedSatellites.size > 0
+          ? [...this.focusedSatellites]
+          : Object.keys(this.$store.state.satellites.satellites)
+      this.updateVisibleSatellites(visibleSatellites)
+      /*}*/
+    },
+    '$route.query.satids': 'handleQueryString'
+  },
+  mounted() {
+    this.handleQueryString()
   },
   methods: {
     editFocusList() {
@@ -156,6 +164,12 @@ export default {
     cancelEditing() {
       this.isEditable = false
       this.selectedItems = []
+    },
+    handleQueryString() {
+      const satIds = this.$route.query.satids
+        ? new Set(this.$route.query.satids.split(','))
+        : new Set([])
+      this.updateFocusedSatellites(satIds)
     },
     removeFromFocused() {
       let newFocusedItems = new Set(this.focusedSatellites)

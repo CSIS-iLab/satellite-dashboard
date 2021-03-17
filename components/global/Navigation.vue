@@ -1,8 +1,6 @@
 <template>
   <div class="nav" :class="parentClass">
-    <h2 v-if="parentClass == 'nav--footer'">
-      Navigate
-    </h2>
+    <h2 v-if="parentClass == 'nav--footer'">Navigate</h2>
     <ul class="nav__list" role="list">
       <li
         v-for="item in items"

@@ -170,6 +170,9 @@ export default {
       return this.timelinePoint.toLocaleDateString('en-US', this.dateOptions)
     }
   },
+  watch: {
+    '$route.query.date': 'handleDateQuery'
+  },
   mounted() {
     cesiumService.getInstance().then((cesiumInstance) => {
       cesium = cesiumInstance
@@ -219,6 +222,23 @@ export default {
     })
   },
   methods: {
+    handleDateQuery() {
+      const { date, timescale } = this.$route.query
+      if (!date) {
+        return
+      }
+      const selectedDate = new Date(date)
+      if (isNaN(selectedDate.valueOf())) {
+        return
+      }
+      const selectedTimescale = this.timescales.find((t) => t.id === timescale)
+      if (!selectedTimescale) {
+        this.selectNewDate(selectedDate)
+        return
+      }
+      this.chosenTimescale = timescale
+      this.selectNewDateAndTimescale(selectedDate, selectedTimescale)
+    },
     beforeViewerDestroy() {
       const { cesiumInstance } = cesiumService
       const { viewer } = cesiumInstance
@@ -230,8 +250,17 @@ export default {
     },
     stopPlayback() {
       this.isPlaying = false
+      if (!cesium) {
+        return
+      }
       const { viewer } = cesium
       viewer.clockViewModel.shouldAnimate = false
+    },
+    selectNewDateAndTimescale(date, timescale) {
+      this.stopPlayback()
+      this.updateSelectedTimescale(timescale)
+      this.updateTargetDate(date)
+      this.getOrbits()
     },
     selectNewDate(date) {
       this.stopPlayback()

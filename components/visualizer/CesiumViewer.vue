@@ -127,7 +127,8 @@ export default {
   },
   watch: {
     satelliteOrbits: 'processNewData',
-    visibleSatellites: 'toggleObjectVisibility'
+    visibleSatellites: 'toggleObjectVisibility',
+    '$route.query.time': 'handleTimeQuery'
   },
   beforeDestroy() {
     Cesium = null
@@ -140,6 +141,24 @@ export default {
     })
   },
   methods: {
+    handleTimeQuery() {
+      if (!viewer || !Cesium) {
+        return
+      }
+      if (this.$route.query.time) {
+        let seconds = parseInt(this.$route.query.time)
+        if (isNaN(seconds)) {
+          seconds = 0
+        }
+        viewer.clock.currentTime = Cesium.JulianDate.addSeconds(
+          this.SimStart,
+          seconds,
+          new Cesium.JulianDate()
+        )
+      } else {
+        viewer.clock.currentTime = this.SimStart
+      }
+    },
     ready(cesiumInstance) {
       console.log('is ready')
       // Set up the Cesium Viewer
@@ -249,7 +268,7 @@ export default {
       cesiumService.getTimeline().then((timeline) => {
         timeline.zoomTo(this.SimStart, this.SimStop)
       })
-      viewer.clock.currentTime = this.SimStart
+      this.handleTimeQuery()
       // Set up the current time and then load in the satellite objects.
       Cesium.Transforms.preloadIcrfFixed(
         new Cesium.TimeInterval({
@@ -518,10 +537,17 @@ export default {
       }
     },
     toggleObjectVisibility() {
+      if (!viewer) {
+        return
+      }
       const entities = viewer.entities.values
       entities.forEach((entity) => {
         entity.show = this.visibleSatellites.includes(entity.id)
       })
+      if (this.visibleSatellites.length > entities.length) {
+        // we need to restore the lost entities
+        this.displayObjects(Cesium, viewer)
+      }
     },
     toggleSunlight() {
       this.showSunlight = !this.showSunlight
