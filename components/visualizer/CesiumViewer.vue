@@ -25,6 +25,7 @@
       :fullscreen-button="fullscreenButton"
       :info-box="infoBox"
       :camera="camera"
+      :selection-indicator="selectionIndicator"
       @ready="ready"
     >
       <!-- <vc-layer-imagery
@@ -100,6 +101,7 @@ export default {
       SimStop: null,
       showSunlight: true,
       satellitesHaveLoaded: false,
+      selectionIndicator: false,
       defaultZoomAmount: 15000000,
       defaultPosition: {
         lng: -80,
@@ -176,26 +178,106 @@ export default {
       globe.nightFadeOutDistance = 1000000
       globe.nightFadeInDistance = 8000000
 
-      // scene.skyBox = new Cesium.SkyBox({
-      //   show: false
-      // })
-
       viewer.camera.defaultZoomAmount = this.defaultZoomAmount
 
       viewer.clock.clockRange = Cesium.ClockRange.CLAMP
 
-      viewer.selectedEntityChanged.addEventListener((entity) => {
-        const entities = viewer.entities.values
-        entities.forEach((e) => {
-          e.path.show = false
-        })
+      let scratch3dPosition = new Cesium.Cartesian3()
+      let scratch2dPosition = new Cesium.Cartesian2()
+      let isEntityVisible = true
 
+      // Create a sample HTML element in the document.
+      let labelContainer = document.createElement('div')
+      labelContainer.classList.add('cesium__entity-label-container')
+      viewer.container.appendChild(labelContainer)
+
+      let entityLabel = document.createElement('div')
+      entityLabel.classList.add('cesium__entity-label')
+
+      let highlightedEntities = new Set()
+
+      // Every animation frame, update the HTML element position from the entity.
+      viewer.clock.onTick.addEventListener(function(clock) {
+        let position3d
+        let position2d
+
+        highlightedEntities.forEach((entity) => {
+          let label
+          // Not all entities have a position, need to check.
+          if (entity && entity.position) {
+            position3d = entity.position.getValue(
+              clock.currentTime,
+              scratch3dPosition
+            )
+            label = document.getElementById(`entity-${entity.id}`)
+          }
+
+          // Moving entities don't have a position for every possible time, need to check.
+          if (position3d) {
+            position2d = Cesium.SceneTransforms.wgs84ToWindowCoordinates(
+              viewer.scene,
+              position3d,
+              scratch2dPosition
+            )
+          }
+
+          // Having a position doesn't guarantee it's on screen, need to check.
+          if (position2d) {
+            // Set the HTML position to match the entity's position.
+            label.style.transform = `translate(${position2d.x}px, ${position2d.y}px)`
+
+            // Reveal HTML when entity comes on screen
+            if (!isEntityVisible) {
+              isEntityVisible = true
+              label.style.display = 'block'
+            }
+          } else if (isEntityVisible) {
+            // Hide HTML when entity goes off screen or loses its position.
+            isEntityVisible = false
+            label.style.display = 'none'
+          }
+        })
+      })
+
+      // Toggle an entity's path & label if we click on it.
+      function selectEntity(event) {
+        const picked = viewer.scene.pick(event.position)
+        if (Cesium.defined(picked)) {
+          const entity = Cesium.defaultValue(picked.id, picked.primitive.id)
+          if (entity instanceof Cesium.Entity) {
+            if (highlightedEntities.has(entity)) {
+              viewer.selectedEntity = false
+              viewer.trackedEntity = false
+
+              highlightedEntities.delete(entity)
+              entity.path.show = false
+              document.getElementById(`entity-${entity.id}`).remove()
+            } else {
+              // Update highlightedEntries & add label when the selectedEntity changes to make behavior consistent across viewer & buttons on panels.
+              viewer.selectedEntity = entity
+            }
+          }
+        }
+      }
+
+      viewer.cesiumWidget.screenSpaceEventHandler.setInputAction(
+        selectEntity,
+        Cesium.ScreenSpaceEventType.LEFT_CLICK
+      )
+
+      viewer.selectedEntityChanged.addEventListener((entity) => {
         if (!entity) {
-          viewer.trackedEntity = undefined
           return
         }
 
+        highlightedEntities.add(entity)
         entity.path.show = true
+
+        let label = entityLabel.cloneNode()
+        label.id = `entity-${entity.id}`
+        label.innerHTML = entity.name
+        labelContainer.appendChild(label)
+
         viewer.trackedEntity = entity
         const entityPosition = viewer.scene.mapProjection.ellipsoid.cartesianToCartographic(
           entity.position.getValue(viewer.clock.currentTime)
@@ -219,8 +301,8 @@ export default {
         }
         const icrfToFixed = Cesium.Transforms.computeIcrfToFixedMatrix(time)
         if (Cesium.defined(icrfToFixed)) {
-          var offset = Cesium.Cartesian3.clone(viewer.camera.position)
-          var transform = Cesium.Matrix4.fromRotationTranslation(icrfToFixed)
+          let offset = Cesium.Cartesian3.clone(viewer.camera.position)
+          let transform = Cesium.Matrix4.fromRotationTranslation(icrfToFixed)
           viewer.camera.lookAtTransform(transform, offset)
         }
       })
@@ -299,11 +381,11 @@ export default {
 
         const orbit = this.compileOrbits(orbits, epjd)
 
-        const status = this.satellites[catalog_id].Status
+        const { Name, Status } = this.satellites[catalog_id]
 
         viewer.entities.add({
           id: catalog_id,
-          // name: `${catalog_id}: ${name}`,
+          name: Name,
           availability: new Cesium.TimeIntervalCollection([
             new Cesium.TimeInterval({
               start: this.SimStart,
@@ -317,11 +399,11 @@ export default {
           position: orbit,
           point: {
             pixelSize: 6,
-            color: entityColors[status].point
+            color: entityColors[Status].point
           },
           path: {
             resolution: 400,
-            material: entityColors[status].path,
+            material: entityColors[Status].path,
             width: 4,
             show: false
           }

@@ -52,6 +52,15 @@
         margin: 0 0 0 auto;
         color: $color-white-140;
       }
+
+      &.btn--is-focused {
+        color: $color-orange-100;
+
+        /* stylelint-disable-next-line */
+        &:hover {
+          color: $color-white-100;
+        }
+      }
     }
   }
 

@@ -6,7 +6,11 @@
   >
     <header class="details-panel__header">
       <div class="details-panel__controls">
-        <Button class="btn--icon btn--zoom" :on-click="highlightOrbit">
+        <Button
+          class="btn--icon btn--zoom"
+          :class="{ 'btn--is-focused': isSatelliteTracked }"
+          :on-click="trackObject"
+        >
           <Icon id="target" name="target" />
         </Button>
         <Button class="btn--icon btn--pin" :on-click="toggleFocusState">
@@ -93,7 +97,8 @@ export default {
   },
   data() {
     return {
-      activeTab: 'details'
+      activeTab: 'details',
+      isTracked: true
     }
   },
   computed: {
@@ -103,9 +108,18 @@ export default {
     satelliteIsInFocused() {
       return this.focusedSatellites.has(this.id)
     },
+    isSatelliteTracked() {
+      return this.isTracked
+    },
     ...mapState({
       focusedSatellites: (state) => state.satellites.focusedSatellites
     })
+  },
+  watch: {
+    id() {
+      // If we're updating to a new satellite, update the tracked state.
+      this.isTracked = true
+    }
   },
   mounted() {
     cesiumService.getInstance().then((cesiumInstance) => {
@@ -113,7 +127,7 @@ export default {
     })
   },
   methods: {
-    highlightOrbit() {
+    trackObject() {
       const { viewer } = cesium
       const entity = viewer.entities.getById(this.id)
 
@@ -121,15 +135,13 @@ export default {
         return
       }
 
-      if (viewer.selectedEntity == entity || viewer.trackedEntity == entity) {
-        viewer.selectedEntity = undefined
-        //viewer.trackedEntity = undefined
-        entity.path.show = false
+      if (viewer.trackedEntity == entity) {
+        viewer.trackedEntity = false
+        this.isTracked = false
         return
       }
-
-      viewer.selectedEntity = entity
-      //viewer.trackedEntity = entity
+      viewer.trackedEntity = entity
+      this.isTracked = true
     },
     toggleFocusState() {
       let newFocusedItems = new Set(this.focusedSatellites)
@@ -143,7 +155,6 @@ export default {
       return this.updateFocusedSatellites(newFocusedItems)
     },
     closePanel() {
-      this.highlightOrbit()
       this.updateDetailedSatellite(null)
     },
     ...mapMutations({

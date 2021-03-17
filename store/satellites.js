@@ -113,7 +113,6 @@ export const mutations = {
     state.detailedSatellite = satellite
   },
   updateVisibleSatellites: (state, satellites) => {
-    console.log('update visible satellites')
     state.visibleSatellites = satellites
   },
   updateVisibleSatellitesType: (state, type) => {
