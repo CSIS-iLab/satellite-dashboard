@@ -109,7 +109,7 @@ export default {
       return this.focusedSatellites.has(this.id)
     },
     isSatelliteTracked() {
-      return this.isTracked ? this.isTracked : this.trackingEnabled
+      return this.isTracked
     },
     ...mapState({
       focusedSatellites: (state) => state.satellites.focusedSatellites

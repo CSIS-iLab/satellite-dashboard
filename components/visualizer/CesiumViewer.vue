@@ -163,9 +163,9 @@ export default {
 
       viewer.clock.clockRange = Cesium.ClockRange.CLAMP
 
-      var scratch3dPosition = new Cesium.Cartesian3()
-      var scratch2dPosition = new Cesium.Cartesian2()
-      var isEntityVisible = true
+      let scratch3dPosition = new Cesium.Cartesian3()
+      let scratch2dPosition = new Cesium.Cartesian2()
+      let isEntityVisible = true
 
       // Create a sample HTML element in the document.
       let labelContainer = document.createElement('div')
@@ -179,8 +179,8 @@ export default {
 
       // Every animation frame, update the HTML element position from the entity.
       viewer.clock.onTick.addEventListener(function(clock) {
-        var position3d
-        var position2d
+        let position3d
+        let position2d
 
         highlightedEntities.forEach((entity) => {
           let label
@@ -282,8 +282,8 @@ export default {
         }
         const icrfToFixed = Cesium.Transforms.computeIcrfToFixedMatrix(time)
         if (Cesium.defined(icrfToFixed)) {
-          var offset = Cesium.Cartesian3.clone(viewer.camera.position)
-          var transform = Cesium.Matrix4.fromRotationTranslation(icrfToFixed)
+          let offset = Cesium.Cartesian3.clone(viewer.camera.position)
+          let transform = Cesium.Matrix4.fromRotationTranslation(icrfToFixed)
           viewer.camera.lookAtTransform(transform, offset)
         }
       })
