@@ -240,16 +240,17 @@ export default {
       })
 
       // Toggle an entity's path & label if we click on it.
-      function selectEntity(event) {
+      const selectEntity = (event) => {
         const picked = viewer.scene.pick(event.position)
         if (Cesium.defined(picked)) {
           const entity = Cesium.defaultValue(picked.id, picked.primitive.id)
           if (entity instanceof Cesium.Entity) {
             if (highlightedEntities.has(entity)) {
-              viewer.selectedEntity = false
-              viewer.trackedEntity = false
-
+              viewer.selectedEntity = null
               highlightedEntities.delete(entity)
+              if (highlightedEntities.size === 0) {
+                this.zoomReset()
+              }
               entity.path.show = false
               document.getElementById(`entity-${entity.id}`).remove()
             } else {
@@ -257,6 +258,8 @@ export default {
               viewer.selectedEntity = entity
             }
           }
+        } else if (highlightedEntities.size === 0) {
+          this.zoomReset()
         }
       }
 
@@ -267,6 +270,8 @@ export default {
 
       viewer.selectedEntityChanged.addEventListener((entity) => {
         if (!entity) {
+          this.zoomReset()
+          viewer.trackedEntity = null
           return
         }
 
@@ -283,6 +288,7 @@ export default {
           entity.position.getValue(viewer.clock.currentTime)
         )
         entityPosition.height = entityPosition.height + this.defaultZoomAmount
+
         const cameraPosition = viewer.scene.mapProjection.ellipsoid.cartographicToCartesian(
           entityPosition
         )
@@ -611,12 +617,12 @@ export default {
         })
       }
 
-      if (Cesium.defined(viewer.trackedEntity)) {
+      /*if (Cesium.defined(viewer.trackedEntity)) {
         // when tracking do not reset to default view but to default view of tracked entity
         // const trackedEntity = viewer.trackedEntity
-        viewer.trackedEntity = undefined
+        //viewer.trackedEntity = undefined
         // viewer.trackedEntity = trackedEntity
-      }
+      }*/
     },
     toggleObjectVisibility() {
       if (!viewer) {
