@@ -212,6 +212,10 @@ export default {
             label = document.getElementById(`entity-${entity.id}`)
           }
 
+          if (!label) {
+            return
+          }
+
           // Moving entities don't have a position for every possible time, need to check.
           if (position3d) {
             position2d = Cesium.SceneTransforms.wgs84ToWindowCoordinates(
@@ -246,15 +250,13 @@ export default {
           const entity = Cesium.defaultValue(picked.id, picked.primitive.id)
           if (entity instanceof Cesium.Entity) {
             if (highlightedEntities.has(entity)) {
-              viewer.selectedEntity = null
               highlightedEntities.delete(entity)
-              if (highlightedEntities.size === 0) {
-                this.zoomReset()
-              }
               entity.path.show = false
               document.getElementById(`entity-${entity.id}`).remove()
+              viewer.selectedEntity = null
             } else {
               // Update highlightedEntries & add label when the selectedEntity changes to make behavior consistent across viewer & buttons on panels.
+              highlightedEntities.add(entity)
               viewer.selectedEntity = entity
             }
           }
@@ -270,8 +272,10 @@ export default {
 
       viewer.selectedEntityChanged.addEventListener((entity) => {
         if (!entity) {
-          this.zoomReset()
-          viewer.trackedEntity = null
+          if (highlightedEntities.size === 0 || entity === false) {
+            this.zoomReset()
+            viewer.trackedEntity = null
+          }
           return
         }
 

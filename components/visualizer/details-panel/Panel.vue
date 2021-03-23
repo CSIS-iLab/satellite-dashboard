@@ -135,9 +135,9 @@ export default {
         return
       }
 
-      if (viewer.trackedEntity == entity) {
-        viewer.trackedEntity = null
-        viewer.selectedEntity = null
+      if (viewer.selectedEntity == entity) {
+        //viewer.trackedEntity = null
+        viewer.selectedEntity = false
         this.isTracked = false
         return
       }
