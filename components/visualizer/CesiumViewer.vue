@@ -196,6 +196,8 @@ export default {
 
       let highlightedEntities = new Set()
 
+      let lastSelectedEntity = null
+
       // Every animation frame, update the HTML element position from the entity.
       viewer.clock.onTick.addEventListener(function(clock) {
         let position3d
@@ -210,6 +212,10 @@ export default {
               scratch3dPosition
             )
             label = document.getElementById(`entity-${entity.id}`)
+          }
+
+          if (!label) {
+            return
           }
 
           // Moving entities don't have a position for every possible time, need to check.
@@ -240,23 +246,26 @@ export default {
       })
 
       // Toggle an entity's path & label if we click on it.
-      function selectEntity(event) {
+      const selectEntity = (event) => {
         const picked = viewer.scene.pick(event.position)
         if (Cesium.defined(picked)) {
           const entity = Cesium.defaultValue(picked.id, picked.primitive.id)
           if (entity instanceof Cesium.Entity) {
             if (highlightedEntities.has(entity)) {
-              viewer.selectedEntity = false
-              viewer.trackedEntity = false
-
-              highlightedEntities.delete(entity)
-              entity.path.show = false
-              document.getElementById(`entity-${entity.id}`).remove()
+              lastSelectedEntity = entity
+              if (!viewer.selectedEntity !== entity) {
+                viewer.selectedEntity =
+                  viewer.selectedEntity === null ? false : null
+              }
             } else {
               // Update highlightedEntries & add label when the selectedEntity changes to make behavior consistent across viewer & buttons on panels.
+              //highlightedEntities.add(entity)
+              lastSelectedEntity = null
               viewer.selectedEntity = entity
             }
           }
+        } else if (highlightedEntities.size === 0) {
+          this.zoomReset()
         }
       }
 
@@ -265,24 +274,45 @@ export default {
         Cesium.ScreenSpaceEventType.LEFT_CLICK
       )
 
+      const handleHighlights = (entity) => {
+        if (highlightedEntities.has(entity)) {
+          highlightedEntities.delete(entity)
+          entity.path.show = false
+          document.getElementById(`entity-${entity.id}`).remove()
+        } else {
+          // Update highlightedEntries & add label when the selectedEntity changes to make behavior consistent across viewer & buttons on panels.
+          highlightedEntities.add(entity)
+          entity.path.show = true
+
+          let label = entityLabel.cloneNode()
+          label.id = `entity-${entity.id}`
+          label.innerHTML = entity.name
+          labelContainer.appendChild(label)
+        }
+      }
+
       viewer.selectedEntityChanged.addEventListener((entity) => {
         if (!entity) {
+          handleHighlights(lastSelectedEntity)
+          if (highlightedEntities.size === 0) {
+            this.zoomReset()
+            viewer.trackedEntity = null
+          } else {
+            const highlightedEntitiesArray = [...highlightedEntities]
+            const newSelection =
+              highlightedEntitiesArray[highlightedEntitiesArray.length - 1]
+            highlightedEntities.delete(newSelection)
+            viewer.selectedEntity = newSelection
+          }
           return
         }
-
-        highlightedEntities.add(entity)
-        entity.path.show = true
-
-        let label = entityLabel.cloneNode()
-        label.id = `entity-${entity.id}`
-        label.innerHTML = entity.name
-        labelContainer.appendChild(label)
-
+        handleHighlights(entity)
         viewer.trackedEntity = entity
         const entityPosition = viewer.scene.mapProjection.ellipsoid.cartesianToCartographic(
           entity.position.getValue(viewer.clock.currentTime)
         )
         entityPosition.height = entityPosition.height + this.defaultZoomAmount
+
         const cameraPosition = viewer.scene.mapProjection.ellipsoid.cartographicToCartesian(
           entityPosition
         )
@@ -290,6 +320,7 @@ export default {
           destination: cameraPosition
         })
         this.showSatelliteDetails(entity.id)
+        lastSelectedEntity = entity
       })
 
       /* This event listener adjusts the camera position every frame
@@ -611,12 +642,12 @@ export default {
         })
       }
 
-      if (Cesium.defined(viewer.trackedEntity)) {
+      /*if (Cesium.defined(viewer.trackedEntity)) {
         // when tracking do not reset to default view but to default view of tracked entity
         // const trackedEntity = viewer.trackedEntity
-        viewer.trackedEntity = undefined
+        //viewer.trackedEntity = undefined
         // viewer.trackedEntity = trackedEntity
-      }
+      }*/
     },
     toggleObjectVisibility() {
       if (!viewer) {

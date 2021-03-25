@@ -135,12 +135,14 @@ export default {
         return
       }
 
-      if (viewer.trackedEntity == entity) {
-        viewer.trackedEntity = false
+      if (viewer.selectedEntity == entity) {
+        //viewer.trackedEntity = null
+        viewer.selectedEntity = false
         this.isTracked = false
         return
       }
       viewer.trackedEntity = entity
+      viewer.selectedEntity = entity
       this.isTracked = true
     },
     toggleFocusState() {
