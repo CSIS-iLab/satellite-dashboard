@@ -356,7 +356,7 @@
       height: rem(240);
       overflow: hidden;
       text-align: center;
-      background-color: $color-slate-200;
+      background-color: $color-slate-600;
 
       @include breakpoint('medium') {
         flex: 1 1 50%;
