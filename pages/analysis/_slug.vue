@@ -208,6 +208,21 @@ export default {
       users: (state) => state.analysis.users
     })
   },
+  mounted: function() {
+    this.$nextTick(function() {
+      // Code that will run only after the
+      // entire view has been rendered
+      let elements = document.getElementsByClassName(
+        'easy-footnote-margin-adjust'
+      )
+      let elementsToReplace = document.getElementsByClassName('easy-footnote')
+      if (elementsToReplace.length) {
+        for (let i = 0; i < elementsToReplace.length; i++) {
+          elementsToReplace[i].firstChild.href = `#${elements[i].id}`
+        }
+      }
+    })
+  },
   methods: {
     getKeywords(taxonomy, state, url) {
       if (!this.post[taxonomy]) {
