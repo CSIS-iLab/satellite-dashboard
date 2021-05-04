@@ -212,13 +212,17 @@ export default {
     this.$nextTick(function() {
       // Code that will run only after the
       // entire view has been rendered
-      let elements = document.getElementsByClassName(
+      let superscripts = document.getElementsByClassName(
         'easy-footnote-margin-adjust'
       )
-      let elementsToReplace = document.getElementsByClassName('easy-footnote')
-      if (elementsToReplace.length) {
-        for (let i = 0; i < elementsToReplace.length; i++) {
-          elementsToReplace[i].firstChild.href = `#${elements[i].id}`
+      let updatedSuperscripts = document.getElementsByClassName('easy-footnote')
+      let footnotes = document.getElementsByClassName('post__further-footnote')
+      if (updatedSuperscripts.length) {
+        for (let i = 0; i < updatedSuperscripts.length; i++) {
+          updatedSuperscripts[
+            i
+          ].firstChild.href = `#${superscripts[i].id}-bottom`
+          footnotes[i].id = `${superscripts[i].id}-bottom`
         }
       }
     })
