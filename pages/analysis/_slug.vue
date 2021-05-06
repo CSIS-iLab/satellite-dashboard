@@ -104,7 +104,20 @@
         </div>
       </footer>
     </div>
-    <section class="post__related-wrapper"></section>
+    <section class="post__related-wrapper">
+      <!-- Here goes the related post -->
+      <template v-for="relatedPost in relatedPosts">
+        <article :key="relatedPost.ID" class="post__related-block">
+          <div>
+            <h2 class="post__related-title">{{ relatedPost.title }}</h2>
+            <p class="post__related-author">
+              Written by {{ relatedPost.author }}
+            </p>
+            <p class="post__related-date">Published {{ relatedPost.date }}</p>
+          </div>
+        </article>
+      </template>
+    </section>
   </article>
 </template>
 <script>
@@ -130,6 +143,24 @@ export default {
     },
     postContent() {
       return `${this.post.content.rendered}<div class="clearfix"></div>`
+    },
+    relatedPosts() {
+      const options = { year: 'numeric', month: 'long', day: 'numeric' }
+      if (!Array.isArray(this.post.acf.related_analysis)) {
+        return
+      }
+      let relatedAnalysis = []
+      // console.log(this.post.acf.related_analysis)
+      this.post.acf.related_analysis.forEach((post) => {
+        const postDate = new Date(post.post_date)
+        relatedAnalysis.push({
+          title: post.post_title,
+          author: post.post_author,
+          date: new Intl.DateTimeFormat('en-US', options).format(postDate),
+          excerpt: post.post_excerpt
+        })
+      })
+      return relatedAnalysis
     },
     relatedSatellites() {
       if (!Array.isArray(this.post.acf.related_satellites)) {
