@@ -109,11 +109,17 @@
       <template v-for="relatedPost in relatedPosts">
         <article :key="relatedPost.ID" class="post__related-block">
           <div>
-            <h2 class="post__related-title">{{ relatedPost.title }}</h2>
+            <h2 class="post__related-title">
+              {{ relatedPost.title.rendered }}
+            </h2>
+            <!-- <PostMeta :date="relatedPost.date" :authors="relatedPost.authors" /> -->
             <p class="post__related-author">
-              Written by {{ relatedPost.author }}
+              Written by {{ showAuthors(relatedPost.authors) }}
+              <!-- Written by {{ showAuthors([]) }} -->
             </p>
-            <p class="post__related-date">Published {{ relatedPost.date }}</p>
+            <p class="post__related-date">
+              Published {{ formatDate(relatedPost.date) }}
+            </p>
           </div>
         </article>
       </template>
@@ -145,20 +151,12 @@ export default {
       return `${this.post.content.rendered}<div class="clearfix"></div>`
     },
     relatedPosts() {
-      const options = { year: 'numeric', month: 'long', day: 'numeric' }
       if (!Array.isArray(this.post.acf.related_analysis)) {
         return
       }
       let relatedAnalysis = []
-      // console.log(this.post.acf.related_analysis)
-      this.post.acf.related_analysis.forEach((post) => {
-        const postDate = new Date(post.post_date)
-        relatedAnalysis.push({
-          title: post.post_title,
-          author: post.post_author,
-          date: new Intl.DateTimeFormat('en-US', options).format(postDate),
-          excerpt: post.post_excerpt
-        })
+      this.post.acf.related_analysis.forEach((relPost) => {
+        relatedAnalysis.push(this.posts.find(({ id }) => id == relPost.ID))
       })
       return relatedAnalysis
     },
@@ -266,6 +264,12 @@ export default {
         day: 'numeric'
       }
       return date.toLocaleDateString('en', options)
+    },
+    showAuthors(authors) {
+      if (!authors) return
+      let author = ''
+      authors.forEach((a) => (author = a.display_name))
+      return author
     }
   },
   head() {
