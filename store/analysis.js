@@ -1,4 +1,5 @@
 import { decode } from 'html-entities'
+import { parse } from 'node-html-parser'
 import { squash } from '~/services/squash'
 
 export const state = () => ({
@@ -77,6 +78,7 @@ export const actions = {
               country,
               user,
               footnotes: formatFootnotes(content.rendered),
+              footnotesOld: formatFootnotesRegex(content.rendered),
               satellites: getSatellites(acf),
               searchable: searchableContent(title, content)
             }
@@ -183,6 +185,29 @@ export const actions = {
 }
 
 function formatFootnotes(content) {
+  let newContent = parse(content)
+  // let span = newContent.querySelectorAll('.easy-footnote-margin-adjust')
+  // span.forEach((el) => console.log(el.id))
+
+  let aEl = newContent.querySelectorAll('.easy-footnote')
+  // console.log(aEl)
+  let formattedFootnotes = []
+  // aEl.forEach((a) => console.log(a.childNodes[0]._attrs.title))
+  aEl.forEach((a) => formattedFootnotes.push(a.childNodes[0]._attrs.title))
+  // aEl.forEach((a) => console.log(a))
+  // formattedFootnotes = aEl.map((a) => a.rawAttrs)
+  // if (aEl) {
+  //   aEl.forEach((a, i) => a.setAttribute('href', '#' + span[i].id))
+  // aEl.forEach((a, i) => a.setAttribute('href', '#' + span[i].id))
+  // }
+  // console.log(aEl)
+  // console.log(aEl.toString())
+  // return aEl.toString()
+  return formattedFootnotes
+  // console.log(newContent.querySelectorAll('.easy-footnote a').toString())
+}
+
+function formatFootnotesRegex(content) {
   // eslint-disable-next-line no-useless-escape
   const regex = /<span[^>]*>(.*?)<\/span>/gm
   const footnotes = content.match(regex)
@@ -194,6 +219,7 @@ function formatFootnotes(content) {
       )
       .map((item) => decode(item.match(/title=['"](.*)['"]/)[1]))
   }
+  // console.log(formattedFootnotes)
   return formattedFootnotes
 }
 
