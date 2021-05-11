@@ -47,11 +47,18 @@
       <!-- eslint-enable-->
       <section class="post__further">
         <ol v-if="post.footnotes" class="post__further-notes">
-          <li
+          <!-- <li
             v-for="(note, index) in post.footnotes"
             :key="index"
             class="post__further-footnote"
             v-html="note"
+          ></li> -->
+          <!-- testing code -->
+          <li
+            v-for="(note, index) in post.footnotes"
+            :key="index"
+            class="post__further-footnote"
+            v-html="note.title"
           ></li>
         </ol>
         <template v-if="post.acf.further_reading">

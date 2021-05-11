@@ -194,25 +194,47 @@ function formatFootnotes(content) {
   // return formattedFootnotes
 
   // testing
+  // removeChild(node: Node)
+  const html = '<a><b></b></a>'
+  const root = parse(html)
+  const a = root.firstChild
+  const b = a.firstChild
+  // console.log(b.toString())
+  // console.log(a.childNodes)
+  // a.removeChild(b)
+  // console.log(a.childNodes)
+  // all the spans that have the id
   let spansID = newContent.querySelectorAll('.easy-footnote-margin-adjust')
   // spansID.forEach((span) => console.log(span.id))
   // console.log(spansID)
+  // All the spans that contains the a tags
   let spansAEl = newContent.querySelectorAll('.easy-footnote a')
   let fFootnotes = null
-  if (spansAEl) {
-    spansAEl.forEach((a, i) => a.setAttribute('href', '#' + spansID[i].id))
-    fFootnotes = spansAEl.map((a) => a.toString())
+  let testA = []
+  if (spansAEl && spansAEl.length) {
+    spansAEl.forEach((a, i) => {
+      // console.log(a.firstChild.toString())
+      a.removeChild(a.firstChild)
+      // a.setAttribute('href', '#' + spansID[i].id)
+      a.setAttribute('id', spansID[i].id)
+      // spansAEl.forEach((a) => console.log(a._attrs.title))
+      spansAEl.forEach((a) => {
+        a.set_content(a._attrs.title)
+      })
+      // spansAEl.forEach((a) => console.log(a.toString()))
+    })
+    spansAEl.forEach((a) => {
+      // console.log(a)
+      testA.push({
+        id: a._attrs.id,
+        title: a._attrs.title
+      })
+    })
+    // console.log(testA)
+    // root.set_content('<li>Hello World</li>');
+    // fFootnotes = spansAEl.map((a) => a.toString())
   }
-  fFootnotes.forEach((a) => {
-    // console.log(a)
-    let aa = parse(a)
-    console.log(aa.firstChild)
-    // console.log(aa)
-    let sup = aa.firstChild
-    aa.removeChild(sup)
-    // console.log(aa.toString())
-  })
-  return fFootnotes
+  return testA
   // spansAEl.forEach((a) => console.log(a._attrs.title))
   // let formattedFootnotes = null
   // if (spansAEl && spansAEl.length) {
