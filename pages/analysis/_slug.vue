@@ -56,6 +56,7 @@
           <!-- testing code -->
           <li
             v-for="(note, index) in post.footnotes"
+            :id="note.id"
             :key="index"
             class="post__further-footnote"
             v-html="note.title"

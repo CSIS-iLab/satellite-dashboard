@@ -185,72 +185,28 @@ export const actions = {
 }
 
 function formatFootnotes(content) {
+  let formattedFootnotes = null
   let newContent = parse(content)
-  // let spansEl = newContent.querySelectorAll('.easy-footnote')
-  // let formattedFootnotes = null
-  // if (spansEl && spansEl.length) {
-  //   formattedFootnotes = spansEl.map((span) => span.childNodes[0]._attrs.title)
-  // }
-  // return formattedFootnotes
-
-  // testing
-  // removeChild(node: Node)
-  const html = '<a><b></b></a>'
-  const root = parse(html)
-  const a = root.firstChild
-  const b = a.firstChild
-  // console.log(b.toString())
-  // console.log(a.childNodes)
-  // a.removeChild(b)
-  // console.log(a.childNodes)
-  // all the spans that have the id
+  // Grabs all the spans that have the id that we need
   let spansID = newContent.querySelectorAll('.easy-footnote-margin-adjust')
-  // spansID.forEach((span) => console.log(span.id))
-  // console.log(spansID)
-  // All the spans that contains the a tags
+  // Grabs all the spans that contains the a tags
   let spansAEl = newContent.querySelectorAll('.easy-footnote a')
-  let fFootnotes = null
-  let testA = []
   if (spansAEl && spansAEl.length) {
     spansAEl.forEach((a, i) => {
-      // console.log(a.firstChild.toString())
       a.removeChild(a.firstChild)
-      // a.setAttribute('href', '#' + spansID[i].id)
       a.setAttribute('id', spansID[i].id)
-      // spansAEl.forEach((a) => console.log(a._attrs.title))
       spansAEl.forEach((a) => {
         a.set_content(a._attrs.title)
       })
-      // spansAEl.forEach((a) => console.log(a.toString()))
     })
-    spansAEl.forEach((a) => {
-      // console.log(a)
-      testA.push({
-        id: a._attrs.id,
+    formattedFootnotes = spansAEl.map((a) => {
+      return {
+        id: `${a._attrs.id}-bottom`,
         title: a._attrs.title
-      })
+      }
     })
-    // console.log(testA)
-    // root.set_content('<li>Hello World</li>');
-    // fFootnotes = spansAEl.map((a) => a.toString())
   }
-  return testA
-  // spansAEl.forEach((a) => console.log(a._attrs.title))
-  // let formattedFootnotes = null
-  // if (spansAEl && spansAEl.length) {
-  //   formattedFootnotes = spansAEl.map((span) => span.childNodes[0]._attrs.title)
-  // }
-  // return formattedFootnotes
-  // aEl.forEach((a) => console.log(a))
-  // formattedFootnotes = aEl.map((a) => a.rawAttrs)
-  // if (aEl) {
-  //   aEl.forEach((a, i) => a.setAttribute('href', '#' + span[i].id))
-  // aEl.forEach((a, i) => a.setAttribute('href', '#' + span[i].id))
-  // }
-  // console.log(aEl)
-  // console.log(aEl.toString())
-  // return aEl.toString()
-  // console.log(newContent.querySelectorAll('.easy-footnote a').toString())
+  return formattedFootnotes
 }
 
 function formatFootnotesRegex(content) {
@@ -265,7 +221,6 @@ function formatFootnotesRegex(content) {
       )
       .map((item) => decode(item.match(/title=['"](.*)['"]/)[1]))
   }
-  // console.log(formattedFootnotes)
   return formattedFootnotes
 }
 
