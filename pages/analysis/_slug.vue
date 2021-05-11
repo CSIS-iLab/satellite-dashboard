@@ -208,25 +208,25 @@ export default {
       users: (state) => state.analysis.users
     })
   },
-  // mounted: function() {
-  //   this.$nextTick(function() {
-  //     // Code that will run only after the
-  //     // entire view has been rendered
-  //     let superscripts = document.getElementsByClassName(
-  //       'easy-footnote-margin-adjust'
-  //     )
-  //     let updatedSuperscripts = document.getElementsByClassName('easy-footnote')
-  //     let footnotes = document.getElementsByClassName('post__further-footnote')
-  //     if (updatedSuperscripts.length) {
-  //       for (let i = 0; i < updatedSuperscripts.length; i++) {
-  //         updatedSuperscripts[
-  //           i
-  //         ].firstChild.href = `#${superscripts[i].id}-bottom`
-  //         footnotes[i].id = `${superscripts[i].id}-bottom`
-  //       }
-  //     }
-  //   })
-  // },
+  mounted: function() {
+    this.$nextTick(function() {
+      // Code that will run only after the
+      // entire view has been rendered
+      let superscripts = document.getElementsByClassName(
+        'easy-footnote-margin-adjust'
+      )
+      let updatedSuperscripts = document.getElementsByClassName('easy-footnote')
+      let footnotes = document.getElementsByClassName('post__further-footnote')
+      if (updatedSuperscripts.length) {
+        for (let i = 0; i < updatedSuperscripts.length; i++) {
+          updatedSuperscripts[
+            i
+          ].firstChild.href = `#${superscripts[i].id}-bottom`
+          footnotes[i].id = `${superscripts[i].id}-bottom`
+        }
+      }
+    })
+  },
   methods: {
     getKeywords(taxonomy, state, url) {
       if (!this.post[taxonomy]) {

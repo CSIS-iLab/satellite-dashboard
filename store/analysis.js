@@ -186,14 +186,39 @@ export const actions = {
 
 function formatFootnotes(content) {
   let newContent = parse(content)
-  // let span = newContent.querySelectorAll('.easy-footnote-margin-adjust')
-  // span.forEach((el) => console.log(el.id))
+  // let spansEl = newContent.querySelectorAll('.easy-footnote')
+  // let formattedFootnotes = null
+  // if (spansEl && spansEl.length) {
+  //   formattedFootnotes = spansEl.map((span) => span.childNodes[0]._attrs.title)
+  // }
+  // return formattedFootnotes
 
-  let aEl = newContent.querySelectorAll('.easy-footnote')
-  // console.log(aEl)
-  let formattedFootnotes = []
-  // aEl.forEach((a) => console.log(a.childNodes[0]._attrs.title))
-  aEl.forEach((a) => formattedFootnotes.push(a.childNodes[0]._attrs.title))
+  // testing
+  let spansID = newContent.querySelectorAll('.easy-footnote-margin-adjust')
+  // spansID.forEach((span) => console.log(span.id))
+  // console.log(spansID)
+  let spansAEl = newContent.querySelectorAll('.easy-footnote a')
+  let fFootnotes = null
+  if (spansAEl) {
+    spansAEl.forEach((a, i) => a.setAttribute('href', '#' + spansID[i].id))
+    fFootnotes = spansAEl.map((a) => a.toString())
+  }
+  fFootnotes.forEach((a) => {
+    // console.log(a)
+    let aa = parse(a)
+    console.log(aa.firstChild)
+    // console.log(aa)
+    let sup = aa.firstChild
+    aa.removeChild(sup)
+    // console.log(aa.toString())
+  })
+  return fFootnotes
+  // spansAEl.forEach((a) => console.log(a._attrs.title))
+  // let formattedFootnotes = null
+  // if (spansAEl && spansAEl.length) {
+  //   formattedFootnotes = spansAEl.map((span) => span.childNodes[0]._attrs.title)
+  // }
+  // return formattedFootnotes
   // aEl.forEach((a) => console.log(a))
   // formattedFootnotes = aEl.map((a) => a.rawAttrs)
   // if (aEl) {
@@ -203,7 +228,6 @@ function formatFootnotes(content) {
   // console.log(aEl)
   // console.log(aEl.toString())
   // return aEl.toString()
-  return formattedFootnotes
   // console.log(newContent.querySelectorAll('.easy-footnote a').toString())
 }
 
