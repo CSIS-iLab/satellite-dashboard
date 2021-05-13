@@ -104,26 +104,24 @@
         </div>
       </footer>
     </div>
-    <section class="post__related-wrapper">
+    <aside v-if="relatedPosts" class="post__related-wrapper">
       <!-- Here goes the related post -->
       <template v-for="relatedPost in relatedPosts">
         <article :key="relatedPost.ID" class="post__related-block">
           <div>
             <h2 class="post__related-title">
-              {{ relatedPost.title.rendered }}
+              <nuxt-link
+                :to="relatedPost.slug"
+                class="post__related-wrapper card-link"
+              >
+                {{ relatedPost.title.rendered }}
+              </nuxt-link>
             </h2>
-            <!-- <PostMeta :date="relatedPost.date" :authors="relatedPost.authors" /> -->
-            <p class="post__related-author">
-              Written by {{ showAuthors(relatedPost.authors) }}
-              <!-- Written by {{ showAuthors([]) }} -->
-            </p>
-            <p class="post__related-date">
-              Published {{ formatDate(relatedPost.date) }}
-            </p>
+            <PostMeta :date="relatedPost.date" :authors="relatedPost.authors" />
           </div>
         </article>
       </template>
-    </section>
+    </aside>
   </article>
 </template>
 <script>
