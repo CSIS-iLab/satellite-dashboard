@@ -45,8 +45,8 @@
         v-html="postContent"
       ></section>
       <!-- eslint-enable-->
-      <section class="post__further">
-        <ol v-if="post.footnotes" class="post__further-notes">
+      <section v-if="post.footnotes" class="post__further">
+        <ol class="post__further-notes">
           <!-- <li
             v-for="(note, index) in post.footnotes"
             :key="index"

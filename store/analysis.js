@@ -62,6 +62,7 @@ export const actions = {
             country,
             user
           }) => {
+            const formattedContent = formatFootnotes(content.rendered)
             return {
               id,
               slug,
@@ -77,8 +78,9 @@ export const actions = {
               categories,
               country,
               user,
-              footnotes: formatFootnotes(content.rendered),
-              footnotesOld: formatFootnotesRegex(content.rendered),
+              footnotes: formattedContent,
+              // footnotes: formatFootnotes(content.rendered),
+              // footnotesOld: formatFootnotesRegex(content.rendered),
               satellites: getSatellites(acf),
               searchable: searchableContent(title, content)
             }
@@ -185,27 +187,30 @@ export const actions = {
 }
 
 function formatFootnotes(content) {
-  let formattedFootnotes = null
+  let formattedContent = []
+  let formattedFootnotes = []
   let newContent = parse(content)
   // Grabs all the spans that have the id that we need
   let spansID = newContent.querySelectorAll('.easy-footnote-margin-adjust')
   // Grabs all the spans that contains the a tags
   let spansAEl = newContent.querySelectorAll('.easy-footnote a')
-  if (spansAEl && spansAEl.length) {
-    spansAEl.forEach((a, i) => {
-      a.removeChild(a.firstChild)
-      a.setAttribute('id', spansID[i].id)
-      spansAEl.forEach((a) => {
-        a.set_content(a._attrs.title)
-      })
+  console.log(spansAEl == null)
+  // if (!spansAEl && !spansAEl.length) return null
+  if (spansAEl.length < 1) return null
+  spansAEl.forEach((a, i) => {
+    a.removeChild(a.firstChild)
+    a.setAttribute('id', spansID[i].id)
+    a.set_content(a._attrs.title)
+    formattedFootnotes.push({
+      id: `${a._attrs.id}-bottom`,
+      title: a._attrs.title
     })
-    formattedFootnotes = spansAEl.map((a) => {
-      return {
-        id: `${a._attrs.id}-bottom`,
-        title: a._attrs.title
-      }
-    })
-  }
+  })
+  formattedContent.push({
+    content: content,
+    footnotes: formattedFootnotes
+  })
+  console.log(formattedContent[0].footnotes)
   return formattedFootnotes
 }
 
