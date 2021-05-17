@@ -62,7 +62,7 @@ export const actions = {
             country,
             user
           }) => {
-            const formattedContent = formatFootnotes(content.rendered)
+            const formattedContent = formatContent(content.rendered)
             return {
               id,
               slug,
@@ -78,7 +78,7 @@ export const actions = {
               categories,
               country,
               user,
-              footnotes: formattedContent,
+              formattedContent: formattedContent,
               // footnotes: formatFootnotes(content.rendered),
               // footnotesOld: formatFootnotesRegex(content.rendered),
               satellites: getSatellites(acf),
@@ -184,6 +184,55 @@ export const actions = {
       console.log(err)
     }
   }
+}
+
+function formatContent(content) {
+  let formattedContent = {}
+  const CONTENT_PARSED = parse(content)
+  // Grabs all the spans that have the id that we need
+  let spansID = CONTENT_PARSED.querySelectorAll('.easy-footnote-margin-adjust')
+  // Grabs all the spans that contains the a tags
+  let spansAEl = CONTENT_PARSED.querySelectorAll('.easy-footnote a')
+  // if (spansAEl.length < 1) return null
+  if (!spansAEl.length) {
+    formattedContent.content = CONTENT_PARSED.toString()
+  } else {
+    // formattedContent.content = formatC(CONTENT_PARSED)
+    formattedContent.content = formatC(CONTENT_PARSED, spansID)
+    formattedContent.footnotes = formatF(spansAEl, spansID)
+    // console.log(formattedContent)
+  }
+  return formattedContent
+}
+
+function formatC(CONTENT_PARSED, spansID) {
+  let newContent = []
+  // console.log(CONTENT_PARSED)
+  // Grabs all the spans that contains the a tags
+  let spansAEl = CONTENT_PARSED.querySelectorAll('.easy-footnote a')
+  // console.log(spansAEl.length)
+  if (!spansAEl.length) return null
+  spansAEl.forEach((s, i) => {
+    // console.log(s.firstChild)
+    // s._attrs.href = `#${spansID[i].id}-bottom`
+    s.setAttribute('href', `#${spansID[i].id}-bottom`)
+    // console.log(s.firstChild)
+  })
+  return CONTENT_PARSED.toString()
+  // return CONTENT_PARSED
+}
+function formatF(spansAEl, spansID) {
+  let formattedFootnotes = []
+  spansAEl.forEach((a, i) => {
+    a.removeChild(a.firstChild)
+    a.setAttribute('id', spansID[i].id)
+    a.set_content(a._attrs.title)
+    formattedFootnotes.push({
+      id: `${a._attrs.id}-bottom`,
+      title: a._attrs.title
+    })
+  })
+  return formattedFootnotes
 }
 
 function formatFootnotes(content) {
