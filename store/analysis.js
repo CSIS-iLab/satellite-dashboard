@@ -70,14 +70,14 @@ export const actions = {
               date,
               modified,
               tags,
-              content, //I believe I can remove this now?
+              content: formattedContent.content,
               authors: coauthors_full,
               meta,
               acf,
               categories,
               country,
               user,
-              formattedContent: formattedContent,
+              footnotes: formattedContent.footnotes,
               satellites: getSatellites(acf),
               searchable: searchableContent(title, content)
             }
@@ -185,28 +185,28 @@ export const actions = {
 
 function contentFormatter(content) {
   let formattedContent = {}
-  const CONTENT_PARSED = parse(content)
+  const content_parsed = parse(content)
   // Grabs all the spans that have the id that we need
-  let spansID = CONTENT_PARSED.querySelectorAll('.easy-footnote-margin-adjust')
+  let spansID = content_parsed.querySelectorAll('.easy-footnote-margin-adjust')
   // Grabs all the spans that contains the a tags
-  let spansAEl = CONTENT_PARSED.querySelectorAll('.easy-footnote a')
+  let spansAEl = content_parsed.querySelectorAll('.easy-footnote a')
   if (!spansAEl.length) {
     formattedContent.content = content
   } else {
-    formattedContent.content = formatContent(CONTENT_PARSED, spansID)
+    formattedContent.content = formatContent(content_parsed, spansID)
     formattedContent.footnotes = formatFootnotes(spansAEl, spansID)
   }
   return formattedContent
 }
 
-function formatContent(CONTENT_PARSED, spansID) {
+function formatContent(content_parsed, spansID) {
   // Grabs all the spans that contains the a tags
-  let spansAEl = CONTENT_PARSED.querySelectorAll('.easy-footnote a')
+  let spansAEl = content_parsed.querySelectorAll('.easy-footnote a')
   if (!spansAEl.length) return null
   spansAEl.forEach((span, i) => {
     span.setAttribute('href', `#${spansID[i].id}-bottom`)
   })
-  return CONTENT_PARSED.toString()
+  return content_parsed.toString()
 }
 
 function formatFootnotes(spansAEl, spansID) {
@@ -224,7 +224,7 @@ function formatFootnotes(spansAEl, spansID) {
 }
 
 function searchableContent(title, content) {
-  const text = `${title.rendered} ${content.rendered}`
+  const text = `${title.rendered} ${content}`
   return squash(text)
 }
 

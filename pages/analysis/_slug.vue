@@ -45,10 +45,10 @@
         v-html="postContent"
       ></section>
       <!-- eslint-enable-->
-      <section v-if="post.formattedContent.footnotes" class="post__further">
+      <section v-if="post.footnotes" class="post__further">
         <ol class="post__further-notes">
           <li
-            v-for="(note, index) in post.formattedContent.footnotes"
+            v-for="(note, index) in post.footnotes"
             :id="note.id"
             :key="index"
             class="post__further-footnote"
@@ -130,7 +130,7 @@ export default {
       return this.posts.find((el) => el.slug === this.slug)
     },
     postContent() {
-      return `${this.post.formattedContent.content}<div class="clearfix"></div>`
+      return `${this.post.content}<div class="clearfix"></div>`
     },
     relatedSatellites() {
       if (!Array.isArray(this.post.acf.related_satellites)) {
