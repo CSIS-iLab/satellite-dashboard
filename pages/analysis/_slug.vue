@@ -47,13 +47,6 @@
       <!-- eslint-enable-->
       <section v-if="post.formattedContent.footnotes" class="post__further">
         <ol class="post__further-notes">
-          <!-- <li
-            v-for="(note, index) in post.footnotes"
-            :key="index"
-            class="post__further-footnote"
-            v-html="note"
-          ></li> -->
-          <!-- testing code -->
           <li
             v-for="(note, index) in post.formattedContent.footnotes"
             :id="note.id"
@@ -137,8 +130,6 @@ export default {
       return this.posts.find((el) => el.slug === this.slug)
     },
     postContent() {
-      // return `${this.post.content.rendered}<div class="clearfix"></div>`
-      // post.formattedContent.footnotes
       return `${this.post.formattedContent.content}<div class="clearfix"></div>`
     },
     relatedSatellites() {
@@ -218,25 +209,6 @@ export default {
       users: (state) => state.analysis.users
     })
   },
-  // mounted: function() {
-  //   this.$nextTick(function() {
-  //     // Code that will run only after the
-  //     // entire view has been rendered
-  //     let superscripts = document.getElementsByClassName(
-  //       'easy-footnote-margin-adjust'
-  //     )
-  //     let updatedSuperscripts = document.getElementsByClassName('easy-footnote')
-  //     let footnotes = document.getElementsByClassName('post__further-footnote')
-  //     if (updatedSuperscripts.length) {
-  //       for (let i = 0; i < updatedSuperscripts.length; i++) {
-  //         updatedSuperscripts[
-  //           i
-  //         ].firstChild.href = `#${superscripts[i].id}-bottom`
-  //         footnotes[i].id = `${superscripts[i].id}-bottom`
-  //       }
-  //     }
-  //   })
-  // },
   methods: {
     getKeywords(taxonomy, state, url) {
       if (!this.post[taxonomy]) {
