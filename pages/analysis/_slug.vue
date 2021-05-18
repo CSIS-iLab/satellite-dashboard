@@ -108,17 +108,15 @@
       <!-- Here goes the related post -->
       <template v-for="relatedPost in relatedPosts">
         <article :key="relatedPost.ID" class="post__related-block">
-          <div>
-            <h2 class="post__related-title">
-              <nuxt-link
-                :to="relatedPost.slug"
-                class="post__related-wrapper card-link"
-              >
-                {{ relatedPost.title.rendered }}
-              </nuxt-link>
-            </h2>
-            <PostMeta :date="relatedPost.date" :authors="relatedPost.authors" />
-          </div>
+          <h2 class="post__related-title">
+            <nuxt-link
+              :to="relatedPost.slug"
+              class="post__related-wrapper card-link"
+            >
+              {{ relatedPost.title.rendered }}
+            </nuxt-link>
+          </h2>
+          <PostMeta :date="relatedPost.date" :authors="relatedPost.authors" />
         </article>
       </template>
     </aside>

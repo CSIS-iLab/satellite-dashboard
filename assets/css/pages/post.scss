@@ -345,6 +345,12 @@
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 
+      aside {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
       article {
         position: relative;
       }
@@ -365,21 +371,30 @@
     }
 
     &-block {
-      display: flex;
-      justify-content: center;
-      align-items: center;
       padding-top: rem(58);
+      padding-right: rem(16);
       padding-bottom: rem(57);
+      padding-left: rem(16);
       text-align: center;
       background-color: $color-slate-600;
-
-      @include breakpoint('medium') {
-        width: 50vw;
-      }
 
       &:hover {
         background-color: $color-slate-300;
         transition: all 0.3s ease-in-out;
+      }
+
+      .post-meta__label,
+      .post-meta dd {
+        display: inline-block;
+        @extend %font-ui-text-lg-oxygen;
+        color: $color-white-180;
+      }
+
+      .post-meta dd {
+        /* stylelint-disable-next-line */
+        + dd::before {
+          content: ', ';
+        }
       }
     }
 
