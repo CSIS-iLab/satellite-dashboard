@@ -1,4 +1,4 @@
-import { decode } from 'html-entities'
+import { parse } from 'node-html-parser'
 import { squash } from '~/services/squash'
 
 export const state = () => ({
@@ -61,6 +61,7 @@ export const actions = {
             country,
             user
           }) => {
+            const formattedContent = contentFormatter(content.rendered)
             return {
               id,
               slug,
@@ -69,14 +70,14 @@ export const actions = {
               date,
               modified,
               tags,
-              content,
+              content: formattedContent.content,
               authors: coauthors_full,
               meta,
               acf,
               categories,
               country,
               user,
-              footnotes: formatFootnotes(content.rendered),
+              footnotes: formattedContent.footnotes,
               satellites: getSatellites(acf),
               searchable: searchableContent(title, content)
             }
@@ -182,23 +183,48 @@ export const actions = {
   }
 }
 
-function formatFootnotes(content) {
-  // eslint-disable-next-line no-useless-escape
-  const regex = /<span[^>]*>(.*?)<\/span>/gm
-  const footnotes = content.match(regex)
-  let formattedFootnotes = null
-  if (footnotes && footnotes.length) {
-    formattedFootnotes = footnotes
-      .filter((item) =>
-        item.match(/<span\s(?:class='easy-footnote')>(.*)<\/span>/)
-      )
-      .map((item) => decode(item.match(/title=['"](.*)['"]/)[1]))
+function contentFormatter(content) {
+  let formattedContent = {}
+  const content_parsed = parse(content)
+  // Grabs all the spans that have the id that we need
+  let spansID = content_parsed.querySelectorAll('.easy-footnote-margin-adjust')
+  // Grabs all the spans that contains the a tags
+  let spansAEl = content_parsed.querySelectorAll('.easy-footnote a')
+  if (!spansAEl.length) {
+    formattedContent.content = content
+  } else {
+    formattedContent.content = formatContent(content_parsed, spansID)
+    formattedContent.footnotes = formatFootnotes(spansAEl, spansID)
   }
+  return formattedContent
+}
+
+function formatContent(content_parsed, spansID) {
+  // Grabs all the spans that contains the a tags
+  let spansAEl = content_parsed.querySelectorAll('.easy-footnote a')
+  if (!spansAEl.length) return null
+  spansAEl.forEach((span, i) => {
+    span.setAttribute('href', `#${spansID[i].id}-bottom`)
+  })
+  return content_parsed.toString()
+}
+
+function formatFootnotes(spansAEl, spansID) {
+  let formattedFootnotes = []
+  spansAEl.forEach((span, i) => {
+    span.removeChild(span.firstChild) // removes the <sup>
+    span.setAttribute('id', spansID[i].id)
+    span.set_content(span._attrs.title)
+    formattedFootnotes.push({
+      id: `${span._attrs.id}-bottom`,
+      title: span._attrs.title
+    })
+  })
   return formattedFootnotes
 }
 
 function searchableContent(title, content) {
-  const text = `${title.rendered} ${content.rendered}`
+  const text = `${title.rendered} ${content}`
   return squash(text)
 }
 
