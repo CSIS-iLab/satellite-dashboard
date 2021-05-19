@@ -29,6 +29,7 @@
     "@nuxtjs/pwa": "^3.0.0-0",
     "fibers": "^5.0.0",
     "frontmatter-markdown-loader": "^3.3.0",
+    "merge-descriptors": "^1.0.1",
     "nuxt": "^2.12.2",
     "satellite.js": "^4.0.0",
     "vue-cesium": "^2.1.9",
