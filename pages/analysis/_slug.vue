@@ -105,7 +105,22 @@
         </div>
       </footer>
     </div>
-    <section class="post__related-wrapper"></section>
+    <aside v-if="relatedPosts" class="post__related-wrapper">
+      <!-- Here goes the related post -->
+      <template v-for="relatedPost in relatedPosts">
+        <article :key="relatedPost.ID" class="post__related-block">
+          <h2 class="post__related-title">
+            <nuxt-link
+              :to="relatedPost.slug"
+              class="post__related-wrapper card-link"
+            >
+              {{ relatedPost.title.rendered }}
+            </nuxt-link>
+          </h2>
+          <PostMeta :date="relatedPost.date" :authors="relatedPost.authors" />
+        </article>
+      </template>
+    </aside>
   </article>
 </template>
 <script>
@@ -131,6 +146,16 @@ export default {
     },
     postContent() {
       return `${this.post.content}<div class="clearfix"></div>`
+    },
+    relatedPosts() {
+      if (!Array.isArray(this.post.acf.related_analysis)) {
+        return
+      }
+      let relatedAnalysis = []
+      this.post.acf.related_analysis.forEach((relPost) => {
+        relatedAnalysis.push(this.posts.find(({ id }) => id == relPost.ID))
+      })
+      return relatedAnalysis
     },
     relatedSatellites() {
       if (!Array.isArray(this.post.acf.related_satellites)) {
@@ -236,6 +261,12 @@ export default {
         day: 'numeric'
       }
       return date.toLocaleDateString('en', options)
+    },
+    showAuthors(authors) {
+      if (!authors) return
+      let author = ''
+      authors.forEach((a) => (author = a.display_name))
+      return author
     }
   },
   head() {
