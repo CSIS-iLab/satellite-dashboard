@@ -69,20 +69,25 @@
             {{ formatCountry(props.row.country) }}
           </div>
           <div v-else-if="props.column.field == 'actions'" class="sat__actions">
-            <Button :on-click="(e) => highlightOrbit(e, props.row.catalog_id)">
-              <Icon id="orbit" name="orbit" />
+            <Button
+              :on-click="(e) => highlightOrbit(e, props.row.catalog_id)"
+              aria-label="View Orbit"
+            >
+              <Icon id="orbit" name="orbit" focusable="false" />
             </Button>
             <Button
               v-if="checkItemFocusedState(props.row.catalog_id)"
+              aria-label="Pin Result"
               :on-click="(e) => removeFromFocused(e, props.row.catalog_id)"
             >
-              <Icon id="pin" name="pin" />
+              <Icon id="pin" name="pin" focusable="false" />
             </Button>
             <Button
               v-else
               :on-click="(e) => addToFocused(e, props.row.catalog_id)"
+              aria-label="Unpin Result"
             >
-              <Icon id="unpin" name="unpin" />
+              <Icon id="unpin" name="unpin" focusable="false" />
             </Button>
           </div>
           <span v-else>

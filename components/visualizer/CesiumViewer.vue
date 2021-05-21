@@ -1,18 +1,45 @@
 <template>
   <div ref="viewerContainer" class="viewer">
     <ul class="viewer-controls" role="list">
-      <Button class="btn--controls btn--zoom" :on-click="zoomOut">
-        <Icon id="minus" name="minus" />
+      <Button
+        class="btn--controls btn--zoom"
+        aria-label="Zoom Out"
+        :on-click="zoomOut"
+      >
+        <Icon id="minus" name="minus" focusable="false" />
       </Button>
-      <Button class="btn--controls btn--zoom" :on-click="zoomReset">
-        <Icon id="world" name="world" />
+      <Button
+        class="btn--controls btn--zoom"
+        aria-label="Reset Zoom"
+        :on-click="zoomReset"
+      >
+        <Icon id="world" name="world" focusable="false" />
       </Button>
-      <Button class="btn--controls btn--zoom" :on-click="zoomIn">
-        <Icon id="plus" name="plus" />
+      <Button
+        class="btn--controls btn--zoom"
+        aria-label="Zoom In"
+        :on-click="zoomIn"
+      >
+        <Icon id="plus" name="plus" focusable="false" />
       </Button>
-      <Button class="btn--controls btn--sun" :on-click="toggleSunlight">
-        <Icon v-show="showSunlight" id="sun-on" name="sun-on" />
-        <Icon v-show="!showSunlight" id="sun-off" name="sun-off" />
+      <Button
+        class="btn--controls btn--sun"
+        aria-label="Sunlight"
+        :aria-pressed="showSunlight"
+        :on-click="toggleSunlight"
+      >
+        <Icon
+          v-show="showSunlight"
+          id="sun-on"
+          name="sun-on"
+          focusable="false"
+        />
+        <Icon
+          v-show="!showSunlight"
+          id="sun-off"
+          name="sun-off"
+          focusable="false"
+        />
       </Button>
       <HelpPanel />
     </ul>

@@ -1,12 +1,25 @@
 <template>
   <header class="site-header">
     <div class="site-header__masthead">
-      <Button class="btn--menu" :on-click="openNav">
-        <Icon id="menu" class="icon header__menu" name="menu" />
+      <Button
+        aria-label="Open Navigation Menu"
+        class="btn--menu"
+        :on-click="openNav"
+      >
+        <Icon
+          id="menu"
+          class="icon header__menu"
+          name="menu"
+          focusable="false"
+        />
       </Button>
       <div class="site-nav" :class="navIsOpen ? 'site-nav--is-visible' : ''">
-        <Button class="btn--icon btn--close" :on-click="closeNav">
-          <Icon id="close-large" name="close-large" />
+        <Button
+          aria-label="Close Navigation Menu"
+          class="btn--icon btn--close"
+          :on-click="closeNav"
+        >
+          <Icon id="close-large" name="close-large" focusable="false" />
         </Button>
         <Navigation class="header__nav" name="header" />
         <div class="site-nav__footer">

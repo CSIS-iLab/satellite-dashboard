@@ -48,8 +48,12 @@
             <Button :on-click="clearSearch" :disabled="searchTerm == ''"
               >Clear</Button
             >
-            <Button class="btn--apply" :on-click="searchTable">
-              <Icon id="check" name="check" />
+            <Button
+              aria-label="Apply Button"
+              class="btn--apply"
+              :on-click="searchTable"
+            >
+              <Icon id="check" name="check" focusable="false" />
               Apply
             </Button>
           </div>

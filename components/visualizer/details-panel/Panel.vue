@@ -8,17 +8,37 @@
       <div class="details-panel__controls">
         <Button
           class="btn--icon btn--zoom"
+          aria-label="Zoom Into Sattelite"
           :class="{ 'btn--is-focused': isSatelliteTracked }"
           :on-click="trackObject"
         >
-          <Icon id="target" name="target" />
+          <Icon id="target" name="target" focusable="false" />
         </Button>
-        <Button class="btn--icon btn--pin" :on-click="toggleFocusState">
-          <Icon v-show="satelliteIsInFocused" id="pin" name="pin" />
-          <Icon v-show="!satelliteIsInFocused" id="unpin" name="unpin" />
+        <Button
+          class="btn--icon btn--pin"
+          aria-label="Pin Sattelite"
+          :aria-pressed="satelliteIsInFocused"
+          :on-click="toggleFocusState"
+        >
+          <Icon
+            v-show="satelliteIsInFocused"
+            id="pin"
+            name="pin"
+            focusable="false"
+          />
+          <Icon
+            v-show="!satelliteIsInFocused"
+            id="unpin"
+            name="unpin"
+            focusable="false"
+          />
         </Button>
-        <Button class="btn--icon btn--close" :on-click="closePanel">
-          <Icon id="close-large" name="close-large" />
+        <Button
+          class="btn--icon btn--close"
+          aria-label="Close Panel"
+          :on-click="closePanel"
+        >
+          <Icon id="close-large" name="close-large" focusable="false" />
         </Button>
       </div>
       <h2 class="panel__title">{{ satelliteName }}</h2>

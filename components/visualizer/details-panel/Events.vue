@@ -43,7 +43,7 @@
         />
 
         <Button class="btn--apply" :on-click="updateMaxDistance">
-          <Icon id="check" name="check" />
+          <Icon id="check" name="check" focusable="false" aria-hidden="true" />
           Apply
         </Button>
       </form>

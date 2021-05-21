@@ -76,15 +76,25 @@
         <div v-show="numVisibleFilters" class="filters__buttons">
           <Button :on-click="removeAllFilters">Remove All</Button>
           <Button class="btn--apply" :on-click="applyFilters" type="submit">
-            <Icon id="check" name="check" /> Apply
+            <Icon
+              id="check"
+              name="check"
+              focusable="false"
+              aria-hidden="true"
+            />
+            Apply
           </Button>
           <Button :on-click="cancelFilters">Cancel</Button>
         </div>
       </form>
       <div v-else class="filters__list">
         {{ listActiveFilters }}
-        <Button class="btn--contained btn--icon" :on-click="editFilters">
-          <Icon id="pen" name="pen" />
+        <Button
+          class="btn--contained btn--icon"
+          aria-label="Edit Filters"
+          :on-click="editFilters"
+        >
+          <Icon id="pen" name="pen" focusable="false" />
         </Button>
       </div>
     </div>
