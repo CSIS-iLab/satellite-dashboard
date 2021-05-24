@@ -42,15 +42,17 @@
           <div class="sat__actions">
             <Button
               v-if="checkItemFocusedState(object.catalog_id)"
+              aria-label="Pin Event"
               :on-click="(e) => removeFromFocused(e, object.catalog_id)"
             >
-              <Icon id="pin" name="pin" />
+              <Icon id="pin" name="pin" focusable="false" />
             </Button>
             <Button
               v-else
+              aria-label="Unpin Event"
               :on-click="(e) => addToFocused(e, object.catalog_id)"
             >
-              <Icon id="unpin" name="unpin" />
+              <Icon id="unpin" name="unpin" focusable="false" />
             </Button>
           </div>
         </li>

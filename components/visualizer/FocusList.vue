@@ -19,8 +19,8 @@
       v-if="isEditable"
       class="focus-list__heading focus-list__heading--editing"
     >
-      <Button :on-click="cancelEditing">
-        <Icon id="close-small" name="close-small" />
+      <Button :on-click="cancelEditing" aria-label="Cancel Editing">
+        <Icon id="close-small" name="close-small" focusable="false" />
       </Button>
       <strong>{{ numSelectedItems }}</strong
       >&nbsp; selected
@@ -35,9 +35,10 @@
       <strong>{{ focusedSatellitesCount }} objects saved</strong>
       <Button
         class="btn--contained btn--icon btn--edit"
+        aria-label="Edit Focus List"
         :on-click="editFocusList"
       >
-        <Icon id="pen" name="pen" />
+        <Icon id="pen" name="pen" focusable="false" />
       </Button>
     </div>
     <ul class="sat-list" role="list">
@@ -54,9 +55,10 @@
         <div class="sat__actions">
           <Button
             v-if="!isEditable"
+            aria-label="Show Satellite Details"
             :on-click="(e) => showSatelliteDetails(e, item)"
           >
-            <Icon id="info" name="info" />
+            <Icon id="info" name="info" focusable="false" />
           </Button>
           <Checkbox
             v-if="isEditable"

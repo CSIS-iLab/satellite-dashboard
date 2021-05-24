@@ -29,8 +29,8 @@
         :data-playing="isPlaying"
         :aria-label="isPlaying ? 'Play' : 'Pause'"
       >
-        <Icon v-show="!isPlaying" id="play" name="play" />
-        <Icon v-show="isPlaying" id="pause" name="pause" />
+        <Icon v-show="!isPlaying" id="play" name="play" focusable="false" />
+        <Icon v-show="isPlaying" id="pause" name="pause" focusable="false" />
       </Button>
     </div>
     <div class="timeline__player">
@@ -40,7 +40,7 @@
           :on-click="(e) => selectPrevNextDate(e, 'prev')"
           aria-label="Go to previous date"
         >
-          <Icon id="boomarang-left" name="boomarang-left" />
+          <Icon id="boomarang-left" name="boomarang-left" focusable="false" />
         </Button>
         <div class="timeline__date-current">
           <client-only>
@@ -69,7 +69,7 @@
           :on-click="(e) => selectPrevNextDate(e, 'next')"
           aria-label="Go to next date"
         >
-          <Icon id="boomarang-right" name="boomarang-right" />
+          <Icon id="boomarang-right" name="boomarang-right" focusable="false" />
         </Button>
       </div>
       <div ref="scrubber" class="timeline__player-scrub"></div>

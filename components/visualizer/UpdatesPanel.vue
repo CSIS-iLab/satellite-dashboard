@@ -4,13 +4,23 @@
       class="btn--contained btn--curved btn--updates-panel"
       :on-click="openPanel"
     >
-      <Icon id="lightning" name="lightning" />
+      <Icon
+        id="lightning"
+        name="lightning"
+        focusable="false"
+        aria-hidden="true"
+      />
       Latest Updates
     </Button>
     <TabWrapper v-show="panelIsOpen" v-model="activeTab" scope="latestUpdates">
       <header class="updates-panel__header">
         <Button class="btn--close" :on-click="closePanel">
-          <Icon id="close-large" name="close-large" />
+          <Icon
+            id="close-large"
+            name="close-large"
+            focusable="false"
+            aria-hidden="true"
+          />
           Close
         </Button>
         <h2 class="panel__title">Latest Updates</h2>

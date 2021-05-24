@@ -5,9 +5,15 @@
         <button
           id="close-left-panel"
           class="btn btn--panel-close"
+          aria-label="Close Panel"
           @click="activeTab = ''"
         >
-          <Icon id="chevron-left" class="icon" name="chevron-left" />
+          <Icon
+            id="chevron-left"
+            class="icon"
+            name="chevron-left"
+            focusable="false"
+          />
         </button>
         <TabActivator tab="filters" scope="panelLeft">
           <Icon id="filter" class="icon" name="filter" />

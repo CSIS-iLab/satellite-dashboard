@@ -52,7 +52,7 @@
           >Remove All</Button
         >
         <Button class="btn--apply" :on-click="filterPosts">
-          <Icon id="check" name="check" />
+          <Icon id="check" name="check" aria-hidden="true" focusable="false" />
           Apply
         </Button>
       </div>

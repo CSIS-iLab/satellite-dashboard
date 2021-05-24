@@ -2,14 +2,21 @@
   <client-only>
     <tippy trigger="click" interactive @init="onTippyInit">
       <template v-slot:trigger>
-        <button class="btn btn--controls btn--help">
-          <Icon id="help" name="help" />
+        <button
+          class="btn btn--controls btn--help"
+          aria-label="Open Help Panel"
+        >
+          <Icon id="help" name="help" focusable="false" />
         </button>
       </template>
 
       <TabWrapper v-model="activeTab" scope="helpPanel">
-        <Button class="btn btn--icon help__close" @click="closePanel">
-          <Icon id="close-large" name="close-large" />
+        <Button
+          class="btn btn--icon help__close"
+          aria-label="Close Help Panel"
+          @click="closePanel"
+        >
+          <Icon id="close-large" name="close-large" focusable="false" />
         </Button>
         <header>
           <TabList label="Controller" scope="helpPanel" class="help__buttons">

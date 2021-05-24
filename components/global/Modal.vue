@@ -13,10 +13,10 @@
             <Button
               type="button"
               class="modal__btn-close-icon"
-              aria-label="Close modal"
+              aria-label="Close Modal"
               :on-click="close"
             >
-              <Icon id="close-small" name="close-small" />
+              <Icon id="close-small" name="close-small" focusable="false" />
             </Button>
           </slot>
         </header>
@@ -29,14 +29,14 @@
           <slot name="footer">
             THIS IS THE FOOOOTER!
 
-            <Button
-              type="button"
-              class="modal__btn-footer"
-              aria-label="Close modal"
-              :on-click="close"
-            >
+            <Button type="button" class="modal__btn-footer" :on-click="close">
               Close
-              <Icon id="close-small" name="close-small" />
+              <Icon
+                id="close-small"
+                name="close-small"
+                focusable="false"
+                aria-hidden="true"
+              />
             </Button>
           </slot>
         </footer>
