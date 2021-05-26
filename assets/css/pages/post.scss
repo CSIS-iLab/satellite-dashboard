@@ -172,30 +172,6 @@
     }
   }
 
-  // Last updated
-  &__last-updated {
-    padding: 0 calc(50% - #{$size__content-max-width} / 2);
-    background-color: $color-white-100;
-    @include full-width-background($color-white-100, true);
-
-    @include breakpoint('medium') {
-      &::before,
-      &::after {
-        display: none;
-      }
-    }
-
-    &-date {
-      @extend %font-ui-text-sm-oxygen;
-      color: $color-black-160;
-    }
-
-    &-separator {
-      margin-bottom: rem(48);
-      color: rgba(0, 0, 0, 0.2);
-    }
-  }
-
   // Further reading section
 
   &__further {

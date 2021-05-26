@@ -3,6 +3,7 @@
 .entry-content {
   @extend %page-content-bg;
   @extend %font-post-text-lg;
+  background-color: $color-post-background;
 
   > *:not([class]):not(ul):not(ol) {
     padding: 0 calc(50% - #{$size__content-max-width} / 2);
@@ -144,6 +145,23 @@
 
   ul li::marker {
     font-size: 0.8em;
+  }
+
+  /*----------  Last updated  ----------*/
+  .last-updated {
+    padding: 0 calc(50% - #{$size__content-max-width} / 2);
+
+    &__date {
+      margin-bottom: rem(16);
+      @extend %font-post-text-sm;
+      color: $color-black-160;
+      font-weight: 400;
+    }
+
+    &__separator {
+      margin-bottom: rem(48);
+      border: 1px solid $color-black-120;
+    }
   }
 }
 
