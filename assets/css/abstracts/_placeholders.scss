@@ -187,12 +187,12 @@
 
 %page-content-bg {
   color: $color-black-190;
-  background: $color-white-100;
+  background: $color-page-content-bg;
 
   // Ensures that background extends to edges on mobile devices
   @include breakpoint($break: 'medium', $dir: 'max-width') {
     @include full-width-background(
-      $background: $color-white-100,
+      $background: $color-page-content-bg,
       $includeMargins: true
     );
 
