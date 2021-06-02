@@ -234,6 +234,33 @@ export default {
       users: (state) => state.analysis.users
     })
   },
+  vueTippy: 'v-tippy',
+  mounted: function() {
+    this.$nextTick(function() {
+      // Code that will run only after the
+      // entire view has been rendered
+      // I can add it as a custom property to the options but
+      // when I try to do the same to the element where we actually need it,
+      // it won't do it.
+      let test = this
+      test.$options.vueTippy
+      test.$el.vueTippy
+      // test.$children
+      test
+        .$el.children[0].children[1].children[2].children[0].attributes.vueTippy
+      console.log(test.$options)
+      console.log(test.$el)
+      // Grabs & adds the v-tippy as an attribute
+      // same result as adding via wordpress
+      // const glossary = document.querySelector('[data-type="glossary"]')
+      // glossary.setAttribute('v-tippy', true)
+      // console.log(glossary) // <a href="https://satdash.wpengine…/glossary/orbital-speed/" data-type="glossary" data-id="6772" v-tippy="">
+      // Also tried to add it as a property but neither of these 2 ways worked.
+      // test.$el.children[0].children[1].children[2].children[0]['v-test']
+      // test.$el.vueTippy
+      // console.log(test.$el.children[0].children[1].children[2].children[0])
+    })
+  },
   methods: {
     getKeywords(taxonomy, state, url) {
       if (!this.post[taxonomy]) {
