@@ -8,7 +8,7 @@
       <div v-if="showEventType" class="close-approaches__item-title">
         {{ event.orbit }} Close Approach
       </div>
-      <nuxt-link :to="getEventUrl(event)">
+      <nuxt-link :to="getEventUrl(event)" class="close-approaches__item-url">
         <Icon id="orbit" name="orbit" /> View
       </nuxt-link>
       <div
@@ -177,13 +177,21 @@ export default {
       const satIds = event.objects.map((d) => d.catalog_id)
 
       const date = new Date(event.time_of_close_approach)
+      const year = date.getFullYear()
+      const month = date.getMonth()
+      const day = date.getDate()
+      const hours = date.getHours()
+      const minutes = date.getMinutes()
+      const seconds = date.getSeconds()
       const formattedDate = [
-        date.getFullYear(),
-        ('0' + (date.getMonth() + 1)).slice(-2),
-        ('0' + date.getDate()).slice(-2)
+        year,
+        ('0' + (month + 1)).slice(-2),
+        ('0' + day).slice(-2)
       ].join('-')
 
-      return `?satids=${satIds}?date=${formattedDate}`
+      const timeInSeconds = hours * 60 * 60 + minutes * 60 + seconds
+
+      return `?satids=${satIds}&date=${formattedDate}&time=${timeInSeconds}`
     },
     ...mapMutations({
       updateFocusedSatellites: 'satellites/updateFocusedSatellites'
