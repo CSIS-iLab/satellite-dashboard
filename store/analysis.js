@@ -186,6 +186,7 @@ export const actions = {
 function contentFormatter(content) {
   let formattedContent = {}
   const content_parsed = parse(content)
+  // console.log(content)
   const linksToGlossaryFormatted = linkFormatter(content_parsed, content)
   // Grabs all the spans that have the id that we need
   let spansID = content_parsed.querySelectorAll('.easy-footnote-margin-adjust')
@@ -205,7 +206,7 @@ function linkFormatter(contentParsed, content) {
   let linksEl = contentParsed.querySelectorAll("[data-type='glossary']")
   if (!linksEl && !linksEl.length) return content
   linksEl.forEach((link) => {
-    const id = link._attrs['data-id']
+    const id = link._attrs.href.substring(38, link._attrs.href.length - 1)
     link.setAttribute('href', `../glossary#${id}`)
   })
   return contentParsed.toString()
