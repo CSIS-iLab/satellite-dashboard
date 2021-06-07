@@ -8,6 +8,9 @@
       <div v-if="showEventType" class="close-approaches__item-title">
         {{ event.orbit }} Close Approach
       </div>
+      <nuxt-link :to="getEventUrl(event)" class="close-approaches__item-url">
+        <Icon id="orbit" name="orbit" aria-label="View Close Approach" />
+      </nuxt-link>
       <div
         :class="[
           showEventType
@@ -171,6 +174,30 @@ export default {
     addToFocused(e, catalog_id) {
       this.focusedItems.add(catalog_id)
       this.updateFocusedSatellites(this.focusedItems)
+    },
+    getEventUrl(event) {
+      const satIds = event.objects.map((d) => d.catalog_id)
+
+      if (satIds.length === 1 && this.id) {
+        satIds.push(this.id)
+      }
+
+      const date = new Date(event.time_of_close_approach)
+      const year = date.getFullYear()
+      const month = date.getMonth()
+      const day = date.getDate()
+      const hours = date.getHours()
+      const minutes = date.getMinutes()
+      const seconds = date.getSeconds()
+      const formattedDate = [
+        year,
+        ('0' + (month + 1)).slice(-2),
+        ('0' + day).slice(-2)
+      ].join('-')
+
+      const timeInSeconds = hours * 60 * 60 + minutes * 60 + seconds
+
+      return `?satids=${satIds}&date=${formattedDate}&time=${timeInSeconds}`
     },
     ...mapMutations({
       updateFocusedSatellites: 'satellites/updateFocusedSatellites'

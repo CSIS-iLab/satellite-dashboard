@@ -6,8 +6,12 @@
 
   &__item {
     position: relative;
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    justify-content: space-between;
     padding-top: rem(16);
     color: $color-white-180;
+    column-gap: rem(16);
 
     &::before {
       content: '';
@@ -32,11 +36,24 @@
     }
 
     &-meta {
+      grid-column: 1 / -1;
       @extend %font-ui-text-base-oxygen;
+    }
+
+    &-url {
+      display: flex;
+      grid-column: 2;
+      grid-row: 1;
+      gap: rem(4);
+      align-items: center;
+      justify-self: end;
+      color: $color-white-160;
+      text-transform: uppercase;
     }
   }
 
   &__objects {
+    grid-column: 1 / -1;
     margin: rem(16) 0;
     padding: 0;
 

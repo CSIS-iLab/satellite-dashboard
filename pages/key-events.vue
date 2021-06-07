@@ -159,7 +159,16 @@
               role="list"
             >
               <li>
-                <Icon id="orbit" name="orbit" />
+                <nuxt-link
+                  :to="getEventUrl(props.row)"
+                  class="close-approaches__item-url"
+                >
+                  <Icon
+                    id="orbit"
+                    name="orbit"
+                    aria-label="View Close Approach"
+                  />
+                </nuxt-link>
               </li>
               <li>
                 <Icon id="graph" name="graph" />
@@ -334,6 +343,26 @@ export default {
     },
     formatNumber(value) {
       return Number(value).toLocaleString('en-US')
+    },
+    getEventUrl(event) {
+      const satIds = [event.catalog_id_1, event.catalog_id_2]
+
+      const date = new Date(event.time_of_close_approach)
+      const year = date.getFullYear()
+      const month = date.getMonth()
+      const day = date.getDate()
+      const hours = date.getHours()
+      const minutes = date.getMinutes()
+      const seconds = date.getSeconds()
+      const formattedDate = [
+        year,
+        ('0' + (month + 1)).slice(-2),
+        ('0' + day).slice(-2)
+      ].join('-')
+
+      const timeInSeconds = hours * 60 * 60 + minutes * 60 + seconds
+
+      return `/?satids=${satIds}&date=${formattedDate}&time=${timeInSeconds}`
     },
     clearSearch() {
       this.searchTerm = []

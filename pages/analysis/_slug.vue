@@ -30,9 +30,7 @@
               <td class="desktop-only">{{ sat.user }}</td>
               <td class="desktop-only">{{ sat.operator }}</td>
               <td>
-                <nuxt-link :to="`/?satellites=${sat.catalog_id}`"
-                  >View</nuxt-link
-                >
+                <nuxt-link :to="`/?satids=${sat.catalog_id}`">View</nuxt-link>
               </td>
             </tr>
           </tbody>
