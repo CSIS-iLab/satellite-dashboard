@@ -12,6 +12,6 @@ jobs:
     
     steps:
     - name: Trigger our build webhook on Netlify
-      run: curl -s -X POST "${TOKEN}"
+      run: curl --silent --show-error --fail -X POST "${TOKEN}"
       env:
         TOKEN: ${{ secrets.AG_API_URL }}
