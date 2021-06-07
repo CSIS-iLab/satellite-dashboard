@@ -186,17 +186,35 @@ export const actions = {
 function contentFormatter(content) {
   let formattedContent = {}
   const content_parsed = parse(content)
+  // console.log(content)
+  const linksToGlossaryFormatted = glossaryLinkFormatter(
+    content_parsed,
+    content
+  )
   // Grabs all the spans that have the id that we need
   let spansID = content_parsed.querySelectorAll('.easy-footnote-margin-adjust')
   // Grabs all the spans that contains the a tags
   let spansAEl = content_parsed.querySelectorAll('.easy-footnote a')
   if (!spansAEl.length) {
-    formattedContent.content = content
+    formattedContent.content = linksToGlossaryFormatted
   } else {
     formattedContent.content = formatContent(content_parsed, spansID)
     formattedContent.footnotes = formatFootnotes(spansAEl, spansID)
   }
   return formattedContent
+}
+
+function glossaryLinkFormatter(contentParsed, content) {
+  // Grabs the links for the glossary
+  let linksEl = contentParsed.querySelectorAll("[data-type='glossary']")
+  if (!linksEl && !linksEl.length) return content
+  linksEl.forEach((link) => {
+    const url = link._attrs.href.split('/')
+    const urlLength = url.length
+    let id = url[urlLength - 1] != '' ? url[urlLength - 1] : url[urlLength - 2]
+    link.setAttribute('href', `../glossary#${id}`)
+  })
+  return contentParsed.toString()
 }
 
 function formatContent(content_parsed, spansID) {
