@@ -9,7 +9,7 @@
         {{ event.orbit }} Close Approach
       </div>
       <nuxt-link :to="getEventUrl(event)" class="close-approaches__item-url">
-        <Icon id="orbit" name="orbit" /> View
+        <Icon id="orbit" name="orbit" aria-label="View Close Approach" />
       </nuxt-link>
       <div
         :class="[
@@ -175,6 +175,10 @@ export default {
     },
     getEventUrl(event) {
       const satIds = event.objects.map((d) => d.catalog_id)
+
+      if (satIds.length === 1 && this.id) {
+        satIds.push(this.id)
+      }
 
       const date = new Date(event.time_of_close_approach)
       const year = date.getFullYear()
