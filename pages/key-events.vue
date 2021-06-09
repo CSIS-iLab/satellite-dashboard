@@ -236,7 +236,7 @@ export default {
             type: 'desc'
           },
           {
-            field: 'min_distance', // if change to min_distance_km the table is empty
+            field: 'min_distance',
             type: 'asc'
           }
         ],
