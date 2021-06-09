@@ -169,7 +169,6 @@ export default {
     const queryArgs = this.$route.query
     for (let key in this.appliedFilterValues) {
       if (queryArgs[key]) {
-        console.log(queryArgs[key])
         const value = key === 'satellites' ? queryArgs[key] : +queryArgs[key]
         this.appliedFilterValues[key].push(value)
         this.filterPosts()
