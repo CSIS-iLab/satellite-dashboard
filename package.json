@@ -26,9 +26,12 @@
   "dependencies": {
     "@a11y-kit/vue-tabs": "^1.0.1",
     "@nuxtjs/axios": "^5.13.0",
+    "@nuxtjs/composition-api": "^0.24.4",
     "@nuxtjs/pwa": "^3.0.0-0",
     "fibers": "^5.0.0",
     "frontmatter-markdown-loader": "^3.3.0",
+    "highcharts": "^9.1.1",
+    "highcharts-vue": "^1.4.0",
     "merge-descriptors": "^1.0.1",
     "nuxt": "^2.12.2",
     "satellite.js": "^4.0.0",

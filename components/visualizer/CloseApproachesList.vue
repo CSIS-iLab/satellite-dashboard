@@ -44,6 +44,14 @@
           </div>
           <div class="sat__actions">
             <Button
+              aria-label="See historical orbits"
+              :on-click="updateShowMagicChart"
+            >
+              <Icon id="magic-chart" name="graph">ok</Icon>
+            </Button>
+          </div>
+          <div class="sat__actions">
+            <Button
               v-if="checkItemFocusedState(object.catalog_id)"
               aria-label="Pin Event"
               :on-click="(e) => removeFromFocused(e, object.catalog_id)"
@@ -125,6 +133,14 @@ export default {
     focusedItems() {
       return new Set(this.focusedSatellites)
     },
+    showMagicChart: {
+      get: function() {
+        return this.$store.state.layout.showMagicChart
+      },
+      set: function(magicChartState) {
+        this.updateMagicChart({ magicChartState })
+      }
+    },
     ...mapState({
       satellites: (state) => state.satellites.satellites,
       focusedSatellites: (state) => state.satellites.focusedSatellites
@@ -199,8 +215,12 @@ export default {
 
       return `?satids=${satIds}&date=${formattedDate}&time=${timeInSeconds}`
     },
+    updateShowMagicChart() {
+      this.showMagicChart = !this.showMagicChart
+    },
     ...mapMutations({
-      updateFocusedSatellites: 'satellites/updateFocusedSatellites'
+      updateFocusedSatellites: 'satellites/updateFocusedSatellites',
+      updateMagicChart: 'layout/updateMagicChart'
     })
   }
 }
