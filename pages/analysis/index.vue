@@ -171,6 +171,7 @@ export default {
       if (queryArgs[key]) {
         const value = key === 'satellites' ? queryArgs[key] : +queryArgs[key]
         this.appliedFilterValues[key].push(value)
+        this.filterPosts()
       }
     }
   },
