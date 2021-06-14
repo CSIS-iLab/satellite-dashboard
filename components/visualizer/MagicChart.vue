@@ -1,6 +1,16 @@
 <template>
   <Modal @close="updateMagicChart({ showMagicChart: false })">
-    <template v-slot:header>Comparing Orbits</template>
+    <template v-slot:header>
+      Comparing Orbits
+      <Button
+        type="button"
+        class="modal__btn-close-icon"
+        aria-label="Close Modal"
+        :on-click="close"
+      >
+        <Icon id="close-small" name="close-small" focusable="false" />
+      </Button>
+    </template>
     <template v-slot:body>
       <highcharts
         ref="chart"
@@ -18,7 +28,9 @@
 <script>
 import Highcharts from 'highcharts'
 import exportingInit from 'highcharts/modules/exporting'
-exportingInit(Highcharts)
+// server side rendering makes this tricky
+// see https://github.com/highcharts/highcharts/issues/10588
+if (typeof Highcharts === 'object') exportingInit(Highcharts)
 
 import { mapState, mapMutations } from 'vuex'
 import Modal from '~/components/global/Modal'
