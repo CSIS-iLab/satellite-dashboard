@@ -15,8 +15,8 @@
       <highcharts
         ref="chart"
         :constructor-type="'stockChart'"
-        class="hc"
-        :options="options"
+        class="hc magic-chart"
+        :options="chartOptions"
       />
     </template>
     <template v-slot:footer>
@@ -26,12 +26,6 @@
 </template>
 
 <script>
-import Highcharts from 'highcharts'
-import exportingInit from 'highcharts/modules/exporting'
-// server side rendering makes this tricky
-// see https://github.com/highcharts/highcharts/issues/10588
-if (typeof Highcharts === 'object') exportingInit(Highcharts)
-
 import { mapState, mapMutations } from 'vuex'
 import Modal from '~/components/global/Modal'
 
@@ -42,7 +36,7 @@ export default {
 
   data() {
     return {
-      options: {
+      chartOptions: {
         title: {
           text: 'Historical Longitudes',
           style: {
@@ -86,15 +80,15 @@ export default {
               [300000000000, 5],
               [900000000000, 25]
             ],
-            color: '#c07800'
+            dashStyle: this.predicted ? 'longdash' : 'solid'
           }
         ],
-        xAxis: 'datetime',
+        xAxis: 'Datetime',
         yAxis: {
-          title: { text: 'longitude' }
+          title: { text: 'Longitude' }
         },
         chart: {
-          styledMode: false,
+          styledMode: true,
           backgroundColor: null,
           plotBackgroundColor: null
         }
@@ -107,9 +101,6 @@ export default {
     })
   },
   methods: {
-    download() {
-      console.log(Highcharts.version)
-    },
     ...mapMutations({
       updateMagicChart: 'layout/updateMagicChart'
     })
@@ -118,5 +109,6 @@ export default {
 </script>
 
 <style lang="scss">
+@import '~/assets/css/components/highcharts-theme';
 @import '~/assets/css/components/magic-chart';
 </style>

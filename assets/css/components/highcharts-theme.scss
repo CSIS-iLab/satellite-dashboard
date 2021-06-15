@@ -1,0 +1,30 @@
+@import '~/node_modules/highcharts/css/highcharts';
+
+.highcharts-root {
+  font-family: $font__oxygen;
+}
+
+.highcharts-title,
+.highcharts-subtitle {
+  fill: $color-offwhite;
+}
+
+.highcharts-background {
+  fill: $color-slate-395;
+}
+
+.highcharts-plot-background {
+  fill: $color-slate-200;
+}
+
+.highcharts-series-0 {
+  stroke: $color-orange-100;
+  stroke-dasharray: 20, 10;
+
+}
+
+.highcharts-series-1 {
+  stroke: $color-orange-100;
+  stroke: $color-ltblue-100;
+}
+

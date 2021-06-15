@@ -2,6 +2,7 @@
   <div class="details-events">
     <h3>Historical Longitudes</h3>
     <p class="details-panel__desc">Coming soon.</p>
+    <highcharts ref="chart" class="hc sub-chart" :options="chartOptions" />
     <hr />
     <h3>Close Approaches</h3>
     <template v-if="totalEvents === 0">
@@ -118,7 +119,39 @@ export default {
       sortOptions: [
         { value: 'min_distance_km', label: 'Distance' },
         { value: 'time_of_close_approach', label: 'Date' }
-      ]
+      ],
+      chartOptions: {
+        title: {
+          text: 'Historical Longitudes',
+          style: {
+            color: '#DDEECC'
+          }
+        },
+        legend: {
+          enabled: true,
+          itemStyle: {
+            color: '#3333F3',
+            cursor: 'pointer',
+            fontSize: '14px',
+            fontWeight: 'bold'
+          }
+        },
+        series: [
+          {
+            name: 'Sat 1',
+            data: [1, 2, 3]
+          }
+        ],
+        xAxis: { title: { text: 'Datetime' } },
+        yAxis: {
+          title: { text: 'Longitude' }
+        },
+        chart: {
+          styledMode: true,
+          backgroundColor: null,
+          plotBackgroundColor: null
+        }
+      }
     }
   },
   computed: {
@@ -155,3 +188,10 @@ export default {
   }
 }
 </script>
+
+<style>
+.sub-chart {
+  max-width: 100%;
+  max-height: 100%;
+}
+</style>
