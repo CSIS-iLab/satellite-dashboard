@@ -39,7 +39,28 @@ export default {
       chartOptions: {
         title: { text: 'Historical Longitudes' },
         legend: { enabled: true },
-        rangeSelector: { inputEnabled: true },
+        rangeSelector: {
+          inputEnabled: true,
+          allButtonsEnabled: false,
+          buttons: [
+            {
+              type: 'ytd',
+              text: 'YTD',
+              title: 'View year to date'
+            },
+            {
+              type: 'year',
+              count: 1,
+              text: '1y',
+              title: 'View 1 year'
+            },
+            {
+              type: 'all',
+              text: 'All',
+              title: 'View all'
+            }
+          ]
+        },
         series: [
           {
             name: 'Sat 1',

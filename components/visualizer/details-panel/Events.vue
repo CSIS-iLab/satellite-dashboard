@@ -127,18 +127,52 @@ export default {
         title: {
           text: 'Historical Longitudes'
         },
-        legend: {
-          enabled: true
+        chart: {
+          styledMode: true,
+          height: 550,
+          marginTop: 0,
+          marginBottom: 40,
+          marginLeft: 0,
+          marginRight: 0
+        },
+        legend: { enabled: true },
+        xAxis: { title: { text: 'Datetime', margin: -50 } },
+        yAxis: {
+          opposite: false,
+          title: {
+            text: 'Longitude',
+            x: 60,
+            reserveSpace: false
+          }
+        },
+        rangeSelector: {
+          inputEnabled: false,
+          allButtonsEnabled: false,
+          buttons: [
+            {
+              type: 'ytd',
+              text: 'YTD',
+              title: 'View year to date'
+            },
+            {
+              type: 'year',
+              count: 1,
+              text: '1y',
+              title: 'View 1 year'
+            },
+            {
+              type: 'all',
+              text: 'All',
+              title: 'View all'
+            }
+          ]
         },
         series: [
           {
             name: 'Sat 1',
             data: [1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3]
           }
-        ],
-        xAxis: { title: { text: 'Datetime' } },
-        yAxis: { title: { text: 'Longitude' } },
-        chart: { styledMode: true }
+        ]
       }
     }
   },
