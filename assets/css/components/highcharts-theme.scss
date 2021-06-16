@@ -17,14 +17,31 @@
   fill: $color-slate-200;
 }
 
+.highcharts-axis-labels,
+.highcharts-axis-title {
+  fill: $color-offwhite; 
+}
+
+.highcharts-legend text {
+  font-size: 14px;
+  fill: $color-offwhite;
+}
+
+.highcharts-range-input text {
+  font-weight: bold;
+  fill: $color-offwhite;
+}
+
+.highcharts-range-selector-buttons {
+  fill: $color-offwhite;
+}
+
 .highcharts-series-0 {
   stroke: $color-orange-100;
   stroke-dasharray: 20, 10;
-
 }
 
 .highcharts-series-1 {
-  stroke: $color-orange-100;
   stroke: $color-ltblue-100;
 }
 

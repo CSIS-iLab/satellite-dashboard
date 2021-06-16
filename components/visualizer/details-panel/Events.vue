@@ -1,8 +1,11 @@
 <template>
   <div class="details-events">
-    <h3>Historical Longitudes</h3>
-    <p class="details-panel__desc">Coming soon.</p>
-    <highcharts ref="chart" class="hc sub-chart" :options="chartOptions" />
+    <highcharts
+      ref="chart"
+      :constructor-type="'stockChart'"
+      class="hc sub-chart"
+      :options="chartOptions"
+    />
     <hr />
     <h3>Close Approaches</h3>
     <template v-if="totalEvents === 0">
@@ -122,35 +125,20 @@ export default {
       ],
       chartOptions: {
         title: {
-          text: 'Historical Longitudes',
-          style: {
-            color: '#DDEECC'
-          }
+          text: 'Historical Longitudes'
         },
         legend: {
-          enabled: true,
-          itemStyle: {
-            color: '#3333F3',
-            cursor: 'pointer',
-            fontSize: '14px',
-            fontWeight: 'bold'
-          }
+          enabled: true
         },
         series: [
           {
             name: 'Sat 1',
-            data: [1, 2, 3]
+            data: [1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3]
           }
         ],
         xAxis: { title: { text: 'Datetime' } },
-        yAxis: {
-          title: { text: 'Longitude' }
-        },
-        chart: {
-          styledMode: true,
-          backgroundColor: null,
-          plotBackgroundColor: null
-        }
+        yAxis: { title: { text: 'Longitude' } },
+        chart: { styledMode: true }
       }
     }
   },
@@ -189,7 +177,9 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+@import '~/assets/css/components/highcharts-theme';
+
 .sub-chart {
   max-width: 100%;
   max-height: 100%;

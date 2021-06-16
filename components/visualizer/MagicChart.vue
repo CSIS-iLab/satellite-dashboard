@@ -37,28 +37,9 @@ export default {
   data() {
     return {
       chartOptions: {
-        title: {
-          text: 'Historical Longitudes',
-          style: {
-            color: '#DDEECC'
-          }
-        },
-        legend: {
-          enabled: true,
-          itemStyle: {
-            color: '#3333F3',
-            cursor: 'pointer',
-            fontSize: '14px',
-            fontWeight: 'bold'
-          }
-        },
-        rangeSelector: {
-          inputEnabled: true,
-          inputStyle: {
-            color: '#DDEECC',
-            fontWeight: 'bold'
-          }
-        },
+        title: { text: 'Historical Longitudes' },
+        legend: { enabled: true },
+        rangeSelector: { inputEnabled: true },
         series: [
           {
             name: 'Sat 1',
@@ -68,8 +49,7 @@ export default {
               [3000000000, 5],
               [300000000000, 15],
               [900000000000, 5]
-            ],
-            dashStyle: this.predicted | true ? 'longdash' : 'solid'
+            ]
           },
           {
             name: 'Sat 2',
@@ -79,19 +59,12 @@ export default {
               [3000000000, 1],
               [300000000000, 5],
               [900000000000, 25]
-            ],
-            dashStyle: this.predicted ? 'longdash' : 'solid'
+            ]
           }
         ],
-        xAxis: 'Datetime',
-        yAxis: {
-          title: { text: 'Longitude' }
-        },
-        chart: {
-          styledMode: true,
-          backgroundColor: null,
-          plotBackgroundColor: null
-        }
+        xAxis: { title: { text: 'Datetime' } },
+        yAxis: { title: { text: 'Longitude' } },
+        chart: { styledMode: true }
       }
     }
   },
