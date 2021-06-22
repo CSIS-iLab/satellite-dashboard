@@ -103,7 +103,8 @@ export default {
   },
   // Axios module configuration (https://axios.nuxtjs.org/options)
   axios: {
-    baseURL: 'https://satdash.wpengine.com',
+    baseURL: 'http://satellite-dashboard.local',
+    // baseURL: 'https://satdash.wpengine.com',
     retry: {
       retries: 10,
       retryDelay: axiosRetry.exponentialDelay

@@ -187,8 +187,8 @@
 <script>
 import { mapState, mapGetters } from 'vuex'
 import Page from '~/layout/page'
-import Button from '~/components/global/Button.vue'
-import Icon from '~/components/global/Icon.vue'
+import Button from '~/components/global/Button'
+import Icon from '~/components/global/Icon'
 import StatusTypesLegend from '~/components/global/StatusTypesLegend'
 
 export default {

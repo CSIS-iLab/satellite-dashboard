@@ -1,11 +1,12 @@
 <template>
   <div class="details-events">
     <highcharts
+      v-if="dataLoaded"
       ref="chart"
-      :constructor-type="'stockChart'"
       class="hc sub-chart"
       :options="chartOptions"
     />
+    <div v-else>Loading satellite data...</div>
     <hr />
     <h3>Close Approaches</h3>
     <template v-if="totalEvents === 0">
@@ -83,7 +84,8 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import Highcharts from 'highcharts'
+import { mapState, mapActions } from 'vuex'
 import CloseApproachesList from '~/components/visualizer/CloseApproachesList.vue'
 import Button from '~/components/global/Button.vue'
 import Icon from '~/components/global/Icon.vue'
@@ -114,6 +116,7 @@ export default {
   },
   data() {
     return {
+      dataLoaded: false,
       activeTab: 'events',
       events: [],
       maxDistance: 50,
@@ -129,14 +132,22 @@ export default {
         },
         chart: {
           styledMode: true,
-          height: 550,
-          marginTop: 0,
-          marginBottom: 40,
-          marginLeft: 0,
-          marginRight: 0
+          height: 350
+        },
+        plotOptions: {
+          turboThreshold: 15000
         },
         legend: { enabled: true },
-        xAxis: { title: { text: 'Datetime', margin: -50 } },
+        xAxis: {
+          title: {
+            text: 'Datetime'
+          },
+          labels: {
+            formatter: function() {
+              return Highcharts.dateFormat('%Y', this.value)
+            }
+          }
+        },
         yAxis: {
           opposite: false,
           title: {
@@ -167,12 +178,7 @@ export default {
             }
           ]
         },
-        series: [
-          {
-            name: 'Sat 1',
-            data: [1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3]
-          }
-        ]
+        series: []
       }
     }
   },
@@ -203,10 +209,48 @@ export default {
       satellites: (state) => state.satellites.satellites
     })
   },
+  watch: {
+    id() {
+      this.dataLoaded = false
+      this.longitudes()
+    }
+  },
+  async created() {
+    await this.longitudes()
+  },
   methods: {
     updateMaxDistance() {
       this.appliedMaxDistance = this.maxDistance
-    }
+    },
+    async longitudes() {
+      const {
+        names,
+        historical_longitudes,
+        predicted_longitudes
+      } = await this.getLongitudes({ _ids: [this.id] })
+
+      historical_longitudes.forEach((l, i) => {
+        this.chartOptions.series[i] = { data: historical_longitudes[i].data }
+        this.chartOptions.series[i].name = `${this.name}`
+      })
+
+      // set predicted lines
+      predicted_longitudes.forEach((l, i) => {
+        this.chartOptions.series[i + historical_longitudes.length - 1] = {
+          data: predicted_longitudes[i].data
+        }
+        this.chartOptions.series[
+          i + historical_longitudes.length - 1
+        ].name = `${this.name} (predicted)`
+      })
+
+      // render chart after data is loaded
+
+      this.dataLoaded = true
+    },
+    ...mapActions({
+      getLongitudes: 'satellites/getLongitudes'
+    })
   }
 }
 </script>

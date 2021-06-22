@@ -19,7 +19,11 @@
 
 .highcharts-axis-labels,
 .highcharts-axis-title {
-  fill: $color-offwhite; 
+  fill: $color-offwhite;
+}
+
+.highcharts-plot-line-label {
+  fill: $color-offwhite;
 }
 
 .highcharts-legend text {
@@ -38,10 +42,18 @@
 
 .highcharts-series-0 {
   stroke: $color-orange-100;
-  stroke-dasharray: 20, 10;
 }
 
 .highcharts-series-1 {
-  stroke: $color-ltblue-100;
+  stroke: $color-focus;
 }
 
+.highcharts-series2 {
+  stroke: $color-orange-100;
+  stroke-dasharray: 20, 10;
+}
+
+.highcharts-series3 {
+  stroke: $color-focus;
+  stroke-dasharray: 20, 10;
+}

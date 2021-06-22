@@ -44,14 +44,6 @@
           </div>
           <div class="sat__actions">
             <Button
-              aria-label="See historical orbits"
-              :on-click="updateShowMagicChart"
-            >
-              <Icon id="magic-chart" name="graph">ok</Icon>
-            </Button>
-          </div>
-          <div class="sat__actions">
-            <Button
               v-if="checkItemFocusedState(object.catalog_id)"
               aria-label="Pin Event"
               :on-click="(e) => removeFromFocused(e, object.catalog_id)"
@@ -68,6 +60,15 @@
           </div>
         </li>
       </ul>
+      <div class="close-approaches__item btn btn--curved">
+        <Button
+          aria-label="See historical orbits"
+          :on-click="(e) => updateShowMagicChart(event.objects)"
+        >
+          <Icon id="magic-chart" name="graph" focusable="false" />
+          Compare Objects
+        </Button>
+      </div>
     </li>
   </ol>
 </template>
@@ -215,12 +216,18 @@ export default {
 
       return `?satids=${satIds}&date=${formattedDate}&time=${timeInSeconds}`
     },
-    updateShowMagicChart() {
+    updateShowMagicChart(objects) {
+      const payload = {
+        ids: objects.map((o) => o.catalog_id),
+        names: objects.map((o) => o.Name)
+      }
       this.showMagicChart = !this.showMagicChart
+      this.updateLongitudeSatellites(payload)
     },
     ...mapMutations({
       updateFocusedSatellites: 'satellites/updateFocusedSatellites',
-      updateMagicChart: 'layout/updateMagicChart'
+      updateMagicChart: 'layout/updateMagicChart',
+      updateLongitudeSatellites: 'satellites/updateLongitudeSatellites'
     })
   }
 }

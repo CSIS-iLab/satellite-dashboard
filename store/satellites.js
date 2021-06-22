@@ -1,3 +1,5 @@
+import qs from 'querystring'
+
 import Types from '~/assets/data/types.json'
 import AGCountries from '~/assets/data/ag_countries.json'
 import CountryISOs from '~/assets/data/country_isos.json'
@@ -67,6 +69,7 @@ export const state = () => ({
   focusedSatellites: new Set(),
   visibleSatellites: [],
   visibleSatellitesType: 'catalog',
+  longitudeSatellites: [],
   detailedSatellite: null,
   targetDate: new Date(new Date().setHours(0, 0, 0, 0)),
   selectedTimescale: timescales[1],
@@ -117,6 +120,9 @@ export const mutations = {
   },
   updateVisibleSatellitesType: (state, type) => {
     state.visibleSatellitesType = type
+  },
+  updateLongitudeSatellites: (state, payload) => {
+    state.longitudeSatellites = payload
   },
   updateCountriesOfJurisdiction: (state, countries) => {
     state.countriesOfJurisdiction = countries
@@ -232,7 +238,7 @@ export const actions = {
         Object.freeze(countriesOfJurisdiction)
       )
     } catch (err) {
-      console.log(err)
+      console.error(err)
     }
   },
 
@@ -266,6 +272,36 @@ export const actions = {
       commit('updateOrbits', Object.freeze(orbits))
     } catch (err) {
       console.log(err)
+    }
+  },
+
+  /**
+   *  Pulls historical and predicted orbital longitudes for requested satellites
+   * */
+  async getLongitudes({ state, commit }, { _ids }) {
+    // php server only recognizes bracket encoding for arrays
+    const ids = qs.encode(
+      { ids: _ids || state.longitudeSatellites.ids },
+      '&',
+      '[]='
+    )
+
+    let historical_longitudes, predicted_longitudes
+    try {
+      historical_longitudes = await this.$axios.$get(
+        `wp-json/satdash/v1/longitudes/historical?${ids}`
+      )
+      predicted_longitudes = await this.$axios.$get(
+        `wp-json/satdash/v1/longitudes/predicted?${ids}`
+      )
+    } catch (e) {
+      console.error(e)
+    }
+
+    return {
+      historical_longitudes,
+      predicted_longitudes,
+      names: state.longitudeSatellites.names
     }
   }
 }
