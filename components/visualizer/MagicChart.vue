@@ -8,8 +8,9 @@
         v-if="dataLoaded"
         ref="chart"
         :constructor-type="'stockChart'"
-        class="hc magic-chart"
         :options="chartOptions"
+        :callback="chartCallback"
+        class="hc magic-chart"
       />
       <div v-else>Loading satellite data...</div>
     </template>
@@ -77,26 +78,41 @@ export default {
   },
   methods: {
     async longitudes() {
-      const {
+      let {
         names,
         historical_longitudes,
         predicted_longitudes
       } = await this.getLongitudes({ _ids: null })
 
-      // set historical lines
-      historical_longitudes.forEach((l, i) => {
-        this.chartOptions.series[i] = { data: historical_longitudes[i].data }
-        this.chartOptions.series[i].name = `${names[i]}`
+      // shape historical lines
+      historical_longitudes = historical_longitudes.map((l, i) => {
+        // TODO remove this sort after merging backend fix
+        l.data = l.data.sort((a, b) => {
+          return a[0] - b[0]
+        })
+
+        l.name = names[i]
+
+        return l
       })
 
-      // set predicted lines
-      predicted_longitudes.forEach((l, i) => {
-        this.chartOptions.series[i + historical_longitudes.length - 1] = {
-          data: predicted_longitudes[i].data
-        }
-        this.chartOptions.series[
-          i + historical_longitudes.length - 1
-        ].name = `${names[i]} (predicted)`
+      // shape predicted lines
+      predicted_longitudes = predicted_longitudes.map((l, i) => {
+        // TODO remove this sort after merging backend fix
+        l.data = l.data.sort((a, b) => {
+          return a[0] - b[0]
+        })
+
+        l.name = `${names[i]} (predicted)`
+
+        // add last historical point to beginning of predicted
+        l.data.unshift(
+          historical_longitudes[i].data[
+            historical_longitudes[i].data.length - 1
+          ]
+        )
+
+        return l
       })
 
       // add vertical line for today
@@ -108,6 +124,24 @@ export default {
             label: { text: 'Today' }
           }
         ]
+      }
+
+      // TODO set css on series length basis the first chart can have up to 4
+      // lines, the smaller chart has up to 4. If the first chart only has 2
+      // lines (i.e. no predictions), the second chart needs to set the
+      // `highcharts-series-2,3` classes to be solid , If there are 4 separate
+      // series (2 historical solid, 2 predicted dashed), then
+      // `highcharts-series-2,3` need to be dashed and  `highcharts-series-4-7`
+      // need to be solid
+
+      // set chartCallback to get all lines in both charts
+      this.chartCallback = function(chart) {
+        console.log('callback')
+        ;[...historical_longitudes, ...predicted_longitudes].forEach(
+          (series) => {
+            chart.addSeries(series)
+          }
+        )
       }
 
       // render chart after data is loaded
