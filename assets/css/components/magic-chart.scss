@@ -2,3 +2,20 @@
   min-width: 45vw;
   min-height: 60vh;
 }
+
+.data-source--sat-name {
+  color: $color-white-170;
+  font-weight: 500;
+  font-size: 1.2em;
+}
+
+.data-source--source-name {
+  margin-left: 0.6em;
+  color: $color-white-170;
+  font-weight: 400;
+  font-size: 1.1em;
+}
+
+.data-source--time {
+  font-size: 0.8em;
+}

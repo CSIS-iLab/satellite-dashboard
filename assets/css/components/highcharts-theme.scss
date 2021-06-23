@@ -48,12 +48,38 @@
   stroke: $color-focus;
 }
 
-.highcharts-series2 {
+.highcharts-series-2 {
   stroke: $color-orange-100;
-  stroke-dasharray: 20, 10;
+  stroke-dasharray: 20, 20;
 }
 
-.highcharts-series3 {
+.highcharts-series-3 {
   stroke: $color-focus;
-  stroke-dasharray: 20, 10;
+  stroke-dasharray: 20, 20;
 }
+
+// TODO fix nav mask
+.highcharts-navigator-mask-inside {
+  fill: rgba(0, 0, 0, 0);
+  stroke: rgba(80, 198, 120, 0.75);
+}
+
+// not working
+.highcharts-navigator-mask-outside {
+  fill: rgba(0, 0, 0, 0);
+  stroke: rgba(0, 0, 0, 0);
+}
+
+.highcharts-navigator-outline {
+  stroke: none;
+}
+
+/* stylelint-disable */
+g.highcharts-navigator-series:nth-of-type(1n) {
+  stroke: $color-orange-100;
+}
+
+g.highcharts-navigator-series:nth-of-type(3n) {
+  stroke: $color-focus;
+}
+/* stylelint-enable*/

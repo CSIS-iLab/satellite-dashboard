@@ -27,6 +27,10 @@
       margin-top: rem(32);
     }
 
+    + .close-approaches__item:last-child {
+      margin-bottom: rem(70);
+    }
+
     &-title {
       margin-bottom: rem(4);
       color: $color-white-190;

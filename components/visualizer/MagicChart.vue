@@ -1,20 +1,33 @@
 <template>
   <Modal @close="updateMagicChart({ showMagicChart: false })">
-    <template v-slot:header>
-      Comparing Orbits
-    </template>
+    <link rel="stylesheet" href="~/assets/css/components/highcharts-theme" />
+    <template v-slot:header> <h3>Compare Orbits</h3> </template>
     <template v-slot:body>
       <highcharts
         v-if="dataLoaded"
         ref="chart"
         :constructor-type="'stockChart'"
-        class="hc magic-chart"
         :options="chartOptions"
+        class="hc magic-chart"
       />
       <div v-else>Loading satellite data...</div>
     </template>
     <template v-slot:footer>
-      <div></div>
+      <div v-if="dataLoaded">
+        <h4>Data Sources</h4>
+        <ul class="modal__footer-data-source">
+          <li v-for="source in sourceInfo" :key="source.sat_id">
+            <span class="data-source--sat-name">{{ source.sat_name }}:</span>
+            <span class="data-source--source-name">
+              {{ source.source_name }}
+            </span>
+            <span class="data-source-time"
+              >(last updated {{ source.source_last_updated }})</span
+            >
+          </li>
+        </ul>
+      </div>
+      <div v-else purpose="div here to occupy footer while chart loads"></div>
     </template>
   </Modal>
 </template>
@@ -32,15 +45,27 @@ export default {
   data() {
     return {
       dataLoaded: false,
+      sourceInfo: [],
       chartOptions: {
         title: { text: 'Historical Longitudes' },
         chart: { styledMode: true },
         plotOptions: {
-          turboThreshold: 15000
+          turboThreshold: 5000,
+          series: {
+            showInNavigator: true
+          }
         },
         legend: { enabled: true },
         xAxis: { title: { text: 'Datetime' } },
         yAxis: { opposite: false, title: { text: 'Longitude' } },
+        navigator: {
+          height: 75,
+          // not working
+          maskInside: false
+        },
+        scrollbar: {
+          enabled: false
+        },
         rangeSelector: {
           inputEnabled: true,
           allButtonsEnabled: false,
@@ -77,26 +102,43 @@ export default {
   },
   methods: {
     async longitudes() {
-      const {
+      let {
         names,
         historical_longitudes,
         predicted_longitudes
       } = await this.getLongitudes({ _ids: null })
 
-      // set historical lines
-      historical_longitudes.forEach((l, i) => {
-        this.chartOptions.series[i] = { data: historical_longitudes[i].data }
-        this.chartOptions.series[i].name = `${names[i]}`
+      // shape historical lines
+      historical_longitudes = historical_longitudes.map((l, i) => {
+        // TODO remove this sort after merging backend fix
+        l.data = l.data.sort((a, b) => {
+          return a[0] - b[0]
+        })
+
+        l.name = names[i]
+
+        this.chartOptions.series.push(l)
+        return l
       })
 
-      // set predicted lines
-      predicted_longitudes.forEach((l, i) => {
-        this.chartOptions.series[i + historical_longitudes.length - 1] = {
-          data: predicted_longitudes[i].data
-        }
-        this.chartOptions.series[
-          i + historical_longitudes.length - 1
-        ].name = `${names[i]} (predicted)`
+      // shape predicted lines
+      predicted_longitudes = predicted_longitudes.map((l, i) => {
+        // TODO remove this sort after merging backend fix
+        l.data = l.data.sort((a, b) => {
+          return a[0] - b[0]
+        })
+
+        l.showInLegend = false
+
+        // add last historical point to beginning of predicted
+        l.data.unshift(
+          historical_longitudes[i].data[
+            historical_longitudes[i].data.length - 1
+          ]
+        )
+
+        this.chartOptions.series.push(l)
+        return l
       })
 
       // add vertical line for today
@@ -110,7 +152,16 @@ export default {
         ]
       }
 
-      // render chart after data is loaded
+      // add source info to data()
+      this.sourceInfo = historical_longitudes.map((l, i) => {
+        return {
+          sat_id: l.catalog_id,
+          sat_name: names[i],
+          source_name: l.source_name,
+          source_last_updated: l.source_last_updated
+        }
+      })
+
       this.dataLoaded = true
     },
     ...mapActions({

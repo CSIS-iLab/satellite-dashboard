@@ -53,7 +53,6 @@
     align-items: center;
     padding: rem(16) rem(32);
     color: $color-white-150;
-    text-transform: uppercase;
     background-color: $color-slate-400;
     @extend %font-ui-text-base-good;
 
@@ -71,6 +70,10 @@
 
     &-left {
       display: flex;
+    }
+
+    &-data-source {
+      list-style: none;
     }
   }
 
