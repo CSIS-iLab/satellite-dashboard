@@ -158,25 +158,7 @@ export default {
         },
         rangeSelector: {
           inputEnabled: false,
-          allButtonsEnabled: false,
-          buttons: [
-            {
-              type: 'ytd',
-              text: 'YTD',
-              title: 'View year to date'
-            },
-            {
-              type: 'year',
-              count: 1,
-              text: '1y',
-              title: 'View 1 year'
-            },
-            {
-              type: 'all',
-              text: 'All',
-              title: 'View all'
-            }
-          ]
+          allButtonsEnabled: false
         },
         series: []
       }
