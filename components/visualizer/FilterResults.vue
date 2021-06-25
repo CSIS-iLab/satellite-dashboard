@@ -35,10 +35,7 @@
           perPage: 75,
           pageLabel: 'Page'
         }"
-        :sort-options="{
-          enabled: false,
-          initialSortBy: { field: 'Name', type: 'asc' }
-        }"
+        :sort-options="tableSortOptions"
         style-class="vgt-table striped"
       >
         <template slot="table-column" slot-scope="props">
@@ -132,17 +129,27 @@ export default {
         {
           label: 'Name/Norad ID',
           field: 'Name',
-          thClass: 'filter-results__name',
-          sortFn: this.sortFn
+          thClass: 'filter-results__name'
         },
-        { label: 'CO.', field: 'country', sortFn: this.sortFn },
+        {
+          label: 'CO.',
+          field: 'country',
+          sortFn(x, y) {
+            console.log('xy', x[0].label, y[0].label)
+            return x[0].label < y[0].label ? -1 : 1
+          }
+        },
         { label: '', field: 'actions' }
       ],
       sortOptions: [
         { value: 'Name', label: 'Name' },
         { value: 'country', label: 'Country' }
       ],
-      currentSort: 'Name'
+      currentSort: 'Name',
+      tableSortOptions: {
+        enabled: false,
+        initialSortBy: { field: 'country', type: 'desc' }
+      }
     }
   },
   computed: {
@@ -161,9 +168,13 @@ export default {
   methods: {
     sortBy(value) {
       console.log('here I sort by: ', value)
-      console.log('old sorting by: ', this.currentSort)
-      this.currentSort.value = value
-      console.log('new sorting by: ', this.currentSort)
+      this.tableSortOptions = {
+        enabled: false,
+        initialSortBy: {
+          field: value,
+          type: 'asc'
+        }
+      }
     },
     formatCountry(country) {
       return country.map((d) => d.id).join(' / ')
