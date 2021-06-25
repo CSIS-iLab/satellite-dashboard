@@ -171,7 +171,9 @@
                 </nuxt-link>
               </li>
               <li>
-                <Icon id="graph" name="graph" />
+                <Button :on-click="(e) => updateShowMagicChart(props.row)">
+                  <Icon id="graph" name="graph" />
+                </Button>
               </li>
             </ul>
             <template v-else>
@@ -181,15 +183,17 @@
         </vue-good-table>
       </client-only>
     </section>
+    <MagicChart v-if="showMagicChart" />
   </Page>
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { mapState, mapGetters, mapMutations } from 'vuex'
 import Page from '~/layout/page'
 import Button from '~/components/global/Button'
 import Icon from '~/components/global/Icon'
 import StatusTypesLegend from '~/components/global/StatusTypesLegend'
+import MagicChart from '~/components/visualizer/MagicChart'
 
 export default {
   layout: 'layout',
@@ -197,7 +201,8 @@ export default {
     Page,
     Button,
     Icon,
-    StatusTypesLegend
+    StatusTypesLegend,
+    MagicChart
   },
   async fetch() {
     const events = await this.$axios.$get(
@@ -259,14 +264,11 @@ export default {
       const list = this.satelliteCatalogIds
         .map((sat) => {
           const { catalog_id, Name } = this.satellites[sat]
-
           let nameLowerCase
           if (Name) {
             nameLowerCase = Name.toLowerCase()
           }
-
           let term = `${(catalog_id + nameLowerCase).replace(/\s/g, '')}`
-
           return {
             value: catalog_id,
             label: Name || 'Test',
@@ -275,6 +277,14 @@ export default {
         })
         .sort((a, b) => a.label.localeCompare(b.label))
       return list
+    },
+    showMagicChart: {
+      get: function() {
+        return this.$store.state.layout.showMagicChart
+      },
+      set: function(magicChartState) {
+        this.updateMagicChart({ magicChartState })
+      }
     },
     ...mapState({
       satellites: (state) => state.satellites.satellites
@@ -400,7 +410,24 @@ export default {
       })
       this.updateParams({ startDate: dates[0], endDate: dates[1] })
       this.loadItems()
-    }
+    },
+    updateShowMagicChart(row) {
+      const payload = {
+        ids: [row.catalog_id_1, row.catalog_id_2],
+        names: [
+          this.satellites[row.catalog_id_1].Name,
+          this.satellites[row.catalog_id_2].Name
+        ]
+      }
+      console.log('payload', payload)
+
+      this.showMagicChart = !this.showMagicChart
+      this.updateLongitudeSatellites(payload)
+    },
+    ...mapMutations({
+      updateMagicChart: 'layout/updateMagicChart',
+      updateLongitudeSatellites: 'satellites/updateLongitudeSatellites'
+    })
   }
 }
 </script>

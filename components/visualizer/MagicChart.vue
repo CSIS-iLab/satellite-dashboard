@@ -1,6 +1,5 @@
 <template>
   <Modal @close="updateMagicChart({ showMagicChart: false })">
-    <link rel="stylesheet" href="~/assets/css/components/highcharts-theme" />
     <template v-slot:header> <h3>Compare Orbits</h3> </template>
     <template v-slot:body>
       <highcharts
