@@ -167,7 +167,6 @@ export default {
   },
   methods: {
     sortBy(value) {
-      console.log('here I sort by: ', value)
       this.tableSortOptions = {
         enabled: false,
         initialSortBy: {
