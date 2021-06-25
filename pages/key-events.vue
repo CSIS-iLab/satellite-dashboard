@@ -298,6 +298,7 @@ export default {
       this.loadItems()
     },
     onSortChange(params) {
+      console.log(params)
       // Allow for sorting by multiple columns
       let updatedSort = []
       params.forEach((param) => {

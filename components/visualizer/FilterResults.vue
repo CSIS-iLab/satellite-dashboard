@@ -11,6 +11,7 @@
           :clearable="false"
           :options="sortOptions"
           :searchable="false"
+          @input="sortBy(currentSort.value)"
         >
           <template #selected-option="{ label }">
             <Icon id="sort" name="sort" />
@@ -158,6 +159,12 @@ export default {
     })
   },
   methods: {
+    sortBy(value) {
+      console.log('here I sort by: ', value)
+      console.log('old sorting by: ', this.currentSort)
+      this.currentSort.value = value
+      console.log('new sorting by: ', this.currentSort)
+    },
     formatCountry(country) {
       return country.map((d) => d.id).join(' / ')
     },
