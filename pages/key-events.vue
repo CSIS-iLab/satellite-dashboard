@@ -419,7 +419,6 @@ export default {
           this.satellites[row.catalog_id_2].Name
         ]
       }
-      console.log('payload', payload)
 
       this.showMagicChart = !this.showMagicChart
       this.updateLongitudeSatellites(payload)

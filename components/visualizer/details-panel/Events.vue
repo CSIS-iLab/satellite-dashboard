@@ -6,7 +6,10 @@
       class="hc sub-chart"
       :options="chartOptions"
     />
-    <div v-else>Loading satellite data...</div>
+    <div v-else class="loading">
+      <div class="triple-spinner"></div>
+      <div class="loading-text">Loading satellite data...</div>
+    </div>
     <hr />
     <h3>Close Approaches</h3>
     <template v-if="totalEvents === 0">

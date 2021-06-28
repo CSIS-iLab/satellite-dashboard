@@ -109,9 +109,10 @@ export default {
         historical_longitudes,
         predicted_longitudes
       } = await this.getLongitudes({ _ids: null })
-      await (async function() {
-        return new Promise((res) => setTimeout(() => res(), 15000))
-      })()
+      // TODO rm this comment, just here to test spinner class
+      /* await (async function() { */
+      /*   return new Promise((res) => setTimeout(() => res(), 15000)) */
+      /* })() */
 
       // shape historical lines
       historical_longitudes = historical_longitudes.map((l, i) => {
