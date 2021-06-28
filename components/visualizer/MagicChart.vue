@@ -9,7 +9,10 @@
         :options="chartOptions"
         class="hc magic-chart"
       />
-      <div v-else>Loading satellite data...</div>
+      <div v-else class="loading">
+        <div class="triple-spinner" />
+        <div class="loading-text">Loading satellite data...</div>
+      </div>
     </template>
     <template v-slot:footer>
       <div v-if="dataLoaded">
@@ -106,6 +109,9 @@ export default {
         historical_longitudes,
         predicted_longitudes
       } = await this.getLongitudes({ _ids: null })
+      await (async function() {
+        return new Promise((res) => setTimeout(() => res(), 15000))
+      })()
 
       // shape historical lines
       historical_longitudes = historical_longitudes.map((l, i) => {
@@ -176,4 +182,5 @@ export default {
 <style lang="scss">
 @import '~/assets/css/components/highcharts-theme';
 @import '~/assets/css/components/magic-chart';
+@import '~/assets/css/components/loading';
 </style>

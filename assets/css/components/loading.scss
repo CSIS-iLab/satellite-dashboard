@@ -1,0 +1,66 @@
+// css for loading spinner
+
+.triple-spinner {
+  position: relative;
+  display: block;
+  width: 70px;
+  height: 70px;
+  margin: auto;
+  border: 2px solid transparent;
+  border-top: 2px solid #ff5722;
+  border-radius: 50%;
+  animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+.triple-spinner::before,
+.triple-spinner::after {
+  position: absolute;
+  border: 3px solid transparent;
+  border-radius: 50%;
+  content: '';
+}
+
+.triple-spinner::before {
+  top: 3px;
+  right: 3px;
+  bottom: 3px;
+  left: 3px;
+  border-top-color: #ff9800;
+  animation: spin 3s linear infinite;
+  animation: spin 3.5s linear infinite;
+}
+
+.triple-spinner::after {
+  top: 8px;
+  right: 8px;
+  bottom: 8px;
+  left: 8px;
+  border-top-color: #ffc107;
+  animation: spin 1.5s linear infinite;
+  animation: spin 1.75s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}

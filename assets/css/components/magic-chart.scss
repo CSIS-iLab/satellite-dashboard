@@ -3,6 +3,15 @@
   min-height: 60vh;
 }
 
+.loading {
+  min-width: 30 vw;
+}
+
+.loading-text {
+  margin-top: 1vh;
+  font-size: 1.2em;
+}
+
 .data-source--sat-name {
   color: $color-white-170;
   font-weight: 500;
