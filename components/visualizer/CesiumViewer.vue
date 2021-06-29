@@ -155,7 +155,7 @@ export default {
     })
   },
   watch: {
-    satelliteOrbits: 'processNewData',
+    satelliteOrbits: { handler: 'processNewData', immediate: true },
     visibleSatellites: 'toggleObjectVisibility',
     '$route.query.time': 'handleTimeQuery'
   },

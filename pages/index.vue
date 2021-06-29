@@ -1,6 +1,9 @@
 <template>
   <div class="visualizer-content">
-    <template v-if="loading"> Loading... </template>
+    <template v-if="loading" class="loading">
+      <div class="triple-spinner" />
+      <div class="loading-text">Loading...</div>
+    </template>
     <template v-else>
       <PanelLeft />
       <CesiumViewer
@@ -64,11 +67,11 @@ export default {
       showMagicChart: (state) => state.layout.showMagicChart
     })
   },
-  created() {
+  async created() {
     if (this.$route.query.date) {
-      this.getOrbits({ date: this.$route.query.date })
+      await this.getOrbits({ date: this.$route.query.date })
     } else {
-      this.getOrbits()
+      await this.getOrbits()
     }
     this.loading = false
   },
