@@ -11,6 +11,7 @@
           :clearable="false"
           :options="sortOptions"
           :searchable="false"
+          @input="sortBy"
         >
           <template #selected-option="{ label }">
             <Icon id="sort" name="sort" />
@@ -34,10 +35,7 @@
           perPage: 75,
           pageLabel: 'Page'
         }"
-        :sort-options="{
-          enabled: false,
-          initialSortBy: { field: 'Name', type: 'asc' }
-        }"
+        :sort-options="tableSortOptions"
         style-class="vgt-table striped"
       >
         <template slot="table-column" slot-scope="props">
@@ -131,17 +129,28 @@ export default {
         {
           label: 'Name/Norad ID',
           field: 'Name',
-          thClass: 'filter-results__name',
-          sortFn: this.sortFn
+          thClass: 'filter-results__name'
         },
-        { label: 'CO.', field: 'country', sortFn: this.sortFn },
+        {
+          label: 'CO.',
+          field: 'country',
+          sortFn(x, y) {
+            return x[0].id < y[0].id ? -1 : 1
+          }
+        },
         { label: '', field: 'actions' }
       ],
       sortOptions: [
-        { value: 'Name', label: 'Name' },
-        { value: 'country', label: 'Country' }
+        { value: 'Name A-Z', dir: 'asc', label: 'Name A-Z' },
+        { value: 'Name Z-A', dir: 'desc', label: 'Name Z-A' },
+        { value: 'country A-Z', dir: 'asc', label: 'Country A-Z' },
+        { value: 'country Z-A', dir: 'desc', label: 'Country Z-A' }
       ],
-      currentSort: 'Name'
+      currentSort: 'Name A-Z',
+      tableSortOptions: {
+        enabled: false,
+        initialSortBy: { field: 'Name', type: 'asc' }
+      }
     }
   },
   computed: {
@@ -158,6 +167,15 @@ export default {
     })
   },
   methods: {
+    sortBy() {
+      this.tableSortOptions = {
+        enabled: false,
+        initialSortBy: {
+          field: this.currentSort.value.split(' ')[0],
+          type: this.currentSort.dir
+        }
+      }
+    },
     formatCountry(country) {
       return country.map((d) => d.id).join(' / ')
     },
