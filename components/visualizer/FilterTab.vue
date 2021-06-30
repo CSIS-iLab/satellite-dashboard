@@ -210,7 +210,6 @@ export default {
         })
       }
 
-      console.log('filteredSatelliteMeta')
       return results
     },
     ...mapState({
@@ -242,7 +241,6 @@ export default {
       this.visibleFilters = this.visibleFilters.filter((d) => d !== filter)
     },
     applyFilters() {
-      console.log('apply the filter!')
       this.isEditable = false
       this.updateActiveFilters([...this.visibleFilters])
       this.activeFilterValues = Object.assign({}, this.visibleFilterValues)
@@ -276,7 +274,6 @@ export default {
       this.updateVisibleSatellites(filteredSatellites)
     },
     removeAllFilters() {
-      console.log('reset filters')
       // Clear Filters
       let filters = {}
       for (let i = 0; i < this.activeFilters.length; i++) {
@@ -297,7 +294,6 @@ export default {
       updateVisibleSatellites: 'satellites/updateVisibleSatellites'
     }),
     cancelFilters() {
-      console.log('cancel the filters')
       // Reset visible state to match the previous "apply" results
       this.visibleFilterValues = Object.assign({}, this.activeFilterValues)
       this.visibleFilters = [...this.activeFilters]

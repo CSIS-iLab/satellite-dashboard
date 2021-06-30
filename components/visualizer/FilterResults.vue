@@ -11,7 +11,7 @@
           :clearable="false"
           :options="sortOptions"
           :searchable="false"
-          @input="sortBy(currentSort.value)"
+          @input="sortBy"
         >
           <template #selected-option="{ label }">
             <Icon id="sort" name="sort" />
@@ -135,20 +135,21 @@ export default {
           label: 'CO.',
           field: 'country',
           sortFn(x, y) {
-            console.log('xy', x[0].label, y[0].label)
-            return x[0].label < y[0].label ? -1 : 1
+            return x[0].id < y[0].id ? -1 : 1
           }
         },
         { label: '', field: 'actions' }
       ],
       sortOptions: [
-        { value: 'Name', label: 'Name' },
-        { value: 'country', label: 'Country' }
+        { value: 'Name A-Z', dir: 'asc', label: 'Name A-Z' },
+        { value: 'Name Z-A', dir: 'desc', label: 'Name Z-A' },
+        { value: 'country A-Z', dir: 'asc', label: 'Country A-Z' },
+        { value: 'country Z-A', dir: 'desc', label: 'Country Z-A' }
       ],
-      currentSort: 'Name',
+      currentSort: 'Name A-Z',
       tableSortOptions: {
         enabled: false,
-        initialSortBy: { field: 'country', type: 'desc' }
+        initialSortBy: { field: 'Name', type: 'asc' }
       }
     }
   },
@@ -166,13 +167,12 @@ export default {
     })
   },
   methods: {
-    sortBy(value) {
-      console.log('here I sort by: ', value)
+    sortBy() {
       this.tableSortOptions = {
         enabled: false,
         initialSortBy: {
-          field: value,
-          type: 'asc'
+          field: this.currentSort.value.split(' ')[0],
+          type: this.currentSort.dir
         }
       }
     },
