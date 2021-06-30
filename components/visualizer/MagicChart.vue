@@ -109,11 +109,6 @@ export default {
 
       // shape historical lines
       historical_longitudes = historical_longitudes.map((l, i) => {
-        // TODO remove this sort after merging backend fix
-        l.data = l.data.sort((a, b) => {
-          return a[0] - b[0]
-        })
-
         l.name = names[i]
 
         this.chartOptions.series.push(l)
@@ -122,11 +117,6 @@ export default {
 
       // shape predicted lines
       predicted_longitudes = predicted_longitudes.map((l, i) => {
-        // TODO remove this sort after merging backend fix
-        l.data = l.data.sort((a, b) => {
-          return a[0] - b[0]
-        })
-
         l.showInLegend = false
 
         // add last historical point to beginning of predicted
