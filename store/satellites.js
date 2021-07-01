@@ -211,9 +211,7 @@ export const actions = {
           let countryOfJurisdiction = formatCountries(sat.countryOfJurisdiction)
           let countryOfJurisdictionIds = countryOfJurisdiction.map((d) => d.id)
 
-          // let countryOfLaunch = formatCountries(sat.countryOfLaunch)
-          let countryOfLaunch = formatCountries(sat)
-
+          let countryOfLaunch = formatCountries(sat.countryOfLaunch)
           // Store the countryOfJurisdiction so we can filter on it later.
           countryOfJurisdiction.forEach((country) => {
             if (countries.has(country.id)) {
@@ -312,22 +310,16 @@ async function fetchAll(urls) {
   )
 }
 
-function formatCountries(sat) {
-  // console.log(sat.catalog_id)
-  let satID = sat.catalog_id
-  let value = sat.countryOfLaunch
+function formatCountries(value) {
   if (value === undefined) {
     value = ''
   }
-
-  if (satID === undefined) {
-    satID = ''
-  }
+  let countryID = value != undefined ? value : 'TBD'
 
   let iso = AGCountries[value] || value
   let options = iso.split('/').map((d) => d.trim())
   let countries = options.map((option) => ({
-    idTest: satID,
+    countryID: countryID,
     id: option,
     label: CountryISOs[option] || option
   }))
