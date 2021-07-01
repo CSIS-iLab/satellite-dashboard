@@ -84,7 +84,6 @@
 </template>
 
 <script>
-import Highcharts from 'highcharts'
 import { mapState, mapActions } from 'vuex'
 import CloseApproachesList from '~/components/visualizer/CloseApproachesList.vue'
 import Button from '~/components/global/Button.vue'
@@ -134,27 +133,25 @@ export default {
           styledMode: true,
           height: 350
         },
+        boost: { enabled: false, seriesThreshold: 10000 },
         plotOptions: {
-          turboThreshold: 15000
+          turboThreshold: 10000
         },
-        legend: { enabled: true },
+        legend: { enabled: false },
         xAxis: {
-          title: {
-            text: 'Datetime'
-          },
-          labels: {
-            formatter: function() {
-              return Highcharts.dateFormat('%Y', this.value)
-            }
-          }
+          maxPadding: 0.3,
+          minPadding: 0.3,
+          visible: false
         },
         yAxis: {
+          maxPadding: 0.3,
+          minPadding: 0.3,
           opposite: false,
           title: {
-            text: 'Longitude',
-            x: 60,
+            text: '',
             reserveSpace: false
-          }
+          },
+          labels: { format: '{value}°' }
         },
         rangeSelector: {
           inputEnabled: false,
@@ -212,7 +209,43 @@ export default {
       } = await this.getLongitudes({ _ids: [this.id] })
 
       historical_longitudes.forEach((l, i) => {
-        this.chartOptions.series[i] = { data: historical_longitudes[i].data }
+        // take sampling of data (limits total data points which is necessary
+        // for turboBoost issues
+        let modulus = 1
+        let len = historical_longitudes[i].data.length
+        if (len > 1000) {
+          modulus = Math.max(2, Math.ceil(len / 1000))
+        }
+        const data = historical_longitudes[i].data.reduce((a, v, i) => {
+          if (i % modulus === 0) a.push(v)
+          return a
+        }, [])
+
+        // add data labels to first and last point
+        const labelPoints = [0, data.length - 1]
+        labelPoints.forEach((l) => {
+          data[l] = {
+            x: data[l][0],
+            y: data[l][1],
+            dataLabels: {
+              x: l ? 25 : -5,
+              y: l ? 3 : -3,
+              crop: false,
+              overflow: 'none',
+              enabled: true,
+              formatter: function() {
+                return `
+                <div class="label-y">${this.y.toFixed(0)}°</div>
+                <br />
+                <div class="label-x">${new Intl.DateTimeFormat('en-US', {
+                  year: 'numeric',
+                  month: 'short'
+                }).format(new Date(this.x))}</div>`
+              }
+            }
+          }
+        })
+        this.chartOptions.series[i] = { data }
         this.chartOptions.series[i].name = `${this.name}`
       })
 
@@ -243,5 +276,32 @@ export default {
 .sub-chart {
   max-width: 100%;
   max-height: 100%;
+}
+
+.highcharts-area {
+  opacity: 1.25;
+  stroke: $color-orangedull-100;
+}
+
+.highcharts-grid-line {
+  stroke-width: 0;
+}
+
+.highcharts-data-label {
+  font-weight: normal;
+  font-size: 20px;
+}
+
+.highcharts-data-label text {
+  fill: $color-offwhite;
+}
+
+.highcharts-data-label .label-x {
+  font-size: 0.6em;
+}
+
+.label-y {
+  font-size: 0.8em;
+  fill: $color-orangedull-100;
 }
 </style>

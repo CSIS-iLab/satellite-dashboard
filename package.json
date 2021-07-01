@@ -29,7 +29,7 @@
     "@nuxtjs/pwa": "^3.0.0-0",
     "fibers": "^5.0.0",
     "frontmatter-markdown-loader": "^3.3.0",
-    "highcharts": "^7.2.1",
+    "highcharts": "^9.1.2",
     "highcharts-vue": "^1.4.0",
     "merge-descriptors": "^1.0.1",
     "nuxt": "^2.12.2",

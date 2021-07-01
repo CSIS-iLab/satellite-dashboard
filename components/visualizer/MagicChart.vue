@@ -49,14 +49,18 @@ export default {
         title: { text: 'Historical Longitudes' },
         chart: { styledMode: true },
         plotOptions: {
-          turboThreshold: 5000,
+          turboThreshold: 15000,
           series: {
             showInNavigator: true
           }
         },
         legend: { enabled: true },
         xAxis: { title: { text: 'Datetime' } },
-        yAxis: { opposite: false, title: { text: 'Longitude' } },
+        yAxis: {
+          opposite: false,
+          title: { text: 'Longitude' },
+          labels: { format: '{value}°' }
+        },
         navigator: {
           height: 75,
           // not working

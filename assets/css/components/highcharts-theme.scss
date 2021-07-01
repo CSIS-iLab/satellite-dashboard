@@ -14,14 +14,11 @@
 }
 
 .highcharts-plot-background {
-  fill: $color-slate-200;
+  fill: $color-slate-395;
 }
 
 .highcharts-axis-labels,
-.highcharts-axis-title {
-  fill: $color-offwhite;
-}
-
+.highcharts-axis-title,
 .highcharts-plot-line-label {
   fill: $color-offwhite;
 }
@@ -50,18 +47,18 @@
 
 .highcharts-series-2 {
   stroke: $color-orange-100;
-  stroke-dasharray: 20, 20;
+  stroke-dasharray: 20, 5;
 }
 
 .highcharts-series-3 {
   stroke: $color-focus;
-  stroke-dasharray: 20, 20;
+  stroke-dasharray: 20, 5;
 }
 
 // TODO fix nav mask
 .highcharts-navigator-mask-inside {
   fill: rgba(0, 0, 0, 0);
-  stroke: rgba(80, 198, 120, 0.75);
+  stroke: $color-offwhite;
 }
 
 // not working
