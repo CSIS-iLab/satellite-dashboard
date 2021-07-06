@@ -125,8 +125,8 @@ export default {
         Name: { value: 'Name', label: 'Name' },
         NoradId: { value: 'NoradId', label: 'Norad ID' },
         countryOfJurisdictionIds: {
-          value: 'countryOfJurisdictionIds',
-          label: 'Country of Jurisdiction'
+          value: 'countryOfLaunch',
+          label: 'Country'
         },
         Purpose: { value: 'Purpose', label: 'Purpose' },
         Users: { value: 'Users', label: 'Users' },
@@ -198,18 +198,21 @@ export default {
       let results = []
       for (let i = 0; i < this.filteredSatellites.length; i++) {
         const catalog_id = this.filteredSatellites[i]
-        const { Name, Status, countryOfJurisdiction } = this.satellites[
-          catalog_id
-        ]
+        const {
+          Name,
+          Status,
+          countryOfLaunch,
+          countryOfJurisdiction
+        } = this.satellites[catalog_id]
 
         results.push({
           catalog_id,
           Name,
           Status,
-          country: countryOfJurisdiction
+          country: countryOfLaunch
         })
       }
-
+      // console.log(results)
       return results
     },
     ...mapState({
