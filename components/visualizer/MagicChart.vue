@@ -55,11 +55,33 @@ export default {
           }
         },
         legend: { enabled: true },
-        xAxis: { title: { text: 'Datetime' } },
+        xAxis: { title: null },
         yAxis: {
           opposite: false,
           title: { text: 'Longitude' },
           labels: { format: '{value}°' }
+        },
+        tooltip: {
+          formatter: function() {
+            return this.points.reduce(
+              function(s, point, i) {
+                return `${s}<span class="tooltip-line-color" style="color: ${
+                  i ? 'rgba(254, 116, 20,1)' : 'rgba(82, 175, 225, 1)'
+                }">–</span><span class="tooltip-y">
+                  ${point.y.toFixed(2)}°</span>`
+              },
+              '<b>' +
+                new Intl.DateTimeFormat('en-US', {
+                  year: 'numeric',
+                  day: 'numeric',
+                  month: 'short'
+                }).format(new Date(this.x)) +
+                '</b>' +
+                '<br/>'
+            )
+          },
+          split: false,
+          shared: true
         },
         navigator: {
           height: 75,
@@ -129,6 +151,11 @@ export default {
             historical_longitudes[i].data.length - 1
           ]
         )
+
+        // TODO: rm this once backend fix is merged
+        l.data = l.data.sort((a, b) => {
+          return a[0] - b[0]
+        })
 
         this.chartOptions.series.push(l)
         return l

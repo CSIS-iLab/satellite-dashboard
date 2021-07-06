@@ -19,3 +19,29 @@
 .data-source--time {
   font-size: 0.8em;
 }
+
+.highcharts-axis-title {
+  font-size: 2em;
+}
+
+.highcharts-axis-labels text {
+  font-size: 1.4em;
+  fill: $color-slate-50;
+}
+
+.highcharts-xaxis-grid {
+  stroke-width: 1px;
+}
+
+.highcharts-grid-line {
+  stroke: $color-slate-50;
+}
+
+.highcharts-tooltip-box {
+  fill: $color-slate-395;
+  stroke-width: 0;
+}
+
+.highcharts-tooltip text {
+  fill: $color-offwhite;
+}

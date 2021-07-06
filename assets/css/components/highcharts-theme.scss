@@ -47,21 +47,19 @@
 
 .highcharts-series-2 {
   stroke: $color-orange-100;
-  stroke-dasharray: 20, 5;
+  stroke-dasharray: 3, 5;
 }
 
 .highcharts-series-3 {
   stroke: $color-focus;
-  stroke-dasharray: 20, 5;
+  stroke-dasharray: 3, 5;
 }
 
-// TODO fix nav mask
 .highcharts-navigator-mask-inside {
   fill: rgba(0, 0, 0, 0);
   stroke: $color-offwhite;
 }
 
-// not working
 .highcharts-navigator-mask-outside {
   fill: rgba(0, 0, 0, 0);
   stroke: rgba(0, 0, 0, 0);
@@ -73,10 +71,22 @@
 
 /* stylelint-disable */
 g.highcharts-navigator-series:nth-of-type(1n) {
-  stroke: $color-orange-100;
+  stroke: $color-focus;
 }
 
 g.highcharts-navigator-series:nth-of-type(3n) {
-  stroke: $color-focus;
+  stroke: $color-orange-100;
 }
 /* stylelint-enable*/
+
+.highcharts-tooltip-header text {
+  font-size: 1.5em;
+}
+
+.tooltip-line-color {
+  font-size: 2.5em;
+}
+
+.tooltip-y {
+  font-size: 1.5em;
+}
