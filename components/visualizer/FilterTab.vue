@@ -124,7 +124,7 @@ export default {
       filterOptions: {
         Name: { value: 'Name', label: 'Name' },
         NoradId: { value: 'NoradId', label: 'Norad ID' },
-        countryOfJurisdictionIds: {
+        countryOfLaunchIds: {
           value: 'countryOfLaunch',
           label: 'Country'
         },
@@ -136,6 +136,7 @@ export default {
       visibleFilters: [],
       visibleFilterValues: {
         countryOfJurisdictionIds: [],
+        countryOfLaunchIds: [],
         Name: [],
         NoradId: [],
         Purpose: [],
@@ -190,7 +191,8 @@ export default {
       }))
 
       // countryOfJurisdiction
-      filters.countryOfJurisdictionIds = this.countriesOfJurisdiction
+      // filters.countryOfJurisdictionIds = this.countriesOfJurisdiction
+      filters.countryOfLaunchIds = this.countryOfLaunch
 
       return filters
     },

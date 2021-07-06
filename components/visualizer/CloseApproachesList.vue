@@ -41,6 +41,7 @@
           <div class="sat__id">{{ object.catalog_id }}</div>
           <div class="sat__country">
             {{ object.countryOfJurisdiction.id }}
+            {{ object.countryOfLaunch[0].id }}
           </div>
           <div class="sat__actions">
             <Button
@@ -105,16 +106,23 @@ export default {
 
         for (let i = 0; i < ids.length; i++) {
           const id = ids[i]
-          const { Name, Status, countryOfJurisdiction } = this.satellites[id]
+          const {
+            Name,
+            Status,
+            countryOfLaunch,
+            countryOfJurisdiction
+          } = this.satellites[id]
 
           objects.push({
             catalog_id: id,
             Name,
             Status,
+            countryOfLaunch,
             countryOfJurisdiction
           })
         }
 
+        // console.log(objects)
         return {
           objects,
           ...info
