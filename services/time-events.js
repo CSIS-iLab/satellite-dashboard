@@ -39,7 +39,6 @@ class TimeEvents {
   }
 
   dispatchEvent(event) {
-    console.log(event, this.timeIndex)
     if (this.listeners[event]) {
       this.listeners[event].forEach((func) => func(this.timeIndex))
     }
