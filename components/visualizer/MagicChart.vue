@@ -152,11 +152,6 @@ export default {
           ]
         )
 
-        // TODO: rm this once backend fix is merged
-        l.data = l.data.sort((a, b) => {
-          return a[0] - b[0]
-        })
-
         this.chartOptions.series.push(l)
         return l
       })
