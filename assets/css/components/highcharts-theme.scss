@@ -5,12 +5,12 @@
 }
 
 .highcharts-title,
-.highcharts-subtitle {
+.highcharts-subtitle %font-post-heading-h3 {
   fill: $color-offwhite;
 }
 
 .highcharts-background {
-  fill: $color-slate-395;
+  fill: transparent;
 }
 
 .highcharts-plot-background {

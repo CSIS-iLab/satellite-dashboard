@@ -3,7 +3,7 @@
     <highcharts
       v-if="dataLoaded"
       ref="chart"
-      class="hc sub-chart"
+      class="sub-chart"
       :options="chartOptions"
     />
     <div v-else>Loading satellite data...</div>
@@ -127,7 +127,9 @@ export default {
       ],
       chartOptions: {
         title: {
-          text: 'Historical Longitudes'
+          text: 'Historical Longitudes',
+          align: 'left',
+          margin: 25
         },
         chart: {
           styledMode: true,
@@ -137,6 +139,8 @@ export default {
         plotOptions: {
           turboThreshold: 10000
         },
+        exporting: { enabled: false },
+        credits: { enabled: false },
         legend: { enabled: false },
         xAxis: {
           maxPadding: 0.3,
@@ -278,6 +282,14 @@ export default {
   max-height: 100%;
 }
 
+.highcharts-background {
+  fill: transparent;
+}
+
+.highcharts-plot-background {
+  fill: transparent;
+}
+
 .highcharts-area {
   opacity: 1.25;
   stroke: $color-orangedull-100;
@@ -292,8 +304,8 @@ export default {
   font-size: 20px;
 }
 
-.highcharts-data-label text {
-  fill: $color-offwhite;
+.highcharts-data-label text %font-ui-text-xsm-oxygen {
+  fill: $color-white-160;
 }
 
 .highcharts-data-label .label-x {

@@ -54,6 +54,7 @@ export default {
             showInNavigator: true
           }
         },
+        credits: { enabled: false },
         legend: { enabled: true },
         xAxis: { title: null },
         yAxis: {
