@@ -5,8 +5,9 @@
 }
 
 .highcharts-title,
-.highcharts-subtitle %font-post-heading-h3 {
-  fill: $color-offwhite;
+%font-post-heading-h3 %font-ui-heading-section-lg {
+  font-size: 2em;
+  fill: $color-white-170;
 }
 
 .highcharts-background {
@@ -14,18 +15,14 @@
 }
 
 .highcharts-plot-background {
-  fill: $color-slate-395;
-}
-
-.highcharts-axis-labels,
-.highcharts-axis-title,
-.highcharts-plot-line-label {
-  fill: $color-offwhite;
+  fill: $color-slate-300;
 }
 
 .highcharts-legend text {
-  font-size: 14px;
-  fill: $color-offwhite;
+  font-family: $font__oxygen;
+  font-weight: 200;
+  font-size: 18px;
+  fill: $color-white-180;
 }
 
 .highcharts-range-input text {

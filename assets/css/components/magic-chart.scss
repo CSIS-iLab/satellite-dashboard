@@ -3,30 +3,15 @@
   min-height: 60vh;
 }
 
-.data-source--sat-name {
-  color: $color-white-170;
-  font-weight: 500;
-  font-size: 1.2em;
-}
-
-.data-source--source-name {
-  margin-left: 0.6em;
-  color: $color-white-170;
-  font-weight: 400;
-  font-size: 1.1em;
-}
-
-.data-source--time {
-  font-size: 0.8em;
-}
-
 .highcharts-axis-title {
-  font-size: 2em;
+  font-family: $font__oxygen;
+  font-size: 22px;
+  fill: $color-white-160;
 }
 
 .highcharts-axis-labels text {
   font-size: 1.4em;
-  fill: $color-slate-50;
+  fill: $color-white-140;
 }
 
 .highcharts-xaxis-grid {
@@ -34,7 +19,7 @@
 }
 
 .highcharts-grid-line {
-  stroke: $color-slate-50;
+  stroke: $color-white-110;
 }
 
 .highcharts-tooltip-box {
@@ -44,4 +29,42 @@
 
 .highcharts-tooltip text {
   fill: $color-offwhite;
+}
+
+.legend-id {
+  font-weight: 100;
+  font-size: 14px;
+  fill: $color-white-160;
+}
+
+.data-source-title {
+  margin-left: 10px;
+  color: $color-white-160;
+  font-family: $font__good;
+  font-weight: 100;
+  font-size: 22px;
+}
+
+.data-source--sat-name {
+  margin-left: 0.6em;
+  color: $color-white-170;
+  font-family: $font__good;
+  font-weight: 600;
+  font-size: 1.3em;
+}
+
+.data-source--source-name {
+  margin-left: 0.6em;
+  color: $color-white-170;
+  font-family: $font__good;
+  font-weight: 100;
+  font-size: 1.3em;
+}
+
+.data-source-time {
+  margin-left: 0.4em;
+  color: $color-white-150;
+  font-family: $font__good;
+  font-weight: 100;
+  font-size: 1.1em;
 }

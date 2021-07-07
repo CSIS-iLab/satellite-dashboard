@@ -1,19 +1,19 @@
 <template>
   <Modal @close="updateMagicChart({ showMagicChart: false })">
-    <template v-slot:header> <h3>Compare Orbits</h3> </template>
+    <template v-slot:header> Compare Objects </template>
     <template v-slot:body>
       <highcharts
         v-if="dataLoaded"
         ref="chart"
         :constructor-type="'stockChart'"
         :options="chartOptions"
-        class="hc magic-chart"
+        class="magic-chart"
       />
-      <div v-else>Loading satellite data...</div>
+      <div v-else class="magic-chart">Loading satellite data...</div>
     </template>
     <template v-slot:footer>
       <div v-if="dataLoaded">
-        <h4>Data Sources</h4>
+        <h4 class="data-source-title">Data Sources</h4>
         <ul class="modal__footer-data-source">
           <li v-for="source in sourceInfo" :key="source.sat_id">
             <span class="data-source--sat-name">{{ source.sat_name }}:</span>
@@ -40,7 +40,6 @@ export default {
   components: {
     Modal
   },
-
   data() {
     return {
       dataLoaded: false,
@@ -50,12 +49,12 @@ export default {
         chart: { styledMode: true },
         plotOptions: {
           turboThreshold: 15000,
-          series: {
-            showInNavigator: true
-          }
+          series: { showInNavigator: true }
         },
         credits: { enabled: false },
-        legend: { enabled: true },
+        legend: {
+          enabled: true
+        },
         xAxis: { title: null },
         yAxis: {
           opposite: false,
@@ -136,7 +135,8 @@ export default {
 
       // shape historical lines
       historical_longitudes = historical_longitudes.map((l, i) => {
-        l.name = names[i]
+        console.log(l.catalog_id, 'id')
+        l.name = `${names[i]}<br /><span class="legend-id">${l.catalog_id}</span>`
 
         this.chartOptions.series.push(l)
         return l
