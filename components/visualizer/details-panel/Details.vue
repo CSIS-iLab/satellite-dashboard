@@ -97,6 +97,8 @@
 
 <script>
 import { mapState } from 'vuex'
+import timeEventsProvider from '../../../services/time-events'
+const timeEvents = timeEventsProvider()
 
 export default {
   props: {
@@ -208,7 +210,8 @@ export default {
         ]
       },
       earthRadius: 6378136.3, // m
-      mu: 3.986004415e14 // m^3/s^2
+      mu: 3.986004415e14, // m^3/s^2,
+      elementIndex: 0
     }
   },
   computed: {
@@ -224,7 +227,11 @@ export default {
     },
     orbitalElements() {
       // TODO: Need to get the right orbit for the current timeline
-      return this.satelliteAllOrbits[0].elements
+      // watch for date boundary change and set index accordingly
+      const index = this.satelliteAllOrbits[this.elementIndex]
+        ? this.elementIndex
+        : 0
+      return this.satelliteAllOrbits[index].elements
     },
     formattedOrbitData() {
       const Apogee = `${this.formatNumbers(
@@ -308,17 +315,29 @@ export default {
       }
     },
     orbitSource() {
+      const index = this.satelliteAllOrbits[this.elementIndex]
+        ? this.elementIndex
+        : this.satelliteAllOrbits.length - 1
       return `${this.formatDate(
-        this.satelliteAllOrbits[0].source.last_updated
+        this.satelliteAllOrbits[index].source.last_updated
       )}`
     },
     currentDate() {
-      return this.formatDate(this.satelliteAllOrbits[0].epoch)
+      const index = this.satelliteAllOrbits[this.elementIndex]
+        ? this.elementIndex
+        : this.satelliteAllOrbits.length - 1
+      return this.formatDate(this.satelliteAllOrbits[index].epoch)
     },
     ...mapState({
       orbits: (state) => state.satellites.orbits,
       statusTypes: (state) => state.satellites.statusTypes
     })
+  },
+  mounted() {
+    timeEvents.addListener('dateChanged', this.setElementIndex)
+  },
+  beforeDestroy() {
+    timeEvents.removeListener('dateChanged', this.setElementIndex)
   },
   methods: {
     formatCountries(countryField) {
@@ -362,6 +381,9 @@ export default {
       const mDisplay = m > 0 ? m + (m == 1 ? ' minute, ' : ' minutes, ') : ''
       const sDisplay = s > 0 ? s + (s == 1 ? ' second' : ' seconds') : ''
       return dDisplay + hDisplay + mDisplay + sDisplay
+    },
+    setElementIndex(index) {
+      this.elementIndex = index
     },
     formatNumbers(num, minDecimals = 0) {
       return num.toLocaleString('en-US', {

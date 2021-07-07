@@ -1,6 +1,9 @@
 import Types from '~/assets/data/types.json'
 import AGCountries from '~/assets/data/ag_countries.json'
 import CountryISOs from '~/assets/data/country_isos.json'
+import Orbitals from '../services/orbitals'
+import timeEventsProvider from '../services/time-events'
+const timeEvents = timeEventsProvider()
 
 const siteURL = 'https://satdash.wpengine.com'
 const siteURLLocal = 'http://satellite-dashboard.local/'
@@ -99,6 +102,7 @@ export const mutations = {
   },
   updateTargetDate: (state, newTargetDate) => {
     state.targetDate = newTargetDate
+    timeEvents.init(newTargetDate)
   },
   updateSelectedTimescale: (state, selectedTimescale) => {
     state.selectedTimescale = selectedTimescale
@@ -263,6 +267,20 @@ export const actions = {
       // Todo: Modify active satellites here to trigger watch in CesiumViewer
 
       console.log('Get updated orbits.')
+
+      // iterate over orbits and pad elements to match number of days
+      const numDays = state.selectedTimescale.value / oneDay
+      Object.keys(orbits).forEach((key) => {
+        const orbit = orbits[key]
+        if (orbit.orbits && orbit.orbits.length < numDays) {
+          // pad the orbits
+          orbit.orbits = Orbitals.PadOrbitals(
+            orbit.orbits,
+            state.targetDate,
+            numDays
+          )
+        }
+      })
       commit('updateOrbits', Object.freeze(orbits))
     } catch (err) {
       console.log(err)

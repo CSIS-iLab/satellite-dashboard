@@ -109,7 +109,10 @@ import Icon from '~/components/global/Icon'
 import StatusTypesLegend from '~/components/global/StatusTypesLegend'
 
 import cesiumServiceProvider from '../../services/cesium-service'
+import timeEventsProvider from '../../services/time-events'
+import timeEventProvider from '../../services/time-events'
 const cesiumService = cesiumServiceProvider()
+const timeEvents = timeEventProvider()
 const playbackSpeeds = [
   {
     label: '1x',
@@ -158,6 +161,7 @@ export default {
       playbackSpeeds: playbackSpeeds,
       chosenPlaybackSpeed: playbackSpeeds[2],
       timelinePoint: this.selectedDate,
+      lastTimelinePoint: this.selectedDate,
       dateOptions: {
         year: 'numeric',
         month: 'short',
@@ -211,8 +215,13 @@ export default {
       timeline.resize()
       timeline.container.style.left = '0px'
       viewer.clockViewModel.shouldAnimate = false
+      timeEvents.init(Cesium.JulianDate.toDate(viewer.clock.currentTime))
       viewer.clock.onTick.addEventListener(() => {
-        this.timelinePoint = Cesium.JulianDate.toDate(viewer.clock.currentTime)
+        const newTimelinePoint = Cesium.JulianDate.toDate(
+          viewer.clock.currentTime
+        )
+        timeEvents.setTime(newTimelinePoint)
+        this.timelinePoint = newTimelinePoint
       })
       const realDestroy = viewer.destroy
       viewer.destroy = () => {
