@@ -60,10 +60,11 @@
           </div>
         </li>
       </ul>
-      <div class="close-approaches__item btn btn--curved">
+      <div class="close-approaches__item" style="margin-left: 2em;">
         <Button
           aria-label="See historical orbits"
           :on-click="(e) => updateShowMagicChart(event.objects)"
+          class="btn btn--outlined"
         >
           <Icon id="magic-chart" name="graph" focusable="false" />
           Compare Objects
