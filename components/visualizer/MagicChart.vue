@@ -9,18 +9,20 @@
           :options="chartOptions"
           class="magic-chart"
         />
-        <h4 class="data-source-title">Data Sources</h4>
-        <ul class="modal__footer-data-source">
-          <li v-for="source in sourceInfo" :key="source.sat_id">
-            <span class="data-source--sat-name">{{ source.sat_name }}:</span>
-            <span class="data-source--source-name">
-              {{ source.source_name }}
-            </span>
-            <span class="data-source-time"
-              >(last updated {{ source.source_last_updated }})</span
-            >
-          </li>
-        </ul>
+        <div class="data-sources">
+          <h4 class="data-source-title">Data Sources</h4>
+          <ul class="modal__footer-data-source">
+            <li v-for="source in sourceInfo" :key="source.sat_id">
+              <span class="data-source--sat-name">{{ source.sat_name }}:</span>
+              <span class="data-source--source-name">
+                {{ source.source_name }}
+              </span>
+              <span class="data-source-time"
+                >(last updated {{ source.source_last_updated }})</span
+              >
+            </li>
+          </ul>
+        </div>
       </div>
       <div v-else class="magic-chart">Loading satellite data...</div>
     </template>
@@ -30,15 +32,15 @@
           <Button
             id="printer"
             class="btn btn--contained"
+            style="text-transform: none;"
             @click="() => exportImg('application/pdf')"
           >
-            <Icon class="icon" name="printer"> </Icon>
-
-            Print</Button
-          >
+            <Icon class="icon" name="printer" />
+            Print
+          </Button>
         </span>
         <span>
-          Download
+          <span class="export-btns-download">DOWNLOAD</span>
           <Button class="btn btn--contained" @click="exportCSV">CSV</Button>
           <Button
             class="btn btn--contained"

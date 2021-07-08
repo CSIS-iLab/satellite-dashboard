@@ -1,6 +1,6 @@
 .magic-chart {
   min-width: 45vw;
-  min-height: 60vh;
+  min-height: 45vh;
 }
 
 .highcharts-axis-title {
@@ -37,6 +37,11 @@
   fill: $color-white-160;
 }
 
+.data-sources {
+  padding: 1%;
+  border-top: 1px solid $color-white-115;
+}
+
 .data-source-title {
   margin-left: 10px;
   color: $color-white-160;
@@ -71,5 +76,17 @@
 
 .export-btns {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.export-btns *,
+%font-ui-text-base-good {
+  color: $color-white-170;
+}
+
+.export-btns-download,
+%font-ui-text-base-good {
+  margin-right: 1em;
+  color: $color-white-150;
 }
