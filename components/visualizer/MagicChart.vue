@@ -2,17 +2,13 @@
   <Modal @close="updateMagicChart({ showMagicChart: false })">
     <template v-slot:header> Compare Objects </template>
     <template v-slot:body>
-      <highcharts
-        v-if="dataLoaded"
-        ref="chart"
-        :constructor-type="'stockChart'"
-        :options="chartOptions"
-        class="magic-chart"
-      />
-      <div v-else class="magic-chart">Loading satellite data...</div>
-    </template>
-    <template v-slot:footer>
       <div v-if="dataLoaded">
+        <highcharts
+          ref="chart"
+          :constructor-type="'stockChart'"
+          :options="chartOptions"
+          class="magic-chart"
+        />
         <h4 class="data-source-title">Data Sources</h4>
         <ul class="modal__footer-data-source">
           <li v-for="source in sourceInfo" :key="source.sat_id">
@@ -26,6 +22,36 @@
           </li>
         </ul>
       </div>
+      <div v-else class="magic-chart">Loading satellite data...</div>
+    </template>
+    <template v-slot:footer>
+      <div v-if="dataLoaded" class="export-btns">
+        <span>
+          <Button
+            id="printer"
+            class="btn btn--contained"
+            @click="() => exportImg('application/pdf')"
+          >
+            <Icon class="icon" name="printer"> </Icon>
+
+            Print</Button
+          >
+        </span>
+        <span>
+          Download
+          <Button class="btn btn--contained" @click="exportCSV">CSV</Button>
+          <Button
+            class="btn btn--contained"
+            @click="() => exportImg('image/jpeg')"
+            >JPG</Button
+          >
+          <Button
+            class="btn btn--contained"
+            @click="() => exportImg('image/svg+xml')"
+            >SVG</Button
+          >
+        </span>
+      </div>
       <div v-else purpose="div here to occupy footer while chart loads"></div>
     </template>
   </Modal>
@@ -35,10 +61,12 @@
 import { mapState, mapActions, mapMutations } from 'vuex'
 
 import Modal from '~/components/global/Modal'
+import Icon from '~/components/global/Icon'
 
 export default {
   components: {
-    Modal
+    Modal,
+    Icon
   },
   data() {
     return {
@@ -46,11 +74,12 @@ export default {
       sourceInfo: [],
       chartOptions: {
         title: { text: 'Historical Longitudes' },
-        chart: { styledMode: true },
+        chart: { styledMode: true, height: 700 },
         plotOptions: {
           turboThreshold: 15000,
           series: { showInNavigator: true }
         },
+        exporting: { enabled: false, allowHTML: true },
         credits: { enabled: false },
         legend: {
           enabled: true
@@ -126,6 +155,16 @@ export default {
     await this.longitudes()
   },
   methods: {
+    exportCSV() {
+      this.$refs.chart.chart.downloadCSV()
+    },
+    exportImg(type) {
+      this.$refs.chart.chart.exportChart({
+        type,
+        async: true,
+        width: 1000
+      })
+    },
     async longitudes() {
       let {
         names,
