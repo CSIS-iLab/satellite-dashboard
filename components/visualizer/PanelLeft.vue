@@ -32,8 +32,10 @@
         </TabActivator>
         <button
           id="reset-visualization"
+          v-tippy
           class="btn btn--panel-reset"
           aria-label="Reset Visualization"
+          content="This action will reset all applied filters, clear all selected satellites, and reset the timeline to the current date and speed/time scales."
           @click="resetVisualization"
         >
           <Icon id="reset" class="icon" name="reset" focusable="false" />
