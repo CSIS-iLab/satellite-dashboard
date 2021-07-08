@@ -1,7 +1,7 @@
 @import '~/node_modules/highcharts/css/highcharts';
 
 .highcharts-root {
-  font-family: $font__oxygen;
+  font-family: $font__good;
 }
 
 .highcharts-title,
@@ -20,8 +20,8 @@
 
 .highcharts-legend text {
   font-family: $font__oxygen;
-  font-weight: 200;
-  font-size: 18px;
+  font-weight: normal;
+  font-size: 14px;
   fill: $color-white-180;
 }
 

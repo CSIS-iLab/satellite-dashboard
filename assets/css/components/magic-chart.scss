@@ -4,14 +4,17 @@
 }
 
 .highcharts-axis-title {
-  font-family: $font__oxygen;
+  margin-right: 5px;
+  font-family: $font__good;
   font-size: 22px;
   fill: $color-white-160;
 }
 
-.highcharts-axis-labels text {
-  font-size: 1.4em;
-  fill: $color-white-140;
+.highcharts-axis-labels text,
+%font-ui-text-sm-oxygen {
+  font-size: 12px;
+  opacity: 0.4;
+  fill: $color-white-180;
 }
 
 .highcharts-xaxis-grid {
@@ -33,7 +36,7 @@
 
 .legend-id {
   font-weight: 100;
-  font-size: 14px;
+  font-size: 10px;
   fill: $color-white-160;
 }
 

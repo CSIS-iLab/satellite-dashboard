@@ -60,7 +60,7 @@
           </div>
         </li>
       </ul>
-      <div class="close-approaches__item" style="margin-left: 2em;">
+      <div class="compare-objects">
         <Button
           aria-label="See historical orbits"
           :on-click="(e) => updateShowMagicChart(event.objects)"

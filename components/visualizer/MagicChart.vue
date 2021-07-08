@@ -89,7 +89,7 @@ export default {
         xAxis: { title: null },
         yAxis: {
           opposite: false,
-          title: { text: 'Longitude' },
+          title: { text: 'Longitude', margin: 30 },
           labels: { format: '{value}°' }
         },
         tooltip: {
@@ -176,7 +176,6 @@ export default {
 
       // shape historical lines
       historical_longitudes = historical_longitudes.map((l, i) => {
-        console.log(l.catalog_id, 'id')
         l.name = `${names[i]}<br /><span class="legend-id">${l.catalog_id}</span>`
 
         this.chartOptions.series.push(l)
