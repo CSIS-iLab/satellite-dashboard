@@ -99,6 +99,11 @@ export default {
       type: String,
       required: false,
       default: null
+    },
+    name: {
+      type: String,
+      required: false,
+      default: null
     }
   },
   computed: {
@@ -219,8 +224,8 @@ export default {
     },
     updateShowMagicChart(objects) {
       const payload = {
-        ids: objects.map((o) => o.catalog_id),
-        names: objects.map((o) => o.Name)
+        ids: [...objects.map((o) => o.catalog_id), this.id],
+        names: [...objects.map((o) => o.Name), this.name]
       }
       this.showMagicChart = !this.showMagicChart
       this.updateLongitudeSatellites(payload)

@@ -18,6 +18,14 @@
   fill: $color-slate-300;
 }
 
+.highcharts-xaxis-grid {
+  stroke-width: 1px;
+}
+
+.highcharts-grid-line {
+  stroke: $color-white-110;
+}
+
 .highcharts-legend text {
   font-family: $font__oxygen;
   font-weight: normal;

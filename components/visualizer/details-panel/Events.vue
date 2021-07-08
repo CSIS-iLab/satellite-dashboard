@@ -3,7 +3,7 @@
     <highcharts
       v-if="dataLoaded"
       ref="chart"
-      class="sub-chart"
+      class="details-chart"
       :options="chartOptions"
     />
     <div v-else>Loading satellite data...</div>
@@ -76,6 +76,7 @@
       </div>
       <CloseApproachesList
         :id="id"
+        :name="name"
         :events="filteredEvents"
         class="details-events__list"
       />
@@ -128,12 +129,12 @@ export default {
       chartOptions: {
         title: {
           text: 'Historical Longitudes',
-          align: 'left',
-          margin: 25
+          align: 'left'
         },
         chart: {
           styledMode: true,
-          height: 350
+          height: 350,
+          spacingLeft: 0
         },
         boost: { enabled: false, seriesThreshold: 10000 },
         plotOptions: {
@@ -142,6 +143,7 @@ export default {
         exporting: { enabled: false },
         credits: { enabled: false },
         legend: { enabled: false },
+        tooltip: { enabled: false },
         xAxis: {
           maxPadding: 0.3,
           minPadding: 0.3,
@@ -210,7 +212,9 @@ export default {
         names,
         historical_longitudes,
         predicted_longitudes
-      } = await this.getLongitudes({ _ids: [this.id] })
+      } = await this.getLongitudes({
+        _ids: [this.id]
+      })
 
       historical_longitudes.forEach((l, i) => {
         // take sampling of data (limits total data points which is necessary
@@ -232,7 +236,7 @@ export default {
             x: data[l][0],
             y: data[l][1],
             dataLabels: {
-              x: l ? 25 : -5,
+              x: l ? 25 : -25,
               y: l ? 3 : -3,
               crop: false,
               overflow: 'none',
@@ -276,45 +280,5 @@ export default {
 
 <style lang="scss">
 @import '~/assets/css/components/highcharts-theme';
-
-.sub-chart {
-  max-width: 100%;
-  max-height: 100%;
-}
-
-.highcharts-background {
-  fill: transparent;
-}
-
-.highcharts-plot-background {
-  fill: transparent;
-}
-
-.highcharts-area {
-  opacity: 1.25;
-  stroke: $color-orangedull-100;
-}
-
-.highcharts-grid-line {
-  stroke-width: 0;
-}
-
-.highcharts-data-label {
-  font-weight: normal;
-  font-size: 20px;
-}
-
-.highcharts-data-label text,
-%font-ui-text-xsm-oxygen {
-  fill: $color-white-160;
-}
-
-.highcharts-data-label .label-x {
-  font-size: 0.6em;
-}
-
-.label-y {
-  font-size: 0.8em;
-  fill: $color-orangedull-100;
-}
+@import '~/assets/css/components/details-chart';
 </style>

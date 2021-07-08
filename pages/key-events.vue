@@ -171,7 +171,7 @@
                 </nuxt-link>
               </li>
               <li>
-                <Button :on-click="(e) => updateShowMagicChart(props.row)">
+                <Button @click="() => updateShowMagicChart(props.row)">
                   <Icon id="graph" name="graph" />
                 </Button>
               </li>
@@ -419,10 +419,9 @@ export default {
           this.satellites[row.catalog_id_2].Name
         ]
       }
-      console.log('payload', payload)
 
-      this.showMagicChart = !this.showMagicChart
       this.updateLongitudeSatellites(payload)
+      this.showMagicChart = !this.showMagicChart
     },
     ...mapMutations({
       updateMagicChart: 'layout/updateMagicChart',
