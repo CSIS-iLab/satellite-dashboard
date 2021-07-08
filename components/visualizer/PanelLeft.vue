@@ -30,6 +30,14 @@
             {{ focusedSatellitesCount }}
           </div>
         </TabActivator>
+        <button
+          id="reset-visualization"
+          class="btn btn--panel-reset"
+          aria-label="Reset Visualization"
+          @click="resetVisualization"
+        >
+          <Icon id="reset" class="icon" name="reset" focusable="false" />
+        </button>
       </TabList>
 
       <TabPanel tab="filters" class="panel panel--left" scope="panelLeft">
@@ -43,9 +51,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import { mapGetters } from 'vuex'
-import { mapMutations } from 'vuex'
+import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 import FilterTab from '~/components/visualizer/FilterTab'
 import FocusList from '~/components/visualizer/FocusList'
 import Icon from '~/components/global/Icon'
@@ -74,16 +80,12 @@ export default {
     }),
     ...mapGetters({
       activeFiltersCount: 'filters/activeFiltersCount',
-      focusedSatellitesCount: 'satellites/focusedSatellitesCount'
+      focusedSatellitesCount: 'satellites/focusedSatellitesCount',
+      satelliteCatalogIds: 'satellites/satelliteCatalogIds'
     })
   },
   watch: {
-    activeTab(newTab, oldTab) {
-      // console.log(newTab, oldTab)
-      // console.log(this.activeTab, this.prevTab)
-
-      // this.updateVisibleSatellitesType(newTab)
-
+    activeTab(newTab) {
       // Switch Visible Objects based on active tab
       if (!newTab || newTab == this.prevTab) {
         console.log("don't change current visible")
@@ -106,9 +108,34 @@ export default {
     }
   },
   methods: {
+    resetVisualization() {
+      console.log('reset visual')
+      /* TODO:
+       * Clear Filtered List (0 filters)
+       * Clear Focus List (0 focused satellites)
+       * Reset Visisble satellites (should show all satellites)
+       * Reset date on timeline (go to current date)
+       * Reset speed scale (go to default speed)
+       * Reset time scale (go to default scale)
+       * Reset cesium camera view to default
+       * Reset cesium focused objects to none
+       *
+       * Questions:
+       * Do we reset layout changes? Like which panels are open?
+       */
+
+      this.resetSatelliteState()
+      this.resetFiltersState()
+      this.getOrbits()
+    },
     ...mapMutations({
       updateVisibleSatellites: 'satellites/updateVisibleSatellites',
-      updateVisibleSatellitesType: 'satellites/updateVisibleSatellitesType'
+      updateVisibleSatellitesType: 'satellites/updateVisibleSatellitesType',
+      resetSatelliteState: 'satellites/resetSatellitesState',
+      resetFiltersState: 'filters/resetFiltersState'
+    }),
+    ...mapActions({
+      getOrbits: 'satellites/getOrbits'
     })
   }
 }
