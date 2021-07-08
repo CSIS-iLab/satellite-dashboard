@@ -112,20 +112,6 @@ export default {
   methods: {
     resetVisualization() {
       console.log('reset visual')
-      /* TODO:
-       * Clear Filtered List (0 filters)
-       * Clear Focus List (0 focused satellites)
-       * Reset Visisble satellites (should show all satellites)
-       * Reset date on timeline (go to current date)
-       * Reset speed scale (go to default speed)
-       * Reset time scale (go to default scale)
-       * Reset cesium camera view to default
-       * Reset cesium focused objects to none
-       *
-       * Questions:
-       * Do we reset layout changes? Like which panels are open?
-       */
-
       this.resetSatelliteState()
       this.resetFiltersState()
       this.getOrbits()
