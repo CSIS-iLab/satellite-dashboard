@@ -304,7 +304,8 @@ export default {
   font-size: 20px;
 }
 
-.highcharts-data-label text %font-ui-text-xsm-oxygen {
+.highcharts-data-label text,
+%font-ui-text-xsm-oxygen {
   fill: $color-white-160;
 }
 
