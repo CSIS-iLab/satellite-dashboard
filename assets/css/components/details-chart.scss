@@ -27,6 +27,14 @@
   fill: $color-orangedull-100;
 }
 
+.highcharts-axis-labels text,
+%font-ui-text-sm-oxygen {
+  font-weight: 400;
+  font-size: 10px;
+  opacity: 1;
+  fill: $color-white-160;
+}
+
 .highcharts-data-label {
   font-weight: normal;
   font-size: 20px;
@@ -42,6 +50,6 @@
 }
 
 .label-y {
-  font-size: 0.8em;
+  font-size: 14px;
   fill: $color-orangedull-100;
 }

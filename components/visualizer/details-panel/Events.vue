@@ -150,8 +150,8 @@ export default {
           visible: false
         },
         yAxis: {
-          maxPadding: 0.3,
-          minPadding: 0.3,
+          maxPadding: -0.05,
+          minPadding: -0.05,
           opposite: false,
           title: {
             text: '',
