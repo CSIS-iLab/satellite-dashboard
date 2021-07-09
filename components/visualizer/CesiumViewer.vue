@@ -587,36 +587,17 @@ export default {
       })
 
       const duration = this.SimInt
-      const numDays = duration / 86400
 
-      /* The below ensures that we have the number of orbital elements we iterate
-      over matches the number we would expect to have given the number of days. So
-      If we request 7 days, and only 3 orbital elements are available, then we fill
-      the gaps with the last available orbital element. This is so the position
-      calculations are evenly spaced */
-      const paddedOrbits = []
-      let lastMatch = 0
-      let finalElement
-      for (let day = 0; day < numDays; day++) {
-        const targetDate = Cesium.JulianDate.toDate(
-          Cesium.JulianDate.addDays(this.SimStart, day, new Cesium.JulianDate())
-        ).setHours(0, 0, 0, 0)
-        const orbit = orbits[lastMatch]
-        const epochDate = new Date(orbit.elements.Epoch).setHours(0, 0, 0, 0)
-        if (epochDate.valueOf() === targetDate.valueOf() && orbits[day + 1]) {
-          lastMatch++
-        }
-        paddedOrbits.push(orbit)
-        finalElement = orbit
-      }
+      const paddedOrbits = orbits
+      const finalElement = orbits[paddedOrbits.length - 1]
 
-      const orbitalFragmentSize = duration / paddedOrbits.length
+      const orbitalFragmentSize = duration / orbits.length
       let step = (duration / 360) * 1000
 
       //tack on an extra one so visibility doesn't cut off
-      paddedOrbits.push(finalElement)
+      orbits.push(finalElement)
 
-      paddedOrbits.forEach((orbit, i, a) => {
+      orbits.forEach((orbit, i, a) => {
         const elems = Object.assign({}, orbit.elements)
         const fragmentStart = Cesium.JulianDate.addSeconds(
           this.SimStart,
