@@ -30,6 +30,16 @@
             {{ focusedSatellitesCount }}
           </div>
         </TabActivator>
+        <button
+          id="reset-visualization"
+          v-tippy
+          class="btn btn--panel-reset"
+          aria-label="Reset Visualization"
+          content="This action will reset all applied filters, clear all selected satellites, and reset the timeline to the current date and speed/time scales."
+          @click="resetVisualization"
+        >
+          <Icon id="reset" class="icon" name="reset" focusable="false" />
+        </button>
       </TabList>
 
       <TabPanel tab="filters" class="panel panel--left" scope="panelLeft">
@@ -43,9 +53,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import { mapGetters } from 'vuex'
-import { mapMutations } from 'vuex'
+import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 import FilterTab from '~/components/visualizer/FilterTab'
 import FocusList from '~/components/visualizer/FocusList'
 import Icon from '~/components/global/Icon'
@@ -74,16 +82,12 @@ export default {
     }),
     ...mapGetters({
       activeFiltersCount: 'filters/activeFiltersCount',
-      focusedSatellitesCount: 'satellites/focusedSatellitesCount'
+      focusedSatellitesCount: 'satellites/focusedSatellitesCount',
+      satelliteCatalogIds: 'satellites/satelliteCatalogIds'
     })
   },
   watch: {
-    activeTab(newTab, oldTab) {
-      // console.log(newTab, oldTab)
-      // console.log(this.activeTab, this.prevTab)
-
-      // this.updateVisibleSatellitesType(newTab)
-
+    activeTab(newTab) {
       // Switch Visible Objects based on active tab
       if (!newTab || newTab == this.prevTab) {
         console.log("don't change current visible")
@@ -106,9 +110,19 @@ export default {
     }
   },
   methods: {
+    resetVisualization() {
+      this.resetSatelliteState()
+      this.resetFiltersState()
+      this.getOrbits()
+    },
     ...mapMutations({
       updateVisibleSatellites: 'satellites/updateVisibleSatellites',
-      updateVisibleSatellitesType: 'satellites/updateVisibleSatellitesType'
+      updateVisibleSatellitesType: 'satellites/updateVisibleSatellitesType',
+      resetSatelliteState: 'satellites/resetSatellitesState',
+      resetFiltersState: 'filters/resetFiltersState'
+    }),
+    ...mapActions({
+      getOrbits: 'satellites/getOrbits'
     })
   }
 }
