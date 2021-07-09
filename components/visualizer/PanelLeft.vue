@@ -111,7 +111,6 @@ export default {
   },
   methods: {
     resetVisualization() {
-      console.log('reset visual')
       this.resetSatelliteState()
       this.resetFiltersState()
       this.getOrbits()

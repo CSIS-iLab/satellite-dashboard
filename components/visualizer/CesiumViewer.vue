@@ -145,6 +145,9 @@ export default {
     }
   },
   computed: {
+    numSatelliteOrbits() {
+      return Object.keys(this.satelliteOrbits).length
+    },
     ...mapState({
       satellites: (state) => state.satellites.satellites,
       statusTypes: (state) => state.satellites.statusTypes
@@ -389,9 +392,10 @@ export default {
     processNewData() {
       // in case cesium hasn't loaded yet
       this.satellitesHaveLoaded = true
-      if (!Cesium) {
+      if (!Cesium || !this.numSatelliteOrbits) {
         return
       }
+
       console.log('processing new data')
       const jNow = Cesium.JulianDate.fromDate(
         new Date(this.selectedDate.setHours(0, 0, 0))
