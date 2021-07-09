@@ -182,6 +182,14 @@ export default {
         return l
       })
 
+      // add predicted values to normalize charting
+      if (!predicted_longitudes.length) {
+        predicted_longitudes = historical_longitudes.map((l) => ({
+          ...l,
+          data: l.data.slice(l.data.length - 1)
+        }))
+      }
+
       // shape predicted lines
       predicted_longitudes = predicted_longitudes.map((l, i) => {
         l.showInLegend = false
