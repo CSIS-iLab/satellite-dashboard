@@ -6,7 +6,10 @@
       about an object by clicking its information icon. Edit this list to remove
       an object.
     </p>
-    <Button class="btn--share js--copy" :on-click="shareView">
+    <tippy to="shareView" :visible="showShareViewSuccess" trigger="manual">
+      Copied!
+    </tippy>
+    <Button name="shareView" class="btn--share js--copy" :on-click="shareView">
       <Icon id="share" name="share" focusable="false" />
       Copy link to this view
     </Button>
@@ -103,7 +106,9 @@ export default {
       isEditable: false,
       selectedItems: [],
       hideUnlisted: false,
-      hideObjectLabels: false
+      hideObjectLabels: false,
+      showShareViewSuccess: false,
+      showShareViewError: false
     }
   },
   computed: {
@@ -197,7 +202,12 @@ export default {
 
       try {
         await navigator.clipboard.writeText(url)
-        console.log('Page URL copied to clipboard: ' + url)
+        const that = this
+        this.showShareViewSuccess = true
+
+        setTimeout(function() {
+          that.showShareViewSuccess = false
+        }, 1000)
       } catch (err) {
         console.error('Failed to copy: ', err)
       }
