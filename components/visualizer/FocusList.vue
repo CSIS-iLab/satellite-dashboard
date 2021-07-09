@@ -107,8 +107,7 @@ export default {
       selectedItems: [],
       hideUnlisted: false,
       hideObjectLabels: false,
-      showShareViewSuccess: false,
-      showShareViewError: false
+      showShareViewSuccess: false
     }
   },
   computed: {
