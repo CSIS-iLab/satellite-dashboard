@@ -51,7 +51,7 @@
   &__footer {
     justify-content: space-between;
     align-items: center;
-    padding: rem(16) rem(32);
+    padding: rem(16) rem(16);
     color: $color-white-150;
     background-color: $color-slate-400;
     @extend %font-ui-text-base-good;

@@ -1,12 +1,13 @@
+@import '~/assets/css/components/highcharts-theme';
+
 .details-chart {
   max-width: 100%;
   max-height: 100%;
-  margin-left: -10;
   padding: 0;
 }
 
-.highcharts-title,
-%font-ui-heading-section-md {
+.highcharts-title {
+  @extend %font-ui-heading-section-md;
   font-weight: 500;
   font-size: 20px;
   font-style: normal;
@@ -27,8 +28,8 @@
   fill: $color-orangedull-100;
 }
 
-.highcharts-axis-labels text,
-%font-ui-text-sm-oxygen {
+.highcharts-axis-labels text {
+  @extend %font-ui-text-sm-oxygen;
   font-weight: 400;
   font-size: 10px;
   opacity: 1;
@@ -40,8 +41,8 @@
   font-size: 20px;
 }
 
-.highcharts-data-label text,
-%font-ui-text-xsm-oxygen {
+.highcharts-data-label text {
+  @extend %font-ui-text-xsm-oxygen;
   fill: $color-white-160;
 }
 

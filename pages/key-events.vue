@@ -412,7 +412,6 @@ export default {
       this.loadItems()
     },
     updateShowMagicChart(row) {
-      console.log('update', row)
       const payload = {
         ids: [row.catalog_id_1, row.catalog_id_2],
         names: [

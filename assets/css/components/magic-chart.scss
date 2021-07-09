@@ -1,3 +1,5 @@
+@import '~/assets/css/components/highcharts-theme';
+
 .magic-chart {
   min-width: 45vw;
   min-height: 45vh;
@@ -10,8 +12,8 @@
   fill: $color-white-160;
 }
 
-.highcharts-axis-labels text,
-%font-ui-text-sm-oxygen {
+.highcharts-axis-labels text {
+  @extend %font-ui-text-sm-oxygen;
   font-size: 12px;
   opacity: 0.4;
   fill: $color-white-180;
@@ -33,40 +35,37 @@
 }
 
 .data-sources {
-  padding: 1%;
+  padding: rem(12) 0 0 0;
   border-top: 1px solid $color-white-115;
 }
 
 .data-source-title {
-  margin-left: 10px;
   color: $color-white-160;
   font-family: $font__good;
-  font-weight: 100;
-  font-size: 22px;
+  font-weight: 400;
+  font-size: 16px;
 }
 
 .data-source--sat-name {
-  margin-left: 0.6em;
+  @extend %font-ui-text-base-oxygen;
   color: $color-white-170;
-  font-family: $font__good;
-  font-weight: 600;
-  font-size: 1.3em;
+  font-weight: bold;
+  font-size: 14px;
 }
 
 .data-source--source-name {
+  @extend %font-ui-text-base-oxygen;
   margin-left: 0.6em;
   color: $color-white-170;
-  font-family: $font__good;
-  font-weight: 100;
-  font-size: 1.3em;
+  font-weight: 400;
+  font-size: 14px;
 }
 
 .data-source-time {
+  @extend %font-ui-text-base-oxygen;
   margin-left: 0.4em;
-  color: $color-white-150;
-  font-family: $font__good;
-  font-weight: 100;
-  font-size: 1.1em;
+  color: $color-white-140;
+  font-size: 12px;
 }
 
 .export-btns {
@@ -75,13 +74,22 @@
   width: 100%;
 }
 
-.export-btns *,
-%font-ui-text-base-good {
-  color: $color-white-170;
+.export-btns--print {
+  display: flex;
+  gap: rem(4px);
+  align-items: center;
+  text-transform: none;
 }
 
-.export-btns-download,
-%font-ui-text-base-good {
+.export-btns * {
+  @extend %font-ui-text-base-good;
+  margin: 0 4px;
+  color: $color-white-170;
+  font-size: 14px;
+}
+
+.export-btns-download {
+  @extend %font-ui-text-base-good;
   margin-right: 1em;
   color: $color-white-150;
 }

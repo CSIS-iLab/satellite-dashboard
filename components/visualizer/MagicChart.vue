@@ -31,8 +31,7 @@
         <span>
           <Button
             id="printer"
-            class="btn btn--contained"
-            style="text-transform: none;"
+            class="btn btn--contained export-btns--print"
             @click="() => exportImg('application/pdf')"
           >
             <Icon class="icon" name="printer" />
@@ -239,6 +238,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~/assets/css/components/highcharts-theme';
 @import '~/assets/css/components/magic-chart';
 </style>

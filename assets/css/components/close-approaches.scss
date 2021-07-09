@@ -77,9 +77,9 @@
     margin-right: rem(6);
     font-style: italic;
   }
-}
 
-.compare-objects {
-  grid-column: 1 / -1;
-  justify-self: center;
+  &__compare-objects {
+    grid-column: 1 / -1;
+    justify-self: center;
+  }
 }

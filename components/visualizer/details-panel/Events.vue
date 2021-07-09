@@ -132,7 +132,10 @@ export default {
         },
         boost: { enabled: false, seriesThreshold: 10000 },
         plotOptions: {
-          turboThreshold: 10000
+          turboThreshold: 10000,
+          series: {
+            enableMouseTracking: false
+          }
         },
         exporting: { enabled: false },
         credits: { enabled: false },
@@ -144,12 +147,12 @@ export default {
           visible: false
         },
         yAxis: {
-          maxPadding: -0.05,
-          minPadding: -0.05,
+          maxPadding: 0,
+          minPadding: 0,
           opposite: false,
           title: {
             text: '',
-            reserveSpace: false
+            reserveSpace: true
           },
           labels: { format: '{value}°' }
         },
@@ -280,6 +283,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~/assets/css/components/highcharts-theme';
 @import '~/assets/css/components/details-chart';
 </style>

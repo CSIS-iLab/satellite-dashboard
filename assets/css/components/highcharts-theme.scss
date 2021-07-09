@@ -1,11 +1,12 @@
 @import '~/node_modules/highcharts/css/highcharts';
 
 .highcharts-root {
-  font-family: $font__good;
+  font-family: $font__oxygen;
 }
 
-.highcharts-title,
-%font-post-heading-h3 %font-ui-heading-section-lg {
+.highcharts-title {
+  @extend %font-post-heading-h3;
+  @extend %font-ui-heading-section-lg;
   font-size: 2em;
   fill: $color-white-170;
 }
