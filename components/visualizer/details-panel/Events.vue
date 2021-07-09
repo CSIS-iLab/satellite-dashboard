@@ -102,12 +102,6 @@ export default {
       default: ''
     }
   },
-  async fetch() {
-    const events = await this.$axios.$get(
-      `/wp-json/satdash/v1/close_approaches/${this.id}`
-    )
-    this.events = events
-  },
   data() {
     return {
       activeTab: 'events',
@@ -148,9 +142,24 @@ export default {
       satellites: (state) => state.satellites.satellites
     })
   },
+  watch: {
+    id: {
+      handler() {
+        this.fetch()
+      },
+      immediate: true
+    }
+  },
   methods: {
     updateMaxDistance() {
       this.appliedMaxDistance = this.maxDistance
+    },
+    async fetch() {
+      console.log('fetching')
+      const events = await this.$axios.$get(
+        `/wp-json/satdash/v1/close_approaches/${this.id}`
+      )
+      this.events = events
     }
   }
 }
