@@ -135,4 +135,14 @@
   .btn--panel-close {
     height: $size__header-height;
   }
+
+  .btn--panel-reset {
+    min-height: 40px;
+    color: $color-white-170;
+    @include font-size(20px);
+
+    &:hover {
+      color: $color-white-100;
+    }
+  }
 }

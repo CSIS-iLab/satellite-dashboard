@@ -108,12 +108,6 @@ export default {
       default: ''
     }
   },
-  async fetch() {
-    const events = await this.$axios.$get(
-      `/wp-json/satdash/v1/close_approaches/${this.id}`
-    )
-    this.events = events
-  },
   data() {
     return {
       dataLoaded: false,
@@ -195,13 +189,14 @@ export default {
     })
   },
   watch: {
-    id() {
-      this.dataLoaded = false
-      this.longitudes()
+    id: {
+      handler() {
+        this.dataLoaded = false
+        this.fetch()
+        this.longitudes()
+      },
+      immediate: true
     }
-  },
-  async created() {
-    await this.longitudes()
   },
   methods: {
     updateMaxDistance() {
@@ -270,6 +265,12 @@ export default {
       // render chart after data is loaded
 
       this.dataLoaded = true
+    },
+    async fetch() {
+      const events = await this.$axios.$get(
+        `/wp-json/satdash/v1/close_approaches/${this.id}`
+      )
+      this.events = events
     },
     ...mapActions({
       getLongitudes: 'satellites/getLongitudes'

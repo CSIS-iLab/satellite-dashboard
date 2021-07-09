@@ -109,7 +109,6 @@ import Icon from '~/components/global/Icon'
 import StatusTypesLegend from '~/components/global/StatusTypesLegend'
 
 import cesiumServiceProvider from '../../services/cesium-service'
-import timeEventsProvider from '../../services/time-events'
 import timeEventProvider from '../../services/time-events'
 const cesiumService = cesiumServiceProvider()
 const timeEvents = timeEventProvider()

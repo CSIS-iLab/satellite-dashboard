@@ -65,20 +65,26 @@ const statusTypes = {
   }
 }
 
+const getResettableDefaultState = () => {
+  return {
+    orbits: {},
+    filteredSatellites: [],
+    focusedSatellites: new Set(),
+    visibleSatellites: [],
+    visibleSatellitesType: 'catalog',
+    detailedSatellite: null,
+    targetDate: new Date(new Date().setHours(0, 0, 0, 0)),
+    selectedTimescale: timescales[1]
+  }
+}
+
 export const state = () => ({
   satellites: {},
-  orbits: {},
-  filteredSatellites: [],
-  focusedSatellites: new Set(),
-  visibleSatellites: [],
-  visibleSatellitesType: 'catalog',
   longitudeSatellites: [],
-  detailedSatellite: null,
-  targetDate: new Date(new Date().setHours(0, 0, 0, 0)),
-  selectedTimescale: timescales[1],
+  countriesOfJurisdiction: [],
   timescales,
   statusTypes,
-  countriesOfJurisdiction: []
+  ...getResettableDefaultState()
 })
 
 export const getters = {
@@ -97,6 +103,12 @@ export const getters = {
 }
 
 export const mutations = {
+  resetSatellitesState: (state) => {
+    const items = getResettableDefaultState()
+    Object.keys(items).forEach((key) => {
+      state[key] = items[key]
+    })
+  },
   updateSatellites: (state, satellites) => {
     state.satellites = satellites
   },
