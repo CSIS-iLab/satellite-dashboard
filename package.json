@@ -32,7 +32,7 @@
     "highcharts": "^9.1.2",
     "highcharts-vue": "^1.4.0",
     "merge-descriptors": "^1.0.1",
-    "nuxt": "^2.12.2",
+    "nuxt": "^2.15.7",
     "satellite.js": "^4.0.0",
     "vue-cesium": "^2.1.9",
     "vue-good-table": "^2.21.1",
