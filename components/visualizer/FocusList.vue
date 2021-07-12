@@ -6,9 +6,11 @@
       about an object by clicking its information icon. Edit this list to remove
       an object.
     </p>
-    <tippy to="shareView" :visible="showShareViewSuccess" trigger="manual">
-      Copied!
-    </tippy>
+    <client-only>
+      <tippy to="shareView" :visible="showShareViewSuccess" trigger="manual">
+        Copied!
+      </tippy>
+    </client-only>
     <Button name="shareView" class="btn--share js--copy" :on-click="shareView">
       <Icon id="share" name="share" focusable="false" />
       Copy link to this view
