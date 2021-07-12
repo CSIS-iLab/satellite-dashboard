@@ -125,7 +125,7 @@ export default {
         Name: { value: 'Name', label: 'Name' },
         NoradId: { value: 'NoradId', label: 'Norad ID' },
         countryOfLaunchIds: {
-          value: 'countryOfLaunch',
+          value: 'countryOfLaunchIds',
           label: 'Country'
         },
         Purpose: { value: 'Purpose', label: 'Purpose' },
@@ -135,7 +135,6 @@ export default {
       activeFilterValues: {},
       visibleFilters: [],
       visibleFilterValues: {
-        countryOfJurisdictionIds: [],
         countryOfLaunchIds: [],
         Name: [],
         NoradId: [],
@@ -184,15 +183,12 @@ export default {
           .map((d) => ({ value: d, label: d }))
       }
 
-      // Status
       filters.Status = this.statusTypesKeys.map((d) => ({
         value: d,
         label: this.statusTypes[d].label
       }))
 
-      // countryOfJurisdiction
-      // filters.countryOfJurisdictionIds = this.countriesOfJurisdiction
-      filters.countryOfLaunchIds = this.countryOfLaunch
+      filters.countryOfLaunchIds = this.countriesOfLaunch
 
       return filters
     },
@@ -200,12 +196,7 @@ export default {
       let results = []
       for (let i = 0; i < this.filteredSatellites.length; i++) {
         const catalog_id = this.filteredSatellites[i]
-        const {
-          Name,
-          Status,
-          countryOfLaunch,
-          countryOfJurisdiction
-        } = this.satellites[catalog_id]
+        const { Name, Status, countryOfLaunch } = this.satellites[catalog_id]
 
         results.push({
           catalog_id,
@@ -214,7 +205,6 @@ export default {
           country: countryOfLaunch
         })
       }
-      // console.log(results)
       return results
     },
     ...mapState({
@@ -222,8 +212,7 @@ export default {
       filteredSatellites: (state) => state.satellites.filteredSatellites,
       activeFilters: (state) => state.filters.activeFilters,
       statusTypes: (state) => state.satellites.statusTypes,
-      countriesOfJurisdiction: (state) =>
-        state.satellites.countriesOfJurisdiction
+      countriesOfLaunch: (state) => state.satellites.countriesOfLaunch
     }),
     ...mapGetters({
       satelliteCatalogIds: 'satellites/satelliteCatalogIds',
