@@ -6,6 +6,15 @@
       about an object by clicking its information icon. Edit this list to remove
       an object.
     </p>
+    <client-only>
+      <tippy to="shareView" :visible="showShareViewSuccess" trigger="manual">
+        Copied!
+      </tippy>
+    </client-only>
+    <Button name="shareView" class="btn--share js--copy" :on-click="shareView">
+      <Icon id="share" name="share" focusable="false" />
+      Copy link to this view
+    </Button>
     <ul class="focus-list__options" role="list">
       <li>
         <Toggle
@@ -75,9 +84,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import { mapGetters } from 'vuex'
-import { mapMutations } from 'vuex'
+import { mapState, mapGetters, mapMutations } from 'vuex'
 import Button from '~/components/global/Button.vue'
 import Checkbox from '~/components/global/Checkbox.vue'
 import Icon from '~/components/global/Icon.vue'
@@ -101,7 +108,8 @@ export default {
       isEditable: false,
       selectedItems: [],
       hideUnlisted: false,
-      hideObjectLabels: false
+      hideObjectLabels: false,
+      showShareViewSuccess: false
     }
   },
   computed: {
@@ -118,7 +126,9 @@ export default {
       return document.querySelector('.cesium__entity-label-container')
     },
     ...mapState({
-      focusedSatellites: (state) => state.satellites.focusedSatellites
+      focusedSatellites: (state) => state.satellites.focusedSatellites,
+      selectedTimescale: (state) => state.satellites.selectedTimescale,
+      targetDate: (state) => state.satellites.targetDate
     }),
     ...mapGetters({
       focusedSatellitesCount: 'satellites/focusedSatellitesCount'
@@ -170,6 +180,38 @@ export default {
     showSatelliteDetails(e, catalog_id) {
       console.log('show details')
       this.updateDetailedSatellite(catalog_id)
+    },
+    async shareView() {
+      let viewParams = new URLSearchParams()
+
+      const satellites = Array.from(this.focusedSatellites).join(',')
+      viewParams.set('satids', satellites)
+
+      const date = new Date(this.targetDate)
+      const formattedDate = [
+        date.getFullYear(),
+        ('0' + (date.getMonth() + 1)).slice(-2),
+        ('0' + date.getDate()).slice(-2)
+      ].join('-')
+
+      viewParams.set('date', formattedDate)
+
+      const timescale = this.selectedTimescale.id
+      viewParams.set('timescale', timescale)
+
+      const url = `${location.href}?${viewParams.toString()}`
+
+      try {
+        await navigator.clipboard.writeText(url)
+        const that = this
+        this.showShareViewSuccess = true
+
+        setTimeout(function() {
+          that.showShareViewSuccess = false
+        }, 1000)
+      } catch (err) {
+        console.error('Failed to copy: ', err)
+      }
     },
     ...mapMutations({
       updateFocusedSatellites: 'satellites/updateFocusedSatellites',
