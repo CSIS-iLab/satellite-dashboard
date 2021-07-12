@@ -3,6 +3,7 @@
     <highcharts
       v-if="dataLoaded"
       ref="chart"
+      key="details-chart"
       class="details-chart"
       :options="chartOptions"
     />
@@ -123,6 +124,7 @@ export default {
       chartOptions: {
         title: {
           text: 'Historical Longitudes',
+          margin: 26,
           align: 'left'
         },
         chart: {
@@ -134,7 +136,10 @@ export default {
         plotOptions: {
           turboThreshold: 10000,
           series: {
-            enableMouseTracking: false
+            enableMouseTracking: false,
+            marker: {
+              enabled: false
+            }
           }
         },
         exporting: { enabled: false },

@@ -5,6 +5,7 @@
       <div v-if="dataLoaded">
         <highcharts
           ref="chart"
+          key="chart"
           :constructor-type="'stockChart'"
           :options="chartOptions"
           class="magic-chart"
@@ -122,7 +123,7 @@ export default {
           enabled: false
         },
         rangeSelector: {
-          inputEnabled: true,
+          inputEnabled: false,
           allButtonsEnabled: false,
           buttons: [
             {
@@ -210,7 +211,13 @@ export default {
           {
             width: 2,
             value: new Date().getTime(),
-            label: { text: 'Today' }
+            label: {
+              text: 'Today',
+              verticalAlign: 'top',
+              rotation: 0,
+              x: -20,
+              y: -10
+            }
           }
         ]
       }

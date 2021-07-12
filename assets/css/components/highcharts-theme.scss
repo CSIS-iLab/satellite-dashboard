@@ -5,9 +5,7 @@
 }
 
 .highcharts-title {
-  @extend %font-post-heading-h3;
   @extend %font-ui-heading-section-lg;
-  font-size: 2em;
   fill: $color-white-170;
 }
 
@@ -23,8 +21,20 @@
   stroke-width: 1px;
 }
 
+.highcharts-axis-line {
+  stroke-width: 0;
+}
+
 .highcharts-grid-line {
   stroke: $color-white-110;
+}
+
+.highcharts-axis-title {
+  @extend %font-ui-text-lg-oxygen;
+  font-family: $font__good;
+  font-weight: 400;
+  opacity: 0.8;
+  fill: $color-white-180;
 }
 
 .highcharts-legend text {
@@ -32,6 +42,16 @@
   font-weight: normal;
   font-size: 14px;
   fill: $color-white-180;
+}
+
+.highcharts-tooltip-box {
+  opacity: 0.8;
+  fill: $color-slate-395;
+  stroke-width: 0;
+}
+
+.highcharts-tooltip text {
+  fill: $color-offwhite;
 }
 
 .highcharts-range-input text {

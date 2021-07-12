@@ -6,32 +6,28 @@
 }
 
 .highcharts-axis-title {
-  margin-right: 5px;
+  @extend %font-ui-text-lg-oxygen;
   font-family: $font__good;
-  font-size: 22px;
-  fill: $color-white-160;
+  font-weight: 400;
+  opacity: 0.8;
+  fill: $color-white-180;
 }
 
 .highcharts-axis-labels text {
   @extend %font-ui-text-sm-oxygen;
-  font-size: 12px;
   opacity: 0.4;
   fill: $color-white-180;
-}
-
-.highcharts-tooltip-box {
-  fill: $color-slate-395;
-  stroke-width: 0;
-}
-
-.highcharts-tooltip text {
-  fill: $color-offwhite;
 }
 
 .legend-id {
   font-weight: 100;
   font-size: 10px;
   fill: $color-white-160;
+}
+
+.highcharts-plot-line-label {
+  @extend %font-ui-text-xsm-oxygen;
+  fill: #abadaf;
 }
 
 .data-sources {
@@ -50,7 +46,6 @@
   @extend %font-ui-text-base-oxygen;
   color: $color-white-170;
   font-weight: bold;
-  font-size: 14px;
 }
 
 .data-source--source-name {
@@ -58,7 +53,6 @@
   margin-left: 0.6em;
   color: $color-white-170;
   font-weight: 400;
-  font-size: 14px;
 }
 
 .data-source-time {
