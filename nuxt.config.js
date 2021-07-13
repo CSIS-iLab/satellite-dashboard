@@ -62,6 +62,10 @@ export default {
       src: '@/plugins/vue-select',
       mode: 'client'
     },
+    {
+      src: '@/plugins/vue-highcharts',
+      mode: 'client'
+    },
     { src: '~/plugins/vue-good-table', mode: 'client' },
     { src: '~/plugins/vue-tippy', mode: 'client' },
     { src: '~/plugins/vue-pluralize' },
@@ -80,7 +84,9 @@ export default {
     // Doc: https://github.com/nuxt-community/eslint-module
     '@nuxtjs/eslint-module',
     // Doc: https://github.com/nuxt-community/stylelint-module
-    '@nuxtjs/stylelint-module'
+    '@nuxtjs/stylelint-module',
+    // Doc: https://composition-api.nuxtjs.org/
+    '@nuxtjs/composition-api/module'
   ],
   /*
    ** Nuxt.js modules
@@ -97,6 +103,7 @@ export default {
   },
   // Axios module configuration (https://axios.nuxtjs.org/options)
   axios: {
+    // baseURL: 'http://satellite-dashboard.local',
     baseURL: 'https://satdash.wpengine.com',
     retry: {
       retries: 10,
@@ -163,6 +170,8 @@ export default {
     }
   },
   generate: {
+    // see https://composition-api.nuxtjs.org/getting-started/setup
+    interval: 2000
     // routes: dynamicRoutes // No longer need to specify this.
   }
 }

@@ -60,6 +60,16 @@
           </div>
         </li>
       </ul>
+      <div class="close-approaches__compare-objects">
+        <Button
+          aria-label="See historical orbits"
+          :on-click="(e) => updateShowMagicChart(event.objects)"
+          class="btn btn--outlined"
+        >
+          <Icon id="magic-chart" name="graph" focusable="false" />
+          Compare Objects
+        </Button>
+      </div>
     </li>
   </ol>
 </template>
@@ -86,6 +96,11 @@ export default {
       default: false
     },
     id: {
+      type: String,
+      required: false,
+      default: null
+    },
+    name: {
       type: String,
       required: false,
       default: null
@@ -125,6 +140,14 @@ export default {
     },
     focusedItems() {
       return new Set(this.focusedSatellites)
+    },
+    showMagicChart: {
+      get: function() {
+        return this.$store.state.layout.showMagicChart
+      },
+      set: function(magicChartState) {
+        this.updateMagicChart({ magicChartState })
+      }
     },
     ...mapState({
       satellites: (state) => state.satellites.satellites,
@@ -200,8 +223,18 @@ export default {
 
       return `?satids=${satIds}&date=${formattedDate}&time=${timeInSeconds}`
     },
+    updateShowMagicChart(objects) {
+      const payload = {
+        ids: [...objects.map((o) => o.catalog_id), this.id],
+        names: [...objects.map((o) => o.Name), this.name]
+      }
+      this.showMagicChart = !this.showMagicChart
+      this.updateLongitudeSatellites(payload)
+    },
     ...mapMutations({
-      updateFocusedSatellites: 'satellites/updateFocusedSatellites'
+      updateFocusedSatellites: 'satellites/updateFocusedSatellites',
+      updateMagicChart: 'layout/updateMagicChart',
+      updateLongitudeSatellites: 'satellites/updateLongitudeSatellites'
     })
   }
 }

@@ -27,6 +27,10 @@
       margin-top: rem(32);
     }
 
+    + .close-approaches__item:last-child {
+      margin-bottom: rem(70);
+    }
+
     &-title {
       margin-bottom: rem(4);
       color: $color-white-190;
@@ -72,5 +76,10 @@
     display: inline-block;
     margin-right: rem(6);
     font-style: italic;
+  }
+
+  &__compare-objects {
+    grid-column: 1 / -1;
+    justify-self: center;
   }
 }

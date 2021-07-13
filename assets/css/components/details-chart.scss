@@ -1,0 +1,47 @@
+@import '~/assets/css/components/highcharts-theme';
+
+.details-chart {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.highcharts-title {
+  @extend %font-ui-heading-section-md;
+  font-weight: 500;
+}
+
+.highcharts-background {
+  fill: transparent;
+}
+
+.highcharts-plot-background {
+  fill: transparent;
+}
+
+.highcharts-area {
+  opacity: 1.25;
+  fill: $color-orangedull-100;
+}
+
+.highcharts-axis-labels text {
+  @extend %font-ui-text-sm-oxygen;
+  font-weight: 400;
+  opacity: 1;
+  fill: $color-white-160;
+}
+
+.highcharts-data-label text {
+  @extend %font-ui-text-base-oxygen;
+  fill: $color-white-160;
+}
+
+.highcharts-data-label .label-x {
+  @extend %font-ui-text-sm-oxygen;
+  font-weight: 400;
+  fill: $color-white-170;
+}
+
+.highcharts-data-label .label-y {
+  font-weight: 700;
+  fill: $color-orangedull-100;
+}

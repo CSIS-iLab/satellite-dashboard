@@ -1,7 +1,13 @@
 <template>
   <div class="details-events">
-    <h3>Historical Longitudes</h3>
-    <p class="details-panel__desc">Coming soon.</p>
+    <highcharts
+      v-if="dataLoaded"
+      ref="chart"
+      key="details-chart"
+      class="details-chart"
+      :options="chartOptions"
+    />
+    <div v-else>Loading satellite data...</div>
     <hr />
     <h3>Close Approaches</h3>
     <template v-if="totalEvents === 0">
@@ -71,6 +77,7 @@
       </div>
       <CloseApproachesList
         :id="id"
+        :name="name"
         :events="filteredEvents"
         class="details-events__list"
       />
@@ -79,7 +86,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import CloseApproachesList from '~/components/visualizer/CloseApproachesList.vue'
 import Button from '~/components/global/Button.vue'
 import Icon from '~/components/global/Icon.vue'
@@ -104,6 +111,7 @@ export default {
   },
   data() {
     return {
+      dataLoaded: false,
       activeTab: 'events',
       events: [],
       maxDistance: 50,
@@ -112,7 +120,53 @@ export default {
       sortOptions: [
         { value: 'min_distance_km', label: 'Distance' },
         { value: 'time_of_close_approach', label: 'Date' }
-      ]
+      ],
+      chartOptions: {
+        title: {
+          text: 'Historical Longitudes',
+          margin: 26,
+          align: 'left'
+        },
+        chart: {
+          styledMode: true,
+          height: 350,
+          spacingLeft: 0
+        },
+        boost: { enabled: false, seriesThreshold: 10000 },
+        plotOptions: {
+          turboThreshold: 10000,
+          series: {
+            enableMouseTracking: false,
+            marker: {
+              enabled: false
+            }
+          }
+        },
+        exporting: { enabled: false },
+        credits: { enabled: false },
+        legend: { enabled: false },
+        tooltip: { enabled: false },
+        xAxis: {
+          maxPadding: 0.3,
+          minPadding: 0.3,
+          visible: false
+        },
+        yAxis: {
+          maxPadding: 0,
+          minPadding: 0,
+          opposite: false,
+          title: {
+            text: '',
+            reserveSpace: true
+          },
+          labels: { format: '{value}°' }
+        },
+        rangeSelector: {
+          inputEnabled: false,
+          allButtonsEnabled: false
+        },
+        series: []
+      }
     }
   },
   computed: {
@@ -145,7 +199,9 @@ export default {
   watch: {
     id: {
       handler() {
+        this.dataLoaded = false
         this.fetch()
+        this.longitudes()
       },
       immediate: true
     }
@@ -154,13 +210,83 @@ export default {
     updateMaxDistance() {
       this.appliedMaxDistance = this.maxDistance
     },
+    async longitudes() {
+      const {
+        names,
+        historical_longitudes,
+        predicted_longitudes
+      } = await this.getLongitudes({
+        _ids: [this.id]
+      })
+
+      historical_longitudes.forEach((l, i) => {
+        // take sampling of data (limits total data points which is necessary
+        // for turboBoost issues
+        let modulus = 1
+        let len = historical_longitudes[i].data.length
+        if (len > 1000) {
+          modulus = Math.max(2, Math.ceil(len / 1000))
+        }
+        const data = historical_longitudes[i].data.reduce((a, v, i) => {
+          if (i % modulus === 0) a.push(v)
+          return a
+        }, [])
+
+        // add data labels to first and last point
+        const labelPoints = [0, data.length - 1]
+        labelPoints.forEach((l) => {
+          data[l] = {
+            x: data[l][0],
+            y: data[l][1],
+            dataLabels: {
+              x: l ? 25 : -25,
+              y: l ? 3 : -3,
+              crop: false,
+              overflow: 'none',
+              enabled: true,
+              formatter: function() {
+                return `
+                <div class="label-y">${this.y.toFixed(0)}°</div>
+                <br />
+                <div class="label-x">${new Intl.DateTimeFormat('en-US', {
+                  year: 'numeric',
+                  month: 'short'
+                }).format(new Date(this.x))}</div>`
+              }
+            }
+          }
+        })
+        this.chartOptions.series[i] = { data }
+        this.chartOptions.series[i].name = `${this.name}`
+      })
+
+      // set predicted lines
+      predicted_longitudes.forEach((l, i) => {
+        this.chartOptions.series[i + historical_longitudes.length - 1] = {
+          data: predicted_longitudes[i].data
+        }
+        this.chartOptions.series[
+          i + historical_longitudes.length - 1
+        ].name = `${this.name} (predicted)`
+      })
+
+      // render chart after data is loaded
+
+      this.dataLoaded = true
+    },
     async fetch() {
-      console.log('fetching')
       const events = await this.$axios.$get(
         `/wp-json/satdash/v1/close_approaches/${this.id}`
       )
       this.events = events
-    }
+    },
+    ...mapActions({
+      getLongitudes: 'satellites/getLongitudes'
+    })
   }
 }
 </script>
+
+<style lang="scss">
+@import '~/assets/css/components/details-chart';
+</style>

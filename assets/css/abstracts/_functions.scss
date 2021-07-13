@@ -12,7 +12,7 @@ $browser-context: 16px;
     $size: $size * 1px;
   }
 
-  $rem-size: $size / $browser-context;
+  $rem-size: math.div($size, $browser-context);
   @return $rem-size * 1rem;
 }
 
