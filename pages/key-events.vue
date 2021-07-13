@@ -99,7 +99,11 @@
             mode: 'pages',
             perPage: serverParams.perPage,
             pageLabel: 'Page',
-            dropdownAllowAll: false
+            dropdownAllowAll: false,
+            infoFn: (params) =>
+              `Page ${params.currentPage.toLocaleString(
+                'en-US'
+              )} of ${params.totalPages.toLocaleString('en-US')}`
           }"
           :sort-options="{
             enabled: true,
