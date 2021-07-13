@@ -36,7 +36,7 @@
 
   &__date {
     .form__label {
-      margin-bottom: rem(8);
+      margin-bottom: rem(4);
     }
 
     .sd-icon-calendar,
@@ -147,6 +147,16 @@
       color: $color-white-140;
     }
 
+    /* stylelint-disable-next-line */
+    th.sorting-desc button::before {
+      border-top: 5px solid $color-white-180;
+    }
+
+    /* stylelint-disable-next-line */
+    th.sorting-asc button::after {
+      border-bottom: 5px solid $color-white-180;
+    }
+
     th,
     td {
       &:first-of-type {
@@ -187,6 +197,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: rem(24) 0;
     background: transparent;
     border: 0;
     border-top: 1px solid $color-white-115;
@@ -197,18 +208,39 @@
     }
 
     /* stylelint-disable-next-line */
+    .footer__row-count__label {
+      color: $color-white-150;
+      @extend %font-ui-text-lg-oxygen;
+    }
+
+    /* stylelint-disable-next-line */
     .footer__row-count__select {
       color: $color-white-170;
       background: $color-slate-400;
     }
 
+    .footer__row-count::after {
+      display: none;
+    }
+
     .footer__navigation {
+      @extend %font-ui-text-lg-oxygen;
       text-align: right;
+    }
+
+    /* stylelint-disable-next-line */
+    .footer__navigation__page-info {
+      margin-right: rem(24);
     }
 
     /* stylelint-disable-next-line */
     .footer__navigation__page-info__current-entry {
       background: $color-slate-400;
+    }
+
+    /* stylelint-disable-next-line */
+    .footer__navigation__page-btn {
+      font-weight: normal;
     }
   }
 }
