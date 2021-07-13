@@ -132,20 +132,11 @@ export default {
         advanced: [
           { value: 'Purpose', label: 'Purpose', tooltip: 'purpose' },
           { value: 'Type', label: 'Type', tooltip: 'type' },
-          {
-            value: 'countryOfJurisdiction',
-            label: 'Country of Jurisdiction',
-            tooltip: 'country-of-jurisdiction',
-            customFormatter: true,
-            formatter: function(value) {
-              return self.formatCountries(value)
-            }
-          },
           { value: 'Operator', label: 'Operator', tooltip: 'operator' },
           { value: 'LaunchDate', label: 'Launch Date', tooltip: 'launch-date' },
           {
             value: 'countryOfLaunch',
-            label: 'Country of Launch Site',
+            label: 'Country',
             tooltip: 'country-of-launch-site',
             customFormatter: true,
             formatter: function(value) {

@@ -81,7 +81,7 @@ const getResettableDefaultState = () => {
 export const state = () => ({
   satellites: {},
   longitudeSatellites: [],
-  countriesOfJurisdiction: [],
+  countriesOfLaunch: [],
   timescales,
   statusTypes,
   ...getResettableDefaultState()
@@ -140,8 +140,8 @@ export const mutations = {
   updateLongitudeSatellites: (state, payload) => {
     state.longitudeSatellites = payload
   },
-  updateCountriesOfJurisdiction: (state, countries) => {
-    state.countriesOfJurisdiction = countries
+  updateCountriesOfLaunch: (state, countries) => {
+    state.countriesOfLaunch = countries
   }
 }
 
@@ -179,7 +179,7 @@ export const actions = {
       let items = {}
       let visibleItems = []
       let countries = new Set()
-      let countriesOfJurisdiction = new Set()
+      let countriesOfLaunch = new Set()
 
       /**
        * Todo:
@@ -210,22 +210,20 @@ export const actions = {
           }
 
           // Format country names into standard codes if we can.
-          if (!sat.countryOfJurisdiction) {
-            sat.countryOfJurisdiction = 'TBD'
+          if (!sat.countryOfLaunch) {
+            sat.countryOfLaunch = 'TBD'
           }
 
-          let countryOfJurisdiction = formatCountries(sat.countryOfJurisdiction)
-          let countryOfJurisdictionIds = countryOfJurisdiction.map((d) => d.id)
-
           let countryOfLaunch = formatCountries(sat.countryOfLaunch)
+          let countryOfLaunchIds = countryOfLaunch.map((d) => d.id)
 
-          // Store the countryOfJurisdiction so we can filter on it later.
-          countryOfJurisdiction.forEach((country) => {
+          // Store the countryOfLaunch so we can filter on it later.
+          countryOfLaunch.forEach((country) => {
             if (countries.has(country.id)) {
               return
             }
             countries.add(country.id)
-            countriesOfJurisdiction.add({
+            countriesOfLaunch.add({
               value: country.id,
               label: country.label
             })
@@ -233,9 +231,8 @@ export const actions = {
 
           items[sat.acf.catalog_id] = {
             ...sat,
-            countryOfJurisdiction,
             countryOfLaunch,
-            countryOfJurisdictionIds,
+            countryOfLaunchIds,
             Status: status_type
           }
 
@@ -243,16 +240,13 @@ export const actions = {
           visibleItems.push(sat.acf.catalog_id)
         })
 
-      countriesOfJurisdiction = [...countriesOfJurisdiction].sort((a, b) =>
+      countriesOfLaunch = [...countriesOfLaunch].sort((a, b) =>
         a.label.localeCompare(b.label)
       )
 
       commit('updateSatellites', Object.freeze(items))
       commit('updateVisibleSatellites', visibleItems)
-      commit(
-        'updateCountriesOfJurisdiction',
-        Object.freeze(countriesOfJurisdiction)
-      )
+      commit('updateCountriesOfLaunch', Object.freeze(countriesOfLaunch))
     } catch (err) {
       console.error(err)
     }
@@ -351,10 +345,12 @@ function formatCountries(value) {
   if (value === undefined) {
     value = ''
   }
+  let countryID = value != undefined ? value : 'TBD'
 
   let iso = AGCountries[value] || value
   let options = iso.split('/').map((d) => d.trim())
   let countries = options.map((option) => ({
+    countryID: countryID,
     id: option,
     label: CountryISOs[option] || option
   }))

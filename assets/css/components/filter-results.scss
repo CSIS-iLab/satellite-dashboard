@@ -88,7 +88,19 @@
 
       &__navigation {
         float: none !important;
+        @extend %font-ui-text-base-oxygen;
         text-align: center;
+      }
+
+      &__navigation__page-info {
+        margin: 0 rem(24) 0 0;
+      }
+
+      /* stylelint-disable-next-line */
+      &__navigation__page-btn,
+      &__navigation__page-btn span {
+        @extend %font-ui-text-base-oxygen;
+        font-weight: normal;
       }
     }
   }
