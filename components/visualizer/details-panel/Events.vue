@@ -260,18 +260,7 @@ export default {
         this.chartOptions.series[i].name = `${this.name}`
       })
 
-      // set predicted lines
-      predicted_longitudes.forEach((l, i) => {
-        this.chartOptions.series[i + historical_longitudes.length - 1] = {
-          data: predicted_longitudes[i].data
-        }
-        this.chartOptions.series[
-          i + historical_longitudes.length - 1
-        ].name = `${this.name} (predicted)`
-      })
-
       // render chart after data is loaded
-
       this.dataLoaded = true
     },
     async fetch() {
