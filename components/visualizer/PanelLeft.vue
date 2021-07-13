@@ -114,6 +114,10 @@ export default {
       this.resetSatelliteState()
       this.resetFiltersState()
       this.getOrbits()
+
+      if (!process.server) {
+        history.replaceState({}, null, window.origin)
+      }
     },
     ...mapMutations({
       updateVisibleSatellites: 'satellites/updateVisibleSatellites',
