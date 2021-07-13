@@ -264,6 +264,10 @@ export const actions = {
         return
       }
 
+      if (typeof orbits === 'string') {
+        orbits = JSON.parse(orbits)
+      }
+
       // Todo: Modify active satellites here to trigger watch in CesiumViewer
 
       console.log('Get updated orbits.')

@@ -26,6 +26,10 @@ class TimeEvents {
     }
   }
 
+  getDate() {
+    return this.time.getDate()
+  }
+
   addListener(event, func) {
     this.listeners[event]
       ? this.listeners[event].push(func)
