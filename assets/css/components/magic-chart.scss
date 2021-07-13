@@ -20,8 +20,8 @@
 }
 
 .legend-id {
+  @extend %font-ui-text-xsm-oxygen;
   font-weight: 100;
-  font-size: 10px;
   fill: $color-white-160;
 }
 
@@ -36,10 +36,9 @@
 }
 
 .data-source-title {
+  @extend %font-ui-text-lg-good;
   color: $color-white-160;
-  font-family: $font__good;
   font-weight: 400;
-  font-size: 16px;
 }
 
 .data-source--sat-name {
