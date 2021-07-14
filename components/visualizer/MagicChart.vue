@@ -1,5 +1,8 @@
 <template>
-  <Modal @close="updateMagicChart({ showMagicChart: false })">
+  <Modal
+    class="magic-chart modal"
+    @close="updateMagicChart({ showMagicChart: false })"
+  >
     <template v-slot:header> Compare Objects </template>
     <template v-slot:body>
       <div v-if="dataLoaded">
@@ -76,7 +79,7 @@ export default {
       sourceInfo: [],
       chartOptions: {
         title: { text: 'Historical Longitudes' },
-        chart: { styledMode: true, height: 700 },
+        chart: { styledMode: true, height: '80%' },
         plotOptions: {
           turboThreshold: 15000,
           series: { showInNavigator: true }
@@ -89,7 +92,7 @@ export default {
         xAxis: { title: null },
         yAxis: {
           opposite: false,
-          title: { text: 'Longitude', margin: 30 },
+          title: { text: 'Longitude', margin: 10 },
           labels: {
             formatter: (label) =>
               `${Math.abs(label.value)}°${label.value < 0 ? 'W' : 'E'}`
@@ -120,7 +123,8 @@ export default {
           shared: true
         },
         navigator: {
-          height: 75,
+          adaptToUpdatedData: true,
+          margin: 0,
           // not working
           maskInside: false
         },
@@ -251,4 +255,8 @@ export default {
 
 <style lang="scss">
 @import '~/assets/css/components/magic-chart';
+
+.modal-magic-chart {
+  max-height: 25vh;
+}
 </style>

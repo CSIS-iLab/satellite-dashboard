@@ -1,8 +1,8 @@
 @import '~/assets/css/components/highcharts-theme';
 
-.magic-chart {
-  min-width: 45vw;
-  min-height: 45vh;
+.magic-chart .modal {
+  width: 45vw;
+  max-height: 85vh;
 }
 
 .highcharts-axis-title {

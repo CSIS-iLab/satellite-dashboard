@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   overflow-x: auto;
+  overflow-y: auto;
   background: $color-slate-300;
   border-radius: 3px;
 
@@ -49,6 +50,7 @@
   }
 
   &__footer {
+    bottom: 0;
     justify-content: space-between;
     align-items: center;
     padding: rem(16) rem(6);
@@ -61,10 +63,10 @@
       align-items: center;
 
       &::before {
-        content: 'Download';
         align-items: center;
         margin-right: rem(16);
         text-transform: uppercase;
+        content: 'Download';
       }
     }
 
