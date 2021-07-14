@@ -50,6 +50,10 @@
 
       .sat__disclaimer {
         grid-column: 2;
+        margin-top: rem(12);
+        color: $color-white-160;
+        @extend %font-ui-text-xsm-oxygen;
+        letter-spacing: 0.025em;
       }
     }
   }
