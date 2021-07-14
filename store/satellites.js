@@ -316,13 +316,12 @@ export const actions = {
 
     let historical_longitudes, predicted_longitudes
     try {
-      historical_longitudes = await this.$axios.$get(
-        `wp-json/satdash/v1/longitudes/historical?${ids}`
-      )
-      predicted_longitudes = await this.$axios.$get(
-        `wp-json/satdash/v1/longitudes/predicted?${ids}`
-      )
+      ;[historical_longitudes, predicted_longitudes] = await Promise.all([
+        this.$axios.$get(`wp-json/satdash/v1/longitudes/historical?${ids}`),
+        this.$axios.$get(`wp-json/satdash/v1/longitudes/predicted?${ids}`)
+      ])
     } catch (e) {
+      // TODO: handle error case with notification and canceling charting fns
       console.error(e)
     }
 
