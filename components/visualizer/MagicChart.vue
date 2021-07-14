@@ -90,7 +90,10 @@ export default {
         yAxis: {
           opposite: false,
           title: { text: 'Longitude', margin: 30 },
-          labels: { format: '{value}°' }
+          labels: {
+            formatter: (label) =>
+              `${Math.abs(label.value)}°${label.value < 0 ? 'W' : 'E'}`
+          }
         },
         tooltip: {
           formatter: function() {
@@ -99,7 +102,9 @@ export default {
                 return `${s}<span class="tooltip-line-color" style="color: ${
                   i ? 'rgba(254, 116, 20,1)' : 'rgba(82, 175, 225, 1)'
                 }">–</span><span class="tooltip-y">
-                  ${point.y.toFixed(2)}°</span>`
+                  ${Math.abs(point.y).toFixed(2)}°${
+                  point.y < 0 ? 'W' : 'E'
+                }</span>`
               },
               '<b>' +
                 new Intl.DateTimeFormat('en-US', {

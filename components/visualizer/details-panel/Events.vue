@@ -159,7 +159,11 @@ export default {
             text: '',
             reserveSpace: true
           },
-          labels: { format: '{value}°' }
+          /* labels: { format: '{value}°' } */
+          labels: {
+            formatter: (label) =>
+              `${Math.abs(label.value)}°${label.value < 0 ? 'W' : 'E'}`
+          }
         },
         rangeSelector: {
           inputEnabled: false,
@@ -246,7 +250,9 @@ export default {
               enabled: true,
               formatter: function() {
                 return `
-                <div class="label-y">${this.y.toFixed(0)}°</div>
+                <div class="label-y">${Math.abs(this.y).toFixed(0)}°${
+                  this.y < 0 ? 'W' : 'E'
+                }</div>
                 <br />
                 <div class="label-x">${new Intl.DateTimeFormat('en-US', {
                   year: 'numeric',
