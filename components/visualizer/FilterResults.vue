@@ -134,6 +134,8 @@ export default {
         {
           label: 'CO.',
           field: 'country',
+          tdClass: 'filter-results__country',
+          width: '4em',
           sortFn(x, y) {
             return x[0].id < y[0].id ? -1 : 1
           }
