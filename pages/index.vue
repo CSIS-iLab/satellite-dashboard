@@ -21,6 +21,7 @@
         :satellite="detailedSatelliteInfo"
       />
       <UpdatePanel />
+      <MagicChart v-if="showMagicChart" />
     </template>
   </div>
 </template>
@@ -31,6 +32,7 @@ import CesiumViewer from '~/components/visualizer/CesiumViewer'
 import PanelLeft from '~/components/visualizer/PanelLeft'
 import Timeline from '~/components/timeline/Timeline'
 import UpdatePanel from '~/components/visualizer/UpdatesPanel'
+import MagicChart from '~/components/visualizer/MagicChart'
 
 export default {
   layout: 'visualizer',
@@ -39,7 +41,8 @@ export default {
     DetailsPanel: () => import('~/components/visualizer/details-panel/Panel'),
     PanelLeft,
     Timeline,
-    UpdatePanel
+    UpdatePanel,
+    MagicChart
   },
   data() {
     return {
@@ -57,7 +60,8 @@ export default {
       detailedSatellite: (state) => state.satellites.detailedSatellite,
       targetDate: (state) => state.satellites.targetDate,
       timescales: (state) => state.satellites.timescales,
-      selectedTimescale: (state) => state.satellites.selectedTimescale
+      selectedTimescale: (state) => state.satellites.selectedTimescale,
+      showMagicChart: (state) => state.layout.showMagicChart
     })
   },
   created() {

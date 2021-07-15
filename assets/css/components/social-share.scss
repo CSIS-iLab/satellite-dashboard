@@ -37,20 +37,17 @@
   }
 
   .btn--copy {
+    padding-right: 0;
+    padding-left: 0;
     color: $color-ltblue-175;
     @include font-size(12px);
     background: transparent;
     border: 0;
     border-radius: 0;
-    cursor: pointer;
-    transition: color 0.3s ease-in-out;
+    opacity: 1;
 
     &:hover {
       color: $color-orange-100;
     }
-  }
-
-  #copyText {
-    display: none;
   }
 }

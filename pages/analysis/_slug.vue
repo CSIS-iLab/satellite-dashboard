@@ -167,12 +167,11 @@ export default {
         if (!meta) {
           return
         }
-
         satellites.push({
           catalog_id: meta.catalog_id,
           name: meta.Name,
           country:
-            meta.countryOfJurisdiction.map((d) => d.label).join(' / ') || 'N/A',
+            meta.countryOfLaunch.map((d) => d.label).join(' / ') || 'N/A',
           user: meta.User || 'N/A',
           operator: meta.Operator || 'N/A'
         })

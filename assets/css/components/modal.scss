@@ -11,7 +11,7 @@
     right: 0;
     bottom: 0;
     left: 0;
-    z-index: 1;
+    z-index: 100;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -51,9 +51,8 @@
   &__footer {
     justify-content: space-between;
     align-items: center;
-    padding: rem(16) rem(32);
+    padding: rem(16) rem(6);
     color: $color-white-150;
-    text-transform: uppercase;
     background-color: $color-slate-400;
     @extend %font-ui-text-base-good;
 
@@ -71,6 +70,11 @@
 
     &-left {
       display: flex;
+    }
+
+    &-data-source {
+      padding-left: 0;
+      list-style: none;
     }
   }
 

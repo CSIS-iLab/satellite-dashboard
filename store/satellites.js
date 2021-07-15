@@ -1,3 +1,5 @@
+import qs from 'querystring'
+
 import Types from '~/assets/data/types.json'
 import AGCountries from '~/assets/data/ag_countries.json'
 import CountryISOs from '~/assets/data/country_isos.json'
@@ -78,7 +80,8 @@ const getResettableDefaultState = () => {
 
 export const state = () => ({
   satellites: {},
-  countriesOfJurisdiction: [],
+  longitudeSatellites: [],
+  countriesOfLaunch: [],
   timescales,
   statusTypes,
   ...getResettableDefaultState()
@@ -134,8 +137,11 @@ export const mutations = {
   updateVisibleSatellitesType: (state, type) => {
     state.visibleSatellitesType = type
   },
-  updateCountriesOfJurisdiction: (state, countries) => {
-    state.countriesOfJurisdiction = countries
+  updateLongitudeSatellites: (state, payload) => {
+    state.longitudeSatellites = payload
+  },
+  updateCountriesOfLaunch: (state, countries) => {
+    state.countriesOfLaunch = countries
   }
 }
 
@@ -173,7 +179,7 @@ export const actions = {
       let items = {}
       let visibleItems = []
       let countries = new Set()
-      let countriesOfJurisdiction = new Set()
+      let countriesOfLaunch = new Set()
 
       /**
        * Todo:
@@ -204,22 +210,20 @@ export const actions = {
           }
 
           // Format country names into standard codes if we can.
-          if (!sat.countryOfJurisdiction) {
-            sat.countryOfJurisdiction = 'TBD'
+          if (!sat.countryOfLaunch) {
+            sat.countryOfLaunch = 'TBD'
           }
 
-          let countryOfJurisdiction = formatCountries(sat.countryOfJurisdiction)
-          let countryOfJurisdictionIds = countryOfJurisdiction.map((d) => d.id)
-
           let countryOfLaunch = formatCountries(sat.countryOfLaunch)
+          let countryOfLaunchIds = countryOfLaunch.map((d) => d.id)
 
-          // Store the countryOfJurisdiction so we can filter on it later.
-          countryOfJurisdiction.forEach((country) => {
+          // Store the countryOfLaunch so we can filter on it later.
+          countryOfLaunch.forEach((country) => {
             if (countries.has(country.id)) {
               return
             }
             countries.add(country.id)
-            countriesOfJurisdiction.add({
+            countriesOfLaunch.add({
               value: country.id,
               label: country.label
             })
@@ -227,9 +231,8 @@ export const actions = {
 
           items[sat.acf.catalog_id] = {
             ...sat,
-            countryOfJurisdiction,
             countryOfLaunch,
-            countryOfJurisdictionIds,
+            countryOfLaunchIds,
             Status: status_type
           }
 
@@ -237,18 +240,15 @@ export const actions = {
           visibleItems.push(sat.acf.catalog_id)
         })
 
-      countriesOfJurisdiction = [...countriesOfJurisdiction].sort((a, b) =>
+      countriesOfLaunch = [...countriesOfLaunch].sort((a, b) =>
         a.label.localeCompare(b.label)
       )
 
       commit('updateSatellites', Object.freeze(items))
       commit('updateVisibleSatellites', visibleItems)
-      commit(
-        'updateCountriesOfJurisdiction',
-        Object.freeze(countriesOfJurisdiction)
-      )
+      commit('updateCountriesOfLaunch', Object.freeze(countriesOfLaunch))
     } catch (err) {
-      console.log(err)
+      console.error(err)
     }
   },
 
@@ -276,6 +276,10 @@ export const actions = {
         return
       }
 
+      if (typeof orbits === 'string') {
+        orbits = JSON.parse(orbits)
+      }
+
       // Todo: Modify active satellites here to trigger watch in CesiumViewer
 
       console.log('Get updated orbits.')
@@ -297,6 +301,35 @@ export const actions = {
     } catch (err) {
       console.log(err)
     }
+  },
+
+  /**
+   *  Pulls historical and predicted orbital longitudes for requested satellites
+   * */
+  async getLongitudes({ state, commit }, { _ids }) {
+    // php server only recognizes bracket encoding for arrays
+    const ids = qs.encode(
+      { ids: _ids || state.longitudeSatellites.ids },
+      '&',
+      '[]='
+    )
+
+    let historical_longitudes, predicted_longitudes
+    try {
+      ;[historical_longitudes, predicted_longitudes] = await Promise.all([
+        this.$axios.$get(`wp-json/satdash/v1/longitudes/historical?${ids}`),
+        this.$axios.$get(`wp-json/satdash/v1/longitudes/predicted?${ids}`)
+      ])
+    } catch (e) {
+      // TODO: handle error case with notification and canceling charting fns
+      console.error(e)
+    }
+
+    return {
+      historical_longitudes,
+      predicted_longitudes,
+      names: state.longitudeSatellites.names
+    }
   }
 }
 
@@ -315,10 +348,12 @@ function formatCountries(value) {
   if (value === undefined) {
     value = ''
   }
+  let countryID = value != undefined ? value : 'TBD'
 
   let iso = AGCountries[value] || value
   let options = iso.split('/').map((d) => d.trim())
   let countries = options.map((option) => ({
+    countryID: countryID,
     id: option,
     label: CountryISOs[option] || option
   }))
