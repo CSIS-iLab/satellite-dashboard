@@ -143,12 +143,12 @@ export default {
         { label: '', field: 'actions' }
       ],
       sortOptions: [
-        { value: 'Name A-Z', dir: 'asc', label: 'Name A-Z' },
-        { value: 'Name Z-A', dir: 'desc', label: 'Name Z-A' },
-        { value: 'country A-Z', dir: 'asc', label: 'Country A-Z' },
-        { value: 'country Z-A', dir: 'desc', label: 'Country Z-A' }
+        { value: 'Name A-Z', dir: 'asc', label: 'Name (A-Z)' },
+        { value: 'Name Z-A', dir: 'desc', label: 'Name (Z-A)' },
+        { value: 'country A-Z', dir: 'asc', label: 'Country (A-Z)' },
+        { value: 'country Z-A', dir: 'desc', label: 'Country (Z-A)' }
       ],
-      currentSort: 'Name A-Z',
+      currentSort: 'Name (A-Z)',
       tableSortOptions: {
         enabled: false,
         initialSortBy: { field: 'Name', type: 'asc' }
