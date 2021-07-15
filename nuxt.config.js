@@ -51,31 +51,27 @@ export default {
    */
   plugins: [
     {
-      src: '@/plugins/vue-cesium.js',
-      mode: 'client'
+      src: '@/plugins/vue-cesium.client.js'
     },
     {
-      src: '@/plugins/vue-datepicker',
-      mode: 'client'
+      src: '@/plugins/vue-datepicker.client.js'
     },
     {
-      src: '@/plugins/vue-select',
-      mode: 'client'
+      src: '@/plugins/vue-select.client.js'
     },
     {
-      src: '@/plugins/vue-highcharts',
-      mode: 'client'
+      src: '@/plugins/vue-highcharts.client.js'
     },
-    { src: '~/plugins/vue-good-table', mode: 'client' },
-    { src: '~/plugins/vue-tippy', mode: 'client' },
+    { src: '~/plugins/vue-good-table.client.js' },
+    { src: '~/plugins/vue-tippy.client.js' },
     { src: '~/plugins/vue-pluralize' },
-    { src: '~/plugins/server/pages.js' },
-    { src: '~/plugins/server/posts.js' },
-    { src: '~/plugins/server/tags.js' },
-    { src: '~/plugins/server/categories.js' },
-    { src: '~/plugins/server/countries.js' },
-    { src: '~/plugins/server/users.js' },
-    { src: '~/plugins/server/glossary.js' }
+    { src: '~/plugins/pages.server.js' },
+    { src: '~/plugins/posts.server.js' },
+    { src: '~/plugins/tags.server.js' },
+    { src: '~/plugins/categories.server.js' },
+    { src: '~/plugins/countries.server.js' },
+    { src: '~/plugins/users.server.js' },
+    { src: '~/plugins/glossary.server.js' }
   ],
   /*
    ** Nuxt.js dev-modules

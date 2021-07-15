@@ -30,7 +30,7 @@ export default {
   },
   computed: {
     nestedSlug() {
-      return `${this.post.slug}`
+      return `/analysis/${this.post.slug}`
     },
     formatDate() {
       let date = new Date(this.post.date)
