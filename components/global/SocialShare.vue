@@ -73,6 +73,7 @@ export default {
   },
   data() {
     return {
+      siteURL: 'https://satellitedashboard.org',
       siteTitle: 'Satellite Dashboard',
       showCopySuccess: false
     }
@@ -91,7 +92,12 @@ export default {
       return `mailto:?subject=${this.siteTitle}: ${this.pageTitle}&amp;body=${this.pageURL}`
     },
     pageURL() {
-      return `${location.origin}${this.$route.path}`
+      return `${this.siteURL}${this.$route.path}`
+    }
+  },
+  created() {
+    if (process.browser) {
+      this.siteURL = location.origin
     }
   },
   methods: {
