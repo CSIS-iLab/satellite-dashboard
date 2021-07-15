@@ -61,6 +61,12 @@
           {{ satellites[item].Name }}
         </div>
         <div class="sat__id">{{ satellites[item].catalog_id }}</div>
+        <div
+          v-if="!orbits[item] || !orbits[item].orbits"
+          class="sat__disclaimer"
+        >
+          *This object is not yet in orbit
+        </div>
         <div class="sat__actions">
           <Button
             v-if="!isEditable"
@@ -119,6 +125,9 @@ export default {
     satellites() {
       return this.$store.state.satellites.satellites
     },
+    orbits() {
+      return this.$store.state.satellites.orbits
+    },
     numSelectedItems() {
       return this.selectedItems.length
     },
@@ -139,13 +148,11 @@ export default {
       this.objectLabels.classList.toggle('is-hidden', val)
     },
     focusedItems: function(val, oldVal) {
-      /*if (this.isOpen) {*/
       const visibleSatellites =
         this.focusedSatellites.size > 0
           ? [...this.focusedSatellites]
           : Object.keys(this.$store.state.satellites.satellites)
       this.updateVisibleSatellites(visibleSatellites)
-      /*}*/
     },
     '$route.query.satids': 'handleQueryString'
   },
