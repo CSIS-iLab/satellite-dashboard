@@ -1,8 +1,7 @@
 .modal {
   display: flex;
   flex-direction: column;
-  overflow-x: auto;
-  overflow-y: auto;
+  overflow: auto;
   background: $color-slate-300;
   border-radius: 3px;
 

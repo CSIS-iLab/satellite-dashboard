@@ -1,8 +1,5 @@
 <template>
-  <Modal
-    class="magic-chart modal"
-    @close="updateMagicChart({ showMagicChart: false })"
-  >
+  <Modal @close="updateMagicChart({ showMagicChart: false })">
     <template v-slot:header> Compare Objects </template>
     <template v-slot:body>
       <div v-if="dataLoaded">
@@ -255,8 +252,4 @@ export default {
 
 <style lang="scss">
 @import '~/assets/css/components/magic-chart';
-
-.modal-magic-chart {
-  max-height: 25vh;
-}
 </style>
