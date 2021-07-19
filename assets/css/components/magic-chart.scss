@@ -1,7 +1,10 @@
 @import '~/assets/css/components/highcharts-theme';
 
-.magic-chart {
-  min-width: 400px;
+.magic-chart .modal {
+  width: 100%;
+  max-width: 680px;
+  max-height: 85vh;
+  margin: rem(16);
 }
 
 .highcharts-axis-title {
@@ -30,7 +33,7 @@
 }
 
 .data-sources {
-  padding: rem(12) 0 0 0;
+  padding-top: rem(12);
   border-top: 1px solid $color-white-115;
 }
 
@@ -40,48 +43,47 @@
   font-weight: 400;
 }
 
-.data-source--sat-name {
+.modal__footer-data-source {
   @extend %font-ui-text-base-oxygen;
   color: $color-white-170;
+}
+
+.data-source--sat-name {
   font-weight: bold;
 }
 
 .data-source--source-name {
-  @extend %font-ui-text-base-oxygen;
-  margin-left: 0.6em;
-  color: $color-white-170;
+  margin-left: rem(8);
   font-weight: 400;
 }
 
 .data-source-time {
-  @extend %font-ui-text-base-oxygen;
-  margin-left: 0.4em;
+  margin-left: rem(8);
   color: $color-white-140;
-  font-size: 12px;
 }
 
 .export-btns {
   display: flex;
   justify-content: space-between;
   width: 100%;
-}
-
-.export-btns--print {
-  display: flex;
-  gap: rem(4px);
-  align-items: center;
-  text-transform: none;
-}
-
-.export-btns * {
   @extend %font-ui-text-base-good;
-  margin: 0 4px;
-  color: $color-white-170;
-  font-size: 14px;
-}
 
-.export-btns-download {
-  @extend %font-ui-text-base-good;
-  margin-right: 1em;
-  color: $color-white-150;
+  &--print {
+    display: flex;
+    gap: rem(4);
+    align-items: center;
+    text-transform: none;
+  }
+
+  &__download {
+    display: flex;
+    gap: rem(8);
+    align-items: center;
+  }
+
+  &__label {
+    margin-right: rem(8);
+    color: $color-white-150;
+    text-transform: uppercase;
+  }
 }

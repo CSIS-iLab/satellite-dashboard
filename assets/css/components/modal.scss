@@ -35,15 +35,19 @@
 
   &__header {
     justify-content: space-between;
-    padding: rem(16) rem(20);
+    padding: rem(16) rem(32);
     color: $color-white-160;
     border-bottom: 1px solid $color-white-110;
     @extend %font-ui-text-lg-good;
+
+    h3 {
+      font-weight: normal;
+    }
   }
 
   &__body {
     position: relative;
-    padding: rem(20) rem(10);
+    padding: rem(20) rem(32);
     color: $color-white-150;
     @extend %font-ui-text-base-good;
   }
@@ -52,7 +56,7 @@
     bottom: 0;
     justify-content: space-between;
     align-items: center;
-    padding: rem(16) rem(6);
+    padding: rem(16) rem(32);
     color: $color-white-150;
     background-color: $color-slate-400;
     @extend %font-ui-text-base-good;

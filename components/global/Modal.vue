@@ -8,9 +8,11 @@
         aria-describedby="modalDescription"
       >
         <header id="modalTitle" class="modal__header">
-          <slot name="header">
-            This is the default tile!
-          </slot>
+          <h3>
+            <slot name="header">
+              This is the default tile!
+            </slot>
+          </h3>
           <Button
             type="button"
             class="modal__btn-close-icon"
