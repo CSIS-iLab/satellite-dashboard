@@ -82,7 +82,34 @@
       v-if="ITUFilings.length"
       :rows="ITUFilings"
       :columns="ITUColumns"
+      style-class="vgt-table striped"
+      :sort-options="{
+        enabled: false
+      }"
     >
+      <template slot="table-column" slot-scope="props">
+        <div v-if="props.column.field == 'longitude'" class="itu__basic">
+          <div class="sat__name">
+            {{ props.column.label }}
+          </div>
+        </div>
+      </template>
+      <template slot="table-row" slot-scope="props">
+        <span v-if="props.column.field == 'longitude'" class="sat__name">
+          {{ formatLongitude(props.row.longitude) }}
+        </span>
+        <span v-else-if="props.column.field == 'country'">
+          {{ props.row.country }}
+        </span>
+        <span v-else-if="props.column.field == 'bands'">
+          {{ props.row.bands }}
+        </span>
+        <span v-else-if="props.column.field == 'link'" class="sat__actions">
+          <a :href="props.row.link" target="_blank">
+            <Icon id="link" name="external-link" focusable="false" />
+          </a>
+        </span>
+      </template>
     </vue-good-table>
     <div v-else>No ITU Filings available for this satellite</div>
     <template v-if="satellite.acf.comments">
@@ -107,10 +134,14 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex'
+import Icon from '~/components/global/Icon.vue'
 import timeEventsProvider from '../../../services/time-events'
 const timeEvents = timeEventsProvider()
 
 export default {
+  components: {
+    Icon
+  },
   props: {
     id: {
       type: String,
@@ -215,9 +246,8 @@ export default {
       elementIndex: 0,
       ITUColumns: [
         {
-          label: 'Longitude',
-          field: 'longitude',
-          thClass: 'filter-results__name'
+          label: 'Long.',
+          field: 'longitude'
         },
         { label: 'Co.', field: 'country' },
         { label: 'Bands', field: 'bands' },
@@ -408,6 +438,9 @@ export default {
         minimumFractionDigits: minDecimals,
         maximumFractionDigits: minDecimals
       })
+    },
+    formatLongitude(longitude) {
+      return `${Math.abs(longitude)}°${longitude < 0 ? 'W' : 'E'}`
     }
   }
 }

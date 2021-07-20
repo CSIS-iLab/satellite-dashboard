@@ -1,0 +1,28 @@
+.itu {
+  &__basic {
+    .itu-list & {
+      grid-template-columns: auto;
+      margin-top: rem(16);
+      padding: rem(16);
+      background: $color-slate-400;
+      border-radius: 3px;
+      @include shadow(xsm);
+      transition: background 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+
+      &:hover {
+        background: $color-slate-300;
+        @include shadow(sm);
+      }
+    }
+  }
+
+  &__longitude {
+    color: $color-white-180;
+    @extend %font-ui-text-lg-oxygen;
+  }
+
+  &__bands {
+    color: $color-white-160;
+    @extend %font-ui-text-sm-oxygen;
+  }
+}
