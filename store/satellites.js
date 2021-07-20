@@ -84,6 +84,7 @@ export const state = () => ({
   countriesOfLaunch: [],
   timescales,
   statusTypes,
+  ITUData: [],
   ...getResettableDefaultState()
 })
 
@@ -99,6 +100,26 @@ export const getters = {
   },
   statusTypesKeys: (state) => {
     return Object.keys(state.statusTypes)
+  },
+  ITUDataNearLongitude: (state) => (longitude) => {
+    // filter rows within +/- 0.5 longitude from target
+    const upper = longitude + 0.5
+    const lower = longitude - 0.5
+    const absLong = Math.abs(longitude)
+    const filtered = state.ITUData.filter((datum) => {
+      return datum.longitude <= upper && datum.longitude >= lower
+    }).sort((a, b) => {
+      // compare absolute diffs to get ascending dist from original longitude
+      const diffA = Math.abs(Math.abs(a.longitude) - absLong)
+      const diffB = Math.abs(Math.abs(b.longitude) - absLong)
+      return diffA - diffB
+    })
+
+    if (!filtered.length) return []
+
+    // return closest vals
+    const closest = filtered[0]
+    return filtered.filter((row) => row.longitude === closest.longitude)
   }
 }
 
@@ -142,6 +163,9 @@ export const mutations = {
   },
   updateCountriesOfLaunch: (state, countries) => {
     state.countriesOfLaunch = countries
+  },
+  updateITUData: (state, ituData) => {
+    state.ITUData = ituData
   }
 }
 
@@ -330,6 +354,28 @@ export const actions = {
       predicted_longitudes,
       names: state.longitudeSatellites.names
     }
+  },
+
+  async getITUData({ commit }) {
+    let ituData = await fetch(
+      'https://docs.google.com/spreadsheets/d/e/2PACX-1vSyAhdaS0Ria8o0LNxjBKrEEd5JX4lx6ZqBw9yPpGTue62co4OS4Js7rm6ZFIQBoYs6Jj9_X08oQ9lm/pub?output=tsv'
+    )
+    if (!ituData.ok) {
+      console.error('error fetching ITU data')
+      return
+    }
+    ituData = await ituData.text()
+    ituData = ituData.split('\n').map((row) => {
+      const [longitude, country, bands, link] = row.split('\t').slice(0, 4)
+      return {
+        longitude,
+        country,
+        bands,
+        link
+      }
+    })
+
+    commit('updateITUData', ituData)
   }
 }
 

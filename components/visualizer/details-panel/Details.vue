@@ -76,8 +76,15 @@
     <p v-else class="details-panel__small-desc">
       This object is not yet in orbit.
     </p>
-    <!-- <hr />
-    <h3>ITU Filings</h3> -->
+    <hr />
+    <h3>ITU Filings</h3>
+    <vue-good-table
+      v-if="ITUFilings.length"
+      :rows="ITUFilings"
+      :columns="ITUColumns"
+    >
+    </vue-good-table>
+    <div v-else>No ITU Filings available for this satellite</div>
     <template v-if="satellite.acf.comments">
       <hr />
       <h3>Comments</h3>
@@ -99,7 +106,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import timeEventsProvider from '../../../services/time-events'
 const timeEvents = timeEventsProvider()
 
@@ -205,7 +212,17 @@ export default {
       },
       earthRadius: 6378136.3, // m
       mu: 3.986004415e14, // m^3/s^2,
-      elementIndex: 0
+      elementIndex: 0,
+      ITUColumns: [
+        {
+          label: 'Longitude',
+          field: 'longitude',
+          thClass: 'filter-results__name'
+        },
+        { label: 'Co.', field: 'country' },
+        { label: 'Bands', field: 'bands' },
+        { label: 'Link', field: 'link' }
+      ]
     }
   },
   computed: {
@@ -323,9 +340,15 @@ export default {
         : this.satelliteAllOrbits.length - 1
       return this.formatDate(this.satelliteAllOrbits[index].epoch)
     },
+    ITUFilings() {
+      return this.nearbyITU(this.orbitalElements.Longitude.degrees)
+    },
     ...mapState({
       orbits: (state) => state.satellites.orbits,
       statusTypes: (state) => state.satellites.statusTypes
+    }),
+    ...mapGetters({
+      nearbyITU: 'satellites/ITUDataNearLongitude'
     })
   },
   mounted() {
