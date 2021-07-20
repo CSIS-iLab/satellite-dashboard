@@ -141,7 +141,11 @@ export default {
           lat: 5,
           height: 100000000
         }
-      }
+      },
+      focussedSatellites: new Set([]),
+      highlightedEntities: new Set([]),
+      entityLabel: null,
+      labelContainer: null
     }
   },
   computed: {
@@ -160,7 +164,8 @@ export default {
   watch: {
     satelliteOrbits: 'processNewData',
     visibleSatellites: 'toggleObjectVisibility',
-    '$route.query.time': 'handleTimeQuery'
+    '$route.query.time': 'handleTimeQuery',
+    '$route.query.satids': 'handleSatIdChange'
   },
   beforeDestroy() {
     Cesium = null
@@ -191,6 +196,51 @@ export default {
         viewer.clock.currentTime = this.SimStart
       }
     },
+    handleSatIdChange() {
+      if (!this.$route.query.satids) {
+        viewer.entities.values.forEach((entity) => {
+          entity.path.show = false
+        })
+        viewer.selectedEntity = null
+      }
+    },
+    setFocussedSatellites(focussedSatellites) {
+      this.clearHighlightedEntities()
+      focussedSatellites.forEach((entity, i) => {
+        entity.path.show = true
+        if (i > 0) {
+          // we're selecting the first element next, which will trigger highlight
+          this.handleHighlights(entity)
+        }
+      })
+      viewer.selectedEntity = focussedSatellites[0]
+    },
+    handleHighlights(entity) {
+      if (!entity) {
+        return
+      }
+      if (this.highlightedEntities.has(entity)) {
+        this.highlightedEntities.delete(entity)
+        entity.path.show = false
+        document.getElementById(`entity-${entity.id}`).remove()
+      } else {
+        // Update highlightedEntries & add label when the selectedEntity changes to make behavior consistent across viewer & buttons on panels.
+        this.highlightedEntities.add(entity)
+        entity.path.show = true
+
+        let label = this.entityLabel.cloneNode()
+        label.id = `entity-${entity.id}`
+        label.innerHTML = entity.name
+        this.labelContainer.appendChild(label)
+      }
+    },
+    clearHighlightedEntities() {
+      ;[...this.highlightedEntities].forEach((entity) => {
+        entity.path.show = false
+        document.getElementById(`entity-${entity.id}`).remove()
+        this.highlightedEntities.delete(entity)
+      })
+    },
     ready(cesiumInstance) {
       console.log('is ready')
       // Set up the Cesium Viewer
@@ -217,23 +267,23 @@ export default {
       let isEntityVisible = true
 
       // Create a sample HTML element in the document.
-      let labelContainer = document.createElement('div')
-      labelContainer.classList.add('cesium__entity-label-container')
-      viewer.container.appendChild(labelContainer)
+      this.labelContainer = document.createElement('div')
+      this.labelContainer.classList.add('cesium__entity-label-container')
+      viewer.container.appendChild(this.labelContainer)
 
-      let entityLabel = document.createElement('div')
-      entityLabel.classList.add('cesium__entity-label')
+      this.entityLabel = document.createElement('div')
+      this.entityLabel.classList.add('cesium__entity-label')
 
-      let highlightedEntities = new Set()
+      // let highlightedEntities = new Set()
 
       let lastSelectedEntity = null
 
       // Every animation frame, update the HTML element position from the entity.
-      viewer.clock.onTick.addEventListener(function(clock) {
+      viewer.clock.onTick.addEventListener((clock) => {
         let position3d
         let position2d
 
-        highlightedEntities.forEach((entity) => {
+        this.highlightedEntities.forEach((entity) => {
           let label
           // Not all entities have a position, need to check.
           if (entity && entity.position) {
@@ -281,7 +331,7 @@ export default {
         if (Cesium.defined(picked)) {
           const entity = Cesium.defaultValue(picked.id, picked.primitive.id)
           if (entity instanceof Cesium.Entity) {
-            if (highlightedEntities.has(entity)) {
+            if (this.highlightedEntities.has(entity)) {
               lastSelectedEntity = entity
               if (!viewer.selectedEntity !== entity) {
                 viewer.selectedEntity =
@@ -294,7 +344,7 @@ export default {
               viewer.selectedEntity = entity
             }
           }
-        } else if (highlightedEntities.size === 0) {
+        } else if (this.highlightedEntities.size === 0) {
           this.zoomReset()
         }
       }
@@ -304,7 +354,10 @@ export default {
         Cesium.ScreenSpaceEventType.LEFT_CLICK
       )
 
-      const handleHighlights = (entity) => {
+      /*const handleHighlights = (entity) => {
+        if (!entity) {
+          return
+        }
         if (highlightedEntities.has(entity)) {
           highlightedEntities.delete(entity)
           entity.path.show = false
@@ -319,24 +372,24 @@ export default {
           label.innerHTML = entity.name
           labelContainer.appendChild(label)
         }
-      }
+      }*/
 
       viewer.selectedEntityChanged.addEventListener((entity) => {
         if (!entity) {
-          handleHighlights(lastSelectedEntity)
-          if (highlightedEntities.size === 0) {
+          this.handleHighlights(lastSelectedEntity)
+          if (this.highlightedEntities.size === 0) {
             this.zoomReset()
             viewer.trackedEntity = null
           } else {
-            const highlightedEntitiesArray = [...highlightedEntities]
+            const highlightedEntitiesArray = [...this.highlightedEntities]
             const newSelection =
               highlightedEntitiesArray[highlightedEntitiesArray.length - 1]
-            highlightedEntities.delete(newSelection)
+            this.highlightedEntities.delete(newSelection)
             viewer.selectedEntity = newSelection
           }
           return
         }
-        handleHighlights(entity)
+        this.handleHighlights(entity)
         viewer.trackedEntity = entity
         const entityPosition = viewer.scene.mapProjection.ellipsoid.cartesianToCartographic(
           entity.position.getValue(viewer.clock.currentTime)
@@ -429,7 +482,7 @@ export default {
 
       // For each object, calculate its position & orbit
       // Calculations pulled from: https://github.com/ut-astria/AstriaGraph/blob/master/main.js & https://github.com/ut-astria/AstriaGraph/blob/master/celemech.js
-
+      const focussedEntities = []
       this.visibleSatellites.forEach((sat, i) => {
         if (!this.satelliteOrbits[sat]) {
           return
@@ -445,7 +498,11 @@ export default {
 
         const { Name, Status } = this.satellites[catalog_id]
 
-        viewer.entities.add({
+        const focussedSatelliteIds = this.$route.query.satids
+          ? new Set(this.$route.query.satids.split(','))
+          : new Set([])
+
+        const entity = viewer.entities.add({
           id: catalog_id,
           name: Name,
           availability: new Cesium.TimeIntervalCollection([
@@ -470,7 +527,13 @@ export default {
             show: false
           }
         })
+        if (focussedSatelliteIds.has(catalog_id)) {
+          focussedEntities.push(entity)
+        }
       })
+      if (focussedEntities.length) {
+        this.setFocussedSatellites(focussedEntities)
+      }
     },
     // Reference: https://github.com/ut-astria/AstriaGraph/blob/master/celemech.js#L44
     eltocart(Cesium, ele, posonly = false, tol = 1e-6, MAXITER = 20) {
@@ -669,7 +732,10 @@ export default {
       entities.forEach((entity) => {
         entity.show = this.visibleSatellites.includes(entity.id)
       })
-      if (this.visibleSatellites.length > entities.length) {
+      if (
+        this.visibleSatellites.length > entities.length ||
+        this.$route.query.date
+      ) {
         // we need to restore the lost entities
         this.displayObjects(Cesium, viewer)
       }

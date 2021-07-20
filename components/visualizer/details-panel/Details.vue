@@ -214,7 +214,7 @@ export default {
       return true
     },
     satelliteAllOrbits() {
-      return this.orbits[this.id].orbits
+      return this.orbits[this.id] ? this.orbits[this.id].orbits : null
     },
     orbitalElements() {
       // TODO: Need to get the right orbit for the current timeline
