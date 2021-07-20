@@ -40,21 +40,31 @@
         /></a>
       </li>
       <li class="social-share__item">
-        <button class="btn--copy" aria-label="Share Link" @click="copy">
+        <client-only>
+          <tippy to="copyURL" :visible="showCopySuccess" trigger="manual">
+            Copied!
+          </tippy>
+        </client-only>
+        <Button
+          name="copyURL"
+          class="btn--copy"
+          aria-label="Copy link to current page"
+          :on-click="copyURL"
+        >
           <Icon id="link" class="icon" name="link" />
-        </button>
-        <input id="copyText" type="hidden" :value="linkURL" />
+        </Button>
       </li>
     </ul>
   </div>
 </template>
 
 <script>
+import Button from '~/components/global/Button.vue'
 import Icon from '~/components/global/Icon.vue'
 
 export default {
   name: 'SocialShare',
-  components: { Icon },
+  components: { Button, Icon },
   props: {
     pageTitle: {
       type: String,
@@ -63,36 +73,46 @@ export default {
   },
   data() {
     return {
-      siteURL: 'https://satellitedashboard.com',
-      siteTitle: 'Satellite Dashboard'
+      siteURL: 'https://satellitedashboard.org',
+      siteTitle: 'Satellite Dashboard',
+      showCopySuccess: false
     }
   },
   computed: {
     facebookURL() {
-      return `https://www.facebook.com/sharer.php?u=${this.siteURL}${this.$route.path}`
+      return `https://www.facebook.com/sharer.php?u=${this.pageURL}`
     },
     twitterURL() {
-      return `https://twitter.com/intent/tweet?text=${this.pageTitle}&url=${this.siteURL}${this.$route.path}&via=satdashboard&related=satdashboard`
+      return `https://twitter.com/intent/tweet?text=${this.pageTitle}&url=${this.pageURL}&via=satdashboard&related=satdashboard`
     },
     linkedInURL() {
-      return `https://www.linkedin.com/shareArticle?mini=true&url=${this.siteURL}&summary=${this.pageTitle}&source=CSIS`
+      return `https://www.linkedin.com/shareArticle?mini=true&url=${this.pageURL}&summary=${this.pageTitle}&source=CSIS`
     },
     emailURL() {
-      return `mailto:?subject=${this.siteTitle}: ${this.pageTitle}&amp;body=${this.siteURL}`
+      return `mailto:?subject=${this.siteTitle}: ${this.pageTitle}&amp;body=${this.pageURL}`
     },
-    linkURL() {
-      return `${this.siteURL}`
+    pageURL() {
+      return `${this.siteURL}${this.$route.path}`
+    }
+  },
+  created() {
+    if (process.browser) {
+      this.siteURL = location.origin
     }
   },
   methods: {
-    copy: function copy() {
-      let copyText = document.querySelector('#copyText')
+    async copyURL() {
+      try {
+        await navigator.clipboard.writeText(this.pageURL)
+        const that = this
+        this.showCopySuccess = true
 
-      copyText.setAttribute('type', 'text')
-      copyText.select()
-
-      copyText.setAttribute('type', 'hidden')
-      window.getSelection().removeAllRanges()
+        setTimeout(function() {
+          that.showCopySuccess = false
+        }, 1000)
+      } catch (err) {
+        console.error('Failed to copy: ', err)
+      }
     }
   }
 }
