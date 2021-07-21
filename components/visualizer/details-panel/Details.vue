@@ -88,23 +88,21 @@
       }"
     >
       <template slot="table-column" slot-scope="props">
-        <div v-if="props.column.field == 'longitude'" class="itu__basic">
-          <div class="sat__name">
-            {{ props.column.label }}
-          </div>
+        <div class="itu__basic">
+          {{ props.column.label }}
         </div>
       </template>
       <template slot="table-row" slot-scope="props">
-        <span v-if="props.column.field == 'longitude'" class="sat__name">
+        <span v-if="props.column.field == 'longitude'" class="itu__longitude">
           {{ formatLongitude(props.row.longitude) }}
         </span>
-        <span v-else-if="props.column.field == 'country'">
+        <span v-else-if="props.column.field == 'country'" class="itu__country">
           {{ props.row.country }}
         </span>
-        <span v-else-if="props.column.field == 'bands'">
+        <span v-else-if="props.column.field == 'bands'" class="itu__bands">
           {{ props.row.bands }}
         </span>
-        <span v-else-if="props.column.field == 'link'" class="sat__actions">
+        <span v-else-if="props.column.field == 'link'">
           <a :href="props.row.link" target="_blank">
             <Icon id="link" name="external-link" focusable="false" />
           </a>
@@ -446,4 +444,7 @@ export default {
 }
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+@import '../assets/css/components/vgt-table';
+@import '../assets/css/components/itu-block';
+</style>

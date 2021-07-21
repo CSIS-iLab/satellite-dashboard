@@ -1,13 +1,21 @@
 .itu {
+  &-list {
+    margin: 0;
+    padding: 0;
+  }
+
   &__basic {
     .itu-list & {
+      @extend %font-ui-text-sm-oxygen;
       grid-template-columns: auto;
       margin-top: rem(16);
       padding: rem(16);
+      color: $color-white-160;
+      font-weight: 700;
       background: $color-slate-400;
       border-radius: 3px;
-      @include shadow(xsm);
       transition: background 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+      @include shadow(xsm);
 
       &:hover {
         background: $color-slate-300;
@@ -17,12 +25,17 @@
   }
 
   &__longitude {
-    color: $color-white-180;
     @extend %font-ui-text-lg-oxygen;
+    color: $color-white-180;
+  }
+
+  &__country {
+    @extend %font-ui-text-base-oxygen;
+    color: $color-white-180;
   }
 
   &__bands {
-    color: $color-white-160;
     @extend %font-ui-text-sm-oxygen;
+    color: $color-white-180;
   }
 }

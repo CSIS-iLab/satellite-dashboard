@@ -357,9 +357,14 @@ export const actions = {
   },
 
   async getITUData({ commit }) {
-    let ituData = await fetch(
-      'https://docs.google.com/spreadsheets/d/e/2PACX-1vSyAhdaS0Ria8o0LNxjBKrEEd5JX4lx6ZqBw9yPpGTue62co4OS4Js7rm6ZFIQBoYs6Jj9_X08oQ9lm/pub?output=tsv'
-    )
+    let ituData
+    try {
+      ituData = await fetch(
+        'https://docs.google.com/spreadsheets/d/e/2PACX-1vSyAhdaS0Ria8o0LNxjBKrEEd5JX4lx6ZqBw9yPpGTue62co4OS4Js7rm6ZFIQBoYs6Jj9_X08oQ9lm/pub?output=tsv'
+      )
+    } catch (e) {
+      console.error(e)
+    }
     if (!ituData.ok) {
       console.error('error fetching ITU data')
       return
