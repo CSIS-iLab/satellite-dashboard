@@ -82,7 +82,10 @@ export default {
           turboThreshold: 15000,
           series: { showInNavigator: true }
         },
-        exporting: { enabled: false, allowHTML: true },
+        exporting: {
+          enabled: false,
+          allowHTML: true
+        },
         credits: { enabled: false },
         legend: {
           enabled: true
@@ -168,11 +171,18 @@ export default {
       this.$refs.chart.chart.downloadCSV()
     },
     exportImg(type) {
-      this.$refs.chart.chart.exportChart({
-        type,
-        async: true,
-        width: 1000
-      })
+      this.$refs.chart.chart.exportChart(
+        {
+          type,
+          async: false,
+          width: 1000
+        },
+        {
+          chart: {
+            backgroundColor: '#000000'
+          }
+        }
+      )
     },
     async longitudes() {
       let {
@@ -253,4 +263,8 @@ export default {
 
 <style lang="scss">
 @import '~/assets/css/components/magic-chart';
+
+.export .highcharts-axis-title {
+  fill: #f00 !important;
+}
 </style>
