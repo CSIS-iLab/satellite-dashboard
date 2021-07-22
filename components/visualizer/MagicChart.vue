@@ -77,7 +77,7 @@ export default {
       sourceInfo: [],
       chartOptions: {
         title: { text: 'Historical Longitudes' },
-        chart: { styledMode: true, height: '80%' },
+        chart: { styledMode: true, height: '85%' },
         plotOptions: {
           turboThreshold: 15000,
           series: { showInNavigator: true }
@@ -85,9 +85,12 @@ export default {
         exporting: {
           enabled: false,
           allowHTML: true,
+          sourceWidth: 600,
+          sourceHeight: 400,
           chartOptions: {
             chart: {
-              margin: 10,
+              height: null,
+              spacing: [10, 10, 15, 10],
               events: {
                 load: function() {
                   this.container.classList.add('highchart-export')
@@ -201,8 +204,7 @@ export default {
     exportImg(type) {
       this.$refs.chart.chart.exportChart({
         type,
-        async: false,
-        width: 1000
+        async: false
       })
     },
     async longitudes() {
