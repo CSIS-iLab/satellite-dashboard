@@ -119,7 +119,11 @@ export default {
         },
         credits: { enabled: false },
         legend: {
-          enabled: true
+          enabled: true,
+          labelFormatter: function() {
+            console.log(this)
+            return `${this.name}<br /><span class="legend-id">${this.options.catalog_id}</span>`
+          }
         },
         xAxis: { title: null },
         yAxis: {
@@ -216,7 +220,7 @@ export default {
 
       // shape historical lines
       historical_longitudes = historical_longitudes.map((l, i) => {
-        l.name = `${names[i]}<br /><span class="legend-id">${l.catalog_id}</span>`
+        l.name = names[i]
 
         this.chartOptions.series.push(l)
         return l
