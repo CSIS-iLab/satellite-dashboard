@@ -84,7 +84,35 @@ export default {
         },
         exporting: {
           enabled: false,
-          allowHTML: true
+          allowHTML: true,
+          chartOptions: {
+            chart: {
+              margin: 10,
+              events: {
+                load: function() {
+                  this.container.classList.add('highchart-export')
+                },
+                render: function() {
+                  /* TODO: Add Sat Dash Logo to bottom corner of export */
+                  this.renderer
+                    .image(
+                      'https://www.highcharts.com/samples/graphics/sun.png',
+                      50,
+                      160,
+                      30,
+                      30
+                    )
+                    .add()
+                }
+              }
+            },
+            rangeSelector: {
+              enabled: false
+            },
+            navigator: {
+              enabled: false
+            }
+          }
         },
         credits: { enabled: false },
         legend: {
@@ -171,18 +199,11 @@ export default {
       this.$refs.chart.chart.downloadCSV()
     },
     exportImg(type) {
-      this.$refs.chart.chart.exportChart(
-        {
-          type,
-          async: false,
-          width: 1000
-        },
-        {
-          chart: {
-            backgroundColor: '#000000'
-          }
-        }
-      )
+      this.$refs.chart.chart.exportChart({
+        type,
+        async: false,
+        width: 1000
+      })
     },
     async longitudes() {
       let {
@@ -263,8 +284,4 @@ export default {
 
 <style lang="scss">
 @import '~/assets/css/components/magic-chart';
-
-.export .highcharts-axis-title {
-  fill: #f00 !important;
-}
 </style>
