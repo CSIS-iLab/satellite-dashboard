@@ -1,31 +1,21 @@
 .itu {
-  &-list {
-    margin: 0;
-    padding: 0;
-  }
-
   &__basic {
-    .itu-list & {
-      @extend %font-ui-text-sm-oxygen;
-      grid-template-columns: auto;
-      margin-top: rem(16);
-      padding: rem(16);
-      color: $color-white-160;
-      font-weight: 700;
-      background: $color-slate-400;
-      border-radius: 3px;
-      transition: background 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-      @include shadow(xsm);
+    @extend %font-ui-text-sm-oxygen;
+    grid-template-columns: auto;
+    color: $color-white-160;
+    font-weight: bold;
+    text-transform: uppercase;
+    @include shadow(xsm);
 
-      &:hover {
-        background: $color-slate-300;
-        @include shadow(sm);
-      }
+    &:hover {
+      background: $color-slate-300;
+      @include shadow(sm);
     }
   }
 
   &__longitude {
     @extend %font-ui-text-lg-oxygen;
+    margin-left: 16px;
     color: $color-white-180;
   }
 
@@ -37,5 +27,21 @@
   &__bands {
     @extend %font-ui-text-sm-oxygen;
     color: $color-white-180;
+  }
+
+  &__link {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+
+    svg {
+      position: relative;
+      top: 3px;
+    }
+
+    // TODO: won't work until svg is re-imported
+    &svg:hover {
+      color: $color-white-180;
+    }
   }
 }

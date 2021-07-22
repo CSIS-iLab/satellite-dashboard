@@ -77,7 +77,11 @@
       This object is not yet in orbit.
     </p>
     <hr />
-    <h3>ITU Filings</h3>
+    <h3>Nearby ITU Filings</h3>
+    <span class="details-panel__small-desc"
+      >This list includes ITU filings near
+      {{ orbitalElements.Longitude.label }}</span
+    >
     <vue-good-table
       v-if="ITUFilings.length"
       :rows="ITUFilings"
@@ -102,14 +106,20 @@
         <span v-else-if="props.column.field == 'bands'" class="itu__bands">
           {{ props.row.bands }}
         </span>
-        <span v-else-if="props.column.field == 'link'">
-          <a :href="props.row.link" target="_blank">
+        <span v-else-if="props.column.field == 'link'" class="itu__link">
+          <a
+            :href="props.row.link"
+            target="_blank"
+            aria-label="View ITU Filing"
+          >
             <Icon id="link" name="external-link" focusable="false" />
           </a>
         </span>
       </template>
     </vue-good-table>
-    <div v-else>No ITU Filings available for this satellite</div>
+    <div v-else class="details-panel__comments">
+      No ITU Filings available for this satellite
+    </div>
     <template v-if="satellite.acf.comments">
       <hr />
       <h3>Comments</h3>
