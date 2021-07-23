@@ -1,21 +1,22 @@
+.vgt-table th:first-of-type div {
+  margin-left: rem(16);
+}
+
+.vgt-table th:last-of-type div {
+  margin-right: rem(16);
+}
+
 .itu {
   &__basic {
     @extend %font-ui-text-sm-oxygen;
-    grid-template-columns: auto;
     color: $color-white-160;
     font-weight: bold;
     text-transform: uppercase;
-    @include shadow(xsm);
-
-    &:hover {
-      background: $color-slate-300;
-      @include shadow(sm);
-    }
   }
 
   &__longitude {
     @extend %font-ui-text-lg-oxygen;
-    margin-left: 16px;
+    margin-left: rem(16);
     color: $color-white-180;
   }
 
@@ -33,14 +34,18 @@
     display: flex;
     justify-content: center;
     align-content: center;
+    margin-right: rem(16);
 
     svg {
       position: relative;
       top: 3px;
     }
 
-    // TODO: won't work until svg is re-imported
-    &svg:hover {
+    a {
+      color: $color-orangedull-100;
+    }
+
+    &:hover {
       color: $color-white-180;
     }
   }

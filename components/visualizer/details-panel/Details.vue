@@ -78,10 +78,10 @@
     </p>
     <hr />
     <h3>Nearby ITU Filings</h3>
-    <span class="details-panel__small-desc"
-      >This list includes ITU filings near
-      {{ orbitalElements.Longitude.label }}</span
-    >
+    <p class="details-panel__small-desc">
+      This list includes ITU filings near
+      {{ orbitalElements.Longitude.label }}.
+    </p>
     <vue-good-table
       v-if="ITUFilings.length"
       :rows="ITUFilings"
@@ -117,9 +117,9 @@
         </span>
       </template>
     </vue-good-table>
-    <div v-else class="details-panel__comments">
-      No ITU Filings available for this satellite
-    </div>
+    <p v-else class="details-panel__no-itu">
+      No ITU Filings available for this satellite.
+    </p>
     <template v-if="satellite.acf.comments">
       <hr />
       <h3>Comments</h3>
