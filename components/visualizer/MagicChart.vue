@@ -121,7 +121,6 @@ export default {
         legend: {
           enabled: true,
           labelFormatter: function() {
-            console.log(this)
             return `${this.name}<br /><span class="legend-id">${this.options.catalog_id}</span>`
           }
         },
