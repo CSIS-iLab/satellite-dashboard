@@ -77,7 +77,11 @@ export default {
       sourceInfo: [],
       chartOptions: {
         title: { text: 'Historical Longitudes' },
-        chart: { styledMode: true, height: '85%' },
+        chart: {
+          styledMode: true,
+          height: '85%',
+          events: {}
+        },
         plotOptions: {
           turboThreshold: 15000,
           series: { showInNavigator: true }
@@ -121,7 +125,6 @@ export default {
         legend: {
           enabled: true,
           labelFormatter: function() {
-            console.log(this)
             return `${this.name}<br /><span class="legend-id">${this.options.catalog_id}</span>`
           }
         },
@@ -172,9 +175,16 @@ export default {
           allButtonsEnabled: false,
           buttons: [
             {
-              type: 'ytd',
-              text: 'YTD',
-              title: 'View year to date'
+              type: 'week',
+              count: 1,
+              text: 'Week',
+              title: 'View last week'
+            },
+            {
+              type: 'month',
+              count: 1,
+              text: 'Month',
+              title: 'View last month'
             },
             {
               type: 'year',
@@ -195,7 +205,8 @@ export default {
   },
   computed: {
     ...mapState({
-      showMagicChart: (state) => state.layout.showMagicChart
+      showMagicChart: (state) => state.layout.showMagicChart,
+      zoom: (state) => state.satellites.longitudeSatellites.zoom
     })
   },
   async created() {
@@ -276,6 +287,16 @@ export default {
         }
       })
 
+      if (this.zoom == '1wk') {
+        this.chartOptions.chart.events.load = function() {
+          // set zoom to last week
+          const xAxis = this.xAxis[0]
+          const oneWeekAgo = new Date().getTime() - 1000 * 60 * 60 * 24 * 7
+          const start = this.series[0].xData.find((i) => i > oneWeekAgo)
+          const end = this.series[0].xData.slice(-1)[0]
+          xAxis.setExtremes(start, end)
+        }
+      }
       this.dataLoaded = true
     },
     ...mapActions({
