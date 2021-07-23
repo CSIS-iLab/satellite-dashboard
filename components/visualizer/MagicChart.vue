@@ -98,7 +98,7 @@ export default {
                 render: function() {
                   this.renderer
                     .image(
-                      '/satellite-dashboard-logo-black.svg',
+                      'https://satellitedashboard.org/satellite-dashboard-logo-black.svg',
                       395,
                       375,
                       200,
