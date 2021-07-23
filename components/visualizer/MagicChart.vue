@@ -77,15 +77,51 @@ export default {
       sourceInfo: [],
       chartOptions: {
         title: { text: 'Historical Longitudes' },
-        chart: { styledMode: true, height: '80%' },
+        chart: { styledMode: true, height: '85%' },
         plotOptions: {
           turboThreshold: 15000,
           series: { showInNavigator: true }
         },
-        exporting: { enabled: false, allowHTML: true },
+        exporting: {
+          enabled: false,
+          allowHTML: true,
+          sourceWidth: 600,
+          sourceHeight: 400,
+          chartOptions: {
+            chart: {
+              height: null,
+              spacing: [10, 10, 15, 10],
+              events: {
+                load: function() {
+                  this.container.classList.add('highchart-export')
+                },
+                render: function() {
+                  this.renderer
+                    .image(
+                      'https://satellitedashboard.org/satellite-dashboard-logo-black.svg',
+                      395,
+                      375,
+                      200,
+                      19
+                    )
+                    .add()
+                }
+              }
+            },
+            rangeSelector: {
+              enabled: false
+            },
+            navigator: {
+              enabled: false
+            }
+          }
+        },
         credits: { enabled: false },
         legend: {
-          enabled: true
+          enabled: true,
+          labelFormatter: function() {
+            return `${this.name}<br /><span class="legend-id">${this.options.catalog_id}</span>`
+          }
         },
         xAxis: { title: null },
         yAxis: {
@@ -170,8 +206,7 @@ export default {
     exportImg(type) {
       this.$refs.chart.chart.exportChart({
         type,
-        async: true,
-        width: 1000
+        async: false
       })
     },
     async longitudes() {
@@ -183,7 +218,7 @@ export default {
 
       // shape historical lines
       historical_longitudes = historical_longitudes.map((l, i) => {
-        l.name = `${names[i]}<br /><span class="legend-id">${l.catalog_id}</span>`
+        l.name = names[i]
 
         this.chartOptions.series.push(l)
         return l

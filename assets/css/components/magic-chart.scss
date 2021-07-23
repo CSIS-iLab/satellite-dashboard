@@ -87,3 +87,21 @@
     text-transform: uppercase;
   }
 }
+
+.highchart-export {
+  .highcharts-title,
+  .highcharts-axis-title,
+  .highcharts-axis-labels text,
+  .highcharts-plot-line-label,
+  .highcharts-legend text {
+    fill: $color-black-100;
+  }
+
+  .highcharts-plot-background {
+    fill: transparent;
+  }
+
+  .highcharts-grid-line {
+    stroke: $color-black-120;
+  }
+}
