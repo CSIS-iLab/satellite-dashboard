@@ -100,14 +100,13 @@ export default {
                   this.container.classList.add('highchart-export')
                 },
                 render: function() {
-                  /* TODO: Add Sat Dash Logo to bottom corner of export */
                   this.renderer
                     .image(
-                      'https://www.highcharts.com/samples/graphics/sun.png',
-                      50,
-                      160,
-                      30,
-                      30
+                      'https://satellitedashboard.org/satellite-dashboard-logo-black.svg',
+                      395,
+                      375,
+                      200,
+                      19
                     )
                     .add()
                 }
