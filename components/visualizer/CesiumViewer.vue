@@ -202,6 +202,7 @@ export default {
           entity.path.show = false
         })
         viewer.selectedEntity = null
+        viewer.trackedEntity = null
       }
     },
     setFocussedSatellites(focussedSatellites) {
