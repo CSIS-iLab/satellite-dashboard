@@ -1,5 +1,8 @@
 <template>
-  <Modal @close="updateMagicChart({ showMagicChart: false })">
+  <Modal
+    class="magic-chart"
+    @close="updateMagicChart({ showMagicChart: false })"
+  >
     <template v-slot:header> Compare Objects </template>
     <template v-slot:body>
       <div v-if="dataLoaded">
@@ -12,7 +15,7 @@
         />
         <div class="data-sources">
           <h4 class="data-source-title">Data Sources</h4>
-          <ul class="modal__footer-data-source">
+          <ul class="modal__footer-data-source" role="list">
             <li v-for="source in sourceInfo" :key="source.sat_id">
               <span class="data-source--sat-name">{{ source.sat_name }}:</span>
               <span class="data-source--source-name">
@@ -29,18 +32,16 @@
     </template>
     <template v-slot:footer>
       <div v-if="dataLoaded" class="export-btns">
-        <span>
-          <Button
-            id="printer"
-            class="btn btn--contained export-btns--print"
-            @click="() => exportImg('application/pdf')"
-          >
-            <Icon class="icon" name="printer" />
-            Print
-          </Button>
-        </span>
-        <span>
-          <span class="export-btns-download">DOWNLOAD</span>
+        <Button
+          id="printer"
+          class="btn btn--contained export-btns--print"
+          @click="() => exportImg('application/pdf')"
+        >
+          <Icon class="icon" name="printer" />
+          Print
+        </Button>
+        <div class="export-btns__download">
+          <span class="export-btns__label">Download</span>
           <Button class="btn btn--contained" @click="exportCSV">CSV</Button>
           <Button
             class="btn btn--contained"
@@ -52,7 +53,7 @@
             @click="() => exportImg('image/svg+xml')"
             >SVG</Button
           >
-        </span>
+        </div>
       </div>
       <div v-else purpose="div here to occupy footer while chart loads"></div>
     </template>
@@ -76,7 +77,7 @@ export default {
       sourceInfo: [],
       chartOptions: {
         title: { text: 'Historical Longitudes' },
-        chart: { styledMode: true, height: 700 },
+        chart: { styledMode: true, height: '80%' },
         plotOptions: {
           turboThreshold: 15000,
           series: { showInNavigator: true }
@@ -89,8 +90,11 @@ export default {
         xAxis: { title: null },
         yAxis: {
           opposite: false,
-          title: { text: 'Longitude', margin: 30 },
-          labels: { format: '{value}°' }
+          title: { text: 'Longitude', margin: 10 },
+          labels: {
+            formatter: (label) =>
+              `${Math.abs(label.value)}°${label.value < 0 ? 'W' : 'E'}`
+          }
         },
         tooltip: {
           formatter: function() {
@@ -99,7 +103,9 @@ export default {
                 return `${s}<span class="tooltip-line-color" style="color: ${
                   i ? 'rgba(254, 116, 20,1)' : 'rgba(82, 175, 225, 1)'
                 }">–</span><span class="tooltip-y">
-                  ${point.y.toFixed(2)}°</span>`
+                  ${Math.abs(point.y).toFixed(2)}°${
+                  point.y < 0 ? 'W' : 'E'
+                }</span>`
               },
               '<b>' +
                 new Intl.DateTimeFormat('en-US', {
@@ -115,7 +121,8 @@ export default {
           shared: true
         },
         navigator: {
-          height: 75,
+          adaptToUpdatedData: true,
+          margin: 0,
           // not working
           maskInside: false
         },

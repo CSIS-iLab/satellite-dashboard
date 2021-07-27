@@ -51,9 +51,9 @@
         </dd>
       </div>
     </dl>
+    <hr />
+    <h3>Orbit</h3>
     <div v-if="hasOrbit">
-      <hr />
-      <h3>Orbit</h3>
       <p class="details-panel__small-desc">Last updated on {{ orbitSource }}</p>
       <dl class="details__orbit">
         <div v-for="item in info.orbit" :key="item.value">
@@ -73,6 +73,9 @@
         </div>
       </dl>
     </div>
+    <p v-else class="details-panel__small-desc">
+      This object is not yet in orbit.
+    </p>
     <!-- <hr />
     <h3>ITU Filings</h3> -->
     <template v-if="satellite.acf.comments">
@@ -207,18 +210,19 @@ export default {
   },
   computed: {
     hasOrbit() {
-      if (!this.satelliteAllOrbits || this.satelliteAllOrbits.length === -1) {
-        return
+      if (!this.satelliteAllOrbits || !this.satelliteAllOrbits.length) {
+        return false
       }
 
       return true
     },
     satelliteAllOrbits() {
-      return this.orbits[this.id] ? this.orbits[this.id].orbits : null
+      if (!this.orbits[this.id]) {
+        return []
+      }
+      return this.orbits[this.id].orbits
     },
     orbitalElements() {
-      // TODO: Need to get the right orbit for the current timeline
-      // watch for date boundary change and set index accordingly
       const index = this.satelliteAllOrbits[this.elementIndex]
         ? this.elementIndex
         : 0

@@ -11,6 +11,7 @@
           aria-label="Zoom Into Sattelite"
           :class="{ 'btn--is-focused': isSatelliteTracked }"
           :on-click="trackObject"
+          :disabled="!hasOrbit"
         >
           <Icon id="target" name="target" focusable="false" />
         </Button>
@@ -78,8 +79,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import { mapMutations } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 import Button from '~/components/global/Button'
 import Details from '~/components/visualizer/details-panel/Details.vue'
 import Events from '~/components/visualizer/details-panel/Events.vue'
@@ -131,8 +131,22 @@ export default {
     isSatelliteTracked() {
       return this.isTracked
     },
+    hasOrbit() {
+      if (!this.satelliteAllOrbits || !this.satelliteAllOrbits.length) {
+        return false
+      }
+
+      return true
+    },
+    satelliteAllOrbits() {
+      if (!this.orbits[this.id]) {
+        return []
+      }
+      return this.orbits[this.id].orbits
+    },
     ...mapState({
-      focusedSatellites: (state) => state.satellites.focusedSatellites
+      focusedSatellites: (state) => state.satellites.focusedSatellites,
+      orbits: (state) => state.satellites.orbits
     })
   },
   watch: {

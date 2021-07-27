@@ -134,6 +134,8 @@ export default {
         {
           label: 'CO.',
           field: 'country',
+          tdClass: 'filter-results__country',
+          width: '4em',
           sortFn(x, y) {
             return x[0].id < y[0].id ? -1 : 1
           }
@@ -141,12 +143,12 @@ export default {
         { label: '', field: 'actions' }
       ],
       sortOptions: [
-        { value: 'Name A-Z', dir: 'asc', label: 'Name A-Z' },
-        { value: 'Name Z-A', dir: 'desc', label: 'Name Z-A' },
-        { value: 'country A-Z', dir: 'asc', label: 'Country A-Z' },
-        { value: 'country Z-A', dir: 'desc', label: 'Country Z-A' }
+        { value: 'Name A-Z', dir: 'asc', label: 'Name (A-Z)' },
+        { value: 'Name Z-A', dir: 'desc', label: 'Name (Z-A)' },
+        { value: 'country A-Z', dir: 'asc', label: 'Country (A-Z)' },
+        { value: 'country Z-A', dir: 'desc', label: 'Country (Z-A)' }
       ],
-      currentSort: 'Name A-Z',
+      currentSort: 'Name (A-Z)',
       tableSortOptions: {
         enabled: false,
         initialSortBy: { field: 'Name', type: 'asc' }

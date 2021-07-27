@@ -159,7 +159,11 @@ export default {
             text: '',
             reserveSpace: true
           },
-          labels: { format: '{value}°' }
+          /* labels: { format: '{value}°' } */
+          labels: {
+            formatter: (label) =>
+              `${Math.abs(label.value)}°${label.value < 0 ? 'W' : 'E'}`
+          }
         },
         rangeSelector: {
           inputEnabled: false,
@@ -246,7 +250,9 @@ export default {
               enabled: true,
               formatter: function() {
                 return `
-                <div class="label-y">${this.y.toFixed(0)}°</div>
+                <div class="label-y">${Math.abs(this.y).toFixed(0)}°${
+                  this.y < 0 ? 'W' : 'E'
+                }</div>
                 <br />
                 <div class="label-x">${new Intl.DateTimeFormat('en-US', {
                   year: 'numeric',
@@ -260,18 +266,7 @@ export default {
         this.chartOptions.series[i].name = `${this.name}`
       })
 
-      // set predicted lines
-      predicted_longitudes.forEach((l, i) => {
-        this.chartOptions.series[i + historical_longitudes.length - 1] = {
-          data: predicted_longitudes[i].data
-        }
-        this.chartOptions.series[
-          i + historical_longitudes.length - 1
-        ].name = `${this.name} (predicted)`
-      })
-
       // render chart after data is loaded
-
       this.dataLoaded = true
     },
     async fetch() {

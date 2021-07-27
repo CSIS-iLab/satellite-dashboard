@@ -40,7 +40,7 @@
           </div>
           <div class="sat__id">{{ object.catalog_id }}</div>
           <div class="sat__country">
-            {{ object.countryOfLaunch[0].id }}
+            {{ object.countries }}
           </div>
           <div class="sat__actions">
             <Button
@@ -122,11 +122,13 @@ export default {
           const id = ids[i]
           const { Name, Status, countryOfLaunch } = this.satellites[id]
 
+          let countries = countryOfLaunch.map((d) => d.id).join(' / ')
+
           objects.push({
             catalog_id: id,
             Name,
             Status,
-            countryOfLaunch
+            countries
           })
         }
 
