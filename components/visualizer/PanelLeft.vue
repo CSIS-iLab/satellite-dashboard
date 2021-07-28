@@ -114,10 +114,7 @@ export default {
       this.resetSatelliteState()
       this.resetFiltersState()
       this.getOrbits()
-
-      if (!process.server) {
-        history.replaceState({}, null, window.origin)
-      }
+      this.$router.push({ path: '/' })
     },
     ...mapMutations({
       updateVisibleSatellites: 'satellites/updateVisibleSatellites',
