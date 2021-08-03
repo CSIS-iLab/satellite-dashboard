@@ -144,6 +144,7 @@ export default {
       },
       focussedSatellites: new Set([]),
       highlightedEntities: new Set([]),
+      activeOrbitPaths: [],
       entityLabel: null,
       labelContainer: null
     }
@@ -164,6 +165,7 @@ export default {
   watch: {
     satelliteOrbits: 'processNewData',
     visibleSatellites: 'toggleObjectVisibility',
+    selectedDate: 'mapHighlightedOrbits',
     '$route.query.time': 'handleTimeQuery',
     '$route.query.satids': 'handleSatIdChange'
   },
@@ -241,6 +243,13 @@ export default {
         document.getElementById(`entity-${entity.id}`).remove()
         this.highlightedEntities.delete(entity)
       })
+    },
+    mapHighlightedOrbits() {
+      this.activeOrbitPaths = viewer
+        ? viewer.entities.values
+            .filter((s) => s.path && s.path.show._value === true)
+            .map((s) => s.id)
+        : []
     },
     ready(cesiumInstance) {
       console.log('is ready')
@@ -355,26 +364,6 @@ export default {
         Cesium.ScreenSpaceEventType.LEFT_CLICK
       )
 
-      /*const handleHighlights = (entity) => {
-        if (!entity) {
-          return
-        }
-        if (highlightedEntities.has(entity)) {
-          highlightedEntities.delete(entity)
-          entity.path.show = false
-          document.getElementById(`entity-${entity.id}`).remove()
-        } else {
-          // Update highlightedEntries & add label when the selectedEntity changes to make behavior consistent across viewer & buttons on panels.
-          highlightedEntities.add(entity)
-          entity.path.show = true
-
-          let label = entityLabel.cloneNode()
-          label.id = `entity-${entity.id}`
-          label.innerHTML = entity.name
-          labelContainer.appendChild(label)
-        }
-      }*/
-
       viewer.selectedEntityChanged.addEventListener((entity) => {
         if (!entity) {
           this.handleHighlights(lastSelectedEntity)
@@ -484,6 +473,9 @@ export default {
       // For each object, calculate its position & orbit
       // Calculations pulled from: https://github.com/ut-astria/AstriaGraph/blob/master/main.js & https://github.com/ut-astria/AstriaGraph/blob/master/celemech.js
       const focussedEntities = []
+      const focussedSatelliteIds = this.$route.query.satids
+        ? new Set(this.$route.query.satids.split(','))
+        : new Set(this.activeOrbitPaths)
       this.visibleSatellites.forEach((sat, i) => {
         if (!this.satelliteOrbits[sat]) {
           return
@@ -498,10 +490,6 @@ export default {
         const orbit = this.compileOrbits(orbits, epjd)
 
         const { Name, Status } = this.satellites[catalog_id]
-
-        const focussedSatelliteIds = this.$route.query.satids
-          ? new Set(this.$route.query.satids.split(','))
-          : new Set([])
 
         const entity = viewer.entities.add({
           id: catalog_id,
