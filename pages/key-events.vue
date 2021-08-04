@@ -154,8 +154,8 @@
                 </div>
               </div>
             </template>
-            <template v-else-if="props.column.field === 'min_distance_km'">
-              {{ formatNumber(props.row.min_distance_km) }}
+            <template v-else-if="props.column.field === 'min_distance'">
+              {{ formatNumber(props.row.min_distance) }}
             </template>
             <ul
               v-else-if="props.column.field == 'actions'"
@@ -239,8 +239,8 @@ export default {
         },
         {
           label: 'Est. Distance',
-          field: 'min_distance_km',
-          sublabel: 'km',
+          field: 'min_distance',
+          sublabel: 'm',
           tdClass: 'text--right'
         },
         { label: '', field: 'actions', sortable: false }
