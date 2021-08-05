@@ -138,24 +138,34 @@ export default {
         },
         tooltip: {
           formatter: function() {
-            return this.points.reduce(
-              function(s, point, i) {
-                return `${s}<span class="tooltip-line-color" style="color: ${
-                  i ? 'rgba(254, 116, 20,1)' : 'rgba(82, 175, 225, 1)'
-                }">–</span><span class="tooltip-y">
+            return this.points
+              .map((point, i) => {
+                point.color =
+                  i % 2 ? 'rgba(82, 175, 225, 1)' : 'rgba(254, 116, 20,1)'
+                return point
+              })
+              .sort((a, b) => a.y < b.y)
+              .reduce(
+                function(arr, point, i) {
+                  arr.push(`<span class="tooltip-line-color" style="color: ${
+                    point.color
+                  }">–</span><span class="tooltip-y">
                   ${Math.abs(point.y).toFixed(2)}°${
-                  point.y < 0 ? 'W' : 'E'
-                }</span>`
-              },
-              '<b>' +
-                new Intl.DateTimeFormat('en-US', {
-                  year: 'numeric',
-                  day: 'numeric',
-                  month: 'short'
-                }).format(new Date(this.x)) +
-                '</b>' +
-                '<br/>'
-            )
+                    point.y < 0 ? 'W' : 'E'
+                  }</span>`)
+                  return arr
+                },
+                [
+                  `<b>
+                    ${new Intl.DateTimeFormat('en-US', {
+                      year: 'numeric',
+                      day: 'numeric',
+                      month: 'short'
+                    }).format(new Date(this.x))}
+                    </b>`
+                ]
+              )
+              .join('<br />')
           },
           split: false,
           shared: true
