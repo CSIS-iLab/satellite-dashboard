@@ -8,11 +8,10 @@
   border-style: none;
   border-radius: 0;
   cursor: pointer;
-  opacity: 0.7;
   transition: all 0.3s ease-in-out;
 
   &:hover {
-    color: $color-white-180;
+    color: $color-white-190;
   }
 
   &:focus {
@@ -35,7 +34,7 @@
 
   &--contained {
     color: $color-white-170;
-    background-color: $color-slate-200;
+    background-color: $color-slate-100;
 
     &:hover {
       color: $color-white-190;
@@ -52,7 +51,7 @@
   }
 
   &--round {
-    color: $color-white-170;
+    color: $color-white-160;
     background-color: $color-slate-600;
     border-radius: 50px;
 
@@ -78,7 +77,6 @@
     color: $color-blue-100;
     border: 1px solid $color-blue-100;
     border-radius: 14px;
-    opacity: 0.9;
 
     &:hover {
       color: $color-slate-100;
@@ -88,7 +86,7 @@
   &--icon {
     width: 40px;
     height: 40px;
-    color: $color-white-140;
+    color: $color-white-160;
     border-radius: 50px;
   }
 
