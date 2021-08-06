@@ -82,10 +82,10 @@
       }
 
       &:focus {
-        outline: 1px solid $color-focus;
+        outline: 0;
 
         &::before {
-          outline: 1px solid $color-focus;
+          outline: 0;
         }
       }
 
