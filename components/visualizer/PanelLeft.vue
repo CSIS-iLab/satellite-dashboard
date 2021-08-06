@@ -88,6 +88,17 @@ export default {
   },
   watch: {
     activeTab(newTab) {
+      // enables panel content transition
+      let tabs = document.querySelectorAll('.ak-vt__panel.panel--left')
+
+      tabs.forEach((tab) => {
+        if (newTab === '') {
+          tab.style.display = 'block'
+        } else {
+          tab.style.display = ''
+        }
+      })
+
       // Switch Visible Objects based on active tab
       if (!newTab || newTab == this.prevTab) {
         return
