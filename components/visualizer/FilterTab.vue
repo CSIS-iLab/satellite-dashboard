@@ -124,9 +124,9 @@ export default {
       filterOptions: {
         Name: { value: 'Name', label: 'Name' },
         NoradId: { value: 'NoradId', label: 'Norad ID' },
-        countryOfJurisdictionIds: {
-          value: 'countryOfJurisdictionIds',
-          label: 'Country of Jurisdiction'
+        countryOfLaunchIds: {
+          value: 'countryOfLaunchIds',
+          label: 'Country'
         },
         Purpose: { value: 'Purpose', label: 'Purpose' },
         Users: { value: 'Users', label: 'Users' },
@@ -135,7 +135,7 @@ export default {
       activeFilterValues: {},
       visibleFilters: [],
       visibleFilterValues: {
-        countryOfJurisdictionIds: [],
+        countryOfLaunchIds: [],
         Name: [],
         NoradId: [],
         Purpose: [],
@@ -183,14 +183,12 @@ export default {
           .map((d) => ({ value: d, label: d }))
       }
 
-      // Status
       filters.Status = this.statusTypesKeys.map((d) => ({
         value: d,
         label: this.statusTypes[d].label
       }))
 
-      // countryOfJurisdiction
-      filters.countryOfJurisdictionIds = this.countriesOfJurisdiction
+      filters.countryOfLaunchIds = this.countriesOfLaunch
 
       return filters
     },
@@ -198,19 +196,15 @@ export default {
       let results = []
       for (let i = 0; i < this.filteredSatellites.length; i++) {
         const catalog_id = this.filteredSatellites[i]
-        const { Name, Status, countryOfJurisdiction } = this.satellites[
-          catalog_id
-        ]
+        const { Name, Status, countryOfLaunch } = this.satellites[catalog_id]
 
         results.push({
           catalog_id,
           Name,
           Status,
-          country: countryOfJurisdiction
+          country: countryOfLaunch
         })
       }
-
-      console.log('filteredSatelliteMeta')
       return results
     },
     ...mapState({
@@ -218,8 +212,7 @@ export default {
       filteredSatellites: (state) => state.satellites.filteredSatellites,
       activeFilters: (state) => state.filters.activeFilters,
       statusTypes: (state) => state.satellites.statusTypes,
-      countriesOfJurisdiction: (state) =>
-        state.satellites.countriesOfJurisdiction
+      countriesOfLaunch: (state) => state.satellites.countriesOfLaunch
     }),
     ...mapGetters({
       satelliteCatalogIds: 'satellites/satelliteCatalogIds',
@@ -242,7 +235,6 @@ export default {
       this.visibleFilters = this.visibleFilters.filter((d) => d !== filter)
     },
     applyFilters() {
-      console.log('apply the filter!')
       this.isEditable = false
       this.updateActiveFilters([...this.visibleFilters])
       this.activeFilterValues = Object.assign({}, this.visibleFilterValues)
@@ -276,7 +268,6 @@ export default {
       this.updateVisibleSatellites(filteredSatellites)
     },
     removeAllFilters() {
-      console.log('reset filters')
       // Clear Filters
       let filters = {}
       for (let i = 0; i < this.activeFilters.length; i++) {
@@ -297,7 +288,6 @@ export default {
       updateVisibleSatellites: 'satellites/updateVisibleSatellites'
     }),
     cancelFilters() {
-      console.log('cancel the filters')
       // Reset visible state to match the previous "apply" results
       this.visibleFilterValues = Object.assign({}, this.activeFilterValues)
       this.visibleFilters = [...this.activeFilters]

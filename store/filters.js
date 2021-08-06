@@ -1,5 +1,11 @@
+const getResettableDefaultState = () => {
+  return {
+    activeFilters: []
+  }
+}
+
 export const state = () => ({
-  activeFilters: []
+  ...getResettableDefaultState()
 })
 
 export const getters = {
@@ -9,6 +15,12 @@ export const getters = {
 }
 
 export const mutations = {
+  resetFiltersState: (state) => {
+    const items = getResettableDefaultState()
+    Object.keys(items).forEach((key) => {
+      state[key] = items[key]
+    })
+  },
   updateActiveFilters: (state, filters) => {
     state.activeFilters = filters
   }

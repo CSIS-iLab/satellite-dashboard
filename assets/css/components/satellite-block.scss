@@ -22,7 +22,7 @@
 
     &--status {
       display: grid;
-      grid-template-columns: max-content auto;
+      grid-template-columns: max-content 2fr max-content max-content;
       column-gap: var(--marker-gap, rem(16));
       row-gap: rem(2);
 
@@ -46,6 +46,14 @@
       .sat__id {
         grid-column: 2;
         grid-row: 2;
+      }
+
+      .sat__disclaimer {
+        grid-column: 2;
+        margin-top: rem(12);
+        color: $color-white-160;
+        @extend %font-ui-text-xsm-oxygen;
+        letter-spacing: 0.025em;
       }
     }
   }

@@ -40,7 +40,7 @@
           </div>
           <div class="sat__id">{{ object.catalog_id }}</div>
           <div class="sat__country">
-            {{ object.countryOfJurisdiction.id }}
+            {{ object.countries }}
           </div>
           <div class="sat__actions">
             <Button
@@ -60,10 +60,11 @@
           </div>
         </li>
       </ul>
-      <div class="close-approaches__item btn btn--curved">
+      <div class="close-approaches__compare-objects">
         <Button
           aria-label="See historical orbits"
           :on-click="(e) => updateShowMagicChart(event.objects)"
+          class="btn btn--outlined"
         >
           <Icon id="magic-chart" name="graph" focusable="false" />
           Compare Objects
@@ -98,6 +99,11 @@ export default {
       type: String,
       required: false,
       default: null
+    },
+    name: {
+      type: String,
+      required: false,
+      default: null
     }
   },
   computed: {
@@ -114,16 +120,19 @@ export default {
 
         for (let i = 0; i < ids.length; i++) {
           const id = ids[i]
-          const { Name, Status, countryOfJurisdiction } = this.satellites[id]
+          const { Name, Status, countryOfLaunch } = this.satellites[id]
+
+          let countries = countryOfLaunch.map((d) => d.id).join(' / ')
 
           objects.push({
             catalog_id: id,
             Name,
             Status,
-            countryOfJurisdiction
+            countries
           })
         }
 
+        // console.log(objects)
         return {
           objects,
           ...info
@@ -218,11 +227,12 @@ export default {
     },
     updateShowMagicChart(objects) {
       const payload = {
-        ids: objects.map((o) => o.catalog_id),
-        names: objects.map((o) => o.Name)
+        ids: [...objects.map((o) => o.catalog_id), this.id],
+        names: [...objects.map((o) => o.Name), this.name],
+        zoom: '1wk'
       }
-      this.showMagicChart = !this.showMagicChart
       this.updateLongitudeSatellites(payload)
+      this.showMagicChart = !this.showMagicChart
     },
     ...mapMutations({
       updateFocusedSatellites: 'satellites/updateFocusedSatellites',

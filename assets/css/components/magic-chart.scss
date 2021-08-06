@@ -1,6 +1,10 @@
-.magic-chart {
-  min-width: 45vw;
-  min-height: 60vh;
+@import '~/assets/css/components/highcharts-theme';
+
+.magic-chart .modal {
+  width: 100%;
+  max-width: 680px;
+  max-height: 85vh;
+  margin: rem(16);
 }
 
 .loading {
@@ -12,19 +16,101 @@
   font-size: 1.2em;
 }
 
-.data-source--sat-name {
+.highcharts-axis-title {
+  @extend %font-ui-text-lg-oxygen;
+  font-family: $font__good;
+  font-weight: 400;
+  opacity: 0.8;
+  fill: $color-white-180;
+}
+
+.highcharts-axis-labels text {
+  @extend %font-ui-text-sm-oxygen;
+  opacity: 0.4;
+  fill: $color-white-180;
+}
+
+.legend-id {
+  @extend %font-ui-text-xsm-oxygen;
+  font-weight: 100;
+  fill: $color-white-160;
+}
+
+.highcharts-plot-line-label {
+  @extend %font-ui-text-xsm-oxygen;
+  fill: #abadaf;
+}
+
+.data-sources {
+  padding-top: rem(12);
+  border-top: 1px solid $color-white-115;
+}
+
+.data-source-title {
+  @extend %font-ui-text-lg-good;
+  color: $color-white-160;
+  font-weight: 400;
+}
+
+.modal__footer-data-source {
+  @extend %font-ui-text-base-oxygen;
   color: $color-white-170;
-  font-weight: 500;
-  font-size: 1.2em;
+}
+
+.data-source--sat-name {
+  font-weight: bold;
 }
 
 .data-source--source-name {
-  margin-left: 0.6em;
-  color: $color-white-170;
+  margin-left: rem(8);
   font-weight: 400;
-  font-size: 1.1em;
 }
 
-.data-source--time {
-  font-size: 0.8em;
+.data-source-time {
+  margin-left: rem(8);
+  color: $color-white-140;
+}
+
+.export-btns {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  @extend %font-ui-text-base-good;
+
+  &--print {
+    display: flex;
+    gap: rem(4);
+    align-items: center;
+    text-transform: none;
+  }
+
+  &__download {
+    display: flex;
+    gap: rem(8);
+    align-items: center;
+  }
+
+  &__label {
+    margin-right: rem(8);
+    color: $color-white-150;
+    text-transform: uppercase;
+  }
+}
+
+.highchart-export {
+  .highcharts-title,
+  .highcharts-axis-title,
+  .highcharts-axis-labels text,
+  .highcharts-plot-line-label,
+  .highcharts-legend text {
+    fill: $color-black-100;
+  }
+
+  .highcharts-plot-background {
+    fill: transparent;
+  }
+
+  .highcharts-grid-line {
+    stroke: $color-black-120;
+  }
 }

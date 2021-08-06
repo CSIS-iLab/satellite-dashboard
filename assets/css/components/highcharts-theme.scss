@@ -4,30 +4,57 @@
   font-family: $font__oxygen;
 }
 
-.highcharts-title,
-.highcharts-subtitle {
-  fill: $color-offwhite;
+.highcharts-title {
+  @extend %font-ui-heading-section-lg;
+  fill: $color-white-170;
 }
 
 .highcharts-background {
-  fill: $color-slate-395;
+  fill: transparent;
 }
 
 .highcharts-plot-background {
-  fill: $color-slate-200;
+  fill: $color-slate-300;
 }
 
-.highcharts-axis-labels,
+.highcharts-xaxis-grid {
+  stroke-width: 1px;
+}
+
+.highcharts-axis-line {
+  stroke-width: 0;
+}
+
+.highcharts-grid-line {
+  stroke: $color-white-110;
+}
+
 .highcharts-axis-title {
-  fill: $color-offwhite;
-}
-
-.highcharts-plot-line-label {
-  fill: $color-offwhite;
+  @extend %font-ui-text-lg-oxygen;
+  font-family: $font__good;
+  font-weight: 400;
+  opacity: 0.8;
+  fill: $color-white-180;
 }
 
 .highcharts-legend text {
+  font-family: $font__oxygen;
+  font-weight: normal;
   font-size: 14px;
+  fill: $color-white-180;
+}
+
+.highcharts-legend-item:hover text {
+  fill: $color-white-180;
+}
+
+.highcharts-tooltip-box {
+  opacity: 0.8;
+  fill: $color-slate-395;
+  stroke-width: 0;
+}
+
+.highcharts-tooltip text {
   fill: $color-offwhite;
 }
 
@@ -50,21 +77,19 @@
 
 .highcharts-series-2 {
   stroke: $color-orange-100;
-  stroke-dasharray: 20, 20;
+  stroke-dasharray: 3, 5;
 }
 
 .highcharts-series-3 {
   stroke: $color-focus;
-  stroke-dasharray: 20, 20;
+  stroke-dasharray: 3, 5;
 }
 
-// TODO fix nav mask
 .highcharts-navigator-mask-inside {
   fill: rgba(0, 0, 0, 0);
-  stroke: rgba(80, 198, 120, 0.75);
+  stroke: $color-offwhite;
 }
 
-// not working
 .highcharts-navigator-mask-outside {
   fill: rgba(0, 0, 0, 0);
   stroke: rgba(0, 0, 0, 0);
@@ -76,10 +101,22 @@
 
 /* stylelint-disable */
 g.highcharts-navigator-series:nth-of-type(1n) {
-  stroke: $color-orange-100;
+  stroke: $color-focus;
 }
 
 g.highcharts-navigator-series:nth-of-type(3n) {
-  stroke: $color-focus;
+  stroke: $color-orange-100;
 }
 /* stylelint-enable*/
+
+.highcharts-tooltip-header text {
+  font-size: 1.5em;
+}
+
+.tooltip-line-color {
+  font-size: 2.5em;
+}
+
+.tooltip-y {
+  font-size: 1.5em;
+}

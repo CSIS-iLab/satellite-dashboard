@@ -3,6 +3,9 @@ import qs from 'querystring'
 import Types from '~/assets/data/types.json'
 import AGCountries from '~/assets/data/ag_countries.json'
 import CountryISOs from '~/assets/data/country_isos.json'
+import Orbitals from '../services/orbitals'
+import timeEventsProvider from '../services/time-events'
+const timeEvents = timeEventsProvider()
 
 const siteURL = 'https://satdash.wpengine.com'
 const siteURLLocal = 'http://satellite-dashboard.local/'
@@ -62,20 +65,26 @@ const statusTypes = {
   }
 }
 
+const getResettableDefaultState = () => {
+  return {
+    orbits: {},
+    filteredSatellites: [],
+    focusedSatellites: new Set(),
+    visibleSatellites: [],
+    visibleSatellitesType: 'catalog',
+    detailedSatellite: null,
+    targetDate: new Date(new Date().setHours(0, 0, 0, 0)),
+    selectedTimescale: timescales[1]
+  }
+}
+
 export const state = () => ({
   satellites: {},
-  orbits: {},
-  filteredSatellites: [],
-  focusedSatellites: new Set(),
-  visibleSatellites: [],
-  visibleSatellitesType: 'catalog',
   longitudeSatellites: [],
-  detailedSatellite: null,
-  targetDate: new Date(new Date().setHours(0, 0, 0, 0)),
-  selectedTimescale: timescales[1],
+  countriesOfLaunch: [],
   timescales,
   statusTypes,
-  countriesOfJurisdiction: []
+  ...getResettableDefaultState()
 })
 
 export const getters = {
@@ -94,6 +103,12 @@ export const getters = {
 }
 
 export const mutations = {
+  resetSatellitesState: (state) => {
+    const items = getResettableDefaultState()
+    Object.keys(items).forEach((key) => {
+      state[key] = items[key]
+    })
+  },
   updateSatellites: (state, satellites) => {
     state.satellites = satellites
   },
@@ -102,6 +117,7 @@ export const mutations = {
   },
   updateTargetDate: (state, newTargetDate) => {
     state.targetDate = newTargetDate
+    timeEvents.init(newTargetDate)
   },
   updateSelectedTimescale: (state, selectedTimescale) => {
     state.selectedTimescale = selectedTimescale
@@ -124,8 +140,8 @@ export const mutations = {
   updateLongitudeSatellites: (state, payload) => {
     state.longitudeSatellites = payload
   },
-  updateCountriesOfJurisdiction: (state, countries) => {
-    state.countriesOfJurisdiction = countries
+  updateCountriesOfLaunch: (state, countries) => {
+    state.countriesOfLaunch = countries
   }
 }
 
@@ -163,7 +179,7 @@ export const actions = {
       let items = {}
       let visibleItems = []
       let countries = new Set()
-      let countriesOfJurisdiction = new Set()
+      let countriesOfLaunch = new Set()
 
       /**
        * Todo:
@@ -194,22 +210,20 @@ export const actions = {
           }
 
           // Format country names into standard codes if we can.
-          if (!sat.countryOfJurisdiction) {
-            sat.countryOfJurisdiction = 'TBD'
+          if (!sat.countryOfLaunch) {
+            sat.countryOfLaunch = 'TBD'
           }
 
-          let countryOfJurisdiction = formatCountries(sat.countryOfJurisdiction)
-          let countryOfJurisdictionIds = countryOfJurisdiction.map((d) => d.id)
-
           let countryOfLaunch = formatCountries(sat.countryOfLaunch)
+          let countryOfLaunchIds = countryOfLaunch.map((d) => d.id)
 
-          // Store the countryOfJurisdiction so we can filter on it later.
-          countryOfJurisdiction.forEach((country) => {
+          // Store the countryOfLaunch so we can filter on it later.
+          countryOfLaunch.forEach((country) => {
             if (countries.has(country.id)) {
               return
             }
             countries.add(country.id)
-            countriesOfJurisdiction.add({
+            countriesOfLaunch.add({
               value: country.id,
               label: country.label
             })
@@ -217,9 +231,8 @@ export const actions = {
 
           items[sat.acf.catalog_id] = {
             ...sat,
-            countryOfJurisdiction,
             countryOfLaunch,
-            countryOfJurisdictionIds,
+            countryOfLaunchIds,
             Status: status_type
           }
 
@@ -227,16 +240,13 @@ export const actions = {
           visibleItems.push(sat.acf.catalog_id)
         })
 
-      countriesOfJurisdiction = [...countriesOfJurisdiction].sort((a, b) =>
+      countriesOfLaunch = [...countriesOfLaunch].sort((a, b) =>
         a.label.localeCompare(b.label)
       )
 
       commit('updateSatellites', Object.freeze(items))
       commit('updateVisibleSatellites', visibleItems)
-      commit(
-        'updateCountriesOfJurisdiction',
-        Object.freeze(countriesOfJurisdiction)
-      )
+      commit('updateCountriesOfLaunch', Object.freeze(countriesOfLaunch))
     } catch (err) {
       console.error(err)
     }
@@ -266,9 +276,27 @@ export const actions = {
         return
       }
 
+      if (typeof orbits === 'string') {
+        orbits = JSON.parse(orbits)
+      }
+
       // Todo: Modify active satellites here to trigger watch in CesiumViewer
 
       console.log('Get updated orbits.')
+
+      // iterate over orbits and pad elements to match number of days
+      const numDays = state.selectedTimescale.value / oneDay
+      Object.keys(orbits).forEach((key) => {
+        const orbit = orbits[key]
+        if (orbit.orbits && orbit.orbits.length < numDays) {
+          // pad the orbits
+          orbit.orbits = Orbitals.PadOrbitals(
+            orbit.orbits,
+            state.targetDate,
+            numDays
+          )
+        }
+      })
       commit('updateOrbits', Object.freeze(orbits))
     } catch (err) {
       console.log(err)
@@ -288,13 +316,12 @@ export const actions = {
 
     let historical_longitudes, predicted_longitudes
     try {
-      historical_longitudes = await this.$axios.$get(
-        `wp-json/satdash/v1/longitudes/historical?${ids}`
-      )
-      predicted_longitudes = await this.$axios.$get(
-        `wp-json/satdash/v1/longitudes/predicted?${ids}`
-      )
+      ;[historical_longitudes, predicted_longitudes] = await Promise.all([
+        this.$axios.$get(`wp-json/satdash/v1/longitudes/historical?${ids}`),
+        this.$axios.$get(`wp-json/satdash/v1/longitudes/predicted?${ids}`)
+      ])
     } catch (e) {
+      // TODO: handle error case with notification and canceling charting fns
       console.error(e)
     }
 
@@ -321,10 +348,12 @@ function formatCountries(value) {
   if (value === undefined) {
     value = ''
   }
+  let countryID = value != undefined ? value : 'TBD'
 
   let iso = AGCountries[value] || value
   let options = iso.split('/').map((d) => d.trim())
   let countries = options.map((option) => ({
+    countryID: countryID,
     id: option,
     label: CountryISOs[option] || option
   }))
