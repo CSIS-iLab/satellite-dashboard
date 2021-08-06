@@ -1,0 +1,153 @@
+.chart-globe {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+}
+
+#loader-box {
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: inherit;
+  width: inherit;
+  height: 50vh;
+  color: #fff;
+  font-weight: 400;
+  font-size: 1em;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  text-size-adjust: 100%;
+}
+
+#loader-globe {
+  position: relative;
+  z-index: 4;
+  display: grid;
+  grid-template-columns: repeat(1, 50px);
+  grid-template-rows: repeat(2, 50px);
+  align-items: center;
+  box-sizing: inherit;
+  width: 50px;
+  height: 50px;
+  color: #fff;
+  font-weight: 400;
+  font-size: 1em;
+  line-height: 1.5;
+  background-size: 100%;
+  border-radius: 50%;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  text-size-adjust: 100%;
+  justify-items: center;
+}
+
+.loader-orbit {
+  position: absolute;
+  grid-column: 1;
+  grid-row-start: 1;
+  width: 100%;
+  height: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+}
+
+.loader-sat {
+  grid-column: 1;
+  grid-row-start: 1;
+  width: 100%;
+  height: 100%;
+  background-color: #fe7414;
+  border-radius: 50%;
+}
+
+#sat1 {
+  animation: spin1 3s linear infinite;
+}
+
+#sat1o {
+  width: 160%;
+  height: 160%;
+}
+
+#sat2 {
+  animation: spin2 3s linear infinite;
+}
+
+#sat2o {
+  width: 200%;
+  height: 200%;
+}
+
+#sat3 {
+  animation: spin3 2.5s linear infinite;
+}
+
+#sat3o {
+  width: 240%;
+  height: 240%;
+}
+
+@keyframes spin1 {
+  0% {
+    transform: rotate(0deg) translateX(80%) rotate(0deg) scale(0.1);
+  }
+
+  100% {
+    transform: rotate(1turn) translateX(80%) rotate(-1turn) scale(0.1);
+  }
+}
+
+@keyframes spin2 {
+  0% {
+    transform: rotate(0deg) translateX(100%) rotate(0deg) scale(0.1);
+  }
+
+  100% {
+    transform: rotate(-1turn) translateX(100%) rotate(1turn) scale(0.1);
+  }
+}
+
+@keyframes spin3 {
+  0% {
+    transform: rotate(0deg) translateX(120%) rotate(0deg) scale(0.1);
+  }
+
+  100% {
+    transform: rotate(1turn) translateX(120%) rotate(-1turn) scale(0.1);
+  }
+}
+
+#loader-globe-svg {
+  position: absolute;
+  grid-column: 1;
+  grid-row-start: 1;
+  box-sizing: inherit;
+  width: 60px;
+  height: 60px;
+  color: #fff;
+  font-weight: 400;
+  font-size: 1em;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  text-size-adjust: 100%;
+}
+
+.globe {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  //border: 2px solid #8bc34a;
+
+  width: 100%;
+  width: 100%;
+  height: 100%;
+
+  svg {
+    height: 75%;
+  }
+}

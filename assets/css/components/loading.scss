@@ -1,66 +1,201 @@
 // css for loading spinner
+/* stylelint-disable */
 
-.triple-spinner {
-  position: relative;
-  display: block;
-  width: 70px;
-  height: 70px;
-  margin: auto;
-  border: 2px solid transparent;
-  border-top: 2px solid #ff5722;
-  border-radius: 50%;
-  animation: spin 2s linear infinite;
-  animation: spin 2s linear infinite;
+// @import 'bourbon';
+
+// @include font-face(
+//   AlteHaasGroteskBold,
+//   'http://edwardloveall.com/online/fonts/altehaasgroteskbold'
+// );
+
+////////
+
+$planet-size: 6px;
+$rotation-period: 10s;
+$buffer: 50%;
+$diameter: 100 + ($buffer * 2);
+
+////////
+
+h1 {
+  font-size: 1em;
 }
 
-.triple-spinner::before,
-.triple-spinner::after {
-  position: absolute;
-  border: 3px solid transparent;
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #000;
+}
+
+section.wrapper,
+div.orbit {
+  @include transform-style(preserve-3d);
+}
+
+section.wrapper {
+  position: relative;
+  height: 50%;
+  text-align: center;
+
+  &::before {
+    display: inline-block;
+    height: 100%;
+    margin-right: -0.25em;
+    vertical-align: middle;
+    content: '';
+  }
+}
+
+h1 {
+  @include transform-style(preserve-3d);
+  position: relative;
+  z-index: 3;
+  display: inline-block;
+  margin: 32px;
+
+  /* background-color: rgba(0, 0, 0, 0.1); */
+  color: #3b3e42;
+  font-family: AlteHaasGroteskBold, sans-serif;
+  font-size: 180px;
+  vertical-align: bottom;
+}
+
+div.orbit {
+  /* background-color: rgba(0, 0, 0, 0.1); */
+
+  @each $i, $size, $delay, $height, $orbit-diameter in (1, 4, 0.68, 56, 0.99),
+    (2, 8, 0.03, 77, 0.84), (3, 4, 0.23, 48, 1), (4, 5, 0.36, 43, 0.99),
+    (5, 6, 0.72, 27, 0.89), (6, 6, 0.17, 24, 0.86), (7, 5, 0.56, 14, 0.69),
+    (8, 6, 0.5, 4, 0.39), (9, 5, 0.34, 20, 0.8), (10, 9, 0.82, 40, 0.98),
+    (11, 6, 0.22, 83, 0.75), (12, 6, 0.01, 87, 0.67), (13, 6, 0.8, 17, 0.76),
+    (14, 5, 0.34, 92, 0.53), (15, 8, 0.06, 85, 0.71), (16, 8, 0.5, 14, 0.7),
+    (17, 5, 0.96, 79, 0.82), (18, 7, 0.08, 11, 0.63), (19, 5, 0.32, 65, 0.96),
+    (20, 4, 0.97, 30, 0.92)
+  {
+    &.orbit-#{$i} {
+      $width: $diameter * $orbit-diameter;
+
+      @include animation(orbit-rotate $rotation-period linear infinite);
+      @include animation-delay($rotation-period * -$delay);
+      @include position(
+        absolute,
+        ($height * 0.4% + 25%) 0 0 ((100 - $width) / 2)
+      );
+      width: $width;
+
+      &::after {
+        @include animation-delay($rotation-period * -$delay);
+        width: $size * 1px;
+        height: $size * 1px;
+      }
+    }
+  }
+}
+
+div.orbit::after {
+  @include animation(planet-rotate $rotation-period linear infinite);
+  display: block;
+  background-color: #fe7414;
   border-radius: 50%;
   content: '';
 }
 
-.triple-spinner::before {
-  top: 3px;
-  right: 3px;
-  bottom: 3px;
-  left: 3px;
-  border-top-color: #ff9800;
-  animation: spin 3s linear infinite;
-  animation: spin 3.5s linear infinite;
-}
-
-.triple-spinner::after {
-  top: 8px;
-  right: 8px;
-  bottom: 8px;
-  left: 8px;
-  border-top-color: #ffc107;
-  animation: spin 1.5s linear infinite;
-  animation: spin 1.75s linear infinite;
-}
-
-@keyframes spin {
+@include keyframes(orbit-rotate) {
   from {
-    transform: rotate(0deg);
-    transform: rotate(0deg);
+    @include transform(rotateY(0deg));
   }
 
   to {
-    transform: rotate(360deg);
-    transform: rotate(360deg);
+    @include transform(rotateY(360deg));
   }
 }
 
-@keyframes spin {
+@include keyframes(planet-rotate) {
   from {
-    transform: rotate(0deg);
-    transform: rotate(0deg);
+    @include transform(rotateY(0deg));
   }
 
   to {
-    transform: rotate(360deg);
-    transform: rotate(360deg);
+    @include transform(rotateY(-360deg));
   }
 }
+
+.globe {
+  position: relative;
+  top: 0%;
+  left: 0%;
+  //transform: translate(-50%, -50%);
+  width: 100px;
+  height: 100px;
+  overflow: hidden;
+  background-color: #35424a;
+  //border: 2px solid #8bc34a;
+  border-radius: 50%;
+
+  &::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+
+    border-radius: 100%;
+    box-shadow: inset 16px 0 40px 3px rgb(0, 0, 0),
+      inset -3px 0 6px 2px rgba(255, 255, 255, 0.2);
+    content: '';
+  }
+
+  .svg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url('https://assets.codepen.io/1465055/planet+rotating.svg');
+    background-repeat: repeat-x;
+    background-size: auto 100%;
+    animation: rotation 10s linear 0s infinite;
+  }
+}
+
+@keyframes rotation {
+  0% {
+    background-position: 0%;
+  }
+
+  50% {
+    background-position: -100%;
+  }
+
+  100% {
+    background-position: -200%;
+  }
+}
+
+.counter {
+  position: relative;
+  top: 0;
+
+  //align-items: center;
+  z-index: -10;
+  display: flex;
+  width: 300px;
+  height: 2px;
+  margin: 0 auto;
+  background-color: rgba(255, 255, 255, 0.5);
+
+  hr {
+    width: 100%;
+    max-width: 300px;
+    height: 2px;
+    margin: 0;
+    background: white;
+    border: none;
+  }
+}
+/* stylelint-enable */
