@@ -44,6 +44,10 @@
   fill: $color-white-180;
 }
 
+.highcharts-legend-item:hover text {
+  fill: $color-white-180;
+}
+
 .highcharts-tooltip-box {
   opacity: 0.8;
   fill: $color-slate-395;
@@ -67,16 +71,8 @@
   stroke: $color-orange-100;
 }
 
-.highcharts-series-0.highcharts-legend-item:hover text {
-  fill: $color-orange-100;
-}
-
 .highcharts-series-1 {
   stroke: $color-focus;
-}
-
-.highcharts-series-1.highcharts-legend-item:hover text {
-  fill: $color-focus;
 }
 
 .highcharts-series-2 {
