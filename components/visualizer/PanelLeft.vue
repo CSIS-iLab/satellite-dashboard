@@ -90,7 +90,6 @@ export default {
     activeTab(newTab) {
       // Switch Visible Objects based on active tab
       if (!newTab || newTab == this.prevTab) {
-        console.log("don't change current visible")
         return
       }
 
@@ -99,12 +98,10 @@ export default {
       }
 
       if (this.activeTab === 'filters' && this.activeFiltersCount > 0) {
-        console.log('the filter list')
         this.updateVisibleSatellites(this.filteredSatellites)
       }
 
       if (this.activeTab === 'list' && this.focusedSatellitesCount > 0) {
-        console.log('the focus list')
         this.updateVisibleSatellites([...this.focusedSatellites])
       }
     }

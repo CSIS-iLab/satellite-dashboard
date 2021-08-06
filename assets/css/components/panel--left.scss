@@ -44,6 +44,11 @@
       }
     }
 
+    &__panel {
+      // enables panel content transition
+      display: block;
+    }
+
     &__list {
       position: absolute;
       top: 0;
