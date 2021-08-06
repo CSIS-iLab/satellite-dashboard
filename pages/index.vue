@@ -1,7 +1,7 @@
 <template>
   <div class="visualizer-content">
     <template v-if="loading" class="loading">
-      <div class="triple-spinner" />
+      <Loading />
       <div class="loading-text">Loading...</div>
     </template>
     <template v-else>
@@ -36,6 +36,7 @@ import PanelLeft from '~/components/visualizer/PanelLeft'
 import Timeline from '~/components/timeline/Timeline'
 import UpdatePanel from '~/components/visualizer/UpdatesPanel'
 import MagicChart from '~/components/visualizer/MagicChart'
+import Loading from '@/components/global/Loading'
 
 export default {
   layout: 'visualizer',
@@ -45,7 +46,8 @@ export default {
     PanelLeft,
     Timeline,
     UpdatePanel,
-    MagicChart
+    MagicChart,
+    Loading
   },
   data() {
     return {

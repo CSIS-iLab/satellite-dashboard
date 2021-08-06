@@ -1,166 +1,483 @@
-// css for loading spinner
 /* stylelint-disable */
-
-// @import 'bourbon';
-
-// @include font-face(
-//   AlteHaasGroteskBold,
-//   'http://edwardloveall.com/online/fonts/altehaasgroteskbold'
-// );
-
-////////
-
-$planet-size: 6px;
-$rotation-period: 10s;
-$buffer: 50%;
-$diameter: 100 + ($buffer * 2);
-
-////////
-
 h1 {
   font-size: 1em;
 }
 
-html,
-body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  background-color: #000;
-}
-
-section.wrapper,
+section.loading__wrapper,
 div.orbit {
-  @include transform-style(preserve-3d);
+  transform-style: preserve-3d;
 }
 
-section.wrapper {
+section.loading__wrapper {
   position: relative;
   height: 50%;
+  top: 40vh;
+  width: fit-content;
   text-align: center;
+  margin: auto;
+}
 
-  &::before {
-    display: inline-block;
-    height: 100%;
-    margin-right: -0.25em;
-    vertical-align: middle;
-    content: '';
-  }
+section.loading__wrapper::before {
+  display: inline-block;
+  height: 100%;
+  margin-right: -0.25em;
+  vertical-align: middle;
+  content: '';
 }
 
 h1 {
-  @include transform-style(preserve-3d);
   position: relative;
   z-index: 3;
   display: inline-block;
   margin: 32px;
-
   /* background-color: rgba(0, 0, 0, 0.1); */
   color: #3b3e42;
   font-family: AlteHaasGroteskBold, sans-serif;
   font-size: 180px;
   vertical-align: bottom;
+  transform-style: preserve-3d;
 }
 
 div.orbit {
   /* background-color: rgba(0, 0, 0, 0.1); */
+}
 
-  @each $i, $size, $delay, $height, $orbit-diameter in (1, 4, 0.68, 56, 0.99),
-    (2, 8, 0.03, 77, 0.84), (3, 4, 0.23, 48, 1), (4, 5, 0.36, 43, 0.99),
-    (5, 6, 0.72, 27, 0.89), (6, 6, 0.17, 24, 0.86), (7, 5, 0.56, 14, 0.69),
-    (8, 6, 0.5, 4, 0.39), (9, 5, 0.34, 20, 0.8), (10, 9, 0.82, 40, 0.98),
-    (11, 6, 0.22, 83, 0.75), (12, 6, 0.01, 87, 0.67), (13, 6, 0.8, 17, 0.76),
-    (14, 5, 0.34, 92, 0.53), (15, 8, 0.06, 85, 0.71), (16, 8, 0.5, 14, 0.7),
-    (17, 5, 0.96, 79, 0.82), (18, 7, 0.08, 11, 0.63), (19, 5, 0.32, 65, 0.96),
-    (20, 4, 0.97, 30, 0.92)
-  {
-    &.orbit-#{$i} {
-      $width: $diameter * $orbit-diameter;
+div.orbit.orbit-1 {
+  position: absolute;
+  top: 47.4%;
+  right: 0;
+  bottom: 0;
+  left: -49%;
+  width: 198%;
+  animation: orbit-rotate 10s linear infinite;
+  animation-delay: -6.8s;
+}
 
-      @include animation(orbit-rotate $rotation-period linear infinite);
-      @include animation-delay($rotation-period * -$delay);
-      @include position(
-        absolute,
-        ($height * 0.4% + 25%) 0 0 ((100 - $width) / 2)
-      );
-      width: $width;
+div.orbit.orbit-1::after {
+  width: 4px;
+  height: 4px;
+  animation-delay: -6.8s;
+}
 
-      &::after {
-        @include animation-delay($rotation-period * -$delay);
-        width: $size * 1px;
-        height: $size * 1px;
-      }
-    }
-  }
+div.orbit.orbit-2 {
+  position: absolute;
+  top: 55.8%;
+  right: 0;
+  bottom: 0;
+  left: -34%;
+  width: 168%;
+  animation: orbit-rotate 10s linear infinite;
+  animation-delay: -0.3s;
+}
+
+div.orbit.orbit-2::after {
+  width: 8px;
+  height: 8px;
+  animation-delay: -0.3s;
+}
+
+div.orbit.orbit-3 {
+  position: absolute;
+  top: 44.2%;
+  right: 0;
+  bottom: 0;
+  left: -50%;
+  width: 200%;
+  animation: orbit-rotate 10s linear infinite;
+  animation-delay: -2.3s;
+}
+
+div.orbit.orbit-3::after {
+  width: 4px;
+  height: 4px;
+  animation-delay: -2.3s;
+}
+
+div.orbit.orbit-4 {
+  position: absolute;
+  top: 42.2%;
+  right: 0;
+  bottom: 0;
+  left: -49%;
+  width: 198%;
+  animation: orbit-rotate 10s linear infinite;
+  animation-delay: -3.6s;
+}
+
+div.orbit.orbit-4::after {
+  width: 5px;
+  height: 5px;
+  animation-delay: -3.6s;
+}
+
+div.orbit.orbit-5 {
+  position: absolute;
+  top: 35.8%;
+  right: 0;
+  bottom: 0;
+  left: -39%;
+  width: 178%;
+  animation: orbit-rotate 10s linear infinite;
+  animation-delay: -7.2s;
+}
+
+div.orbit.orbit-5::after {
+  width: 6px;
+  height: 6px;
+  animation-delay: -7.2s;
+}
+
+div.orbit.orbit-6 {
+  position: absolute;
+  top: 34.6%;
+  right: 0;
+  bottom: 0;
+  left: -36%;
+  width: 172%;
+  animation: orbit-rotate 10s linear infinite;
+  animation-delay: -1.7s;
+}
+
+div.orbit.orbit-6::after {
+  width: 6px;
+  height: 6px;
+  animation-delay: -1.7s;
+}
+
+div.orbit.orbit-7 {
+  position: absolute;
+  top: 30.6%;
+  right: 0;
+  bottom: 0;
+  left: -19%;
+  width: 138%;
+  animation: orbit-rotate 10s linear infinite;
+  animation-delay: -5.6s;
+}
+
+div.orbit.orbit-7::after {
+  width: 5px;
+  height: 5px;
+  animation-delay: -5.6s;
+}
+
+div.orbit.orbit-8 {
+  position: absolute;
+  top: 26.6%;
+  right: 0;
+  bottom: 0;
+  left: 11%;
+  width: 78%;
+  animation: orbit-rotate 10s linear infinite;
+  animation-delay: -5s;
+}
+
+div.orbit.orbit-8::after {
+  width: 6px;
+  height: 6px;
+  animation-delay: -5s;
+}
+
+div.orbit.orbit-9 {
+  position: absolute;
+  top: 33%;
+  right: 0;
+  bottom: 0;
+  left: -30%;
+  width: 160%;
+  animation: orbit-rotate 10s linear infinite;
+  animation-delay: -3.4s;
+}
+
+div.orbit.orbit-9::after {
+  width: 5px;
+  height: 5px;
+  animation-delay: -3.4s;
+}
+
+div.orbit.orbit-10 {
+  position: absolute;
+  top: 41%;
+  right: 0;
+  bottom: 0;
+  left: -48%;
+  width: 196%;
+  animation: orbit-rotate 10s linear infinite;
+  animation-delay: -8.2s;
+}
+
+div.orbit.orbit-10::after {
+  width: 9px;
+  height: 9px;
+  animation-delay: -8.2s;
+}
+
+div.orbit.orbit-11 {
+  position: absolute;
+  top: 58.2%;
+  right: 0;
+  bottom: 0;
+  left: -25%;
+  width: 150%;
+  animation: orbit-rotate 10s linear infinite;
+  animation-delay: -2.2s;
+}
+
+div.orbit.orbit-11::after {
+  width: 6px;
+  height: 6px;
+  animation-delay: -2.2s;
+}
+
+div.orbit.orbit-12 {
+  position: absolute;
+  top: 59.8%;
+  right: 0;
+  bottom: 0;
+  left: -17%;
+  width: 134%;
+  animation: orbit-rotate 10s linear infinite;
+  animation-delay: -0.1s;
+}
+
+div.orbit.orbit-12::after {
+  width: 6px;
+  height: 6px;
+  animation-delay: -0.1s;
+}
+
+div.orbit.orbit-13 {
+  position: absolute;
+  top: 31.8%;
+  right: 0;
+  bottom: 0;
+  left: -26%;
+  width: 152%;
+  animation: orbit-rotate 10s linear infinite;
+  animation-delay: -8s;
+}
+
+div.orbit.orbit-13::after {
+  width: 6px;
+  height: 6px;
+  animation-delay: -8s;
+}
+
+div.orbit.orbit-14 {
+  position: absolute;
+  top: 61.8%;
+  right: 0;
+  bottom: 0;
+  left: -3%;
+  width: 106%;
+  animation: orbit-rotate 10s linear infinite;
+  animation-delay: -3.4s;
+}
+
+div.orbit.orbit-14::after {
+  width: 5px;
+  height: 5px;
+  animation-delay: -3.4s;
+}
+
+div.orbit.orbit-15 {
+  position: absolute;
+  top: 59%;
+  right: 0;
+  bottom: 0;
+  left: -21%;
+  width: 142%;
+  animation: orbit-rotate 10s linear infinite;
+  animation-delay: -0.6s;
+}
+
+div.orbit.orbit-15::after {
+  width: 8px;
+  height: 8px;
+  animation-delay: -0.6s;
+}
+
+div.orbit.orbit-16 {
+  position: absolute;
+  top: 30.6%;
+  right: 0;
+  bottom: 0;
+  left: -20%;
+  width: 140%;
+  animation: orbit-rotate 10s linear infinite;
+  animation-delay: -5s;
+}
+
+div.orbit.orbit-16::after {
+  width: 8px;
+  height: 8px;
+  animation-delay: -5s;
+}
+
+div.orbit.orbit-17 {
+  position: absolute;
+  top: 56.6%;
+  right: 0;
+  bottom: 0;
+  left: -32%;
+  width: 164%;
+  animation: orbit-rotate 10s linear infinite;
+  animation-delay: -9.6s;
+}
+
+div.orbit.orbit-17::after {
+  width: 5px;
+  height: 5px;
+  animation-delay: -9.6s;
+}
+
+div.orbit.orbit-18 {
+  position: absolute;
+  top: 29.4%;
+  right: 0;
+  bottom: 0;
+  left: -13%;
+  width: 126%;
+  animation: orbit-rotate 10s linear infinite;
+  animation-delay: -0.8s;
+}
+
+div.orbit.orbit-18::after {
+  width: 7px;
+  height: 7px;
+  animation-delay: -0.8s;
+}
+
+div.orbit.orbit-19 {
+  position: absolute;
+  top: 51%;
+  right: 0;
+  bottom: 0;
+  left: -46%;
+  width: 192%;
+  animation: orbit-rotate 10s linear infinite;
+  animation-delay: -3.2s;
+}
+
+div.orbit.orbit-19::after {
+  width: 5px;
+  height: 5px;
+  animation-delay: -3.2s;
+}
+
+div.orbit.orbit-20 {
+  position: absolute;
+  top: 37%;
+  right: 0;
+  bottom: 0;
+  left: -42%;
+  width: 184%;
+  animation: orbit-rotate 10s linear infinite;
+  animation-delay: -9.7s;
+}
+
+div.orbit.orbit-20::after {
+  width: 4px;
+  height: 4px;
+  animation-delay: -9.7s;
 }
 
 div.orbit::after {
-  @include animation(planet-rotate $rotation-period linear infinite);
   display: block;
   background-color: #fe7414;
   border-radius: 50%;
+  animation: planet-rotate 10s linear infinite;
   content: '';
 }
 
-@include keyframes(orbit-rotate) {
+@keyframes orbit-rotate {
   from {
-    @include transform(rotateY(0deg));
+    transform: rotateY(0deg);
   }
 
   to {
-    @include transform(rotateY(360deg));
+    transform: rotateY(360deg);
   }
 }
-
-@include keyframes(planet-rotate) {
+@keyframes orbit-rotate {
   from {
-    @include transform(rotateY(0deg));
+    transform: rotateY(0deg);
   }
 
   to {
-    @include transform(rotateY(-360deg));
+    transform: rotateY(360deg);
+  }
+}
+@keyframes orbit-rotate {
+  from {
+    transform: rotateY(0deg);
+  }
+
+  to {
+    transform: rotateY(360deg);
+  }
+}
+@keyframes planet-rotate {
+  from {
+    transform: rotateY(0deg);
+  }
+
+  to {
+    transform: rotateY(-360deg);
+  }
+}
+@keyframes planet-rotate {
+  from {
+    transform: rotateY(0deg);
+  }
+
+  to {
+    transform: rotateY(-360deg);
+  }
+}
+@keyframes planet-rotate {
+  from {
+    transform: rotateY(0deg);
+  }
+
+  to {
+    transform: rotateY(-360deg);
   }
 }
 
-.globe {
+.loading__globe {
   position: relative;
   top: 0%;
   left: 0%;
-  //transform: translate(-50%, -50%);
   width: 100px;
   height: 100px;
   overflow: hidden;
   background-color: #35424a;
-  //border: 2px solid #8bc34a;
   border-radius: 50%;
+}
 
-  &::after {
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: block;
-    width: 100%;
-    height: 100%;
-    background-color: transparent;
+.loading__globe::after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  border-radius: 100%;
+  box-shadow: inset 16px 0 40px 3px black,
+    inset -3px 0 6px 2px rgba(255, 255, 255, 0.2);
+  content: '';
+}
 
-    border-radius: 100%;
-    box-shadow: inset 16px 0 40px 3px rgb(0, 0, 0),
-      inset -3px 0 6px 2px rgba(255, 255, 255, 0.2);
-    content: '';
-  }
-
-  .svg {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-image: url('https://assets.codepen.io/1465055/planet+rotating.svg');
-    background-repeat: repeat-x;
-    background-size: auto 100%;
-    animation: rotation 10s linear 0s infinite;
-  }
+.loading__globe .svg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: url('https://assets.codepen.io/1465055/planet+rotating.svg');
+  background-repeat: repeat-x;
+  background-size: auto 100%;
+  animation: rotation 10s linear 0s infinite;
 }
 
 @keyframes rotation {
@@ -180,22 +497,19 @@ div.orbit::after {
 .counter {
   position: relative;
   top: 0;
-
-  //align-items: center;
   z-index: -10;
   display: flex;
   width: 300px;
   height: 2px;
   margin: 0 auto;
   background-color: rgba(255, 255, 255, 0.5);
-
-  hr {
-    width: 100%;
-    max-width: 300px;
-    height: 2px;
-    margin: 0;
-    background: white;
-    border: none;
-  }
 }
-/* stylelint-enable */
+
+.counter hr {
+  width: 100%;
+  max-width: 300px;
+  height: 2px;
+  margin: 0;
+  background: white;
+  border: none;
+}

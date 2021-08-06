@@ -32,4 +32,7 @@
     </div>
   </div>
 </template>
-<script></script>
+
+<style scoped>
+@include '../assets/css/components/loading';
+</style>
