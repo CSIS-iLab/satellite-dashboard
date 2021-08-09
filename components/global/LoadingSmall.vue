@@ -33,6 +33,6 @@
   </div>
 </template>
 
-<style scoped>
-@include '../assets/css/components/loading';
+<style scoped lang="scss">
+@import '@/assets/css/components/loading-sm';
 </style>

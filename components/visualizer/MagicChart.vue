@@ -28,8 +28,8 @@
           </ul>
         </div>
       </div>
-      <div v-else class="loading">
-        <div class="triple-spinner" />
+      <div v-else>
+        <LoadingSmall />
         <div class="loading-text">Loading satellite data...</div>
       </div>
     </template>
@@ -66,13 +66,15 @@
 <script>
 import { mapState, mapActions, mapMutations } from 'vuex'
 
-import Modal from '~/components/global/Modal'
-import Icon from '~/components/global/Icon'
+import Modal from '@/components/global/Modal'
+import Icon from '@/components/global/Icon'
+import LoadingSmall from '@/components/global/LoadingSmall'
 
 export default {
   components: {
     Modal,
-    Icon
+    Icon,
+    LoadingSmall
   },
   data() {
     return {
@@ -326,6 +328,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~/assets/css/components/magic-chart';
-@import '~/assets/css/components/loading';
+@import '@/assets/css/components/magic-chart';
 </style>
