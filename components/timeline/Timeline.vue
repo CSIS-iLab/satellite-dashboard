@@ -82,6 +82,7 @@
           v-model="chosenTimescale"
           :clearable="false"
           :options="timescales"
+          :searchable="false"
           @input="selectTimescale"
         >
           <template #open-indicator="{ attributes }">
