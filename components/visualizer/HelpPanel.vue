@@ -220,7 +220,7 @@
                 </li>
                 <li>
                   <strong>Changing the date range on the timeline:</strong>
-                  There are two ways you can update the the range of dates in
+                  There are two ways you can update the range of dates in
                   view on the timeline:
                   <ol>
                     <li>
