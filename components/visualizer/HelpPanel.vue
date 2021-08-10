@@ -202,7 +202,7 @@
               </p>
               <p>
                 The timeline only shows a certain period of time. By default, it
-                only shows one week, starting on the current day.
+                only shows one week, starting on the current day and extending 7 days into the future.
               </p>
               <ul class="help__list help__list--inline" role="list">
                 <li>
