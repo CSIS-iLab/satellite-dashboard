@@ -183,8 +183,6 @@ export const actions = {
 
       /**
        * Todo:
-       * Show manual overrides in ACF fields
-       * Match country with spreadsheet
        * Dynamically load in status & country spreadsheets
        */
 
@@ -196,6 +194,7 @@ export const actions = {
           post_id: id,
           catalog_id: acf.catalog_id,
           ...ag_meta,
+          alternate_name: acf.name,
           comments: acf.comments
         }))
         .forEach((sat) => {
