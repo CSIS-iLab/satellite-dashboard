@@ -248,5 +248,6 @@
 <symbol id="icon-share" viewBox="0 0 12 12" fill="currentColor">
 <path d="M6.77583 3.87698V1.211L9.67527 4.11044L12 6.43517L9.634 8.40693L6.77583 10.7889V8.18025C1.75802 7.80204 3.8147e-06 10.7058 3.8147e-06 10.7058C3.8147e-06 8.89664 0.149072 7.01912 1.57138 5.59743C3.22468 3.94351 5.61902 3.82647 6.77583 3.87698Z" />
 </symbol>
+<symbol id="icon-playhead" viewBox="0 0 10 18" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M4.232 5v12.25h1.5V5l3.75-5h-9l3.75 5z" fill="#FE7414"/></symbol>
 </defs>
 </svg>
