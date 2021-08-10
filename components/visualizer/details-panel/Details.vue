@@ -122,7 +122,7 @@ export default {
       info: {
         basic: [
           {
-            value: 'Name',
+            value: 'alternate_name',
             label: 'Alternate Name(s)',
             tooltip: 'alternate-name'
           },
