@@ -20,7 +20,7 @@
         :id="detailedSatellite"
         :satellite="detailedSatelliteInfo"
       />
-      <UpdatePanel />
+      <UpdatesPanel />
       <MagicChart v-if="showMagicChart" />
     </template>
   </div>
@@ -31,7 +31,7 @@ import { mapActions, mapState } from 'vuex'
 import CesiumViewer from '~/components/visualizer/CesiumViewer'
 import PanelLeft from '~/components/visualizer/PanelLeft'
 import Timeline from '~/components/timeline/Timeline'
-import UpdatePanel from '~/components/visualizer/UpdatesPanel'
+import UpdatesPanel from '~/components/visualizer/UpdatesPanel'
 import MagicChart from '~/components/visualizer/MagicChart'
 
 export default {
@@ -41,7 +41,7 @@ export default {
     DetailsPanel: () => import('~/components/visualizer/details-panel/Panel'),
     PanelLeft,
     Timeline,
-    UpdatePanel,
+    UpdatesPanel,
     MagicChart
   },
   data() {
