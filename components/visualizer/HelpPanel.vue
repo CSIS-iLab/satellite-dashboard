@@ -229,7 +229,7 @@
                       timeline.
                     </li>
                     <li>
-                      <strong>Change the start date:</strong> To change scale’s
+                      <strong>Change the start date:</strong> To change the scale’s
                       the starting date, click the
                       <Icon id="calendar" name="calendar" /> date picker.
                     </li>
