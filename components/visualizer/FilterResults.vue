@@ -71,7 +71,7 @@
               :on-click="(e) => highlightOrbit(e, props.row.catalog_id)"
               aria-label="View Orbit"
             >
-              <Icon id="orbit" name="orbit" focusable="false" />
+              <Icon id="target" name="target" focusable="false" />
             </Button>
             <Button
               v-if="checkItemFocusedState(props.row.catalog_id)"
