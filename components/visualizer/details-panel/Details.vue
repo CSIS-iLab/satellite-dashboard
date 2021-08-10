@@ -78,11 +78,11 @@
     </p>
     <!-- <hr />
     <h3>ITU Filings</h3> -->
-    <template v-if="satellite.acf.comments">
+    <template v-if="satellite.comments">
       <hr />
       <h3>Comments</h3>
       <ul
-        v-for="comment in satellite.acf.comments"
+        v-for="comment in satellite.comments"
         :key="comment.date"
         class="details-panel__comments"
         role="list"
