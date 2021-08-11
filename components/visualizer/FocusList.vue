@@ -56,6 +56,7 @@
         :key="item"
         class="sat__basic sat__basic--status"
         :data-status="satellites[item].Status"
+        @click="(e) => showSatelliteDetails(e, item)"
       >
         <div class="sat__name">
           {{ satellites[item].Name }}
@@ -68,13 +69,9 @@
           *This object is not yet in orbit
         </div>
         <div class="sat__actions">
-          <Button
-            v-if="!isEditable"
-            aria-label="Show Satellite Details"
-            :on-click="(e) => showSatelliteDetails(e, item)"
-          >
+          <div v-if="!isEditable">
             <Icon id="info" name="info" focusable="false" />
-          </Button>
+          </div>
           <Checkbox
             v-if="isEditable"
             :id="item"
