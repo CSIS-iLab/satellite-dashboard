@@ -202,7 +202,8 @@
               </p>
               <p>
                 The timeline only shows a certain period of time. By default, it
-                only shows one week, starting on the current day and extending 7 days into the future.
+                only shows one week, starting on the current day and extending 7
+                days into the future.
               </p>
               <ul class="help__list help__list--inline" role="list">
                 <li>
@@ -220,8 +221,8 @@
                 </li>
                 <li>
                   <strong>Changing the date range on the timeline:</strong>
-                  There are two ways you can update the range of dates in
-                  view on the timeline:
+                  There are two ways you can update the range of dates in view
+                  on the timeline:
                   <ol>
                     <li>
                       <strong>Change the scale:</strong> Update the “scale”
@@ -229,8 +230,8 @@
                       timeline.
                     </li>
                     <li>
-                      <strong>Change the start date:</strong> To change the scale’s
-                      starting date, click the
+                      <strong>Change the start date:</strong> To change the
+                      scale’s starting date, click the
                       <Icon id="calendar" name="calendar" /> date picker.
                     </li>
                   </ol>
