@@ -183,6 +183,7 @@ export default {
       const { viewer, Cesium } = cesiumInstance
 
       const timeline = viewer.timeline
+      viewer.clock.multiplier = this.chosenPlaybackSpeed.value
 
       /**
        *
