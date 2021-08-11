@@ -15,7 +15,7 @@
             :class="{ 'tooltip__trigger--text': !showInfo }"
           >
             <slot></slot>
-            <Icon v-if="showInfo" id="info" name="info" />
+            <Icon v-if="showInfo" id="info" name="help-outline" />
           </button>
         </template>
 
