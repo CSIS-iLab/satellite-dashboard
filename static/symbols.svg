@@ -4,6 +4,7 @@
 <title>arrow-up</title>
 <path d="M15.286 17.893h-4.236v-13.862l3.804 3.768 1.492-1.482-6.354-6.317-6.354 6.317 1.492 1.482 3.804-3.768v15.969h6.354v-2.107z"></path>
 </symbol>
+<symbol id="icon-arrow-down" viewBox="3 11 10 6" fill="currentColor"><path d="M4 11l4 4 4-4H4z"/></symbol>
 <symbol id="icon-boomarang-left" viewBox="0 0 20 20">
 <title>boomarang-left</title>
 <path   stroke-linejoin="miter" stroke-linecap="butt" stroke-miterlimit="4" stroke-width="1" d="M13.304 14.486l1.047 2.64-8.744-7.351c-0.238-0.2-0.238-0.566 0-0.765l8.744-7.351-3.066 7.734 2.019 5.093z"></path>

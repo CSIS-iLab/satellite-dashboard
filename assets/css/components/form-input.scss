@@ -151,21 +151,8 @@
         grid-row: 1;
       }
 
-      .icon-minus {
-        visibility: hidden;
-        opacity: 0;
-      }
-    }
-
-    &--open {
-      .icon-plus {
-        visibility: hidden;
-        opacity: 0;
-      }
-
-      .icon-minus {
-        visibility: visible;
-        opacity: 1;
+      .icon-arrow-down {
+        color: $color-white-150;
       }
     }
   }
