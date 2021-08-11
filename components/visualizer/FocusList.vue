@@ -40,7 +40,7 @@
         Remove
       </Button>
     </div>
-    <div v-else class="focus-list__heading">
+    <div v-else-if="focusedSatellitesCount > 0" class="focus-list__heading">
       <strong>{{ focusedSatellitesCount }} objects saved</strong>
       <Button
         class="btn--contained btn--icon btn--edit"
