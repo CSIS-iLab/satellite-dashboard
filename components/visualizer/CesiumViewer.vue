@@ -144,9 +144,9 @@ export default {
       },
       focussedSatellites: new Set([]),
       highlightedEntities: new Set([]),
-      activeOrbitPaths: [],
       entityLabel: null,
-      labelContainer: null
+      labelContainer: null,
+      lastSelectedEntity: null
     }
   },
   computed: {
@@ -165,7 +165,6 @@ export default {
   watch: {
     satelliteOrbits: 'processNewData',
     visibleSatellites: 'toggleObjectVisibility',
-    selectedDate: 'mapHighlightedOrbits',
     '$route.query.time': 'handleTimeQuery',
     '$route.query.satids': 'handleSatIdChange'
   },
@@ -244,13 +243,6 @@ export default {
         this.highlightedEntities.delete(entity)
       })
     },
-    mapHighlightedOrbits() {
-      this.activeOrbitPaths = viewer
-        ? viewer.entities.values
-            .filter((s) => s.path && s.path.show._value === true)
-            .map((s) => s.id)
-        : []
-    },
     ready(cesiumInstance) {
       console.log('is ready')
       // Set up the Cesium Viewer
@@ -285,8 +277,6 @@ export default {
       this.entityLabel.classList.add('cesium__entity-label')
 
       // let highlightedEntities = new Set()
-
-      let lastSelectedEntity = null
 
       // Every animation frame, update the HTML element position from the entity.
       viewer.clock.onTick.addEventListener((clock) => {
@@ -342,7 +332,7 @@ export default {
           const entity = Cesium.defaultValue(picked.id, picked.primitive.id)
           if (entity instanceof Cesium.Entity) {
             if (this.highlightedEntities.has(entity)) {
-              lastSelectedEntity = entity
+              this.lastSelectedEntity = entity
               if (!viewer.selectedEntity !== entity) {
                 viewer.selectedEntity =
                   viewer.selectedEntity === null ? false : null
@@ -350,7 +340,7 @@ export default {
             } else {
               // Update highlightedEntries & add label when the selectedEntity changes to make behavior consistent across viewer & buttons on panels.
               //highlightedEntities.add(entity)
-              lastSelectedEntity = null
+              this.lastSelectedEntity = null
               viewer.selectedEntity = entity
             }
           }
@@ -366,7 +356,7 @@ export default {
 
       viewer.selectedEntityChanged.addEventListener((entity) => {
         if (!entity) {
-          this.handleHighlights(lastSelectedEntity)
+          this.handleHighlights(this.lastSelectedEntity)
           if (this.highlightedEntities.size === 0) {
             this.zoomReset()
             viewer.trackedEntity = null
@@ -393,7 +383,7 @@ export default {
           destination: cameraPosition
         })
         this.showSatelliteDetails(entity.id)
-        lastSelectedEntity = entity
+        this.lastSelectedEntity = entity
       })
 
       /* This event listener adjusts the camera position every frame
@@ -467,15 +457,23 @@ export default {
       })
     },
     displayObjects(Cesium, viewer) {
+      const existingOrbits = viewer.entities.values
+        .filter((s) => s.path && s.path.show._value)
+        .map((s) => s.id)
+      this.clearHighlightedEntities()
+      this.lastSelectedEntity = null
+      viewer.trackedEntity = null
+      viewer.selectedEntity = null
       let epjd = new Cesium.JulianDate()
       viewer.entities.removeAll()
 
-      // For each object, calculate its position & orbit
-      // Calculations pulled from: https://github.com/ut-astria/AstriaGraph/blob/master/main.js & https://github.com/ut-astria/AstriaGraph/blob/master/celemech.js
-      const focussedEntities = []
       const focussedSatelliteIds = this.$route.query.satids
         ? new Set(this.$route.query.satids.split(','))
-        : new Set(this.activeOrbitPaths)
+        : new Set(existingOrbits)
+      const focussedEntities = []
+
+      // For each object, calculate its position & orbit
+      // Calculations pulled from: https://github.com/ut-astria/AstriaGraph/blob/master/main.js & https://github.com/ut-astria/AstriaGraph/blob/master/celemech.js
       this.visibleSatellites.forEach((sat, i) => {
         if (!this.satelliteOrbits[sat]) {
           return
@@ -513,7 +511,7 @@ export default {
             resolution: 400,
             material: entityColors[Status].path,
             width: 4,
-            show: false
+            show: existingOrbits.includes(catalog_id)
           }
         })
         if (focussedSatelliteIds.has(catalog_id)) {
