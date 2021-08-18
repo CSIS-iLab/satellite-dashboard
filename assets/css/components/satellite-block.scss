@@ -26,6 +26,15 @@
       column-gap: var(--marker-gap, rem(16));
       row-gap: rem(2);
 
+      &-simple {
+        grid-template-columns: max-content auto;
+
+        /* stylelint-disable-next-line */
+        .filter-results & {
+          grid-template-columns: max-content minmax(auto, 128px);
+        }
+      }
+
       &::before {
         content: '';
         display: block;
