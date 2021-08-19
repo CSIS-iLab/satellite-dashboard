@@ -41,7 +41,7 @@
         <template slot="table-column" slot-scope="props">
           <div
             v-if="props.column.field == 'Name'"
-            class="sat__basic sat__basic--status"
+            class="sat__basic sat__basic--status sat__basic--status-simple"
           >
             <div class="sat__name">
               {{ props.column.label }}
@@ -54,7 +54,7 @@
         <template slot="table-row" slot-scope="props">
           <div v-if="props.column.field == 'Name'">
             <div
-              class="sat__basic sat__basic--status"
+              class="sat__basic sat__basic--status sat__basic--status-simple"
               :data-status="props.row.Status"
             >
               <div class="sat__name">

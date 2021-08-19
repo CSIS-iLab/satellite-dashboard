@@ -18,7 +18,7 @@
         <dt class="visually-hidden">Status</dt>
         <dd>
           <div
-            class="sat__basic sat__basic--status"
+            class="sat__basic sat__basic--status sat__basic--status-simple"
             :data-status="satellite.Status"
           >
             {{ statusTypes[satellite.Status].label }}
