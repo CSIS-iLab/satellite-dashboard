@@ -69,7 +69,10 @@
           *This object is not yet in orbit
         </div>
         <div class="sat__actions">
-          <div v-if="!isEditable">
+          <div
+            v-if="!isEditable"
+            @click.stop="(e) => showSatelliteDetails(e, item)"
+          >
             <Icon id="info" name="info" focusable="false" />
           </div>
           <Checkbox
