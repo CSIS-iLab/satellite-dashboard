@@ -34,8 +34,7 @@
             >
               <template #open-indicator="{ attributes }">
                 <span v-bind="attributes">
-                  <Icon id="plus" name="plus" />
-                  <Icon id="minus" name="minus" />
+                  <Icon id="arrow-down" name="arrow-down" />
                 </span>
               </template>
               <template #search="{ attributes, events }">
@@ -68,7 +67,6 @@
             <template #open-indicator="{ attributes }">
               <span v-bind="attributes">
                 <Icon id="plus" name="plus" />
-                <Icon id="minus" name="minus" />
               </span>
             </template>
           </v-select>

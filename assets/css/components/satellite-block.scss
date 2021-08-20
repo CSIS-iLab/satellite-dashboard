@@ -17,6 +17,7 @@
       &:hover {
         background: $color-slate-300;
         @include shadow(sm);
+        cursor: pointer;
       }
     }
 
@@ -25,6 +26,15 @@
       grid-template-columns: max-content 2fr max-content max-content;
       column-gap: var(--marker-gap, rem(16));
       row-gap: rem(2);
+
+      &-simple {
+        grid-template-columns: max-content auto;
+
+        /* stylelint-disable-next-line */
+        .filter-results & {
+          grid-template-columns: max-content minmax(auto, 128px);
+        }
+      }
 
       &::before {
         content: '';
@@ -83,7 +93,7 @@
       grid-row: 1 / span 2;
     }
 
-    button {
+    div {
       padding-right: rem(4);
       padding-left: rem(4);
       @include font-size(18px);

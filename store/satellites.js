@@ -207,8 +207,6 @@ export const actions = {
 
       /**
        * Todo:
-       * Show manual overrides in ACF fields
-       * Match country with spreadsheet
        * Dynamically load in status & country spreadsheets
        */
 
@@ -219,11 +217,12 @@ export const actions = {
         .map(({ id, ag_meta, acf }) => ({
           post_id: id,
           catalog_id: acf.catalog_id,
-          acf,
-          ...ag_meta
+          ...ag_meta,
+          alternate_name: acf.name,
+          comments: acf.comments
         }))
         .forEach((sat) => {
-          let status_type = Types[sat.acf.catalog_id]?.type || 'TBA'
+          let status_type = Types[sat.catalog_id]?.type || 'TBA'
 
           if (status_type == 'payload') {
             if (sat.Status == 'active') {
@@ -253,7 +252,7 @@ export const actions = {
             })
           })
 
-          items[sat.acf.catalog_id] = {
+          items[sat.catalog_id] = {
             ...sat,
             countryOfLaunch,
             countryOfLaunchIds,
@@ -261,7 +260,7 @@ export const actions = {
           }
 
           // By default all items are visible!
-          visibleItems.push(sat.acf.catalog_id)
+          visibleItems.push(sat.catalog_id)
         })
 
       countriesOfLaunch = [...countriesOfLaunch].sort((a, b) =>

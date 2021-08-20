@@ -88,9 +88,19 @@ export default {
   },
   watch: {
     activeTab(newTab) {
+      // enables panel content transition
+      let tabs = document.querySelectorAll('.ak-vt__panel.panel--left')
+
+      tabs.forEach((tab) => {
+        if (newTab === '') {
+          tab.style.display = 'block'
+        } else {
+          tab.style.display = ''
+        }
+      })
+
       // Switch Visible Objects based on active tab
       if (!newTab || newTab == this.prevTab) {
-        console.log("don't change current visible")
         return
       }
 
@@ -99,12 +109,10 @@ export default {
       }
 
       if (this.activeTab === 'filters' && this.activeFiltersCount > 0) {
-        console.log('the filter list')
         this.updateVisibleSatellites(this.filteredSatellites)
       }
 
       if (this.activeTab === 'list' && this.focusedSatellitesCount > 0) {
-        console.log('the focus list')
         this.updateVisibleSatellites([...this.focusedSatellites])
       }
     }
@@ -114,10 +122,7 @@ export default {
       this.resetSatelliteState()
       this.resetFiltersState()
       this.getOrbits()
-
-      if (!process.server) {
-        history.replaceState({}, null, window.origin)
-      }
+      this.$router.push({ path: '/' })
     },
     ...mapMutations({
       updateVisibleSatellites: 'satellites/updateVisibleSatellites',

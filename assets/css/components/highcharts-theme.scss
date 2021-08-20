@@ -44,6 +44,10 @@
   fill: $color-white-180;
 }
 
+.highcharts-legend-item:hover text {
+  fill: $color-white-180;
+}
+
 .highcharts-tooltip-box {
   opacity: 0.8;
   fill: $color-slate-395;

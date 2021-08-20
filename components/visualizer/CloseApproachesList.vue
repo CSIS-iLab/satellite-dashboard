@@ -228,10 +228,11 @@ export default {
     updateShowMagicChart(objects) {
       const payload = {
         ids: [...objects.map((o) => o.catalog_id), this.id],
-        names: [...objects.map((o) => o.Name), this.name]
+        names: [...objects.map((o) => o.Name), this.name],
+        zoom: '1wk'
       }
-      this.showMagicChart = !this.showMagicChart
       this.updateLongitudeSatellites(payload)
+      this.showMagicChart = !this.showMagicChart
     },
     ...mapMutations({
       updateFocusedSatellites: 'satellites/updateFocusedSatellites',

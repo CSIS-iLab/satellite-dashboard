@@ -107,7 +107,7 @@ export default {
   data() {
     return {
       activeTab: 'events',
-      panelIsOpen: false,
+      panelIsOpen: true,
       events: []
     }
   },

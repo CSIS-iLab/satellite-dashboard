@@ -77,15 +77,55 @@ export default {
       sourceInfo: [],
       chartOptions: {
         title: { text: 'Historical Longitudes' },
-        chart: { styledMode: true, height: '80%' },
+        chart: {
+          styledMode: true,
+          height: '85%',
+          events: {}
+        },
         plotOptions: {
           turboThreshold: 15000,
           series: { showInNavigator: true }
         },
-        exporting: { enabled: false, allowHTML: true },
+        exporting: {
+          enabled: false,
+          allowHTML: true,
+          sourceWidth: 600,
+          sourceHeight: 400,
+          chartOptions: {
+            chart: {
+              height: null,
+              spacing: [10, 10, 15, 10],
+              events: {
+                load: function() {
+                  this.container.classList.add('highchart-export')
+                },
+                render: function() {
+                  this.renderer
+                    .image(
+                      'https://satellitedashboard.org/satellite-dashboard-logo-black.svg',
+                      395,
+                      375,
+                      200,
+                      19
+                    )
+                    .add()
+                }
+              }
+            },
+            rangeSelector: {
+              enabled: false
+            },
+            navigator: {
+              enabled: false
+            }
+          }
+        },
         credits: { enabled: false },
         legend: {
-          enabled: true
+          enabled: true,
+          labelFormatter: function() {
+            return `${this.name}<br /><span class="legend-id">${this.options.catalog_id}</span>`
+          }
         },
         xAxis: { title: null },
         yAxis: {
@@ -98,24 +138,34 @@ export default {
         },
         tooltip: {
           formatter: function() {
-            return this.points.reduce(
-              function(s, point, i) {
-                return `${s}<span class="tooltip-line-color" style="color: ${
-                  i ? 'rgba(254, 116, 20,1)' : 'rgba(82, 175, 225, 1)'
-                }">–</span><span class="tooltip-y">
+            return this.points
+              .map((point, i) => {
+                point.color =
+                  i % 2 ? 'rgba(82, 175, 225, 1)' : 'rgba(254, 116, 20,1)'
+                return point
+              })
+              .sort((a, b) => a.y < b.y)
+              .reduce(
+                function(arr, point, i) {
+                  arr.push(`<span class="tooltip-line-color" style="color: ${
+                    point.color
+                  }">–</span><span class="tooltip-y">
                   ${Math.abs(point.y).toFixed(2)}°${
-                  point.y < 0 ? 'W' : 'E'
-                }</span>`
-              },
-              '<b>' +
-                new Intl.DateTimeFormat('en-US', {
-                  year: 'numeric',
-                  day: 'numeric',
-                  month: 'short'
-                }).format(new Date(this.x)) +
-                '</b>' +
-                '<br/>'
-            )
+                    point.y < 0 ? 'W' : 'E'
+                  }</span>`)
+                  return arr
+                },
+                [
+                  `<b>
+                    ${new Intl.DateTimeFormat('en-US', {
+                      year: 'numeric',
+                      day: 'numeric',
+                      month: 'short'
+                    }).format(new Date(this.x))}
+                    </b>`
+                ]
+              )
+              .join('<br />')
           },
           split: false,
           shared: true
@@ -134,9 +184,16 @@ export default {
           allButtonsEnabled: false,
           buttons: [
             {
-              type: 'ytd',
-              text: 'YTD',
-              title: 'View year to date'
+              type: 'week',
+              count: 1,
+              text: 'Week',
+              title: 'View last week'
+            },
+            {
+              type: 'month',
+              count: 1,
+              text: 'Month',
+              title: 'View last month'
             },
             {
               type: 'year',
@@ -157,7 +214,8 @@ export default {
   },
   computed: {
     ...mapState({
-      showMagicChart: (state) => state.layout.showMagicChart
+      showMagicChart: (state) => state.layout.showMagicChart,
+      zoom: (state) => state.satellites.longitudeSatellites.zoom
     })
   },
   async created() {
@@ -170,8 +228,7 @@ export default {
     exportImg(type) {
       this.$refs.chart.chart.exportChart({
         type,
-        async: true,
-        width: 1000
+        async: false
       })
     },
     async longitudes() {
@@ -183,7 +240,7 @@ export default {
 
       // shape historical lines
       historical_longitudes = historical_longitudes.map((l, i) => {
-        l.name = `${names[i]}<br /><span class="legend-id">${l.catalog_id}</span>`
+        l.name = names[i]
 
         this.chartOptions.series.push(l)
         return l
@@ -239,6 +296,16 @@ export default {
         }
       })
 
+      if (this.zoom == '1wk') {
+        this.chartOptions.chart.events.load = function() {
+          // set zoom to last week
+          const xAxis = this.xAxis[0]
+          const oneWeekAgo = new Date().getTime() - 1000 * 60 * 60 * 24 * 7
+          const start = this.series[0].xData.find((i) => i > oneWeekAgo)
+          const end = this.series[0].xData.slice(-1)[0]
+          xAxis.setExtremes(start, end)
+        }
+      }
       this.dataLoaded = true
     },
     ...mapActions({

@@ -40,7 +40,7 @@
         Remove
       </Button>
     </div>
-    <div v-else class="focus-list__heading">
+    <div v-else-if="focusedSatellitesCount > 0" class="focus-list__heading">
       <strong>{{ focusedSatellitesCount }} objects saved</strong>
       <Button
         class="btn--contained btn--icon btn--edit"
@@ -56,6 +56,7 @@
         :key="item"
         class="sat__basic sat__basic--status"
         :data-status="satellites[item].Status"
+        @click="(e) => showSatelliteDetails(e, item)"
       >
         <div class="sat__name">
           {{ satellites[item].Name }}
@@ -71,7 +72,7 @@
           <Button
             v-if="!isEditable"
             aria-label="Show Satellite Details"
-            :on-click="(e) => showSatelliteDetails(e, item)"
+            @click.stop="(e) => showSatelliteDetails(e, item)"
           >
             <Icon id="info" name="info" focusable="false" />
           </Button>
