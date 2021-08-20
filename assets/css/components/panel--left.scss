@@ -75,7 +75,7 @@
         drop-shadow(0 0 1px rgba(0, 0, 0, 0.44));
       transition: background 0.3s ease-in-out;
 
-      &:hover {
+      &[aria-selected='false']:hover {
         --tab-bg: #{$color-slate-400} !important;
         --tab-cut-out: invert(9%) sepia(9%) saturate(1146%) hue-rotate(169deg)
           brightness(92%) contrast(90%) !important;
