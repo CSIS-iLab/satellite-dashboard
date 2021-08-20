@@ -71,6 +71,7 @@
         <div class="sat__actions">
           <Button
             v-if="!isEditable"
+            aria-label="Show Satellite Details"
             @click.stop="(e) => showSatelliteDetails(e, item)"
           >
             <Icon id="info" name="info" focusable="false" />
