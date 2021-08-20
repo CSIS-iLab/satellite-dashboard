@@ -8,6 +8,7 @@
         interactive-border="4"
         distance="12"
         arrow
+        follow-cursor="true"
       >
         <template v-slot:trigger>
           <button
