@@ -33,12 +33,6 @@
               :filter-by="filterByTerm"
               @input="updateSearchTerm"
             >
-              <template #open-indicator="{ attributes }">
-                <span v-bind="attributes">
-                  <Icon id="plus" name="plus" />
-                  <Icon id="minus" name="minus" />
-                </span>
-              </template>
               <template #option="{ label }">
                 <Icon id="check" name="check" />{{ label }}
               </template>
@@ -275,7 +269,7 @@ export default {
           let term = `${(catalog_id + nameLowerCase).replace(/\s/g, '')}`
           return {
             value: catalog_id,
-            label: Name || 'Test',
+            label: Name,
             term
           }
         })

@@ -53,7 +53,8 @@ $today-color: $color-white-180;
         color: $color-white-130;
       }
 
-      &.in-range {
+      &.in-range,
+      &.hover-in-range {
         background: $color-orange-140;
       }
     }
