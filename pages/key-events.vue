@@ -33,12 +33,6 @@
               :filter-by="filterByTerm"
               @input="updateSearchTerm"
             >
-              <template #open-indicator="{ attributes }">
-                <span v-bind="attributes">
-                  <Icon id="plus" name="plus" />
-                  <Icon id="minus" name="minus" />
-                </span>
-              </template>
               <template #option="{ label }">
                 <Icon id="check" name="check" />{{ label }}
               </template>

@@ -32,6 +32,10 @@
       justify-content: flex-end;
       margin-top: rem(8);
     }
+
+    .vs__actions {
+      display: none;
+    }
   }
 
   &__date {
