@@ -269,7 +269,7 @@ export default {
           let term = `${(catalog_id + nameLowerCase).replace(/\s/g, '')}`
           return {
             value: catalog_id,
-            label: Name || 'Test',
+            label: Name,
             term
           }
         })
