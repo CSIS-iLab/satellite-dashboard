@@ -1,0 +1,52 @@
+.vgt-table th:first-of-type div {
+  margin-left: rem(16);
+}
+
+.vgt-table th:last-of-type div {
+  margin-right: rem(16);
+}
+
+.itu {
+  &__basic {
+    @extend %font-ui-text-sm-oxygen;
+    color: $color-white-160;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  &__longitude {
+    @extend %font-ui-text-lg-oxygen;
+    margin-left: rem(16);
+    color: $color-white-180;
+  }
+
+  &__country {
+    @extend %font-ui-text-base-oxygen;
+    color: $color-white-180;
+  }
+
+  &__bands {
+    @extend %font-ui-text-sm-oxygen;
+    color: $color-white-180;
+  }
+
+  &__link {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    margin-right: rem(16);
+
+    svg {
+      position: relative;
+      top: 3px;
+    }
+
+    a {
+      color: $color-orangedull-100;
+    }
+
+    &:hover {
+      color: $color-white-180;
+    }
+  }
+}
