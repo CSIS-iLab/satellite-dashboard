@@ -18,7 +18,7 @@
         <dt class="visually-hidden">Status</dt>
         <dd>
           <div
-            class="sat__basic sat__basic--status"
+            class="sat__basic sat__basic--status sat__basic--status-simple"
             :data-status="satellite.Status"
           >
             {{ statusTypes[satellite.Status].label }}
@@ -76,8 +76,50 @@
     <p v-else class="details-panel__small-desc">
       This object is not yet in orbit.
     </p>
-    <!-- <hr />
-    <h3>ITU Filings</h3> -->
+    <hr />
+    <h3>Nearby ITU Filings</h3>
+    <p class="details-panel__small-desc">
+      This list includes ITU filings near
+      {{ orbitalElements.Longitude.label }}.
+    </p>
+    <vue-good-table
+      v-if="ITUFilings.length"
+      :rows="ITUFilings"
+      :columns="ITUColumns"
+      style-class="vgt-table striped"
+      :sort-options="{
+        enabled: false
+      }"
+    >
+      <template slot="table-column" slot-scope="props">
+        <div class="itu__basic">
+          {{ props.column.label }}
+        </div>
+      </template>
+      <template slot="table-row" slot-scope="props">
+        <span v-if="props.column.field == 'longitude'" class="itu__longitude">
+          {{ formatLongitude(props.row.longitude) }}
+        </span>
+        <span v-else-if="props.column.field == 'country'" class="itu__country">
+          {{ props.row.country }}
+        </span>
+        <span v-else-if="props.column.field == 'bands'" class="itu__bands">
+          {{ props.row.bands }}
+        </span>
+        <span v-else-if="props.column.field == 'link'" class="itu__link">
+          <a
+            :href="props.row.link"
+            target="_blank"
+            aria-label="View ITU Filing"
+          >
+            <Icon id="link" name="external-link" focusable="false" />
+          </a>
+        </span>
+      </template>
+    </vue-good-table>
+    <p v-else class="details-panel__no-itu">
+      No ITU Filings available for this satellite.
+    </p>
     <template v-if="satellite.comments">
       <hr />
       <h3>Comments</h3>
@@ -99,11 +141,15 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
+import Icon from '~/components/global/Icon.vue'
 import timeEventsProvider from '../../../services/time-events'
 const timeEvents = timeEventsProvider()
 
 export default {
+  components: {
+    Icon
+  },
   props: {
     id: {
       type: String,
@@ -205,7 +251,16 @@ export default {
       },
       earthRadius: 6378136.3, // m
       mu: 3.986004415e14, // m^3/s^2,
-      elementIndex: 0
+      elementIndex: 0,
+      ITUColumns: [
+        {
+          label: 'Long.',
+          field: 'longitude'
+        },
+        { label: 'Co.', field: 'country' },
+        { label: 'Bands', field: 'bands' },
+        { label: 'Link', field: 'link' }
+      ]
     }
   },
   computed: {
@@ -323,9 +378,15 @@ export default {
         : this.satelliteAllOrbits.length - 1
       return this.formatDate(this.satelliteAllOrbits[index].epoch)
     },
+    ITUFilings() {
+      return this.nearbyITU(this.orbitalElements.Longitude.degrees)
+    },
     ...mapState({
       orbits: (state) => state.satellites.orbits,
       statusTypes: (state) => state.satellites.statusTypes
+    }),
+    ...mapGetters({
+      nearbyITU: 'satellites/ITUDataNearLongitude'
     })
   },
   mounted() {
@@ -385,9 +446,15 @@ export default {
         minimumFractionDigits: minDecimals,
         maximumFractionDigits: minDecimals
       })
+    },
+    formatLongitude(longitude) {
+      return `${Math.abs(longitude)}°${longitude < 0 ? 'W' : 'E'}`
     }
   }
 }
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+@import '../assets/css/components/vgt-table';
+@import '../assets/css/components/itu-block';
+</style>

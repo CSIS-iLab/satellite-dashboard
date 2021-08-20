@@ -116,6 +116,11 @@
       @extend %font-ui-text-sm-oxygen;
     }
   }
+
+  &__no-itu {
+    color: $color-white-180;
+    @extend %font-ui-text-lg-oxygen;
+  }
 }
 
 .details-details {

@@ -73,7 +73,12 @@
         </client-only>
         <div v-show="numVisibleFilters" class="filters__buttons">
           <Button :on-click="removeAllFilters">Remove All</Button>
-          <Button class="btn--apply" :on-click="applyFilters" type="submit">
+          <Button
+            class="btn--apply"
+            :disabled="!hasVisibleFilterValues"
+            :on-click="applyFilters"
+            type="submit"
+          >
             <Icon
               id="check"
               name="check"
@@ -146,6 +151,16 @@ export default {
   computed: {
     numVisibleFilters() {
       return this.visibleFilters.length
+    },
+    numVisibleFilterValues() {
+      const values = Object.values(this.visibleFilterValues).flat()
+      return values.length
+    },
+    hasVisibleFilterValues() {
+      if (this.numVisibleFilterValues) {
+        return true
+      }
+      return false
     },
     listActiveFilters() {
       return this.activeFilters

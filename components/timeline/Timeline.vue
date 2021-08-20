@@ -82,6 +82,7 @@
           v-model="chosenTimescale"
           :clearable="false"
           :options="timescales"
+          :searchable="false"
           @input="selectTimescale"
         >
           <template #open-indicator="{ attributes }">
@@ -182,6 +183,7 @@ export default {
       const { viewer, Cesium } = cesiumInstance
 
       const timeline = viewer.timeline
+      viewer.clock.multiplier = this.chosenPlaybackSpeed.value
 
       /**
        *

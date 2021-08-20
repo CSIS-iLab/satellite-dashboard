@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
+import { mapActions, mapState, mapGetters } from 'vuex'
 import CesiumViewer from '~/components/visualizer/CesiumViewer'
 import PanelLeft from '~/components/visualizer/PanelLeft'
 import Timeline from '~/components/timeline/Timeline'
@@ -64,20 +64,19 @@ export default {
       showMagicChart: (state) => state.layout.showMagicChart
     })
   },
-  created() {
+  async created() {
     if (this.$route.query.date) {
       this.getOrbits({ date: this.$route.query.date })
     } else {
       this.getOrbits()
     }
     this.loading = false
+    await this.getITUData()
   },
   methods: {
-    openFilters() {
-      console.log('open filters')
-    },
     ...mapActions({
-      getOrbits: 'satellites/getOrbits'
+      getOrbits: 'satellites/getOrbits',
+      getITUData: 'satellites/getITUData'
     })
   }
 }

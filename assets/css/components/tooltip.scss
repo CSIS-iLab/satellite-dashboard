@@ -1,6 +1,4 @@
 .tooltip {
-  border: 1px solid #f0f;
-
   &__container {
     display: inline-block;
 
@@ -71,6 +69,6 @@
 /* stylelint-disable */
 .tippy-popper[x-placement^='top']
   [data-animation='shift-away'][data-state='visible'] {
-  // transform: none;
+  transform: none;
 }
 /* stylelint-enable */
