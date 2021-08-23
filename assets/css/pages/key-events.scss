@@ -46,8 +46,7 @@
     .sd-icon-calendar,
     .sd-icon-clear {
       top: var(--top, 50%);
-      right: unset;
-      left: rem(8);
+      right: rem(8);
       color: $color-white-170;
       font-size: 1.5em;
 
@@ -65,7 +64,7 @@
     }
 
     .datepicker__input {
-      padding-left: rem(40);
+      padding-left: rem(16);
     }
   }
 
