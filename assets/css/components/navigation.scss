@@ -24,11 +24,6 @@
     &__item:not(:last-child) {
       margin-bottom: rem(16px);
     }
-
-    &__glossary {
-      @extend %font-ui-text-base-oxygen;
-      color: $color-white-150;
-    }
   }
 
   &--footer {
