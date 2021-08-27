@@ -148,8 +148,8 @@
                 </div>
               </div>
             </template>
-            <template v-else-if="props.column.field === 'min_distance_km'">
-              {{ formatNumber(props.row.min_distance_km) }}
+            <template v-else-if="props.column.field === 'min_distance'">
+              {{ formatNumber(props.row.min_distance) }}
             </template>
             <ul
               v-else-if="props.column.field == 'actions'"
@@ -233,7 +233,7 @@ export default {
         },
         {
           label: 'Est. Distance',
-          field: 'min_distance_km',
+          field: 'min_distance',
           sublabel: 'km',
           tdClass: 'text--right'
         },
@@ -350,7 +350,7 @@ export default {
       return `${formattedDate}<div class="key-events__time">${formattedTime}</div>`
     },
     formatNumber(value) {
-      return Number(value).toLocaleString('en-US')
+      return Number(value / 1000).toLocaleString('en-US')
     },
     getEventUrl(event) {
       const satIds = [event.catalog_id_1, event.catalog_id_2]
