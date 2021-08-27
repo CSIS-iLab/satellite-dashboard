@@ -7,9 +7,6 @@ import Orbitals from '../services/orbitals'
 import timeEventsProvider from '../services/time-events'
 const timeEvents = timeEventsProvider()
 
-const siteURL = 'https://satdash.wpengine.com'
-const siteURLLocal = 'http://satellite-dashboard.local/'
-
 const padNumber = (num) => {
   return num.toString().padStart(2, 0)
 }
@@ -188,10 +185,10 @@ export const actions = {
       // Get the remaining satellites' data by fetching each additional page.
       let requestURLs = []
       for (let i = 2; i <= firstPage.totalPages; i++) {
-        requestURLs.push(`${siteURL}${url}&page=${i}`)
+        requestURLs.push(this.$axios.get(`${url}&page=${i}`))
       }
 
-      let satellites = await fetchAll(requestURLs)
+      let satellites = await Promise.all(requestURLs)
 
       satellites = satellites
         .map((request) => request.data)
@@ -381,17 +378,6 @@ export const actions = {
 
     commit('updateITUData', ituData)
   }
-}
-
-async function fetchAll(urls) {
-  return Promise.all(
-    urls.map((url) =>
-      fetch(url)
-        .then((r) => r.json())
-        .then((data) => ({ data, url }))
-        .catch((error) => ({ error, url }))
-    )
-  )
 }
 
 function formatCountries(value) {

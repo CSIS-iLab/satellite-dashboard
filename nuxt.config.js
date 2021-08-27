@@ -190,6 +190,23 @@ export default {
         include: path.resolve(__dirname, 'content/analysis'),
         loader: 'frontmatter-markdown-loader'
       })
+    },
+    babel: {
+      plugins: [
+        ['@babel/plugin-proposal-private-property-in-object', { loose: true }]
+      ],
+      presets: [
+        [
+          '@babel/preset-env',
+          {
+            targets: {
+              esmodules: true
+            },
+            loose: true,
+            shippedProposals: true
+          }
+        ]
+      ]
     }
   },
   generate: {
