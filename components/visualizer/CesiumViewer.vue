@@ -259,6 +259,7 @@ export default {
       globe.lightingFadeInDistance = 30000000
       globe.nightFadeOutDistance = 1000000
       globe.nightFadeInDistance = 8000000
+      globe.maximumScreenSpaceError = 0.5
 
       viewer.camera.defaultZoomAmount = this.defaultZoomAmount
 
