@@ -44,6 +44,7 @@
         width: var(--marker-size, 10px);
         height: var(--marker-size, 10px);
         margin-top: var(--marker-top, 2px);
+        vertical-align: top;
         background: var(--status, $color-slate-200);
         border-radius: 50%;
       }
