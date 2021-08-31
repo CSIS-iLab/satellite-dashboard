@@ -127,11 +127,11 @@ const playbackSpeeds = [
     value: 100
   },
   {
-    label: '1000x',
+    label: '1,000x',
     value: 1000
   },
   {
-    label: '10000x',
+    label: '10,000x',
     value: 10000
   }
 ]
