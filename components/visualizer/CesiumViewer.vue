@@ -370,7 +370,8 @@ export default {
           return
         }
         this.handleHighlights(entity)
-        viewer.trackedEntity = entity
+        // glitches camera movement between satellites
+        /* viewer.trackedEntity = entity */
         const entityPosition = viewer.scene.mapProjection.ellipsoid.cartesianToCartographic(
           entity.position.getValue(viewer.clock.currentTime)
         )
