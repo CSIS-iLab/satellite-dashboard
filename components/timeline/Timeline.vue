@@ -332,7 +332,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import 'vue-select/src/scss/vue-select';
 @import '~/assets/css/components/datepicker';
 @import '../assets/css/components/timeline';
 </style>
