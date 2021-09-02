@@ -199,7 +199,15 @@ export default {
             tooltip: 'launch-vehicle'
           },
           { value: 'Contractor', label: 'Contractor', tooltip: 'contractor' },
-          { value: 'Lifetime', label: 'Lifetime', tooltip: 'lifetime' }
+          {
+            value: 'Lifetime',
+            label: 'Lifetime (years)',
+            tooltip: 'lifetime (years)',
+            customFormatter: true,
+            formatter: function(value) {
+              return `${value} years`
+            }
+          }
         ],
         orbit: [
           {
