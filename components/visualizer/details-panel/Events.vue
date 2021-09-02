@@ -212,6 +212,7 @@ export default {
   },
   methods: {
     updateMaxDistance() {
+      if (this.maxDistance < 0 || this.maxDistance > 150) return
       this.appliedMaxDistance = this.maxDistance
     },
     async longitudes() {
