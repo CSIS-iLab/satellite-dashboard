@@ -39,6 +39,7 @@
               </template>
               <template #search="{ attributes, events }">
                 <input
+                  :ref="'filter__' + filter"
                   class="vs__search"
                   :required="!visibleFilterValues[filter]"
                   v-bind="attributes"
@@ -241,6 +242,12 @@ export default {
     selectFilter(value) {
       this.visibleFilters.push(value.value)
       this.latestFilterAdded = null
+
+      // ref does not exist until next tick
+      setTimeout(() => {
+        const ref = this.$refs['filter__' + value.value][0]
+        ref.focus()
+      })
     },
     deleteFilter(e, filter) {
       this.activeFilterValues[filter] = []
