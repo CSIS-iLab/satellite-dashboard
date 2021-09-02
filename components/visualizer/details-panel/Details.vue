@@ -212,7 +212,7 @@ export default {
         orbit: [
           {
             value: 'Apogee',
-            label: 'Apogee Altitude (km)',
+            label: 'Apogee Altitude',
             tooltip: 'apogee-altitude'
           },
           {
@@ -222,7 +222,7 @@ export default {
           },
           {
             value: 'Perigee',
-            label: 'Perigee Altitude (km)',
+            label: 'Perigee Altitude',
             tooltip: 'perigee-altitude'
           },
           { value: 'Ecc', label: 'Eccentricity', tooltip: 'eccentricity' },
@@ -230,7 +230,7 @@ export default {
           { value: 'Longitude', label: 'Longitude', tooltip: 'longitude' },
           {
             value: 'MeanMotion',
-            label: 'Mean Motion (&deg/s)',
+            label: 'Mean Motion',
             tooltip: 'mean-motion'
           },
           {
@@ -240,12 +240,12 @@ export default {
           },
           {
             value: 'OrbitalSpeed',
-            label: 'Mean Orbital Speed (km/s)',
+            label: 'Mean Orbital Speed',
             tooltip: 'orbital-speed'
           },
           {
             value: 'SMA',
-            label: 'Semi-major axis (km)',
+            label: 'Semi-major axis',
             tooltip: 'semi-major-axis'
           },
           {
