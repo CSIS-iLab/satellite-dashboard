@@ -77,7 +77,7 @@
     border: 0;
   }
 
-  a {
+  a:not(.updates-panel__page-link) {
     text-decoration: underline;
     text-decoration-color: $color-ltblue-175;
     text-underline-offset: 0.2em;
