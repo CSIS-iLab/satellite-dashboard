@@ -317,7 +317,7 @@ export default {
       const Ecc = `${this.formatNumbers(this.orbitalElements.Ecc, 4)}`
 
       const Inc = `${this.formatNumbers(
-        this.orbitalElements.Inc / Math.PI,
+        (this.orbitalElements.Inc * 180) / Math.PI,
         4
       )}&deg;`
 
