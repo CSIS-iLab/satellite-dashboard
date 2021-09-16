@@ -120,6 +120,9 @@ export default {
 
         for (let i = 0; i < ids.length; i++) {
           const id = ids[i]
+          if (!this.satellites[id]) {
+            continue
+          }
           const { Name, Status, countryOfLaunch } = this.satellites[id]
 
           let countries = countryOfLaunch.map((d) => d.id).join(' / ')
@@ -226,11 +229,14 @@ export default {
       return `?satids=${satIds}&date=${formattedDate}&time=${timeInSeconds}`
     },
     updateShowMagicChart(objects) {
-      const payload = {
-        ids: [...objects.map((o) => o.catalog_id), this.id],
-        names: [...objects.map((o) => o.Name), this.name],
-        zoom: '1wk'
-      }
+      const payload = objects.reduce(
+        (a, v) => {
+          a.ids.push(v.catalog_id)
+          a.names.push(v.Name)
+          return a
+        },
+        { ids: [this.id], names: [this.name], zoom: '1wk' }
+      )
       this.updateLongitudeSatellites(payload)
       this.showMagicChart = !this.showMagicChart
     },

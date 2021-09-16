@@ -144,7 +144,7 @@ export default {
                   i % 2 ? 'rgba(82, 175, 225, 1)' : 'rgba(254, 116, 20,1)'
                 return point
               })
-              .sort((a, b) => a.y < b.y)
+              .sort((a, b) => b.y - a.y)
               .reduce(
                 function(arr, point, i) {
                   arr.push(`<span class="tooltip-line-color" style="color: ${
