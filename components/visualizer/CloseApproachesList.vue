@@ -229,14 +229,21 @@ export default {
       return `?satids=${satIds}&date=${formattedDate}&time=${timeInSeconds}`
     },
     updateShowMagicChart(objects) {
-      const payload = objects.reduce(
-        (a, v) => {
-          a.ids.push(v.catalog_id)
-          a.names.push(v.Name)
-          return a
-        },
-        { ids: [this.id], names: [this.name], zoom: '1wk' }
-      )
+      // this component is called from Key Events and Details panels
+      // this function regularizes the payload delivered to the store
+
+      const payloadObj = { ids: [], names: [], zoom: '1wk' }
+      if (this.id && this.name) {
+        payloadObj.ids.push(this.id)
+        payloadObj.names.push(this.name)
+      }
+
+      const payload = objects.reduce((a, v) => {
+        a.ids.push(v.catalog_id)
+        a.names.push(v.Name)
+        return a
+      }, payloadObj)
+
       this.updateLongitudeSatellites(payload)
       this.showMagicChart = !this.showMagicChart
     },
