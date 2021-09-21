@@ -65,3 +65,10 @@
 [x-placement^='bottom'] .tooltip-theme .tippy-arrow {
   border-bottom: 8px solid $color-slate-700;
 }
+
+/* stylelint-disable */
+.tippy-popper[x-placement^='top']
+  [data-animation='shift-away'][data-state='visible'] {
+  transform: none;
+}
+/* stylelint-enable */

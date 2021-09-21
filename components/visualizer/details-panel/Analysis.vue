@@ -1,8 +1,11 @@
 <template>
   <div class="details-analysis">
     <p v-if="!hasRelatedPosts" class="details-panel__desc">
-      This object does not appear in any Dashboard analysis pieces. See the full
-      <nuxt-link to="/analysis">analysis</nuxt-link> archive here.
+      This object does not appear in any Dashboard analysis pieces.
+      <nuxt-link to="/analysis" class="updates-panel__page-link">
+        All Analysis
+        <Icon id="chevron-right" name="chevron-right" />
+      </nuxt-link>
     </p>
     <PostList :posts="relatedPosts" />
   </div>
@@ -10,11 +13,13 @@
 
 <script>
 import { mapState } from 'vuex'
+import Icon from '~/components/global/Icon'
 import PostList from '~/components/global/PostList.vue'
 
 export default {
   components: {
-    PostList
+    PostList,
+    Icon
   },
   props: {
     id: {
@@ -54,3 +59,7 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+@import '../assets/css/components/updates-panel';
+</style>

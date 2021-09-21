@@ -75,17 +75,17 @@
         drop-shadow(0 0 1px rgba(0, 0, 0, 0.44));
       transition: background 0.3s ease-in-out;
 
-      &:hover {
+      &[aria-selected='false']:hover {
         --tab-bg: #{$color-slate-400} !important;
         --tab-cut-out: invert(9%) sepia(9%) saturate(1146%) hue-rotate(169deg)
           brightness(92%) contrast(90%) !important;
       }
 
       &:focus {
-        outline: 1px solid $color-focus;
+        outline: 0;
 
         &::before {
-          outline: 1px solid $color-focus;
+          outline: 0;
         }
       }
 
@@ -134,5 +134,15 @@
 
   .btn--panel-close {
     height: $size__header-height;
+  }
+
+  .btn--panel-reset {
+    min-height: 40px;
+    color: $color-white-170;
+    @include font-size(20px);
+
+    &:hover {
+      color: $color-white-100;
+    }
   }
 }

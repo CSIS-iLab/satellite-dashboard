@@ -1,5 +1,5 @@
 <template>
-  <Page :title="page.title.rendered" :content-has-bg="true">
+  <Page v-if="page" :title="page.title.rendered" :content-has-bg="true">
     <!-- eslint-disable-->
     <section
       class="post__content entry-content"

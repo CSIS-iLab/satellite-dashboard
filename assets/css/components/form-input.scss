@@ -151,34 +151,32 @@
         grid-row: 1;
       }
 
-      .icon-minus {
-        visibility: hidden;
-        opacity: 0;
-      }
-    }
-
-    &--open {
-      .icon-plus {
-        visibility: hidden;
-        opacity: 0;
-      }
-
-      .icon-minus {
-        visibility: visible;
-        opacity: 1;
+      .icon-arrow-down {
+        color: $color-white-150;
       }
     }
   }
 }
 
 .dropdown--simple {
+  .vs__selected {
+    white-space: nowrap;
+  }
+
   .vs__selected-options {
     flex-shrink: 1;
     justify-content: flex-end;
   }
 
   .vs__search {
-    display: none;
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    margin: -1px !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    border: 0 !important;
+    clip: rect(0 0 0 0) !important;
   }
 
   .vs__dropdown-menu {

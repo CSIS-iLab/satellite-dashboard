@@ -127,6 +127,7 @@
       padding: rem(16) rem(24) rem(16) 0;
 
       &:first-child {
+        min-width: 18vw;
         padding-left: rem(24);
       }
     }
@@ -138,6 +139,10 @@
       white-space: nowrap;
       text-align: left;
       text-transform: uppercase;
+    }
+
+    td {
+      vertical-align: top;
     }
 
     a {

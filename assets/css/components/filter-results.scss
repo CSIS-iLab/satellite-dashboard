@@ -51,7 +51,7 @@
     }
 
     .vgt-table {
-      /* stylelint-disable max-nesting-depth, selector-max-compound-selectors */
+      /* stylelint-disable max-nesting-depth, selector-max-compound-selectors, selector-no-qualifying-type */
       tbody tr:nth-of-type(odd) {
         background: $color-slate-700;
       }
@@ -66,8 +66,9 @@
           padding-left: var(--panel-padding-side);
         }
 
+        // Vue table  overflows the container by default, offset that here to avoid a horizontal scroll.
         &:last-of-type {
-          padding-right: var(--panel-padding-side);
+          padding-right: calc(var(--panel-padding-side) - 12px);
         }
       }
 
@@ -77,6 +78,10 @@
 
       td {
         --cell-vertical-padding: #{rem(12)};
+      }
+
+      td.filter-results__country {
+        @extend %font-ui-text-base-oxygen;
       }
       /* stylelint-enable */
     }
@@ -88,7 +93,19 @@
 
       &__navigation {
         float: none !important;
+        @extend %font-ui-text-base-oxygen;
         text-align: center;
+      }
+
+      &__navigation__page-info {
+        margin: 0 rem(24) 0 0;
+      }
+
+      /* stylelint-disable-next-line */
+      &__navigation__page-btn,
+      &__navigation__page-btn span {
+        @extend %font-ui-text-base-oxygen;
+        font-weight: normal;
       }
     }
   }

@@ -34,12 +34,12 @@
             >
               <template #open-indicator="{ attributes }">
                 <span v-bind="attributes">
-                  <Icon id="plus" name="plus" />
-                  <Icon id="minus" name="minus" />
+                  <Icon id="arrow-down" name="arrow-down" />
                 </span>
               </template>
               <template #search="{ attributes, events }">
                 <input
+                  :ref="'filter__' + filter"
                   class="vs__search"
                   :required="!visibleFilterValues[filter]"
                   v-bind="attributes"
@@ -68,14 +68,18 @@
             <template #open-indicator="{ attributes }">
               <span v-bind="attributes">
                 <Icon id="plus" name="plus" />
-                <Icon id="minus" name="minus" />
               </span>
             </template>
           </v-select>
         </client-only>
         <div v-show="numVisibleFilters" class="filters__buttons">
           <Button :on-click="removeAllFilters">Remove All</Button>
-          <Button class="btn--apply" :on-click="applyFilters" type="submit">
+          <Button
+            class="btn--apply"
+            :disabled="!hasVisibleFilterValues"
+            :on-click="applyFilters"
+            type="submit"
+          >
             <Icon
               id="check"
               name="check"
@@ -124,9 +128,9 @@ export default {
       filterOptions: {
         Name: { value: 'Name', label: 'Name' },
         NoradId: { value: 'NoradId', label: 'Norad ID' },
-        countryOfJurisdictionIds: {
-          value: 'countryOfJurisdictionIds',
-          label: 'Country of Jurisdiction'
+        countryOfLaunchIds: {
+          value: 'countryOfLaunchIds',
+          label: 'Country'
         },
         Purpose: { value: 'Purpose', label: 'Purpose' },
         Users: { value: 'Users', label: 'Users' },
@@ -135,7 +139,7 @@ export default {
       activeFilterValues: {},
       visibleFilters: [],
       visibleFilterValues: {
-        countryOfJurisdictionIds: [],
+        countryOfLaunchIds: [],
         Name: [],
         NoradId: [],
         Purpose: [],
@@ -148,6 +152,16 @@ export default {
   computed: {
     numVisibleFilters() {
       return this.visibleFilters.length
+    },
+    numVisibleFilterValues() {
+      const values = Object.values(this.visibleFilterValues).flat()
+      return values.length
+    },
+    hasVisibleFilterValues() {
+      if (this.numVisibleFilterValues) {
+        return true
+      }
+      return false
     },
     listActiveFilters() {
       return this.activeFilters
@@ -183,14 +197,12 @@ export default {
           .map((d) => ({ value: d, label: d }))
       }
 
-      // Status
       filters.Status = this.statusTypesKeys.map((d) => ({
         value: d,
         label: this.statusTypes[d].label
       }))
 
-      // countryOfJurisdiction
-      filters.countryOfJurisdictionIds = this.countriesOfJurisdiction
+      filters.countryOfLaunchIds = this.countriesOfLaunch
 
       return filters
     },
@@ -198,18 +210,15 @@ export default {
       let results = []
       for (let i = 0; i < this.filteredSatellites.length; i++) {
         const catalog_id = this.filteredSatellites[i]
-        const { Name, Status, countryOfJurisdiction } = this.satellites[
-          catalog_id
-        ]
+        const { Name, Status, countryOfLaunch } = this.satellites[catalog_id]
 
         results.push({
           catalog_id,
           Name,
           Status,
-          country: countryOfJurisdiction
+          country: countryOfLaunch
         })
       }
-
       return results
     },
     ...mapState({
@@ -217,8 +226,7 @@ export default {
       filteredSatellites: (state) => state.satellites.filteredSatellites,
       activeFilters: (state) => state.filters.activeFilters,
       statusTypes: (state) => state.satellites.statusTypes,
-      countriesOfJurisdiction: (state) =>
-        state.satellites.countriesOfJurisdiction
+      countriesOfLaunch: (state) => state.satellites.countriesOfLaunch
     }),
     ...mapGetters({
       satelliteCatalogIds: 'satellites/satelliteCatalogIds',
@@ -234,6 +242,12 @@ export default {
     selectFilter(value) {
       this.visibleFilters.push(value.value)
       this.latestFilterAdded = null
+
+      // ref does not exist until next tick
+      setTimeout(() => {
+        const ref = this.$refs['filter__' + value.value][0]
+        ref.focus()
+      })
     },
     deleteFilter(e, filter) {
       this.activeFilterValues[filter] = []

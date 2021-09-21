@@ -41,7 +41,7 @@
         <template slot="table-column" slot-scope="props">
           <div
             v-if="props.column.field == 'Name'"
-            class="sat__basic sat__basic--status"
+            class="sat__basic sat__basic--status sat__basic--status-simple"
           >
             <div class="sat__name">
               {{ props.column.label }}
@@ -54,7 +54,7 @@
         <template slot="table-row" slot-scope="props">
           <div v-if="props.column.field == 'Name'">
             <div
-              class="sat__basic sat__basic--status"
+              class="sat__basic sat__basic--status sat__basic--status-simple"
               :data-status="props.row.Status"
             >
               <div class="sat__name">
@@ -71,7 +71,7 @@
               :on-click="(e) => highlightOrbit(e, props.row.catalog_id)"
               aria-label="View Orbit"
             >
-              <Icon id="orbit" name="orbit" focusable="false" />
+              <Icon id="target" name="target" focusable="false" />
             </Button>
             <Button
               v-if="checkItemFocusedState(props.row.catalog_id)"
@@ -134,6 +134,8 @@ export default {
         {
           label: 'CO.',
           field: 'country',
+          tdClass: 'filter-results__country',
+          width: '4em',
           sortFn(x, y) {
             return x[0].id < y[0].id ? -1 : 1
           }
@@ -141,12 +143,12 @@ export default {
         { label: '', field: 'actions' }
       ],
       sortOptions: [
-        { value: 'Name A-Z', dir: 'asc', label: 'Name A-Z' },
-        { value: 'Name Z-A', dir: 'desc', label: 'Name Z-A' },
-        { value: 'country A-Z', dir: 'asc', label: 'Country A-Z' },
-        { value: 'country Z-A', dir: 'desc', label: 'Country Z-A' }
+        { value: 'Name A-Z', dir: 'asc', label: 'Name (A-Z)' },
+        { value: 'Name Z-A', dir: 'desc', label: 'Name (Z-A)' },
+        { value: 'country A-Z', dir: 'asc', label: 'Country (A-Z)' },
+        { value: 'country Z-A', dir: 'desc', label: 'Country (Z-A)' }
       ],
-      currentSort: 'Name A-Z',
+      currentSort: 'Name (A-Z)',
       tableSortOptions: {
         enabled: false,
         initialSortBy: { field: 'Name', type: 'asc' }

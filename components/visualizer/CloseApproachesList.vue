@@ -40,7 +40,7 @@
           </div>
           <div class="sat__id">{{ object.catalog_id }}</div>
           <div class="sat__country">
-            {{ object.countryOfJurisdiction.id }}
+            {{ object.countries }}
           </div>
           <div class="sat__actions">
             <Button
@@ -60,6 +60,16 @@
           </div>
         </li>
       </ul>
+      <div class="close-approaches__compare-objects">
+        <Button
+          aria-label="See historical orbits"
+          :on-click="(e) => updateShowMagicChart(event.objects)"
+          class="btn btn--outlined"
+        >
+          <Icon id="magic-chart" name="graph" focusable="false" />
+          Compare Objects
+        </Button>
+      </div>
     </li>
   </ol>
 </template>
@@ -89,6 +99,11 @@ export default {
       type: String,
       required: false,
       default: null
+    },
+    name: {
+      type: String,
+      required: false,
+      default: null
     }
   },
   computed: {
@@ -105,16 +120,22 @@ export default {
 
         for (let i = 0; i < ids.length; i++) {
           const id = ids[i]
-          const { Name, Status, countryOfJurisdiction } = this.satellites[id]
+          if (!this.satellites[id]) {
+            continue
+          }
+          const { Name, Status, countryOfLaunch } = this.satellites[id]
+
+          let countries = countryOfLaunch.map((d) => d.id).join(' / ')
 
           objects.push({
             catalog_id: id,
             Name,
             Status,
-            countryOfJurisdiction
+            countries
           })
         }
 
+        // console.log(objects)
         return {
           objects,
           ...info
@@ -124,6 +145,14 @@ export default {
     },
     focusedItems() {
       return new Set(this.focusedSatellites)
+    },
+    showMagicChart: {
+      get: function() {
+        return this.$store.state.layout.showMagicChart
+      },
+      set: function(magicChartState) {
+        this.updateMagicChart({ magicChartState })
+      }
     },
     ...mapState({
       satellites: (state) => state.satellites.satellites,
@@ -199,8 +228,29 @@ export default {
 
       return `?satids=${satIds}&date=${formattedDate}&time=${timeInSeconds}`
     },
+    updateShowMagicChart(objects) {
+      // this component is called from Key Events and Details panels
+      // this function regularizes the payload delivered to the store
+
+      const payloadObj = { ids: [], names: [], zoom: '1wk' }
+      if (this.id && this.name) {
+        payloadObj.ids.push(this.id)
+        payloadObj.names.push(this.name)
+      }
+
+      const payload = objects.reduce((a, v) => {
+        a.ids.push(v.catalog_id)
+        a.names.push(v.Name)
+        return a
+      }, payloadObj)
+
+      this.updateLongitudeSatellites(payload)
+      this.showMagicChart = !this.showMagicChart
+    },
     ...mapMutations({
-      updateFocusedSatellites: 'satellites/updateFocusedSatellites'
+      updateFocusedSatellites: 'satellites/updateFocusedSatellites',
+      updateMagicChart: 'layout/updateMagicChart',
+      updateLongitudeSatellites: 'satellites/updateLongitudeSatellites'
     })
   }
 }

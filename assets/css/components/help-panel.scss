@@ -1,27 +1,93 @@
+.ak-vt__wrapper--scope-helpPanel {
+  // 32px - 9px (from default Tippy styles)
+  --panel-padding-side: #{rem(23)};
+
+  .ak-vt {
+    &__panel {
+      max-height: 50vh;
+    }
+  }
+}
+
 .help {
+  &__panel-header,
+  &__panel-content {
+    padding-right: var(--panel-padding-side);
+    padding-left: var(--panel-padding-side);
+  }
+
+  &__panel-header {
+    margin-top: rem(12);
+  }
+
+  &__buttons {
+    display: flex;
+  }
+
   &__panel-content {
     margin-bottom: rem(44);
-    padding-right: rem(32);
-    padding-left: rem(32);
+    padding-top: rem(16);
+    overflow: auto;
+    color: $color-white-180;
+    @extend %font-ui-text-base-oxygen;
     text-align: left;
+
+    .panel__title:not(:first-child) {
+      margin-top: rem(16);
+      padding-top: rem(16);
+      border-top: 1px solid $color-white-180;
+    }
   }
 
   &__title {
     grid-column: 1 / -1;
-    padding-top: rem(16);
-    padding-bottom: rem(16);
-    @include font-size(20px);
-  }
+    margin-top: rem(16);
+    margin-bottom: rem(16);
+    color: $color-white-180;
+    @extend %font-ui-heading-section-md;
 
-  &__title-line {
-    border-top: 1px solid $color-white-150;
+    &--line {
+      padding-top: rem(16);
+      border-top: 1px solid $color-white-150;
+    }
+
+    .icon {
+      font-size: 0.8em;
+    }
   }
 
   &__term {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    margin-bottom: rem(32);
-    column-gap: rem(16);
+    &--columns {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      margin-bottom: rem(16);
+      column-gap: rem(16);
+    }
+
+    p + p {
+      margin-top: rem(12);
+    }
+
+    ol {
+      margin: rem(16) 0;
+      padding: 0 0 0 rem(32);
+
+      /* stylelint-disable-next-line */
+      > li + li {
+        margin-top: rem(12);
+      }
+    }
+
+    :not(.help__title) .icon {
+      position: relative;
+      top: 1px;
+      margin-right: rem(2);
+      margin-left: rem(2);
+    }
+
+    .icon {
+      color: $color-white-100;
+    }
   }
 
   &__icon-layout {
@@ -35,24 +101,10 @@
     max-width: 120px;
   }
 
-  &__buttons {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    margin-top: rem(32);
-
-    #about-activator {
-      padding-left: rem(32);
-    }
-  }
-
-  &__btn-right {
-    text-align: right;
-  }
-
   &__close {
     position: absolute;
     top: 0;
-    right: 0;
+    right: calc(var(--panel-padding-side) / 4);
     color: $color-white-160;
     @include font-size(15px);
     background: $color-slate-700;
@@ -67,18 +119,20 @@
     width: 40px;
     height: 48px;
   }
-}
 
-.ak-vt {
-  &__activator {
+  &__list {
+    margin: rem(16) 0;
     padding: 0;
-    color: $color-white-150;
-    @extend %font-ui-text-lg-oxygen;
-    background: transparent;
-    border: 0;
-    border-radius: 0;
-    cursor: pointer;
-    transition: color 0.3s ease-in-out;
+
+    &--icons li {
+      display: flex;
+      gap: rem(8);
+      align-items: baseline;
+    }
+
+    > li + li {
+      margin-top: rem(12);
+    }
   }
 }
 

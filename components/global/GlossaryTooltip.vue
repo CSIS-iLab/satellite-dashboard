@@ -8,6 +8,7 @@
         interactive-border="4"
         distance="12"
         arrow
+        :follow-cursor="true"
       >
         <template v-slot:trigger>
           <button
@@ -15,7 +16,7 @@
             :class="{ 'tooltip__trigger--text': !showInfo }"
           >
             <slot></slot>
-            <Icon v-if="showInfo" id="info" name="info" />
+            <Icon v-if="showInfo" id="info" name="help-outline" />
           </button>
         </template>
 

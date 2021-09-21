@@ -29,6 +29,11 @@
     }
   }
 
+  a[data-type='glossary'] {
+    text-decoration: dashed underline;
+    text-decoration-color: $color-orange-100;
+  }
+
   figcaption {
     @extend %font-post-text-sm;
     padding-top: rem(8px);

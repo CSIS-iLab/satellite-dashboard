@@ -33,12 +33,6 @@
               :filter-by="filterByTerm"
               @input="updateSearchTerm"
             >
-              <template #open-indicator="{ attributes }">
-                <span v-bind="attributes">
-                  <Icon id="plus" name="plus" />
-                  <Icon id="minus" name="minus" />
-                </span>
-              </template>
               <template #option="{ label }">
                 <Icon id="check" name="check" />{{ label }}
               </template>
@@ -99,7 +93,11 @@
             mode: 'pages',
             perPage: serverParams.perPage,
             pageLabel: 'Page',
-            dropdownAllowAll: false
+            dropdownAllowAll: false,
+            infoFn: (params) =>
+              `Page ${params.currentPage.toLocaleString(
+                'en-US'
+              )} of ${params.totalPages.toLocaleString('en-US')}`
           }"
           :sort-options="{
             enabled: true,
@@ -137,7 +135,7 @@
               "
             >
               <div
-                class="sat__basic sat__basic--status"
+                class="sat__basic sat__basic--status sat__basic--status-simple"
                 :data-status="
                   satellites[props.formattedRow[props.column.field]].Status
                 "
@@ -150,8 +148,8 @@
                 </div>
               </div>
             </template>
-            <template v-else-if="props.column.field === 'min_distance_km'">
-              {{ formatNumber(props.row.min_distance_km) }}
+            <template v-else-if="props.column.field === 'min_distance'">
+              {{ formatNumber(props.row.min_distance) }}
             </template>
             <ul
               v-else-if="props.column.field == 'actions'"
@@ -171,7 +169,9 @@
                 </nuxt-link>
               </li>
               <li>
-                <Icon id="graph" name="graph" />
+                <Button :on-click="() => updateShowMagicChart(props.row)">
+                  <Icon id="graph" name="graph" />
+                </Button>
               </li>
             </ul>
             <template v-else>
@@ -181,15 +181,17 @@
         </vue-good-table>
       </client-only>
     </section>
+    <MagicChart v-if="showMagicChart" />
   </Page>
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { mapState, mapGetters, mapMutations } from 'vuex'
 import Page from '~/layout/page'
-import Button from '~/components/global/Button.vue'
-import Icon from '~/components/global/Icon.vue'
+import Button from '~/components/global/Button'
+import Icon from '~/components/global/Icon'
 import StatusTypesLegend from '~/components/global/StatusTypesLegend'
+import MagicChart from '~/components/visualizer/MagicChart'
 
 export default {
   layout: 'layout',
@@ -197,7 +199,8 @@ export default {
     Page,
     Button,
     Icon,
-    StatusTypesLegend
+    StatusTypesLegend,
+    MagicChart
   },
   async fetch() {
     const events = await this.$axios.$get(
@@ -230,7 +233,7 @@ export default {
         },
         {
           label: 'Est. Distance',
-          field: 'min_distance_km',
+          field: 'min_distance',
           sublabel: 'km',
           tdClass: 'text--right'
         },
@@ -259,22 +262,27 @@ export default {
       const list = this.satelliteCatalogIds
         .map((sat) => {
           const { catalog_id, Name } = this.satellites[sat]
-
           let nameLowerCase
           if (Name) {
             nameLowerCase = Name.toLowerCase()
           }
-
           let term = `${(catalog_id + nameLowerCase).replace(/\s/g, '')}`
-
           return {
             value: catalog_id,
-            label: Name || 'Test',
+            label: Name,
             term
           }
         })
         .sort((a, b) => a.label.localeCompare(b.label))
       return list
+    },
+    showMagicChart: {
+      get: function() {
+        return this.$store.state.layout.showMagicChart
+      },
+      set: function(magicChartState) {
+        this.updateMagicChart({ magicChartState })
+      }
     },
     ...mapState({
       satellites: (state) => state.satellites.satellites
@@ -342,7 +350,7 @@ export default {
       return `${formattedDate}<div class="key-events__time">${formattedTime}</div>`
     },
     formatNumber(value) {
-      return Number(value).toLocaleString('en-US')
+      return Number(value / 1000).toLocaleString('en-US')
     },
     getEventUrl(event) {
       const satIds = [event.catalog_id_1, event.catalog_id_2]
@@ -400,7 +408,23 @@ export default {
       })
       this.updateParams({ startDate: dates[0], endDate: dates[1] })
       this.loadItems()
-    }
+    },
+    updateShowMagicChart(row) {
+      const payload = {
+        ids: [row.catalog_id_1, row.catalog_id_2],
+        names: [
+          this.satellites[row.catalog_id_1].Name,
+          this.satellites[row.catalog_id_2].Name
+        ]
+      }
+
+      this.updateLongitudeSatellites(payload)
+      this.showMagicChart = !this.showMagicChart
+    },
+    ...mapMutations({
+      updateMagicChart: 'layout/updateMagicChart',
+      updateLongitudeSatellites: 'satellites/updateLongitudeSatellites'
+    })
   }
 }
 </script>

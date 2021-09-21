@@ -82,6 +82,7 @@
           v-model="chosenTimescale"
           :clearable="false"
           :options="timescales"
+          :searchable="false"
           @input="selectTimescale"
         >
           <template #open-indicator="{ attributes }">
@@ -109,7 +110,9 @@ import Icon from '~/components/global/Icon'
 import StatusTypesLegend from '~/components/global/StatusTypesLegend'
 
 import cesiumServiceProvider from '../../services/cesium-service'
+import timeEventProvider from '../../services/time-events'
 const cesiumService = cesiumServiceProvider()
+const timeEvents = timeEventProvider()
 const playbackSpeeds = [
   {
     label: '1x',
@@ -124,11 +127,11 @@ const playbackSpeeds = [
     value: 100
   },
   {
-    label: '1000x',
+    label: '1,000x',
     value: 1000
   },
   {
-    label: '10000x',
+    label: '10,000x',
     value: 10000
   }
 ]
@@ -158,6 +161,7 @@ export default {
       playbackSpeeds: playbackSpeeds,
       chosenPlaybackSpeed: playbackSpeeds[2],
       timelinePoint: this.selectedDate,
+      lastTimelinePoint: this.selectedDate,
       dateOptions: {
         year: 'numeric',
         month: 'short',
@@ -179,6 +183,7 @@ export default {
       const { viewer, Cesium } = cesiumInstance
 
       const timeline = viewer.timeline
+      viewer.clock.multiplier = this.chosenPlaybackSpeed.value
 
       /**
        *
@@ -211,8 +216,13 @@ export default {
       timeline.resize()
       timeline.container.style.left = '0px'
       viewer.clockViewModel.shouldAnimate = false
+      timeEvents.init(Cesium.JulianDate.toDate(viewer.clock.currentTime))
       viewer.clock.onTick.addEventListener(() => {
-        this.timelinePoint = Cesium.JulianDate.toDate(viewer.clock.currentTime)
+        const newTimelinePoint = Cesium.JulianDate.toDate(
+          viewer.clock.currentTime
+        )
+        timeEvents.setTime(newTimelinePoint)
+        this.timelinePoint = newTimelinePoint
       })
       const realDestroy = viewer.destroy
       viewer.destroy = () => {
@@ -322,7 +332,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import 'vue-select/src/scss/vue-select';
 @import '~/assets/css/components/datepicker';
 @import '../assets/css/components/timeline';
 </style>

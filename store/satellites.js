@@ -1,9 +1,11 @@
+import qs from 'querystring'
+
 import Types from '~/assets/data/types.json'
 import AGCountries from '~/assets/data/ag_countries.json'
 import CountryISOs from '~/assets/data/country_isos.json'
-
-const siteURL = 'https://satdash.wpengine.com'
-const siteURLLocal = 'http://satellite-dashboard.local/'
+import Orbitals from '../services/orbitals'
+import timeEventsProvider from '../services/time-events'
+const timeEvents = timeEventsProvider()
 
 const padNumber = (num) => {
   return num.toString().padStart(2, 0)
@@ -60,19 +62,27 @@ const statusTypes = {
   }
 }
 
+const getResettableDefaultState = () => {
+  return {
+    orbits: {},
+    filteredSatellites: [],
+    focusedSatellites: new Set(),
+    visibleSatellites: [],
+    visibleSatellitesType: 'catalog',
+    detailedSatellite: null,
+    targetDate: new Date(new Date().setHours(0, 0, 0, 0)),
+    selectedTimescale: timescales[1]
+  }
+}
+
 export const state = () => ({
   satellites: {},
-  orbits: {},
-  filteredSatellites: [],
-  focusedSatellites: new Set(),
-  visibleSatellites: [],
-  visibleSatellitesType: 'catalog',
-  detailedSatellite: null,
-  targetDate: new Date(new Date().setHours(0, 0, 0, 0)),
-  selectedTimescale: timescales[1],
+  longitudeSatellites: [],
+  countriesOfLaunch: [],
   timescales,
   statusTypes,
-  countriesOfJurisdiction: []
+  ITUData: [],
+  ...getResettableDefaultState()
 })
 
 export const getters = {
@@ -87,10 +97,36 @@ export const getters = {
   },
   statusTypesKeys: (state) => {
     return Object.keys(state.statusTypes)
+  },
+  ITUDataNearLongitude: (state) => (longitude) => {
+    // filter rows within +/- 0.5 longitude from target
+    const upper = longitude + 0.5
+    const lower = longitude - 0.5
+    const absLong = Math.abs(longitude)
+    const filtered = state.ITUData.filter((datum) => {
+      return datum.longitude <= upper && datum.longitude >= lower
+    }).sort((a, b) => {
+      // compare absolute diffs to get ascending dist from original longitude
+      const diffA = Math.abs(Math.abs(a.longitude) - absLong)
+      const diffB = Math.abs(Math.abs(b.longitude) - absLong)
+      return diffA - diffB
+    })
+
+    if (!filtered.length) return []
+
+    // return closest vals
+    const closest = filtered[0]
+    return filtered.filter((row) => row.longitude === closest.longitude)
   }
 }
 
 export const mutations = {
+  resetSatellitesState: (state) => {
+    const items = getResettableDefaultState()
+    Object.keys(items).forEach((key) => {
+      state[key] = items[key]
+    })
+  },
   updateSatellites: (state, satellites) => {
     state.satellites = satellites
   },
@@ -99,6 +135,7 @@ export const mutations = {
   },
   updateTargetDate: (state, newTargetDate) => {
     state.targetDate = newTargetDate
+    timeEvents.init(newTargetDate)
   },
   updateSelectedTimescale: (state, selectedTimescale) => {
     state.selectedTimescale = selectedTimescale
@@ -118,8 +155,14 @@ export const mutations = {
   updateVisibleSatellitesType: (state, type) => {
     state.visibleSatellitesType = type
   },
-  updateCountriesOfJurisdiction: (state, countries) => {
-    state.countriesOfJurisdiction = countries
+  updateLongitudeSatellites: (state, payload) => {
+    state.longitudeSatellites = payload
+  },
+  updateCountriesOfLaunch: (state, countries) => {
+    state.countriesOfLaunch = countries
+  },
+  updateITUData: (state, ituData) => {
+    state.ITUData = ituData
   }
 }
 
@@ -142,10 +185,10 @@ export const actions = {
       // Get the remaining satellites' data by fetching each additional page.
       let requestURLs = []
       for (let i = 2; i <= firstPage.totalPages; i++) {
-        requestURLs.push(`${siteURL}${url}&page=${i}`)
+        requestURLs.push(this.$axios.get(`${url}&page=${i}`))
       }
 
-      let satellites = await fetchAll(requestURLs)
+      let satellites = await Promise.all(requestURLs)
 
       satellites = satellites
         .map((request) => request.data)
@@ -157,12 +200,10 @@ export const actions = {
       let items = {}
       let visibleItems = []
       let countries = new Set()
-      let countriesOfJurisdiction = new Set()
+      let countriesOfLaunch = new Set()
 
       /**
        * Todo:
-       * Show manual overrides in ACF fields
-       * Match country with spreadsheet
        * Dynamically load in status & country spreadsheets
        */
 
@@ -173,11 +214,12 @@ export const actions = {
         .map(({ id, ag_meta, acf }) => ({
           post_id: id,
           catalog_id: acf.catalog_id,
-          acf,
-          ...ag_meta
+          ...ag_meta,
+          alternate_name: acf.name,
+          comments: acf.comments
         }))
         .forEach((sat) => {
-          let status_type = Types[sat.acf.catalog_id]?.type || 'TBA'
+          let status_type = Types[sat.catalog_id]?.type || 'TBA'
 
           if (status_type == 'payload') {
             if (sat.Status == 'active') {
@@ -188,51 +230,45 @@ export const actions = {
           }
 
           // Format country names into standard codes if we can.
-          if (!sat.countryOfJurisdiction) {
-            sat.countryOfJurisdiction = 'TBD'
+          if (!sat.countryOfLaunch) {
+            sat.countryOfLaunch = 'TBD'
           }
 
-          let countryOfJurisdiction = formatCountries(sat.countryOfJurisdiction)
-          let countryOfJurisdictionIds = countryOfJurisdiction.map((d) => d.id)
-
           let countryOfLaunch = formatCountries(sat.countryOfLaunch)
+          let countryOfLaunchIds = countryOfLaunch.map((d) => d.id)
 
-          // Store the countryOfJurisdiction so we can filter on it later.
-          countryOfJurisdiction.forEach((country) => {
+          // Store the countryOfLaunch so we can filter on it later.
+          countryOfLaunch.forEach((country) => {
             if (countries.has(country.id)) {
               return
             }
             countries.add(country.id)
-            countriesOfJurisdiction.add({
+            countriesOfLaunch.add({
               value: country.id,
               label: country.label
             })
           })
 
-          items[sat.acf.catalog_id] = {
+          items[sat.catalog_id] = {
             ...sat,
-            countryOfJurisdiction,
             countryOfLaunch,
-            countryOfJurisdictionIds,
+            countryOfLaunchIds,
             Status: status_type
           }
 
           // By default all items are visible!
-          visibleItems.push(sat.acf.catalog_id)
+          visibleItems.push(sat.catalog_id)
         })
 
-      countriesOfJurisdiction = [...countriesOfJurisdiction].sort((a, b) =>
+      countriesOfLaunch = [...countriesOfLaunch].sort((a, b) =>
         a.label.localeCompare(b.label)
       )
 
       commit('updateSatellites', Object.freeze(items))
       commit('updateVisibleSatellites', visibleItems)
-      commit(
-        'updateCountriesOfJurisdiction',
-        Object.freeze(countriesOfJurisdiction)
-      )
+      commit('updateCountriesOfLaunch', Object.freeze(countriesOfLaunch))
     } catch (err) {
-      console.log(err)
+      console.error(err)
     }
   },
 
@@ -260,35 +296,100 @@ export const actions = {
         return
       }
 
+      if (typeof orbits === 'string') {
+        orbits = JSON.parse(orbits)
+      }
+
       // Todo: Modify active satellites here to trigger watch in CesiumViewer
 
       console.log('Get updated orbits.')
+
+      // iterate over orbits and pad elements to match number of days
+      const numDays = state.selectedTimescale.value / oneDay
+      Object.keys(orbits).forEach((key) => {
+        const orbit = orbits[key]
+        if (orbit.orbits && orbit.orbits.length < numDays) {
+          // pad the orbits
+          orbit.orbits = Orbitals.PadOrbitals(
+            orbit.orbits,
+            state.targetDate,
+            numDays
+          )
+        }
+      })
       commit('updateOrbits', Object.freeze(orbits))
     } catch (err) {
       console.log(err)
     }
-  }
-}
+  },
 
-async function fetchAll(urls) {
-  return Promise.all(
-    urls.map((url) =>
-      fetch(url)
-        .then((r) => r.json())
-        .then((data) => ({ data, url }))
-        .catch((error) => ({ error, url }))
+  /**
+   *  Pulls historical and predicted orbital longitudes for requested satellites
+   * */
+  async getLongitudes({ state, commit }, { _ids }) {
+    // php server only recognizes bracket encoding for arrays
+    const ids = qs.encode(
+      { ids: _ids || state.longitudeSatellites.ids },
+      '&',
+      '[]='
     )
-  )
+
+    let historical_longitudes, predicted_longitudes
+    try {
+      ;[historical_longitudes, predicted_longitudes] = await Promise.all([
+        this.$axios.$get(`wp-json/satdash/v1/longitudes/historical?${ids}`),
+        this.$axios.$get(`wp-json/satdash/v1/longitudes/predicted?${ids}`)
+      ])
+    } catch (e) {
+      // TODO: handle error case with notification and canceling charting fns
+      console.error(e)
+    }
+
+    return {
+      historical_longitudes,
+      predicted_longitudes,
+      names: state.longitudeSatellites.names
+    }
+  },
+
+  async getITUData({ commit }) {
+    let ituData
+    try {
+      ituData = await fetch(
+        'https://docs.google.com/spreadsheets/d/e/2PACX-1vSyAhdaS0Ria8o0LNxjBKrEEd5JX4lx6ZqBw9yPpGTue62co4OS4Js7rm6ZFIQBoYs6Jj9_X08oQ9lm/pub?output=tsv'
+      )
+    } catch (e) {
+      console.error(e)
+    }
+    if (!ituData.ok) {
+      console.error('error fetching ITU data')
+      return
+    }
+    ituData = await ituData.text()
+    ituData = ituData.split('\n').map((row) => {
+      const [longitude, country, bands, link] = row.split('\t').slice(0, 4)
+      return {
+        longitude,
+        country,
+        bands,
+        link
+      }
+    })
+
+    commit('updateITUData', ituData)
+  }
 }
 
 function formatCountries(value) {
   if (value === undefined) {
     value = ''
   }
+  let countryID = value != undefined ? value : 'TBD'
 
   let iso = AGCountries[value] || value
   let options = iso.split('/').map((d) => d.trim())
   let countries = options.map((option) => ({
+    countryID: countryID,
     id: option,
     label: CountryISOs[option] || option
   }))

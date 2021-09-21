@@ -1,3 +1,5 @@
+@import 'vue-select/src/scss/vue-select';
+
 .timeline {
   &__container {
     --padding-top: #{rem(12)};
@@ -286,8 +288,15 @@
     flex: 0 0 auto;
   }
 
-  .vs__selected-options input {
-    display: none;
+  .vs__search {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    margin: -1px !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    border: 0 !important;
+    clip: rect(0 0 0 0) !important;
   }
 
   .vs__open-indicator {
@@ -296,6 +305,9 @@
   }
 
   .vs__dropdown-menu {
+    top: unset;
+    bottom: calc(100% + 1px);
+    min-width: 100px;
     background: $color-slate-700;
     border: 0;
   }

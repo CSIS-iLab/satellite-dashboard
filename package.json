@@ -29,6 +29,8 @@
     "@nuxtjs/pwa": "^3.0.0-0",
     "fibers": "^5.0.0",
     "frontmatter-markdown-loader": "^3.3.0",
+    "highcharts": "^9.1.2",
+    "highcharts-vue": "^1.4.0",
     "merge-descriptors": "^1.0.1",
     "nuxt": "^2.12.2",
     "satellite.js": "^4.0.0",
@@ -39,6 +41,7 @@
     "vue2-datepicker": "^3.8.2"
   },
   "devDependencies": {
+    "@nuxtjs/composition-api": "0.24.4",
     "@nuxtjs/eslint-config": "^2.0.0",
     "@nuxtjs/eslint-module": "^1.0.0",
     "@nuxtjs/style-resources": "^1.0.0",
@@ -57,7 +60,7 @@
     "node-sass": "^4.13.1",
     "postcss-preset-env": "^6.7.0",
     "prettier": "^1.19.1",
-    "sass": "^1.32.6",
+    "sass": "^1.33.0",
     "sass-loader": "^10.1.1",
     "stylelint": "^13.1.0",
     "stylelint-config-sass-guidelines": "^7.0.0",

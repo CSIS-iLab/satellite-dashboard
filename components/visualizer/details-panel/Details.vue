@@ -18,7 +18,7 @@
         <dt class="visually-hidden">Status</dt>
         <dd>
           <div
-            class="sat__basic sat__basic--status"
+            class="sat__basic sat__basic--status sat__basic--status-simple"
             :data-status="satellite.Status"
           >
             {{ statusTypes[satellite.Status].label }}
@@ -51,9 +51,9 @@
         </dd>
       </div>
     </dl>
+    <hr />
+    <h3>Orbit</h3>
     <div v-if="hasOrbit">
-      <hr />
-      <h3>Orbit</h3>
       <p class="details-panel__small-desc">Last updated on {{ orbitSource }}</p>
       <dl class="details__orbit">
         <div v-for="item in info.orbit" :key="item.value">
@@ -73,13 +73,58 @@
         </div>
       </dl>
     </div>
-    <!-- <hr />
-    <h3>ITU Filings</h3> -->
-    <template v-if="satellite.acf.comments">
+    <p v-else class="details-panel__small-desc">
+      This object is not yet in orbit.
+    </p>
+    <hr />
+    <h3>Nearby ITU Filings</h3>
+    <p class="details-panel__small-desc">
+      This list includes ITU filings near
+      {{ orbitalElements.Longitude.label }}.
+    </p>
+    <vue-good-table
+      v-if="ITUFilings.length"
+      :rows="ITUFilings"
+      :columns="ITUColumns"
+      style-class="vgt-table striped"
+      :sort-options="{
+        enabled: false
+      }"
+    >
+      <template slot="table-column" slot-scope="props">
+        <div class="itu__basic">
+          {{ props.column.label }}
+        </div>
+      </template>
+      <template slot="table-row" slot-scope="props">
+        <span v-if="props.column.field == 'longitude'" class="itu__longitude">
+          {{ formatLongitude(props.row.longitude) }}
+        </span>
+        <span v-else-if="props.column.field == 'country'" class="itu__country">
+          {{ props.row.country }}
+        </span>
+        <span v-else-if="props.column.field == 'bands'" class="itu__bands">
+          {{ props.row.bands }}
+        </span>
+        <span v-else-if="props.column.field == 'link'" class="itu__link">
+          <a
+            :href="props.row.link"
+            target="_blank"
+            aria-label="View ITU Filing"
+          >
+            <Icon id="link" name="external-link" focusable="false" />
+          </a>
+        </span>
+      </template>
+    </vue-good-table>
+    <p v-else class="details-panel__no-itu">
+      No ITU Filings available for this satellite.
+    </p>
+    <template v-if="satellite.comments">
       <hr />
       <h3>Comments</h3>
       <ul
-        v-for="comment in satellite.acf.comments"
+        v-for="comment in satellite.comments"
         :key="comment.date"
         class="details-panel__comments"
         role="list"
@@ -96,9 +141,15 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
+import Icon from '~/components/global/Icon.vue'
+import timeEventsProvider from '../../../services/time-events'
+const timeEvents = timeEventsProvider()
 
 export default {
+  components: {
+    Icon
+  },
   props: {
     id: {
       type: String,
@@ -117,7 +168,7 @@ export default {
       info: {
         basic: [
           {
-            value: 'Name',
+            value: 'alternate_name',
             label: 'Alternate Name(s)',
             tooltip: 'alternate-name'
           },
@@ -130,20 +181,11 @@ export default {
         advanced: [
           { value: 'Purpose', label: 'Purpose', tooltip: 'purpose' },
           { value: 'Type', label: 'Type', tooltip: 'type' },
-          {
-            value: 'countryOfJurisdiction',
-            label: 'Country of Jurisdiction',
-            tooltip: 'country-of-jurisdiction',
-            customFormatter: true,
-            formatter: function(value) {
-              return self.formatCountries(value)
-            }
-          },
           { value: 'Operator', label: 'Operator', tooltip: 'operator' },
           { value: 'LaunchDate', label: 'Launch Date', tooltip: 'launch-date' },
           {
             value: 'countryOfLaunch',
-            label: 'Country of Launch Site',
+            label: 'Country',
             tooltip: 'country-of-launch-site',
             customFormatter: true,
             formatter: function(value) {
@@ -157,12 +199,20 @@ export default {
             tooltip: 'launch-vehicle'
           },
           { value: 'Contractor', label: 'Contractor', tooltip: 'contractor' },
-          { value: 'Lifetime', label: 'Lifetime', tooltip: 'lifetime' }
+          {
+            value: 'Lifetime',
+            label: 'Lifetime (years)',
+            tooltip: 'lifetime (years)',
+            customFormatter: true,
+            formatter: function(value) {
+              return `${value} years`
+            }
+          }
         ],
         orbit: [
           {
             value: 'Apogee',
-            label: 'Apogee Altitude (km)',
+            label: 'Apogee Altitude',
             tooltip: 'apogee-altitude'
           },
           {
@@ -172,7 +222,7 @@ export default {
           },
           {
             value: 'Perigee',
-            label: 'Perigee Altitude (km)',
+            label: 'Perigee Altitude',
             tooltip: 'perigee-altitude'
           },
           { value: 'Ecc', label: 'Eccentricity', tooltip: 'eccentricity' },
@@ -180,7 +230,7 @@ export default {
           { value: 'Longitude', label: 'Longitude', tooltip: 'longitude' },
           {
             value: 'MeanMotion',
-            label: 'Mean Motion (&deg/s)',
+            label: 'Mean Motion',
             tooltip: 'mean-motion'
           },
           {
@@ -190,12 +240,12 @@ export default {
           },
           {
             value: 'OrbitalSpeed',
-            label: 'Mean Orbital Speed (km/s)',
+            label: 'Mean Orbital Speed',
             tooltip: 'orbital-speed'
           },
           {
             value: 'SMA',
-            label: 'Semi-major axis (km)',
+            label: 'Semi-major axis',
             tooltip: 'semi-major-axis'
           },
           {
@@ -208,23 +258,38 @@ export default {
         ]
       },
       earthRadius: 6378136.3, // m
-      mu: 3.986004415e14 // m^3/s^2
+      mu: 3.986004415e14, // m^3/s^2,
+      elementIndex: 0,
+      ITUColumns: [
+        {
+          label: 'Long.',
+          field: 'longitude'
+        },
+        { label: 'Co.', field: 'country' },
+        { label: 'Bands', field: 'bands' },
+        { label: 'Link', field: 'link' }
+      ]
     }
   },
   computed: {
     hasOrbit() {
-      if (!this.satelliteAllOrbits || this.satelliteAllOrbits.length === -1) {
-        return
+      if (!this.satelliteAllOrbits || !this.satelliteAllOrbits.length) {
+        return false
       }
 
       return true
     },
     satelliteAllOrbits() {
+      if (!this.orbits[this.id]) {
+        return []
+      }
       return this.orbits[this.id].orbits
     },
     orbitalElements() {
-      // TODO: Need to get the right orbit for the current timeline
-      return this.satelliteAllOrbits[0].elements
+      const index = this.satelliteAllOrbits[this.elementIndex]
+        ? this.elementIndex
+        : 0
+      return this.satelliteAllOrbits[index].elements
     },
     formattedOrbitData() {
       const Apogee = `${this.formatNumbers(
@@ -249,10 +314,10 @@ export default {
         4
       )}&deg;`
 
-      const Ecc = `${this.formatNumbers(this.orbitalElements.Ecc, 4)}&deg;`
+      const Ecc = `${this.formatNumbers(this.orbitalElements.Ecc, 4)}`
 
       const Inc = `${this.formatNumbers(
-        this.orbitalElements.Inc / Math.PI,
+        (this.orbitalElements.Inc * 180) / Math.PI,
         4
       )}&deg;`
 
@@ -308,17 +373,35 @@ export default {
       }
     },
     orbitSource() {
+      const index = this.satelliteAllOrbits[this.elementIndex]
+        ? this.elementIndex
+        : this.satelliteAllOrbits.length - 1
       return `${this.formatDate(
-        this.satelliteAllOrbits[0].source.last_updated
+        this.satelliteAllOrbits[index].source.last_updated
       )}`
     },
     currentDate() {
-      return this.formatDate(this.satelliteAllOrbits[0].epoch)
+      const index = this.satelliteAllOrbits[this.elementIndex]
+        ? this.elementIndex
+        : this.satelliteAllOrbits.length - 1
+      return this.formatDate(this.satelliteAllOrbits[index].epoch)
+    },
+    ITUFilings() {
+      return this.nearbyITU(this.orbitalElements.Longitude.degrees)
     },
     ...mapState({
       orbits: (state) => state.satellites.orbits,
       statusTypes: (state) => state.satellites.statusTypes
+    }),
+    ...mapGetters({
+      nearbyITU: 'satellites/ITUDataNearLongitude'
     })
+  },
+  mounted() {
+    timeEvents.addListener('dateChanged', this.setElementIndex)
+  },
+  beforeDestroy() {
+    timeEvents.removeListener('dateChanged', this.setElementIndex)
   },
   methods: {
     formatCountries(countryField) {
@@ -363,14 +446,23 @@ export default {
       const sDisplay = s > 0 ? s + (s == 1 ? ' second' : ' seconds') : ''
       return dDisplay + hDisplay + mDisplay + sDisplay
     },
+    setElementIndex(index) {
+      this.elementIndex = index
+    },
     formatNumbers(num, minDecimals = 0) {
       return num.toLocaleString('en-US', {
         minimumFractionDigits: minDecimals,
         maximumFractionDigits: minDecimals
       })
+    },
+    formatLongitude(longitude) {
+      return `${Math.abs(longitude)}°${longitude < 0 ? 'W' : 'E'}`
     }
   }
 }
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+@import '../assets/css/components/vgt-table';
+@import '../assets/css/components/itu-block';
+</style>

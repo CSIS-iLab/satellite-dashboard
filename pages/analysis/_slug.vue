@@ -18,20 +18,25 @@
             <tr>
               <th>Object Name</th>
               <th>Country</th>
-              <th class="desktop-only">User</th>
               <th class="desktop-only">Operator</th>
               <th></th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="sat in relatedSatellites" :key="sat.catalog_id">
-              <td>{{ sat.name }}</td>
-              <td>{{ sat.country }}</td>
-              <td class="desktop-only">{{ sat.user }}</td>
-              <td class="desktop-only">{{ sat.operator }}</td>
               <td>
-                <nuxt-link :to="`/?satids=${sat.catalog_id}`">View</nuxt-link>
+                <div
+                  class="sat__basic sat__basic--status sat__basic--status-simple"
+                  :data-status="sat.status"
+                >
+                  <div class="sat__name">
+                    {{ sat.name }}
+                  </div>
+                  <div class="sat__id">{{ sat.catalog_id }}</div>
+                </div>
               </td>
+              <td>{{ sat.country }}</td>
+              <td class="desktop-only">{{ sat.operator }}</td>
             </tr>
           </tbody>
         </table>
@@ -167,14 +172,14 @@ export default {
         if (!meta) {
           return
         }
-
         satellites.push({
           catalog_id: meta.catalog_id,
           name: meta.Name,
           country:
-            meta.countryOfJurisdiction.map((d) => d.label).join(' / ') || 'N/A',
+            meta.countryOfLaunch.map((d) => d.label).join(' / ') || 'N/A',
           user: meta.User || 'N/A',
-          operator: meta.Operator || 'N/A'
+          operator: meta.Operator || 'N/A',
+          status: meta.Status
         })
       })
 
