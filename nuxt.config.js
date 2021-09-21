@@ -15,6 +15,9 @@ const customSass = {
 
 export default {
   target: 'static',
+  googleAnalytics: {
+    id: 'UA-110820736-2'
+  },
   /*
    ** Headers of the page
    */
@@ -109,7 +112,9 @@ export default {
     // Doc: https://github.com/nuxt-community/stylelint-module
     '@nuxtjs/stylelint-module',
     // Doc: https://composition-api.nuxtjs.org/
-    '@nuxtjs/composition-api/module'
+    '@nuxtjs/composition-api/module',
+    // Doc: https://google-analytics.nuxtjs.org/setup
+    '@nuxtjs/google-analytics'
   ],
   /*
    ** Nuxt.js modules
