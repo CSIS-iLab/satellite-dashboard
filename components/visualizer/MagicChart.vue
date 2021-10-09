@@ -233,15 +233,12 @@ export default {
     },
     async longitudes() {
       let {
-        names,
         historical_longitudes,
         predicted_longitudes
       } = await this.getLongitudes({ _ids: null })
 
       // shape historical lines
       historical_longitudes = historical_longitudes.map((l, i) => {
-        l.name = names[i]
-
         this.chartOptions.series.push(l)
         return l
       })
@@ -290,7 +287,7 @@ export default {
       this.sourceInfo = historical_longitudes.map((l, i) => {
         return {
           sat_id: l.catalog_id,
-          sat_name: names[i],
+          sat_name: l.name,
           source_name: l.source_name,
           source_last_updated: l.source_last_updated
         }

@@ -347,8 +347,7 @@ export const actions = {
 
     return {
       historical_longitudes,
-      predicted_longitudes,
-      names: state.longitudeSatellites.names
+      predicted_longitudes
     }
   },
 
