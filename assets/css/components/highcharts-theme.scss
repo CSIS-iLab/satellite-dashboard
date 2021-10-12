@@ -101,12 +101,12 @@
 
 /* stylelint-disable */
 g.highcharts-navigator-series:nth-of-type(1n) {
-  stroke: $color-orange-100;
+  stroke: $color-focus;
   stroke-dasharray: 0;
 }
 
 g.highcharts-navigator-series:nth-of-type(3n) {
-  stroke: $color-focus;
+  stroke: $color-orange-100;
   stroke-dasharray: 0;
 }
 /* stylelint-enable*/
