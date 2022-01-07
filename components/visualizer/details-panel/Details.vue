@@ -205,7 +205,7 @@ export default {
             tooltip: 'lifetime (years)',
             customFormatter: true,
             formatter: function(value) {
-              return `${value} years`
+              return `${value}`
             }
           }
         ],
