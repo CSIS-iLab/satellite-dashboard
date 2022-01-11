@@ -188,7 +188,7 @@ export default {
       if (this.currentSort === 'time_of_close_approach') {
         events.sort(
           (a, b) =>
-            new Date(a[this.currentSort]) - new Date(b[this.currentSort])
+            new Date(b[this.currentSort]) - new Date(a[this.currentSort])
         )
       } else if (this.currentSort === 'min_distance_km') {
         events.sort((a, b) => a[this.currentSort] - b[this.currentSort])
