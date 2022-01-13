@@ -202,10 +202,10 @@ export default {
           {
             value: 'Lifetime',
             label: 'Lifetime (years)',
-            tooltip: 'lifetime (years)',
+            tooltip: 'lifetime',
             customFormatter: true,
             formatter: function(value) {
-              return `${value} years`
+              return `${value}`
             }
           }
         ],
