@@ -105,3 +105,9 @@
     stroke: $color-black-120;
   }
 }
+
+.highcharts-root {
+  > image {
+    color: $color-white-180;
+  }
+}
