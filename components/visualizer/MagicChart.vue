@@ -73,7 +73,7 @@ export default {
   },
   data() {
     return {
-      dataLoaded: true,
+      dataLoaded: false,
       sourceInfo: [],
       chartOptions: {
         title: { text: 'Historical Longitudes' },
