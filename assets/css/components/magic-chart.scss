@@ -108,6 +108,8 @@
 
 .highcharts-root {
   > image {
-    color: $color-white-180;
+    // color: $color-white-180;
+    filter: invert(84%) sepia(6%) saturate(109%) hue-rotate(169deg)
+      brightness(84%) contrast(81%);
   }
 }

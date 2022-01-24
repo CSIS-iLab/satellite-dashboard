@@ -92,7 +92,7 @@ export default {
                 chart.renderer
                   .image(logo, 395, 68, 200, 19)
                   .attr({
-                    opacity: 0.2
+                    opacity: 0.4
                   })
                   .add()
                 this.logoExist = true
