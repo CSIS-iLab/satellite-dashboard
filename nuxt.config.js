@@ -23,6 +23,7 @@ export default {
    */
   head: {
     titleTemplate: '%s | Satellite Dashboard',
+    title: 'Satellite Dashboard',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
