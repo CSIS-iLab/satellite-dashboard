@@ -31,12 +31,6 @@ export default {
         name: 'description',
         content: process.env.npm_package_description || ''
       },
-      { hid: 'og:title', property: 'og:title', content: 'Satellite Dashboard' },
-      {
-        hid: 'og:site_name',
-        property: 'og:site_name',
-        content: 'Satellite Dashboard'
-      },
       { name: 'msapplication-TileColor', content: '#1c1c1c' },
       { name: 'theme-color', content: '#1c1c1c' }
     ],
