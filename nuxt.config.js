@@ -44,6 +44,27 @@ export default {
         content:
           'https://satdash.wpengine.com/wp-content/uploads/2022/01/Screen-Shot-2022-01-26-at-9.29.17-AM.png'
       },
+      {
+        name: 'twitter:title',
+        content: 'Satellite Dashboard'
+      },
+      {
+        name: 'twitter:card',
+        content: 'summary_large_image'
+      },
+      {
+        name: 'twitter:description',
+        content: process.env.npm_package_description || ''
+      },
+      {
+        name: 'twitter:creator',
+        content: '@satdashboard'
+      },
+      {
+        name: 'twitter:image',
+        content:
+          'https://satdash.wpengine.com/wp-content/uploads/2022/01/Screen-Shot-2022-01-26-at-9.29.17-AM.png'
+      },
       { name: 'msapplication-TileColor', content: '#1c1c1c' },
       { name: 'theme-color', content: '#1c1c1c' }
     ],
