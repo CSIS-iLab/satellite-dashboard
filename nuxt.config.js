@@ -42,6 +42,7 @@ export default {
         hid: 'og:image',
         property: 'og:image',
         content:
+          process.env.BASE_URL +
           '/wp-content/uploads/2022/01/Screen-Shot-2022-01-26-at-9.29.17-AM.png'
       },
       { name: 'msapplication-TileColor', content: '#1c1c1c' },
