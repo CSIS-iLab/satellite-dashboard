@@ -38,6 +38,12 @@ export default {
         property: 'og:site_name',
         content: 'Satellite Dashboard'
       },
+      {
+        hid: 'og:image',
+        property: 'og:image',
+        content:
+          '/wp-content/uploads/2022/01/Screen-Shot-2022-01-26-at-9.29.17-AM.png'
+      },
       { name: 'msapplication-TileColor', content: '#1c1c1c' },
       { name: 'theme-color', content: '#1c1c1c' }
     ],
