@@ -45,28 +45,22 @@ export default {
           'https://satdash.wpengine.com/wp-content/uploads/2022/01/Screen-Shot-2022-01-26-at-9.29.17-AM.png'
       },
       {
-        hid: 'twitter:card',
-        name: 'twitter:card',
-        content: 'summary_large_image'
-      },
-      { hid: 'twitter:site', name: 'twitter:site', content: '@nuxt_js' },
-      {
-        hid: 'twitter:url',
-        name: 'twitter:url',
-        content: 'https://satdash.wpengine.com'
-      },
-      {
-        hid: 'twitter:title',
         name: 'twitter:title',
         content: 'Satellite Dashboard'
       },
       {
-        hid: 'twitter:description',
+        name: 'twitter:card',
+        content: 'summary_large_image'
+      },
+      {
         name: 'twitter:description',
         content: process.env.npm_package_description || ''
       },
       {
-        hid: 'twitter:image',
+        name: 'twitter:creator',
+        content: '@satdashboard'
+      },
+      {
         name: 'twitter:image',
         content:
           'https://satdash.wpengine.com/wp-content/uploads/2022/01/Screen-Shot-2022-01-26-at-9.29.17-AM.png'
