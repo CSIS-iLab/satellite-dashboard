@@ -175,7 +175,7 @@ export default {
   mounted() {
     this.$refs.vcViewer.createPromise.then((cesiumInstance) => {
       cesiumService.registerInstance(cesiumInstance)
-      console.log('viewer is loaded.')
+      // console.log('viewer is loaded.')
     })
   },
   methods: {
@@ -244,7 +244,7 @@ export default {
       })
     },
     ready(cesiumInstance) {
-      console.log('is ready')
+      // console.log('is ready')
       // Set up the Cesium Viewer
       Cesium = cesiumInstance.Cesium
       viewer = cesiumInstance.viewer
