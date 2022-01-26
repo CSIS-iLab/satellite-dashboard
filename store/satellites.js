@@ -302,7 +302,7 @@ export const actions = {
 
       // Todo: Modify active satellites here to trigger watch in CesiumViewer
 
-      console.log('Get updated orbits.')
+      // console.log('Get updated orbits.')
 
       // iterate over orbits and pad elements to match number of days
       const numDays = state.selectedTimescale.value / oneDay
