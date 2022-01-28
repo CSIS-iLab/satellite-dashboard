@@ -276,16 +276,18 @@ export default {
     return {
       title: this.post.title.rendered,
       meta: [
-        { hid: 'og:image' },
-        { property: 'og:image' },
         {
-          hid: 'description',
-          name: 'description',
+          hid: 'og:description',
+          property: 'og:description',
           content: this.post.excerpt || ''
         },
         {
           hid: 'og:title',
           property: 'og:title',
+          content: this.post.title.rendered || ''
+        },
+        {
+          name: 'twitter:title',
           content: this.post.title.rendered || ''
         }
       ],
