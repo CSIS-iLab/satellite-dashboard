@@ -276,17 +276,13 @@ export default {
     return {
       title: this.post.title.rendered,
       meta: [
+        { hid: 'og:image' },
+        { property: 'og:image' },
         {
-          hid: 'og:image',
-          property: 'og:image',
           content:
             this.post.image || 'https://satellitedashboard.org/social.png'
         },
-        {
-          name: 'twitter:image',
-          content:
-            this.post.image || 'https://satellitedashboard.org/social.png'
-        }
+        { 'twitter:image': this.post.image }
       ],
       bodyAttrs: {
         class: 'page-layout'

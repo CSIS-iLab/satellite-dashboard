@@ -59,6 +59,10 @@ export default {
         name: 'twitter:creator',
         content: '@satdashboard'
       },
+      {
+        name: 'twitter:image',
+        content: 'https://satellitedashboard.org/social.png'
+      },
       { name: 'msapplication-TileColor', content: '#1c1c1c' },
       { name: 'theme-color', content: '#1c1c1c' }
     ],
