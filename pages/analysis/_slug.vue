@@ -279,7 +279,7 @@ export default {
         {
           hid: 'og:description',
           property: 'og:description',
-          content: this.post.excerpt || ''
+          content: this.post.excerpt.rendered || ''
         },
         {
           hid: 'og:title',
