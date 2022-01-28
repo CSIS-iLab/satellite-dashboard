@@ -41,8 +41,7 @@ export default {
       {
         hid: 'og:image',
         property: 'og:image',
-        content:
-          'https://satdash.wpengine.com/wp-content/uploads/2022/01/Screen-Shot-2022-01-26-at-9.29.17-AM.png'
+        content: '/social.png'
       },
       {
         name: 'twitter:title',
@@ -62,8 +61,7 @@ export default {
       },
       {
         name: 'twitter:image',
-        content:
-          'https://satdash.wpengine.com/wp-content/uploads/2022/01/Screen-Shot-2022-01-26-at-9.29.17-AM.png'
+        content: '/social.png'
       },
       { name: 'msapplication-TileColor', content: '#1c1c1c' },
       { name: 'theme-color', content: '#1c1c1c' }
