@@ -276,13 +276,14 @@ export default {
     return {
       title: this.post.title.rendered,
       meta: [
-        { hid: 'og:image' },
-        { property: 'og:image' },
         {
-          'twitter:image':
+          hid: 'og:image',
+          property: 'og:image',
+          content:
             this.post.image || 'https://satellitedashboard.org/social.png'
         },
         {
+          name: 'twitter:image',
           content:
             this.post.image || 'https://satellitedashboard.org/social.png'
         }
