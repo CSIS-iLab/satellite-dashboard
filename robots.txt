@@ -1,7 +1,0 @@
-User-agent: *
-Disallow: /wp-admin/
-Allow: /wp-admin/admin-ajax.php
-
-User-agent: Twitterbot
-Disallow: *
-Allow: wp-content/uploads/2022/01/

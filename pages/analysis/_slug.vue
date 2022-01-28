@@ -275,6 +275,11 @@ export default {
   head() {
     return {
       title: this.post.title.rendered,
+      meta: [
+        { hid: 'og:image' },
+        { property: 'og:image' },
+        { 'twitter:image': this.post.image }
+      ],
       bodyAttrs: {
         class: 'page-layout'
       }
