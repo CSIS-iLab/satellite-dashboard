@@ -279,8 +279,14 @@ export default {
         { hid: 'og:image' },
         { property: 'og:image' },
         {
-          'twitter:image':
-            this.post.image || 'https://satellitedashboard.org/social.png'
+          hid: 'description',
+          name: 'description',
+          content: this.post.excerpt || ''
+        },
+        {
+          hid: 'og:title',
+          property: 'og:title',
+          content: this.post.title.rendered
         }
       ],
       bodyAttrs: {
