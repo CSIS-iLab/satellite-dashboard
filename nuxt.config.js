@@ -41,7 +41,7 @@ export default {
       {
         hid: 'og:image',
         property: 'og:image',
-        content: '/social.png'
+        content: 'https://satellitedashboard.org/social.png'
       },
       {
         name: 'twitter:title',
@@ -61,7 +61,7 @@ export default {
       },
       {
         name: 'twitter:image',
-        content: '/social.png'
+        content: 'https://satellitedashboard.org/social.png'
       },
       { name: 'msapplication-TileColor', content: '#1c1c1c' },
       { name: 'theme-color', content: '#1c1c1c' }
