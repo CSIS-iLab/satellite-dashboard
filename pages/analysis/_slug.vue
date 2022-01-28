@@ -278,7 +278,10 @@ export default {
       meta: [
         { hid: 'og:image' },
         { property: 'og:image' },
-        { 'twitter:image': this.post.image }
+        {
+          'twitter:image':
+            this.post.image || 'https://satellitedashboard.org/social.png'
+        }
       ],
       bodyAttrs: {
         class: 'page-layout'
