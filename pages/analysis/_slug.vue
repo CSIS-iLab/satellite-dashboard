@@ -286,7 +286,7 @@ export default {
         {
           hid: 'og:title',
           property: 'og:title',
-          content: this.post.title.rendered
+          content: this.post.title.rendered || ''
         }
       ],
       bodyAttrs: {
