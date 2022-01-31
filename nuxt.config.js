@@ -43,18 +43,10 @@ export default {
         property: 'og:image',
         content: 'https://satellitedashboard.org/social.png'
       },
-      // {
-      //   name: 'twitter:title',
-      //   content: 'Satellite Dashboard'
-      // },
       {
         name: 'twitter:card',
         content: 'summary_large_image'
       },
-      // {
-      //   name: 'twitter:description',
-      //   content: process.env.npm_package_description || ''
-      // },
       {
         name: 'twitter:creator',
         content: '@satdashboard'
