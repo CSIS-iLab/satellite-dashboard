@@ -289,6 +289,11 @@ export default {
         {
           name: 'twitter:title',
           content: this.post.title.rendered || ''
+        },
+        {
+          hid: 'og:image',
+          property: 'og:image',
+          content: this.post.image || ''
         }
       ],
       bodyAttrs: {
