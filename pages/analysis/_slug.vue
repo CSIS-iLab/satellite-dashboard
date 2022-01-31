@@ -291,6 +291,10 @@ export default {
           content: this.post.title.rendered || ''
         },
         {
+          name: 'twitter:description',
+          content: this.post.excerpt.rendered || ''
+        },
+        {
           hid: 'og:image',
           property: 'og:image',
           content: this.post.image || ''
