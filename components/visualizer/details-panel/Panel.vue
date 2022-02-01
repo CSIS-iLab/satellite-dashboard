@@ -64,7 +64,7 @@
       </TabList>
     </header>
 
-    <div class="details-panel__content">
+    <div class="scroller details-panel__content">
       <TabPanel tab="details" scope="detailsPanel">
         <Details :id="id" :satellite="satellite" />
       </TabPanel>

@@ -42,7 +42,7 @@
         </TabList>
       </header>
 
-      <div class="updates-panel__content">
+      <div class="scroller updates-panel__content">
         <TabPanel tab="events" scope="latestUpdates">
           <p>
             Learn more about the latest instances of unsual satellite behavior.

@@ -26,7 +26,7 @@ export default {
     return {
       title: this.title,
       bodyAttrs: {
-        class: `page-layout page--${this.$route.name}`
+        class: `page-layout page--${this.$route.name} scroller`
       }
     }
   }
