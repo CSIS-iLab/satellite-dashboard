@@ -66,23 +66,7 @@
     margin-top: rem(24);
     // margin-bottom: calc(#{$size__updates-bottom-pos} + #{rem(50)});
     margin-bottom: calc(#{rem($size__updates-bottom-pos)} - #{rem(30)});
-    // overflow: auto;
-    overflow: scroll;
-
-    // in the future we will need to replace this with: "scrollbar-width: none;"
-    // more info https://www.w3.org/TR/2021/CR-css-scrollbars-1-20211207/
-    // &::-webkit-scrollbar {
-    //   width: 0;
-    // }
-
-    // &::-webkit-scrollbar-track {
-    //   box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    // }
-
-    // &::-webkit-scrollbar-thumb {
-    //   background-color: #333;
-    //   outline: 1px solid #b3b3b3;
-    // }
+    overflow: auto;
   }
 
   p {

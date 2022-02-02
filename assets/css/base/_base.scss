@@ -79,7 +79,7 @@ a {
   &::-webkit-scrollbar-thumb {
     background-color: $color-white-150;
     background-clip: padding-box;
-    border: 4px solid $color-black-000;
+    border: 4px solid transparent;
     border-radius: 9999px;
   }
 }
