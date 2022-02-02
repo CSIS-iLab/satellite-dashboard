@@ -29,7 +29,7 @@
           </TabList>
         </header>
 
-        <div class="scroller help__panel-content">
+        <div class="help__panel-content">
           <TabPanel tab="about" scope="helpPanel">
             <dl>
               <div class="help__term--columns">

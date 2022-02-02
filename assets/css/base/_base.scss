@@ -68,10 +68,10 @@ a {
   outline: thin solid $color-focus;
 }
 
-.scroller {
-  // Probably in the future we will need to replace this with: "scrollbar-width: none;"
-  // For now this is experimental and is only supported by firefox
-  // more info https://www.w3.org/TR/2021/CR-css-scrollbars-1-20211207/
+// Probably in the future we will need to replace this with: "scrollbar-width: none;"
+// For now this is experimental and is only supported by firefox
+// more info https://www.w3.org/TR/2021/CR-css-scrollbars-1-20211207/
+* {
   &::-webkit-scrollbar {
     width: 14px;
   }
@@ -79,7 +79,7 @@ a {
   &::-webkit-scrollbar-thumb {
     background-color: $color-white-150;
     background-clip: padding-box;
-    border: 5px solid rgba(0, 0, 0, 0);
+    border: 4px solid $color-black-000;
     border-radius: 9999px;
   }
 }
