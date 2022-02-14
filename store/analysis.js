@@ -59,7 +59,8 @@ export const actions = {
             acf,
             categories,
             country,
-            user
+            user,
+            yoast_head_json
           }) => {
             const formattedContent = contentFormatter(content.rendered)
             return {
@@ -79,7 +80,8 @@ export const actions = {
               user,
               footnotes: formattedContent.footnotes,
               satellites: getSatellites(acf),
-              searchable: searchableContent(title, content)
+              searchable: searchableContent(title, content),
+              image: yoast_head_json.og_image[0]?.url
             }
           }
         )

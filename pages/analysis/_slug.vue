@@ -275,6 +275,31 @@ export default {
   head() {
     return {
       title: this.post.title.rendered,
+      meta: [
+        {
+          hid: 'og:description',
+          property: 'og:description',
+          content: this.post.excerpt.rendered || ''
+        },
+        {
+          hid: 'og:title',
+          property: 'og:title',
+          content: this.post.title.rendered || ''
+        },
+        {
+          name: 'twitter:title',
+          content: this.post.title.rendered || ''
+        },
+        {
+          name: 'twitter:description',
+          content: this.post.excerpt.rendered || ''
+        },
+        {
+          hid: 'og:image',
+          property: 'og:image',
+          content: this.post.image || ''
+        }
+      ],
       bodyAttrs: {
         class: 'page-layout'
       }

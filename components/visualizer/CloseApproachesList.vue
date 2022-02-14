@@ -232,15 +232,14 @@ export default {
       // this component is called from Key Events and Details panels
       // this function regularizes the payload delivered to the store
 
-      const payloadObj = { ids: [], names: [], zoom: '1wk' }
-      if (this.id && this.name) {
+      // call chart w default zoom 1wk from this component
+      const payloadObj = { ids: [], zoom: '1wk' }
+      if (this.id) {
         payloadObj.ids.push(this.id)
-        payloadObj.names.push(this.name)
       }
 
       const payload = objects.reduce((a, v) => {
         a.ids.push(v.catalog_id)
-        a.names.push(v.Name)
         return a
       }, payloadObj)
 

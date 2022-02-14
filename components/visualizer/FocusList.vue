@@ -186,7 +186,7 @@ export default {
       this.cancelEditing()
     },
     showSatelliteDetails(e, catalog_id) {
-      console.log('show details')
+      // console.log('show details')
       this.updateDetailedSatellite(catalog_id)
     },
     async shareView() {

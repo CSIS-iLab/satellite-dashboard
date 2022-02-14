@@ -15,11 +15,15 @@ const customSass = {
 
 export default {
   target: 'static',
+  googleAnalytics: {
+    id: 'UA-110820736-2'
+  },
   /*
    ** Headers of the page
    */
   head: {
     titleTemplate: '%s | Satellite Dashboard',
+    title: 'Satellite Dashboard',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -27,6 +31,29 @@ export default {
         hid: 'description',
         name: 'description',
         content: process.env.npm_package_description || ''
+      },
+      { hid: 'og:title', property: 'og:title', content: 'Satellite Dashboard' },
+      {
+        hid: 'og:site_name',
+        property: 'og:site_name',
+        content: 'Satellite Dashboard'
+      },
+      {
+        hid: 'og:image',
+        property: 'og:image',
+        content: 'https://satellitedashboard.org/social.png'
+      },
+      {
+        name: 'twitter:card',
+        content: 'summary_large_image'
+      },
+      {
+        name: 'twitter:creator',
+        content: '@satdashboard'
+      },
+      {
+        name: 'twitter:image',
+        content: 'https://satellitedashboard.org/social.png'
       },
       { name: 'msapplication-TileColor', content: '#1c1c1c' },
       { name: 'theme-color', content: '#1c1c1c' }
@@ -109,7 +136,9 @@ export default {
     // Doc: https://github.com/nuxt-community/stylelint-module
     '@nuxtjs/stylelint-module',
     // Doc: https://composition-api.nuxtjs.org/
-    '@nuxtjs/composition-api/module'
+    '@nuxtjs/composition-api/module',
+    // Doc: https://google-analytics.nuxtjs.org/setup
+    '@nuxtjs/google-analytics'
   ],
   /*
    ** Nuxt.js modules

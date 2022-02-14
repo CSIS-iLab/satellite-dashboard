@@ -1,7 +1,7 @@
 {
   "name": "satellite-dashboard",
   "version": "1.0.0",
-  "description": "Website for The Satellite Dashboard.",
+  "description": "The Satellite Dashboard collects and analyzes space situational awareness data on space object activities of interest creating an enhanced, common understanding of the near-Earth space environment.",
   "author": "CSIS iDeas Lab",
   "private": true,
   "scripts": {
@@ -44,6 +44,7 @@
     "@nuxtjs/composition-api": "0.24.4",
     "@nuxtjs/eslint-config": "^2.0.0",
     "@nuxtjs/eslint-module": "^1.0.0",
+    "@nuxtjs/google-analytics": "^2.4.0",
     "@nuxtjs/style-resources": "^1.0.0",
     "@nuxtjs/stylelint-module": "^3.1.0",
     "babel-eslint": "^10.0.1",
