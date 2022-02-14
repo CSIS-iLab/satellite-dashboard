@@ -26,6 +26,9 @@
             <TabActivator tab="view" scope="helpPanel" class="tab--horizontal">
               Interface Guide
             </TabActivator>
+            <TabActivator tab="video" scope="helpPanel" class="tab--horizontal">
+              Video Guide
+            </TabActivator>
           </TabList>
         </header>
 
@@ -252,6 +255,17 @@
                   shadow on the earth
                 </li>
               </ul>
+            </div>
+          </TabPanel>
+          <TabPanel tab="video" scope="helpPanel">
+            <h2 class="panel__title">Video Demo</h2>
+            <div class="help__video">
+              <iframe
+                src="https://player.vimeo.com/video/674999518?h=49edd722d1&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+                frameborder="0"
+                allow="autoplay; fullscreen; picture-in-picture"
+                allowfullscreen
+              ></iframe>
             </div>
           </TabPanel>
         </div>
