@@ -27,7 +27,7 @@
               Interface Guide
             </TabActivator>
             <TabActivator tab="video" scope="helpPanel" class="tab--horizontal">
-              Video Guide
+              Video
             </TabActivator>
           </TabList>
         </header>
