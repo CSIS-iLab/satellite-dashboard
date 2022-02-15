@@ -261,6 +261,15 @@
             <h2 class="panel__title">Video Demo</h2>
             <div class="help__video">
               <iframe
+                src="https://player.vimeo.com/video/665415888?h=9fcaa4b426&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+                frameborder="0"
+                allow="autoplay; fullscreen; picture-in-picture"
+                allowfullscreen
+              ></iframe>
+            </div>
+            <h2 class="panel__title">Video Demo 2</h2>
+            <div class="help__video">
+              <iframe
                 src="https://player.vimeo.com/video/674999518?h=49edd722d1&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
                 frameborder="0"
                 allow="autoplay; fullscreen; picture-in-picture"
