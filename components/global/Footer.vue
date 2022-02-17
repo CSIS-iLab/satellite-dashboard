@@ -3,7 +3,7 @@
     <div class="footer__main">
       <SiteLogo />
       <p class="footer__desc">
-        The Satellite Dashboard is an analyis and visualization tool to help
+        The Satellite Dashboard is an analysis and visualization tool to help
         readers better understand space situational awareness (SSA) data, with a
         focus on particularly interesting on-orbit activities. Learn more
         <nuxt-link to="/about">here</nuxt-link>.
