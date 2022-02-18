@@ -207,8 +207,8 @@ export default {
       const timescale = this.selectedTimescale.id
       viewParams.set('timescale', timescale)
 
-      const url = `${location.href}?${viewParams.toString()}`
-
+      const url = `${location.origin}?${viewParams.toString()}`
+      console.log(url)
       try {
         await navigator.clipboard.writeText(url)
         const that = this
