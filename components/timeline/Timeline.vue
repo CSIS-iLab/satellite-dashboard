@@ -154,6 +154,15 @@ export default {
     }
   },
   data() {
+    console.log('regular', this.selectedDate)
+    console.log('UTC', this.selectedDate.toUTCString())
+
+    const selectedDateUTC = new Date(
+      this.selectedDate.getUTCMonth(),
+      this.selectedDate.getUTCDate(),
+      this.selectedDate.getUTCFullYear()
+    )
+    console.log(selectedDateUTC)
     return {
       chosenDate: this.selectedDate,
       chosenTimescale: this.selectedTimescale,

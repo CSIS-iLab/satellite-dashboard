@@ -66,7 +66,9 @@ export default {
   },
   async created() {
     if (this.$route.query.date) {
-      this.getOrbits({ date: this.$route.query.date })
+      let urlDate = new Date(this.$route.query.date).toUTCString()
+      console.log(urlDate)
+      this.getOrbits({ date: urlDate })
     } else {
       this.getOrbits()
     }

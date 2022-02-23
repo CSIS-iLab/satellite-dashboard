@@ -3,16 +3,10 @@ const oneDay = 24 * 60 * 60 * 1000
 export default class Orbitals {
   static PadOrbitals(orbitals, targetDate, numDays) {
     targetDate = new Date(
-      Date.UTC(
-        targetDate.getFullYear(),
-        targetDate.getMonth(),
-        targetDate.getDay(),
-        0,
-        0,
-        0
-      )
+      targetDate.getUTCMonth(),
+      targetDate.getUTCDate(),
+      targetDate.getUTCFullYear()
     ).valueOf()
-    // targetDate = targetDate.valueOf()
     const paddedOrbitals = []
     let pointer = 0
     for (let i = 0; i < numDays; i++) {
