@@ -186,7 +186,6 @@ export default {
       this.cancelEditing()
     },
     showSatelliteDetails(e, catalog_id) {
-      // console.log('show details')
       this.updateDetailedSatellite(catalog_id)
     },
     async shareView() {
@@ -207,8 +206,7 @@ export default {
       const timescale = this.selectedTimescale.id
       viewParams.set('timescale', timescale)
 
-      const url = `${location.href}?${viewParams.toString()}`
-
+      const url = `${location.origin}?${viewParams.toString()}`
       try {
         await navigator.clipboard.writeText(url)
         const that = this

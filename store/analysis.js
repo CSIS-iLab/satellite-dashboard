@@ -188,7 +188,7 @@ export const actions = {
 function contentFormatter(content) {
   let formattedContent = {}
   const content_parsed = parse(content)
-  // console.log(content)
+
   const linksToGlossaryFormatted = glossaryLinkFormatter(
     content_parsed,
     content
