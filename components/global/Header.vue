@@ -66,7 +66,6 @@ export default {
   },
   methods: {
     openNav() {
-      // console.log(this.$nuxt.$data.layoutName)
       this.navIsOpen = true
     },
     closeNav() {
