@@ -278,7 +278,7 @@ export const actions = {
   async getOrbits({ state, commit }, payload) {
     if (payload && payload.date) {
       const date = new Date(payload.date)
-      commit('updateTargetDate', date)
+      commit('updateTargetDate', new Date(date.toISOString().slice(0, -1)))
     }
     try {
       const endDate = new Date(state.targetDate)
@@ -301,8 +301,6 @@ export const actions = {
       }
 
       // Todo: Modify active satellites here to trigger watch in CesiumViewer
-
-      // console.log('Get updated orbits.')
 
       // iterate over orbits and pad elements to match number of days
       const numDays = state.selectedTimescale.value / oneDay
