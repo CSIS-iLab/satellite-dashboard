@@ -259,22 +259,44 @@
           </TabPanel>
           <TabPanel tab="video" scope="helpPanel">
             <h2 class="panel__title">Video Demo</h2>
-            <div class="help__video">
-              <iframe
-                src="https://player.vimeo.com/video/665415888?h=9fcaa4b426&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
-                frameborder="0"
-                allow="autoplay; fullscreen; picture-in-picture"
-                allowfullscreen
-              ></iframe>
+            <div>
+              <a
+                href="https://vimeo.com/665415888/9fcaa4b426"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <div class="help__video-thumb">
+                  <div class="help__video-thumb-btn">
+                    <Button class="help__btn-play">
+                      <Icon d="play" name="play" />
+                    </Button>
+                  </div>
+                  <img
+                    src="~/assets/img/video-sd-thumb.jpg"
+                    alt="Video Thumbnail"
+                  />
+                </div>
+              </a>
             </div>
             <h2 class="panel__title">Video Demo 2</h2>
-            <div class="help__video">
-              <iframe
-                src="https://player.vimeo.com/video/674999518?h=49edd722d1&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
-                frameborder="0"
-                allow="autoplay; fullscreen; picture-in-picture"
-                allowfullscreen
-              ></iframe>
+            <div>
+              <a
+                href="https://vimeo.com/676047318/ae8c60cef6"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <div class="help__video-thumb">
+                  <div class="help__video-thumb-btn">
+                    <Button class="help__btn-play">
+                      <Icon d="play" name="play" />
+                    </Button>
+                  </div>
+                  <img
+                    src="~/assets/img/video-sd-thumb.jpg"
+                    alt="Video Thumbnail"
+                  />
+                </div>
+              </a>
             </div>
           </TabPanel>
         </div>
