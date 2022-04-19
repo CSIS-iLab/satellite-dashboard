@@ -109,11 +109,8 @@ import Button from '~/components/global/Button'
 import Icon from '~/components/global/Icon'
 import StatusTypesLegend from '~/components/global/StatusTypesLegend'
 
-// import cesiumServiceProvider from '../../services/cesium-service'
-// import timeEventProvider from '../../services/time-events'
-
-import cesiumServiceProvider from '~/services/cesium-service'
-import timeEventProvider from '~/services/time-events'
+import cesiumServiceProvider from '../../services/cesium-service'
+import timeEventProvider from '../../services/time-events'
 const cesiumService = cesiumServiceProvider()
 const timeEvents = timeEventProvider()
 const playbackSpeeds = [
@@ -336,5 +333,5 @@ export default {
 
 <style lang="scss">
 @import '~/assets/css/components/datepicker';
-@import '~/assets/css/components/timeline';
+@import '../assets/css/components/timeline';
 </style>

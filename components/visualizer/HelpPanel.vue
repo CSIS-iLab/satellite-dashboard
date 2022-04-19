@@ -258,10 +258,10 @@
             </div>
           </TabPanel>
           <TabPanel tab="video" scope="helpPanel">
-            <h2 class="panel__title">Introduction to Satellite Dashboard</h2>
+            <h2 class="panel__title">Video Demo</h2>
             <div>
               <a
-                href="https://youtu.be/8klKjU97dog"
+                href="https://vimeo.com/665415888/9fcaa4b426"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -272,18 +272,16 @@
                     </Button>
                   </div>
                   <img
-                    src="~/assets/img/Introducing-the-Satellite-Dashboard.jpg"
+                    src="~/assets/img/video-sd-thumb.jpg"
                     alt="Video Thumbnail"
                   />
                 </div>
               </a>
             </div>
-            <h2 class="panel__title">
-              Satellite Dashboard: Identifying Key Events
-            </h2>
+            <h2 class="panel__title">Video Demo 2</h2>
             <div>
               <a
-                href="https://youtu.be/8xkqnNIgIvk"
+                href="https://vimeo.com/676047318/ae8c60cef6"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -294,7 +292,7 @@
                     </Button>
                   </div>
                   <img
-                    src="~/assets/img/understanding-the-Satellite-Dashboard.jpg"
+                    src="~/assets/img/video-sd-thumb.jpg"
                     alt="Video Thumbnail"
                   />
                 </div>
