@@ -26,6 +26,9 @@
             <TabActivator tab="view" scope="helpPanel" class="tab--horizontal">
               Interface Guide
             </TabActivator>
+            <TabActivator tab="video" scope="helpPanel" class="tab--horizontal">
+              Videos
+            </TabActivator>
           </TabList>
         </header>
 
@@ -252,6 +255,50 @@
                   shadow on the earth
                 </li>
               </ul>
+            </div>
+          </TabPanel>
+          <TabPanel tab="video" scope="helpPanel">
+            <h2 class="panel__title">Introduction to Satellite Dashboard</h2>
+            <div>
+              <a
+                href="https://youtu.be/8klKjU97dog"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <div class="help__video-thumb">
+                  <div class="help__video-thumb-btn">
+                    <Button class="help__btn-play">
+                      <Icon d="play" name="play" />
+                    </Button>
+                  </div>
+                  <img
+                    src="~/assets/img/Introducing-the-Satellite-Dashboard.jpg"
+                    alt="Video Thumbnail"
+                  />
+                </div>
+              </a>
+            </div>
+            <h2 class="panel__title">
+              Satellite Dashboard: Identifying Key Events
+            </h2>
+            <div>
+              <a
+                href="https://youtu.be/8xkqnNIgIvk"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <div class="help__video-thumb">
+                  <div class="help__video-thumb-btn">
+                    <Button class="help__btn-play">
+                      <Icon d="play" name="play" />
+                    </Button>
+                  </div>
+                  <img
+                    src="~/assets/img/understanding-the-Satellite-Dashboard.jpg"
+                    alt="Video Thumbnail"
+                  />
+                </div>
+              </a>
             </div>
           </TabPanel>
         </div>
