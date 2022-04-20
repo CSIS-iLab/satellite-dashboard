@@ -300,6 +300,28 @@
                 </div>
               </a>
             </div>
+            <h2 class="panel__title">
+              How to Analyze Satellite Behavior with the Satellite Dashboard
+            </h2>
+            <div>
+              <a
+                href="https://youtu.be/8WS8QJwB-Qk"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <div class="help__video-thumb">
+                  <div class="help__video-thumb-btn">
+                    <Button class="help__btn-play">
+                      <Icon d="play" name="play" />
+                    </Button>
+                  </div>
+                  <img
+                    src="~/assets/img/How-to-Analyze-Satellite-Behavior-with-the-Satellite-Dashboard.jpg"
+                    alt="Video Thumbnail"
+                  />
+                </div>
+              </a>
+            </div>
           </TabPanel>
         </div>
       </TabWrapper>
