@@ -236,7 +236,7 @@ export default {
       if (this.id) {
         payloadObj.ids.push(this.id)
       }
-
+      console.log(payloadObj.ids)
       const payload = objects.reduce((a, v) => {
         a.ids.push(v.catalog_id)
         return a
