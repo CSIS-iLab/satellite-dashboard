@@ -1,8 +1,0 @@
-{
-  "editor.formatOnSave": true,
-  "vetur.validation.template": false,
-  "vetur.format.defaultFormatter.html": "prettier",
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
-  }
-}
