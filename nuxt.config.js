@@ -1,22 +1,24 @@
 const path = require('path')
-import Fiber from 'fibers'
 import Sass from 'sass'
 import axiosRetry from 'axios-retry'
+import { defineNuxtConfig } from '@nuxt/bridge'
 
 const customSass = {
   implementation: Sass,
   // webpackImporter: false,
   sassOptions: {
-    fiber: Fiber,
     includePaths: ['node_modules', 'node_modules/vue2-datepicker/scss/']
   },
   sourceMap: process.env.NODE_ENV === 'production'
 }
 
-export default {
+export default defineNuxtConfig({
   target: 'static',
   googleAnalytics: {
     id: 'UA-110820736-2'
+  },
+  dir: {
+    public: 'static'
   },
   /*
    ** Headers of the page
@@ -130,20 +132,20 @@ export default {
   /*
    ** Nuxt.js dev-modules
    */
-  buildModules: [
-    // Doc: https://github.com/nuxt-community/eslint-module
-    '@nuxtjs/eslint-module',
-    // Doc: https://github.com/nuxt-community/stylelint-module
-    '@nuxtjs/stylelint-module',
-    // Doc: https://composition-api.nuxtjs.org/
-    '@nuxtjs/composition-api/module',
-    // Doc: https://google-analytics.nuxtjs.org/setup
-    '@nuxtjs/google-analytics'
-  ],
   /*
    ** Nuxt.js modules
    */
-  modules: ['@nuxtjs/pwa', '@nuxtjs/style-resources', '@nuxtjs/axios'],
+  modules: [
+    // Doc: https://github.com/nuxt-community/eslint-module
+    '@nuxtjs/eslint-module/index',
+    // Doc: https://github.com/nuxt-community/stylelint-module
+    '@nuxtjs/stylelint-module/index',
+    // Doc: https://google-analytics.nuxtjs.org/setup
+    '@nuxtjs/google-analytics/index',
+    '@nuxtjs/pwa',
+    '@nuxtjs/style-resources',
+    '@nuxtjs/axios'
+  ],
   styleResources: {
     scss: [
       './assets/css/abstracts/index.scss'
@@ -173,20 +175,22 @@ export default {
     postcss: {
       // Add plugin names as key and arguments as value
       // Install them before as dependencies with npm or yarn
-      plugins: {
-        /* More info at https://cssnano.co/ */
-        cssnano: {
-          preset: [
-            'default',
-            {
-              autoprefixer: false
-            },
-            {
-              discardComments: {
-                removeAll: true
+      postcssOptions: {
+        plugins: {
+          /* More info at https://cssnano.co/ */
+          cssnano: {
+            preset: [
+              'default',
+              {
+                autoprefixer: false
+              },
+              {
+                discardComments: {
+                  removeAll: true
+                }
               }
-            }
-          ]
+            ]
+          }
         }
       },
       // Change the postcss-preset-env settings
@@ -213,6 +217,12 @@ export default {
         })
       }
 
+      config.module.rules.push({
+        test: /\.mjs$/,
+        include: /node_modules/,
+        type: "javascript/auto"
+      })
+
       // add frontmatter-markdown-loader
       config.module.rules.push({
         test: /\.md$/,
@@ -237,10 +247,5 @@ export default {
         ]
       ]
     }
-  },
-  generate: {
-    // see https://composition-api.nuxtjs.org/getting-started/setup
-    interval: 2000
-    // routes: dynamicRoutes // No longer need to specify this.
   }
-}
+})

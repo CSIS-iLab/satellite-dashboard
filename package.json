@@ -5,10 +5,10 @@
   "author": "CSIS iDeas Lab",
   "private": true,
   "scripts": {
-    "dev": "nuxt -H 0.0.0.0",
-    "build": "nuxt build",
-    "start": "nuxt start",
-    "generate": "nuxt generate",
+    "dev": "nuxi dev -H 0.0.0.0",
+    "build": "nuxi build",
+    "start": "nuxi start",
+    "generate": "nuxi generate",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "lint:scripts-fix": "eslint --ext .js,.vue --ignore-path .gitignore . --fix",
     "lint:styles-fix": "stylelint \"./**/*.(scss|vue)\" --fix",
@@ -17,11 +17,6 @@
   "lint-staged": {
     "*.{js,vue}": "npm run lint",
     "*.{css,vue}": "stylelint"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
   },
   "dependencies": {
     "@a11y-kit/vue-tabs": "^1.0.1",
@@ -32,16 +27,16 @@
     "highcharts": "^9.1.2",
     "highcharts-vue": "^1.4.0",
     "merge-descriptors": "^1.0.1",
-    "nuxt": "^2.12.2",
+    "nuxt": "^3.6.5",
     "satellite.js": "^4.0.0",
-    "vue-cesium": "^2.1.9",
+    "vue-cesium": "^3.2.1",
     "vue-good-table": "^2.21.1",
     "vue-select": "^3.10.8",
     "vue-tippy": "^4.7.2",
     "vue2-datepicker": "^3.8.2"
   },
   "devDependencies": {
-    "@nuxtjs/composition-api": "0.24.4",
+    "@nuxt/bridge": "npm:@nuxt/bridge-edge@^3.0.0-28200790.d820607",
     "@nuxtjs/eslint-config": "^2.0.0",
     "@nuxtjs/eslint-module": "^1.0.0",
     "@nuxtjs/google-analytics": "^2.4.0",
