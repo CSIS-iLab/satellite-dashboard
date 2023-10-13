@@ -23,6 +23,10 @@
               </span>
               <span class="data-source-time">
                 (last updated {{ source.source_last_updated }})
+                <div v-if="hasOrbit">
+                  new LU
+                  {{ orbitSource }}
+                </div>
               </span>
             </li>
           </ul>
@@ -70,6 +74,18 @@ export default {
   components: {
     Modal,
     Icon
+  },
+  props: {
+    id: {
+      type: String,
+      required: false,
+      default: ''
+    },
+    satellite: {
+      type: Object,
+      required: false,
+      default: () => {}
+    }
   },
   data() {
     return {
@@ -234,7 +250,116 @@ export default {
     }
   },
   computed: {
+    hasOrbit() {
+      if (!this.satelliteAllOrbits || !this.satelliteAllOrbits.length) {
+        return false
+      }
+
+      return true
+    },
+    satelliteAllOrbits() {
+      if (!this.orbits[this.id]) {
+        return []
+      }
+      return this.orbits[this.id].orbits
+    },
+    orbitalElements() {
+      const index = this.satelliteAllOrbits[this.elementIndex]
+        ? this.elementIndex
+        : 0
+      return this.satelliteAllOrbits[index].elements
+    },
+    formattedOrbitData() {
+      const Apogee = `${this.formatNumbers(
+        (this.orbitalElements.SMA * (1 + this.orbitalElements.Ecc) -
+          this.earthRadius) /
+          1000
+      )} km`
+
+      const Perigee = `${this.formatNumbers(
+        (this.orbitalElements.SMA * (1 - this.orbitalElements.Ecc) -
+          this.earthRadius) /
+          1000
+      )} km`
+
+      const ArgP = `${this.formatNumbers(
+        (this.orbitalElements.ArgP * 180) / Math.PI,
+        4
+      )}&deg;`
+
+      const RAAN = `${this.formatNumbers(
+        (this.orbitalElements.RAAN * 180) / Math.PI,
+        4
+      )}&deg;`
+
+      const Ecc = `${this.formatNumbers(this.orbitalElements.Ecc, 4)}`
+
+      const Inc = `${this.formatNumbers(
+        (this.orbitalElements.Inc * 180) / Math.PI,
+        4
+      )}&deg;`
+
+      const mmo = Math.sqrt(
+        this.mu /
+          (this.orbitalElements.SMA *
+            this.orbitalElements.SMA *
+            this.orbitalElements.SMA)
+      )
+
+      const MeanMotion = `${this.formatNumbers(
+        (mmo * 180) / Math.PI,
+        4
+      )}&deg;/s`
+
+      const OrbitalPeriod = (2 * Math.PI) / mmo
+      const OrbitalPeriodDisplay = this.secondsToDhms(OrbitalPeriod)
+
+      const SMA = `${this.formatNumbers(this.orbitalElements.SMA / 1000)} km`
+
+      const OrbitalSpeed = `
+        ${this.formatNumbers(
+          (((2 * Math.PI * this.orbitalElements.SMA) / OrbitalPeriod) *
+            (1 -
+              (1 / 4) * this.orbitalElements.Ecc ** 2 -
+              (3 / 64) * this.orbitalElements.Ecc ** 4 -
+              (5 / 256) * this.orbitalElements.Ecc ** 6 -
+              (175 / 16384) * this.orbitalElements.Ecc ** 8)) /
+            1000,
+          1
+        )} km/s`
+
+      const Longitude = this.orbitalElements.Longitude.label
+
+      const Epoch = this.formatDate(this.orbitalElements.Epoch)
+
+      const Source = this.satelliteAllOrbits[0].source.name
+
+      return {
+        Apogee,
+        ArgP,
+        Perigee,
+        Ecc,
+        Inc,
+        Longitude,
+        MeanMotion,
+        OrbitalPeriod: OrbitalPeriodDisplay,
+        OrbitalSpeed,
+        SMA,
+        RAAN,
+        Epoch,
+        Source
+      }
+    },
+    orbitSource() {
+      const index = this.satelliteAllOrbits[this.elementIndex]
+        ? this.elementIndex
+        : this.satelliteAllOrbits.length - 1
+      return `${this.formatDate(
+        this.satelliteAllOrbits[index].source.last_updated
+      )}`
+    },
     ...mapState({
+      orbits: (state) => state.satellites.orbits,
       showMagicChart: (state) => state.layout.showMagicChart,
       zoom: (state) => state.satellites.longitudeSatellites.zoom
     })
@@ -243,6 +368,32 @@ export default {
     await this.longitudes()
   },
   methods: {
+    formatDate(date, dateOnly = false) {
+      const event = new Date(date)
+
+      let options = {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        timeZone: 'UTC',
+        timeZoneName: 'short',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+      }
+
+      if (dateOnly) {
+        options = {
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric'
+        }
+
+        return event.toLocaleDateString('en-US', options)
+      }
+
+      return event.toLocaleString('en-US', options)
+    },
     exportCSV() {
       this.$refs.chart.chart.downloadCSV()
     },
@@ -305,7 +456,9 @@ export default {
       }
 
       // add source info to data()
+      historical_longitudes = historical_longitudes.sort((a, b) => a - b)
       this.sourceInfo = historical_longitudes.map((l, i) => {
+        // console.log(l.source_last_updated)
         return {
           sat_id: l.catalog_id,
           sat_name: l.name,

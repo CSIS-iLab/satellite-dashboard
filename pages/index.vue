@@ -21,7 +21,7 @@
         :satellite="detailedSatelliteInfo"
       />
       <UpdatesPanel />
-      <MagicChart v-if="showMagicChart" />
+      <MagicChart v-if="showMagicChart" id="37748" />
     </template>
   </div>
 </template>
