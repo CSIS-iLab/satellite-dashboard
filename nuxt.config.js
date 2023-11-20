@@ -1,5 +1,4 @@
 const path = require('path')
-import Fiber from 'fibers'
 import Sass from 'sass'
 import axiosRetry from 'axios-retry'
 
@@ -7,7 +6,6 @@ const customSass = {
   implementation: Sass,
   // webpackImporter: false,
   sassOptions: {
-    fiber: Fiber,
     includePaths: ['node_modules', 'node_modules/vue2-datepicker/scss/']
   },
   sourceMap: process.env.NODE_ENV === 'production'

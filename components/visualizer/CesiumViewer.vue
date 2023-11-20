@@ -367,7 +367,9 @@ export default {
             const newSelection =
               highlightedEntitiesArray[highlightedEntitiesArray.length - 1]
             this.highlightedEntities.delete(newSelection)
-            viewer.selectedEntity = newSelection
+            if (viewer != null) {
+              viewer.selectedEntity = newSelection
+            }
           }
           return
         }
