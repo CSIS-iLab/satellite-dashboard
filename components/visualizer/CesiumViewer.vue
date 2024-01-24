@@ -182,6 +182,9 @@ export default {
       if (!viewer || !Cesium) {
         return
       }
+      this.SimStart =
+        this.SimStart ||
+        Cesium.JulianDate.fromDate(new Date(this.$route.query.date))
       if (this.$route.query.time) {
         let seconds = parseInt(this.$route.query.time)
         if (isNaN(seconds)) {
@@ -364,7 +367,9 @@ export default {
             const newSelection =
               highlightedEntitiesArray[highlightedEntitiesArray.length - 1]
             this.highlightedEntities.delete(newSelection)
-            viewer.selectedEntity = newSelection
+            if (viewer != null) {
+              viewer.selectedEntity = newSelection
+            }
           }
           return
         }
