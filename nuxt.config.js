@@ -136,15 +136,17 @@ export default defineNuxtConfig({
    ** Nuxt.js modules
    */
   modules: [
+    /*'@nuxtjs/pwa',*/
+    /*'@nuxtjs/style-resources',*/
+    /*'@nuxtjs/axios'*/
+  ],
+  devModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
     '@nuxtjs/eslint-module/index',
     // Doc: https://github.com/nuxt-community/stylelint-module
     '@nuxtjs/stylelint-module/index',
-    // Doc: https://google-analytics.nuxtjs.org/setup
+    // Doc: https://google-analytics.nuxtjs.org/setup,
     '@nuxtjs/google-analytics/index',
-    '@nuxtjs/pwa',
-    '@nuxtjs/style-resources',
-    '@nuxtjs/axios'
   ],
   styleResources: {
     scss: [
