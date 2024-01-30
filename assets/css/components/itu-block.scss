@@ -1,9 +1,9 @@
 .vgt-table th:first-of-type div {
-  margin-left: rem(16);
+  margin-left: rem-size(16);
 }
 
 .vgt-table th:last-of-type div {
-  margin-right: rem(16);
+  margin-right: rem-size(16);
 }
 
 .itu {
@@ -16,7 +16,7 @@
 
   &__longitude {
     @extend %font-ui-text-lg-oxygen;
-    margin-left: rem(16);
+    margin-left: rem-size(16);
     color: $color-white-180;
   }
 
@@ -34,7 +34,7 @@
     display: flex;
     justify-content: center;
     align-content: center;
-    margin-right: rem(16);
+    margin-right: rem-size(16);
 
     svg {
       position: relative;

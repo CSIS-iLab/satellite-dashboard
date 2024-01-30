@@ -23,7 +23,7 @@
   }
 
   &__sub-desc {
-    margin-top: rem(16);
+    margin-top: rem-size(16);
     color: $color-white-140;
     @extend %font-ui-text-base-oxygen;
   }
@@ -48,7 +48,7 @@
       }
 
       a {
-        margin-left: rem(11px);
+        margin-left: rem-size(11px);
       }
     }
 

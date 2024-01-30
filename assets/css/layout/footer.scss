@@ -1,10 +1,14 @@
+@import '../abstracts/variables';
+@import '../abstracts/mixins';
+@import '../abstracts/placeholders';
+
 .footer {
   display: grid;
   grid-template-areas: 'left left' 'nav orgs' 'copyright copyright';
   grid-template-columns: min-content auto;
-  padding: rem(32px) rem(24px) rem(52px);
+  padding: rem-size(32px) rem-size(24px) rem-size(52px);
   color: $color-white-180;
-  column-gap: rem(54px);
+  column-gap: rem-size(54px);
   @extend %font-ui-text-base-oxygen;
   background: $color-slate-700;
 
@@ -13,8 +17,8 @@
     display: grid;
     grid-template-areas: 'left nav orgs' 'copyright copyright copyright';
     grid-template-columns: minmax(auto, 600px) auto minmax(auto, 250px);
-    padding: rem(64px) rem(40px) rem(32px);
-    column-gap: rem(80px);
+    padding: rem-size(64px) rem-size(40px) rem-size(32px);
+    column-gap: rem-size(80px);
 
     &__nav,
     &__organizations {
@@ -51,7 +55,7 @@
     }
 
     li {
-      margin-bottom: rem(8px);
+      margin-bottom: rem-size(8px);
     }
 
     a {

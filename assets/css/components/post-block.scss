@@ -1,3 +1,6 @@
+@import '../abstracts/variables';
+@import '../abstracts/mixins';
+
 .post-list {
   margin: 0;
   padding: 0;
@@ -5,8 +8,8 @@
   &--compact {
     > li + li {
       position: relative;
-      margin-top: rem(32);
-      padding-top: rem(16);
+      margin-top: rem-size(32);
+      padding-top: rem-size(16);
 
       &::before {
         content: '';
@@ -22,14 +25,14 @@
 
   &--full {
     > li + li {
-      margin-top: rem(64);
+      margin-top: rem-size(64);
     }
   }
 }
 
 .post-block {
   position: relative;
-  margin: rem(32px) auto rem(64px) auto;
+  margin: rem-size(32px) auto rem-size(64px) auto;
 
   .post-list--compact & {
     --margin: 0;
@@ -48,7 +51,7 @@
   }
 
   &__title {
-    margin-top: rem(4px);
+    margin-top: rem-size(4px);
     color: $color-white-190;
     @extend %font-ui-heading-post-block-title;
 
@@ -62,21 +65,21 @@
 
     .post-list--compact & {
       @extend %font-ui-heading-section-md;
-      padding-bottom: rem(2px);
+      padding-bottom: rem-size(2px);
       font-weight: 500;
       letter-spacing: 0.025em;
     }
   }
 
   &__excerpt {
-    margin: rem(16px) 0 rem(24px) 0;
+    margin: rem-size(16px) 0 rem-size(24px) 0;
     color: $color-white-180;
     @extend %font-ui-text-lg-oxygen;
     line-height: 1.5;
 
     .post-list--compact & {
       @extend %font-ui-text-base-oxygen;
-      margin: rem(16px) 0;
+      margin: rem-size(16px) 0;
       color: $color-white-170;
       border-bottom: 1px solid $color-white-110;
 

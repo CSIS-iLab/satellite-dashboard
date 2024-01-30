@@ -4,7 +4,7 @@
   width: 100%;
   max-width: 680px;
   max-height: 85vh;
-  margin: rem(16);
+  margin: rem-size(16);
 }
 
 .highcharts-axis-title {
@@ -33,7 +33,7 @@
 }
 
 .data-sources {
-  padding-top: rem(12);
+  padding-top: rem-size(12);
   border-top: 1px solid $color-white-115;
 }
 
@@ -53,12 +53,12 @@
 }
 
 .data-source--source-name {
-  margin-left: rem(8);
+  margin-left: rem-size(8);
   font-weight: 400;
 }
 
 .data-source-time {
-  margin-left: rem(8);
+  margin-left: rem-size(8);
   color: $color-white-140;
 }
 
@@ -70,19 +70,19 @@
 
   &--print {
     display: flex;
-    gap: rem(4);
+    gap: rem-size(4);
     align-items: center;
     text-transform: none;
   }
 
   &__download {
     display: flex;
-    gap: rem(8);
+    gap: rem-size(8);
     align-items: center;
   }
 
   &__label {
-    margin-right: rem(8);
+    margin-right: rem-size(8);
     color: $color-white-150;
     text-transform: uppercase;
   }

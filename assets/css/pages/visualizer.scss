@@ -31,8 +31,8 @@
 
   &-controls {
     position: absolute;
-    top: rem($size__viewer-controls-top);
-    right: rem(32);
+    top: rem-size($size__viewer-controls-top);
+    right: rem-size(32);
     @include z-index(viewerControls);
     display: flex;
     align-items: center;
@@ -44,8 +44,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: rem(40);
-    height: rem(40);
+    width: rem-size(40);
+    height: rem-size(40);
     color: $color-white-190;
     @include font-size(22px);
     line-height: 1;
@@ -59,7 +59,7 @@
   }
 
   .btn--zoom {
-    margin-left: rem(2);
+    margin-left: rem-size(2);
 
     &:first-of-type {
       border-radius: 3px 0 0 3px;
@@ -71,12 +71,12 @@
   }
 
   .btn--sun {
-    margin-left: rem(24);
+    margin-left: rem-size(24);
     border-radius: 50%;
   }
 
   .btn--help {
-    margin-left: rem(24);
+    margin-left: rem-size(24);
     padding: 0;
     color: $color-white-150;
     @include font-size(36px);
@@ -91,9 +91,9 @@
 
 .cesium__entity-label {
   position: absolute;
-  top: rem(-16);
-  left: rem(8);
-  padding: rem(8);
+  top: rem-size(-16);
+  left: rem-size(8);
+  padding: rem-size(8);
   @extend %font-ui-text-sm-oxygen;
   color: $color-white-160;
   background: $color-slate-695;

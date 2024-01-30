@@ -1,14 +1,18 @@
+@import '../abstracts/variables';
+@import '../abstracts/mixins';
+@import '../abstracts/placeholders';
+
 .post-meta {
   margin: 0;
   color: $color-white-180;
   @extend %font-ui-text-lg-oxygen;
 
   @include breakpoint('medium') {
-    margin-top: rem(8px);
+    margin-top: rem-size(8px);
   }
 
   > * + * {
-    margin-top: rem(16px);
+    margin-top: rem-size(16px);
 
     /* stylelint-disable-next-line */
     .post-list--compact & {
@@ -42,7 +46,7 @@
 
   .post-list--compact & {
     @extend %font-ui-text-sm-oxygen;
-    margin-top: rem(4px);
+    margin-top: rem-size(4px);
     color: $color-white-170;
     letter-spacing: 0.025em;
   }
@@ -57,7 +61,7 @@
     > * + * {
       @include breakpoint('medium') {
         margin-top: 0;
-        margin-left: rem(40px);
+        margin-left: rem-size(40px);
       }
     }
   }

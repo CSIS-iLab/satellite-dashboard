@@ -62,13 +62,13 @@
 
   th,
   td {
-    padding: var(--cell-vertical-padding, rem(12)) 0;
+    padding: var(--cell-vertical-padding, rem-size(12)) 0;
 
     /* stylelint-disable-next-line */
     + th,
     + td {
       padding-right: 0;
-      padding-left: rem(16);
+      padding-left: rem-size(16);
     }
   }
 }
@@ -82,8 +82,8 @@
       }
 
       &__page-info__current-entry {
-        margin: 0 rem(2);
-        padding: rem(2) rem(4);
+        margin: 0 rem-size(2);
+        padding: rem-size(2) rem-size(4);
         color: $color-white-170;
         background: $color-slate-800;
         border: 0;
@@ -103,7 +103,7 @@
         display: inline-block;
         width: 10px;
         height: 10px;
-        margin: 0 rem(4);
+        margin: 0 rem-size(4);
         border-right: 2px solid var(--chevron-color, $color-white-160);
         border-bottom: 2px solid var(--chevron-color, $color-white-160);
         transform: rotate(var(--chevron));

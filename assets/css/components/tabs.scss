@@ -16,9 +16,9 @@
   &::after {
     content: '';
     display: block;
-    width: rem(32);
+    width: rem-size(32);
     height: 1px;
-    margin-top: rem(8);
+    margin-top: rem-size(8);
     background: $color-white-170;
     transform: scaleX(0);
     transform-origin: left center;
@@ -35,6 +35,6 @@
   }
 
   + .tab--horizontal {
-    margin-left: rem(24);
+    margin-left: rem-size(24);
   }
 }

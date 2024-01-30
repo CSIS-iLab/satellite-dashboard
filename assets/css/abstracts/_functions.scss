@@ -7,7 +7,7 @@
 
 $browser-context: 16px;
 
-@function rem($size) {
+@function rem-size($size) {
   @if is-px($size) == false {
     $size: $size * 1px;
   }

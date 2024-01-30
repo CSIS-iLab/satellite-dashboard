@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: rem(4);
+  padding: rem-size(4);
   color: $color-white-190;
   font-weight: bold;
   line-height: 1;
@@ -11,15 +11,15 @@
   border-radius: 50%;
 
   &--large {
-    width: rem(24);
-    height: rem(24);
-    margin: rem(8) auto;
+    width: rem-size(24);
+    height: rem-size(24);
+    margin: rem-size(8) auto;
     @include font-size(12px);
   }
 
   &--small {
-    width: rem(16);
-    height: rem(16);
+    width: rem-size(16);
+    height: rem-size(16);
     @include font-size(9px);
   }
 }

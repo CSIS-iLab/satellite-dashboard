@@ -6,13 +6,13 @@
     @extend %font-ui-text-base-oxygen;
 
     + .form__input {
-      margin-top: rem(4);
+      margin-top: rem-size(4);
     }
   }
 
   &__input {
     width: 100%;
-    padding: rem(10) rem(16) rem(12);
+    padding: rem-size(10) rem-size(16) rem-size(12);
     color: var(--input-color, $color-white-180);
     background: var(--input-bg, $color-slate-800);
     border: 0;
@@ -24,7 +24,7 @@
     }
 
     &--sm {
-      padding: rem(6) rem(10);
+      padding: rem-size(6) rem-size(10);
     }
 
     &:hover {
@@ -65,24 +65,24 @@
 
     &__selected {
       margin: 0;
-      padding: rem(4) rem(12);
+      padding: rem-size(4) rem-size(12);
       color: $color-white-190;
       background: $color-slate-200;
       border: 0;
       border-radius: 50px;
 
       .icon {
-        margin-right: rem(8);
+        margin-right: rem-size(8);
       }
 
       &-options {
-        gap: rem(4);
-        padding: 0 rem(12) 0 0;
+        gap: rem-size(4);
+        padding: 0 rem-size(12) 0 0;
       }
     }
 
     &__deselect {
-      margin-left: rem(12);
+      margin-left: rem-size(12);
       text-shadow: none;
       fill: $color-white-130;
     }
@@ -104,7 +104,7 @@
 
     &__dropdown-option {
       position: relative;
-      padding: rem(12) rem(24);
+      padding: rem-size(12) rem-size(24);
       color: $color-white-170;
       @extend %font-ui-text-lg-oxygen;
       transition: color 0.3s ease-in-out, background 0.3s ease-in-out;
@@ -121,7 +121,7 @@
       &--selected .icon {
         position: absolute;
         top: 50%;
-        left: rem(12);
+        left: rem-size(12);
         display: inline-block;
         font-size: 0.5em;
         transform: translateY(-50%);
@@ -184,7 +184,7 @@
   }
 
   .vs__dropdown-option {
-    padding: rem(8);
+    padding: rem-size(8);
 
     &--selected {
       display: none;

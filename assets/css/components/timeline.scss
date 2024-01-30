@@ -2,9 +2,9 @@
 
 .timeline {
   &__container {
-    --padding-top: #{rem(12)};
-    --padding-sides: #{rem(32)};
-    --padding-bottom: #{rem(20)};
+    --padding-top: #{rem-size(12)};
+    --padding-sides: #{rem-size(32)};
+    --padding-bottom: #{rem-size(20)};
     position: relative;
     z-index: 1;
     display: grid;
@@ -15,15 +15,15 @@
     align-items: end;
     padding: var(--padding-top) var(--padding-sides) var(--padding-bottom);
     color: $color-white-180;
-    column-gap: rem(12);
-    row-gap: rem(12);
+    column-gap: rem-size(12);
+    row-gap: rem-size(12);
     background: $color-black-185;
     backdrop-filter: blur(4px);
 
     @include breakpoint('xlarge') {
       grid-template-areas: 'speed control player scale legend';
       grid-template-columns: max-content max-content auto max-content max-content;
-      height: rem(88);
+      height: rem-size(88);
     }
 
     &::before {
@@ -43,7 +43,7 @@
   &__legend {
     position: relative;
     grid-area: legend;
-    padding: 0 0 0 rem(32);
+    padding: 0 0 0 rem-size(32);
 
     @include breakpoint('xlarge') {
       background: $color-slate-700;
@@ -63,7 +63,7 @@
 
     ul {
       column-count: 3;
-      column-gap: rem(24);
+      column-gap: rem-size(24);
 
       @include breakpoint('xlarge') {
         column-count: 2;
@@ -82,8 +82,8 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      width: rem(40);
-      height: rem(40);
+      width: rem-size(40);
+      height: rem-size(40);
       color: var(--control-color, $color-white-160);
       background: var(--control-bg, $color-slate-200);
       border-radius: 50%;
@@ -109,11 +109,11 @@
   &__player {
     position: relative;
     grid-area: player;
-    padding-top: rem(20);
+    padding-top: rem-size(20);
 
     &-scrub {
       position: relative;
-      height: rem(40);
+      height: rem-size(40);
       background: $color-slate-700;
 
       &::before,
@@ -140,12 +140,12 @@
 
   &__date {
     position: absolute;
-    bottom: rem(20);
+    bottom: rem-size(20);
     left: 50%;
     z-index: 1;
     display: flex;
     align-items: center;
-    padding: rem(4) rem(8) rem(8);
+    padding: rem-size(4) rem-size(8) rem-size(8);
     background: $color-black-100;
     @include shadow(xsm);
     transform: translate(-50%, 0);
@@ -157,7 +157,7 @@
       top: 0;
       bottom: 0;
       z-index: -1;
-      width: rem(12);
+      width: rem-size(12);
       background: linear-gradient(
         68deg,
         rgba(0, 0, 0, 0) 50%,
@@ -179,7 +179,7 @@
       @extend %font-ui-heading-section-sm;
 
       .icon {
-        margin-left: rem(4);
+        margin-left: rem-size(4);
         color: $color-white-140;
         font-size: 0.8em;
       }
@@ -223,7 +223,7 @@
 }
 
 .cesium-timeline-ticLabel {
-  top: rem(6) !important;
+  top: rem-size(6) !important;
   font-size: 100% !important;
   opacity: 0.7;
 }
@@ -262,7 +262,7 @@
 /*----------  Dropdowns  ----------*/
 .timeline__container {
   .v-select {
-    width: rem(80);
+    width: rem-size(80);
   }
 
   .vs__dropdown-toggle {
@@ -314,7 +314,7 @@
 
   .vs__dropdown-option {
     position: relative;
-    padding: rem(8) rem(24);
+    padding: rem-size(8) rem-size(24);
     color: $color-white-170;
     transition: color 0.3s ease-in-out, background 0.3s ease-in-out;
 
@@ -330,7 +330,7 @@
     &--selected .icon {
       position: absolute;
       top: 50%;
-      left: rem(10);
+      left: rem-size(10);
       display: inline-block;
       font-size: 0.5em;
       transform: translateY(-50%);

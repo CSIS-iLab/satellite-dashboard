@@ -1,6 +1,6 @@
 .ak-vt__wrapper--scope-helpPanel {
   // 32px - 9px (from default Tippy styles)
-  --panel-padding-side: #{rem(23)};
+  --panel-padding-side: #{rem-size(23)};
 
   .ak-vt {
     &__panel {
@@ -17,7 +17,7 @@
   }
 
   &__panel-header {
-    margin-top: rem(12);
+    margin-top: rem-size(12);
   }
 
   &__buttons {
@@ -25,29 +25,29 @@
   }
 
   &__panel-content {
-    margin-bottom: rem(44);
-    padding-top: rem(16);
+    margin-bottom: rem-size(44);
+    padding-top: rem-size(16);
     overflow: auto;
     color: $color-white-180;
     @extend %font-ui-text-base-oxygen;
     text-align: left;
 
     .panel__title:not(:first-child) {
-      margin-top: rem(16);
-      padding-top: rem(16);
+      margin-top: rem-size(16);
+      padding-top: rem-size(16);
       border-top: 1px solid $color-white-180;
     }
   }
 
   &__title {
     grid-column: 1 / -1;
-    margin-top: rem(16);
-    margin-bottom: rem(16);
+    margin-top: rem-size(16);
+    margin-bottom: rem-size(16);
     color: $color-white-180;
     @extend %font-ui-heading-section-md;
 
     &--line {
-      padding-top: rem(16);
+      padding-top: rem-size(16);
       border-top: 1px solid $color-white-150;
     }
 
@@ -76,8 +76,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: rem(40);
-    height: rem(40);
+    width: rem-size(40);
+    height: rem-size(40);
     color: var(--control-color, $color-white-160);
     background: var(--control-bg, $color-slate-200);
     border: 0;
@@ -96,29 +96,29 @@
     &--columns {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      margin-bottom: rem(16);
-      column-gap: rem(16);
+      margin-bottom: rem-size(16);
+      column-gap: rem-size(16);
     }
 
     p + p {
-      margin-top: rem(12);
+      margin-top: rem-size(12);
     }
 
     ol {
-      margin: rem(16) 0;
-      padding: 0 0 0 rem(32);
+      margin: rem-size(16) 0;
+      padding: 0 0 0 rem-size(32);
 
       /* stylelint-disable-next-line */
       > li + li {
-        margin-top: rem(12);
+        margin-top: rem-size(12);
       }
     }
 
     :not(.help__title) .icon {
       position: relative;
       top: 1px;
-      margin-right: rem(2);
-      margin-left: rem(2);
+      margin-right: rem-size(2);
+      margin-left: rem-size(2);
     }
 
     .icon {
@@ -157,17 +157,17 @@
   }
 
   &__list {
-    margin: rem(16) 0;
+    margin: rem-size(16) 0;
     padding: 0;
 
     &--icons li {
       display: flex;
-      gap: rem(8);
+      gap: rem-size(8);
       align-items: baseline;
     }
 
     > li + li {
-      margin-top: rem(12);
+      margin-top: rem-size(12);
     }
   }
 }

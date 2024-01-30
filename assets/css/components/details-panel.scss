@@ -1,26 +1,26 @@
 .panel--right {
   position: fixed;
-  top: calc(#{rem(72)} + #{rem($size__viewer-controls-top)});
+  top: calc(#{rem-size(72)} + #{rem-size($size__viewer-controls-top)});
   right: 2rem;
-  bottom: calc(#{$size__updates-bottom-pos} + #{rem(32)});
+  bottom: calc(#{$size__updates-bottom-pos} + #{rem-size(32)});
   display: flex;
   flex-direction: column;
   width: 360px;
   overflow: hidden;
-  border-radius: rem(8);
+  border-radius: rem-size(8);
   @include shadow(lg);
 }
 
 .details-panel {
   &__header {
-    padding-top: rem(16);
+    padding-top: rem-size(16);
     background: $color-slate-478;
   }
 
   &__content {
     flex-grow: 1;
-    padding-top: rem(32);
-    padding-bottom: rem(32);
+    padding-top: rem-size(32);
+    padding-bottom: rem-size(32);
     overflow: auto;
     color: $color-white-180;
     background: $color-slate-395;
@@ -34,7 +34,7 @@
 
   &__controls {
     display: flex;
-    margin: 0 rem(-16) rem(24);
+    margin: 0 rem-size(-16) rem-size(24);
 
     .btn {
       color: $color-white-160;
@@ -45,7 +45,7 @@
       }
 
       &--pin {
-        margin-left: rem(8);
+        margin-left: rem-size(8);
       }
 
       &--close {
@@ -72,7 +72,7 @@
 
   hr {
     height: 1px;
-    margin: rem(16) calc(var(--panel-padding-side) * -1);
+    margin: rem-size(16) calc(var(--panel-padding-side) * -1);
     background: $color-white-115;
     border: 0;
   }
@@ -89,13 +89,13 @@
   }
 
   &__desc {
-    margin: rem(8) 0 rem(16);
+    margin: rem-size(8) 0 rem-size(16);
     color: $color-white-170;
     @extend %font-ui-text-base-oxygen;
   }
 
   &__small-desc {
-    margin-bottom: rem(16);
+    margin-bottom: rem-size(16);
     color: $color-white-140;
     @extend %font-ui-text-sm-oxygen;
   }
@@ -107,11 +107,11 @@
     @extend %font-ui-text-lg-oxygen;
 
     li {
-      margin-top: rem(16);
+      margin-top: rem-size(16);
     }
 
     &-date {
-      margin-top: rem(8);
+      margin-top: rem-size(8);
       color: $color-white-140;
       @extend %font-ui-text-sm-oxygen;
     }
@@ -127,11 +127,11 @@
   .sat__basic--status {
     --marker-size: 8px;
     --marker-top: 0;
-    --marker-gap: #{rem(4)};
+    --marker-gap: #{rem-size(4)};
     align-items: baseline;
     max-width: fit-content;
-    margin-top: rem(2);
-    padding: rem(4) rem(12) rem(4) rem(8);
+    margin-top: rem-size(2);
+    padding: rem-size(4) rem-size(12) rem-size(4) rem-size(8);
     color: $color-white-190;
     @extend %font-ui-text-sm-good;
     letter-spacing: 0.01em;
@@ -143,7 +143,7 @@
   dl {
     /* stylelint-disable-next-line */
     > * + * {
-      margin-top: rem(12);
+      margin-top: rem-size(12);
     }
   }
 
@@ -169,8 +169,8 @@
   &__form {
     display: grid;
     grid-template-columns: auto max-content;
-    gap: rem(8);
-    margin-bottom: rem(40);
+    gap: rem-size(8);
+    margin-bottom: rem-size(40);
 
     .btn--apply {
       grid-column: 1 / -1;
@@ -180,7 +180,7 @@
 
   &__sort {
     display: flex;
-    margin-left: rem(16);
+    margin-left: rem-size(16);
   }
 
   .vs {
@@ -194,28 +194,28 @@
   }
 
   &__input {
-    max-width: rem(50px);
+    max-width: rem-size(50px);
     overflow: hidden;
   }
 
   /*----------  Range Slider  ----------*/
 
   @mixin input-range-track {
-    height: rem(4);
+    height: rem-size(4);
     background: $color-blue-100;
     appearance: none;
   }
 
   @mixin input-range-progress {
-    height: rem(4);
+    height: rem-size(4);
     background: #1e3650;
     border-radius: 0;
   }
 
   @mixin input-range-thumb {
-    width: rem(17);
-    height: rem(17);
-    margin-top: rem(-8);
+    width: rem-size(17);
+    height: rem-size(17);
+    margin-top: rem-size(-8);
     background: radial-gradient(
       circle,
       $color-blue-100 40%,

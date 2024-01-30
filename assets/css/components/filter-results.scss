@@ -2,13 +2,13 @@
   .filter-results {
     position: relative;
     display: grid;
-    grid-gap: rem(8);
+    grid-gap: rem-size(8);
     grid-template-areas:
       'total sort'
       'table table';
     grid-template-columns: auto min-content;
-    margin-top: rem(24);
-    padding-top: rem(24);
+    margin-top: rem-size(24);
+    padding-top: rem-size(24);
 
     &::before {
       content: '';
@@ -32,7 +32,7 @@
 
     &__no-results {
       grid-area: table;
-      margin-top: rem(16);
+      margin-top: rem-size(16);
       color: $color-white-150;
     }
 
@@ -73,11 +73,11 @@
       }
 
       thead th {
-        --cell-vertical-padding: #{rem(16)};
+        --cell-vertical-padding: #{rem-size(16)};
       }
 
       td {
-        --cell-vertical-padding: #{rem(12)};
+        --cell-vertical-padding: #{rem-size(12)};
       }
 
       td.filter-results__country {
@@ -98,7 +98,7 @@
       }
 
       &__navigation__page-info {
-        margin: 0 rem(24) 0 0;
+        margin: 0 rem-size(24) 0 0;
       }
 
       /* stylelint-disable-next-line */

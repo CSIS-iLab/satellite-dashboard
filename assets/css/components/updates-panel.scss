@@ -1,16 +1,16 @@
 .updates-panel {
   position: absolute;
   // Offset this so the button isn't hidden behind the timeline's blurred background.
-  bottom: calc(#{$size__updates-bottom-pos} + #{rem(13)});
-  left: rem($size__left-panel-tab-width);
+  bottom: calc(#{$size__updates-bottom-pos} + #{rem-size(13)});
+  left: rem-size($size__left-panel-tab-width);
 
   .btn--updates-panel {
     display: flex;
-    gap: rem(6);
+    gap: rem-size(6);
     align-items: center;
-    margin-top: rem(-80);
-    padding-top: rem(8);
-    padding-bottom: rem(6);
+    margin-top: rem-size(-80);
+    padding-top: rem-size(8);
+    padding-bottom: rem-size(6);
 
     @include breakpoint('xlarge') {
       margin-top: 0;
@@ -19,14 +19,14 @@
 
   .btn--close {
     display: flex;
-    gap: rem(6);
+    gap: rem-size(6);
     align-items: center;
-    margin-bottom: rem(8);
-    margin-left: rem(-12);
+    margin-bottom: rem-size(8);
+    margin-left: rem-size(-12);
   }
 
   .panel__title {
-    margin-bottom: rem(24);
+    margin-bottom: rem-size(24);
   }
 
   .ak-vt__wrapper {
@@ -39,7 +39,7 @@
     flex-direction: column;
     width: 100%;
     max-width: 400px;
-    padding: calc(#{$size__header-height} + #{rem(50)}) rem(32) 0 rem(96);
+    padding: calc(#{$size__header-height} + #{rem-size(50)}) rem-size(32) 0 rem-size(96);
     background: $color-black-190;
 
     &::after {
@@ -48,7 +48,7 @@
       top: 0;
       bottom: 0;
       left: 100%;
-      width: rem(72);
+      width: rem-size(72);
       background: linear-gradient(
         90deg,
         rgba(0, 0, 0, 0.81) 26.56%,
@@ -63,9 +63,9 @@
 
   &__content {
     flex-grow: 1;
-    margin-top: rem(24);
-    // margin-bottom: calc(#{$size__updates-bottom-pos} + #{rem(50)});
-    margin-bottom: calc(#{rem($size__updates-bottom-pos)} - #{rem(30)});
+    margin-top: rem-size(24);
+    // margin-bottom: calc(#{$size__updates-bottom-pos} + #{rem-size(50)});
+    margin-bottom: calc(#{rem-size($size__updates-bottom-pos)} - #{rem-size(30)});
     overflow: auto;
   }
 
@@ -75,10 +75,10 @@
 
   &__page-link {
     display: flex;
-    gap: rem(6);
+    gap: rem-size(6);
     align-items: center;
-    margin-top: rem(16);
-    margin-bottom: rem(32);
+    margin-top: rem-size(16);
+    margin-bottom: rem-size(32);
     text-transform: uppercase;
 
     &,

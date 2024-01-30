@@ -150,11 +150,11 @@ export default defineNuxtConfig({
   ],
   styleResources: {
     scss: [
-      './assets/css/abstracts/index.scss'
-      // './assets/css/abstracts/_variables.scss',
-      // './assets/css/abstracts/_functions.scss',
-      // './assets/css/abstracts/_mixins.scss',
-      // './assets/css/abstracts/_placeholders.scss'
+      './assets/css/abstracts/index.scss',
+      './assets/css/abstracts/_variables.scss',
+      './assets/css/abstracts/_functions.scss',
+      './assets/css/abstracts/_mixins.scss',
+      './assets/css/abstracts/_placeholders.scss'
     ]
   },
   // Axios module configuration (https://axios.nuxtjs.org/options)

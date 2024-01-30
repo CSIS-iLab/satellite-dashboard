@@ -34,7 +34,7 @@
     @include breakpoint('medium') {
       display: grid;
       grid-template-columns: 2fr 1fr;
-      column-gap: rem(42);
+      column-gap: rem-size(42);
     }
   }
 
@@ -45,7 +45,7 @@
     color: $color-orange-100;
     font-weight: bold;
     text-transform: uppercase;
-    text-shadow: 0 rem(4) rem(4) rgba(0, 0, 0, 0.25);
+    text-shadow: 0 rem-size(4) rem-size(4) rgba(0, 0, 0, 0.25);
     list-style: none;
 
     li {
@@ -73,11 +73,11 @@
       display: block;
       grid-column: 2;
       grid-row: 1 / span 4;
-      padding-left: rem(32);
+      padding-left: rem-size(32);
     }
 
     li {
-      margin-bottom: rem(16);
+      margin-bottom: rem-size(16);
     }
 
     span {
@@ -103,14 +103,14 @@
 
   &__excerpt {
     @extend %font-ui-text-lg-oxygen;
-    margin-top: rem(8);
+    margin-top: rem-size(8);
     color: $color-white-180;
   }
 
   &__sat-table {
     @extend %font-ui-text-base-oxygen;
     width: 100%;
-    margin-top: rem(24);
+    margin-top: rem-size(24);
     border-collapse: collapse;
 
     thead {
@@ -124,11 +124,11 @@
 
     th,
     td {
-      padding: rem(16) rem(24) rem(16) 0;
+      padding: rem-size(16) rem-size(24) rem-size(16) 0;
 
       &:first-child {
         min-width: 18vw;
-        padding-left: rem(24);
+        padding-left: rem-size(24);
       }
     }
 
@@ -192,35 +192,35 @@
     }
 
     &-notes {
-      margin: 0 auto rem(32) auto;
-      padding: rem(64) 0 rem(56) 0;
-      border-bottom: rem(1px) solid $color-black-120;
+      margin: 0 auto rem-size(32) auto;
+      padding: rem-size(64) 0 rem-size(56) 0;
+      border-bottom: rem-size(1px) solid $color-black-120;
     }
 
     &-footnote {
-      margin-top: rem(10);
+      margin-top: rem-size(10);
       @extend %font-post-text-footnote-list;
       color: $color-black-160;
     }
 
     &-header {
       @extend %font-ui-heading-section-lg;
-      margin: rem(32) 0 rem(16) 0;
+      margin: rem-size(32) 0 rem-size(16) 0;
       color: $color-slate-800;
     }
 
     &-article {
       @extend %font-post-text-lg-list;
       display: flex;
-      gap: rem(24);
+      gap: rem-size(24);
       justify-content: space-between;
       align-items: flex-start;
       height: 100%;
-      padding-bottom: rem(8);
+      padding-bottom: rem-size(8);
       color: $color-black-190;
 
       &:last-child {
-        padding-bottom: rem(64);
+        padding-bottom: rem-size(64);
       }
     }
 
@@ -229,7 +229,7 @@
 
       &::before {
         content: '|';
-        margin: 0 rem(8);
+        margin: 0 rem-size(8);
       }
     }
 
@@ -239,8 +239,8 @@
       flex: 0 0 auto;
       justify-content: center;
       align-items: center;
-      width: rem(40);
-      height: rem(40);
+      width: rem-size(40);
+      height: rem-size(40);
       font-size: 1.2em;
       border: 1px solid $color-ltblue-175;
       border-radius: 50%;
@@ -267,13 +267,13 @@
   // Post footer
 
   &__footer {
-    padding: rem(24) 0;
+    padding: rem-size(24) 0;
 
     @include breakpoint('medium') {
       display: grid;
       grid-template-columns: 2fr 1fr;
-      padding: rem(56) 0 rem(48) 0;
-      column-gap: rem(40);
+      padding: rem-size(56) 0 rem-size(48) 0;
+      column-gap: rem-size(40);
     }
   }
 
@@ -301,17 +301,17 @@
     }
 
     li + li {
-      margin-top: rem(24);
+      margin-top: rem-size(24);
 
       @include breakpoint('medium') {
-        margin-top: rem(32);
+        margin-top: rem-size(32);
       }
     }
   }
 
   &__tag {
     @include breakpoint('medium') {
-      margin-left: rem(32);
+      margin-left: rem-size(32);
     }
 
     &-list {
@@ -320,7 +320,7 @@
     }
 
     &-header {
-      margin-bottom: rem(4);
+      margin-bottom: rem-size(4);
       @extend %font-ui-text-base-oxygen;
       color: $color-white-150;
       font-weight: 400;
@@ -339,7 +339,7 @@
 
       &:not(:last-child)::after {
         content: ',';
-        padding-right: rem(8);
+        padding-right: rem-size(8);
       }
     }
   }
@@ -376,10 +376,10 @@
     }
 
     &-block {
-      padding-top: rem(58);
-      padding-right: rem(16);
-      padding-bottom: rem(57);
-      padding-left: rem(16);
+      padding-top: rem-size(58);
+      padding-right: rem-size(16);
+      padding-bottom: rem-size(57);
+      padding-left: rem-size(16);
       text-align: center;
       background-color: $color-slate-600;
 
@@ -406,12 +406,12 @@
     &-link {
       z-index: 2;
       display: table-cell;
-      padding: rem(24) rem(32);
+      padding: rem-size(24) rem-size(32);
       vertical-align: middle;
 
       &:hover .post__related-title {
         color: $color-white-100;
-        transform: translate(0, rem(-4));
+        transform: translate(0, rem-size(-4));
         transition: all 0.3s ease-in-out;
       }
     }
@@ -423,7 +423,7 @@
 
     &-title,
     &-author {
-      padding-bottom: rem(8);
+      padding-bottom: rem-size(8);
     }
 
     &-author,

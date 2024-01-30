@@ -36,7 +36,7 @@
 
   figcaption {
     @extend %font-post-text-sm;
-    padding-top: rem(8px);
+    padding-top: rem-size(8px);
     color: $color-black-160;
   }
 
@@ -47,48 +47,48 @@
     p {
       @extend %font-post-text-blockquote;
       width: 100%;
-      margin-bottom: rem(8);
+      margin-bottom: rem-size(8);
 
       &::before {
         content: url('~assets/img/icon-quotes.svg');
-        padding-right: rem(8px);
+        padding-right: rem-size(8px);
       }
     }
   }
 
   h2:not([class]) {
     @extend %font-post-heading-h2;
-    margin-top: rem(56px);
-    margin-bottom: rem(16px);
+    margin-top: rem-size(56px);
+    margin-bottom: rem-size(16px);
   }
 
   h3 {
     @extend %font-post-heading-h3;
-    margin-top: rem(40px);
-    margin-bottom: rem(16px);
+    margin-top: rem-size(40px);
+    margin-bottom: rem-size(16px);
   }
 
   h4 {
     @extend %font-post-heading-h4;
-    margin-bottom: rem(8px);
+    margin-bottom: rem-size(8px);
   }
 
   p {
-    margin-bottom: rem(24px);
+    margin-bottom: rem-size(24px);
 
     @include breakpoint('medium') {
-      margin-bottom: rem(32px);
+      margin-bottom: rem-size(32px);
     }
   }
 
   .table {
-    margin: 0 rem(80px);
+    margin: 0 rem-size(80px);
   }
 
   table {
     @extend %font-post-text-md;
     width: 100%;
-    margin: rem(32px) 0;
+    margin: rem-size(32px) 0;
     text-align: left;
     border-collapse: collapse;
 
@@ -111,7 +111,7 @@
 
     th,
     td {
-      padding: rem(12px) 0 rem(12px) rem(24px);
+      padding: rem-size(12px) 0 rem-size(12px) rem-size(24px);
       color: $color-black-190;
     }
 
@@ -138,13 +138,13 @@
   ul,
   ol {
     max-width: $size__content-max-width;
-    margin: 0 auto rem(32) auto;
-    padding-left: rem(56);
+    margin: 0 auto rem-size(32) auto;
+    padding-left: rem-size(56);
     @extend %font-post-text-lg-list;
   }
 
   li + li {
-    margin-top: rem(8);
+    margin-top: rem-size(8);
   }
 
   ul li::marker {
@@ -156,14 +156,14 @@
     padding: 0 calc(50% - #{$size__content-max-width} / 2);
 
     &__date {
-      margin-bottom: rem(16);
+      margin-bottom: rem-size(16);
       @extend %font-post-text-sm;
       color: $color-black-160;
       font-weight: 400;
     }
 
     &__separator {
-      margin-bottom: rem(48);
+      margin-bottom: rem-size(48);
       border: 1px solid $color-black-120;
     }
   }
@@ -174,7 +174,7 @@
 .wp-block-embed.is-type-video {
   width: 100%;
   max-width: $size__content-max-width;
-  margin: rem(24) auto;
+  margin: rem-size(24) auto;
 
   img {
     width: 100%;

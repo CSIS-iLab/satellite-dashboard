@@ -1,3 +1,7 @@
+@import '../abstracts/placeholders';
+@import '../abstracts/mixins';
+@import '../abstracts/variables';
+
 .status-types {
   margin: 0;
   padding: 0;
@@ -7,7 +11,7 @@
     position: relative;
 
     + li {
-      margin-top: rem(8);
+      margin-top: rem-size(8);
     }
 
     &::before {
@@ -15,7 +19,7 @@
       display: inline-block;
       width: 8px;
       height: 8px;
-      margin-right: rem(4);
+      margin-right: rem-size(4);
       background: var(--status);
       border-radius: 50%;
     }

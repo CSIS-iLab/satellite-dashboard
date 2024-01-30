@@ -7,8 +7,8 @@
   &__basic {
     .sat-list & {
       grid-template-columns: max-content auto max-content;
-      margin-top: rem(16);
-      padding: rem(16);
+      margin-top: rem-size(16);
+      padding: rem-size(16);
       background: $color-slate-400;
       border-radius: 3px;
       @include shadow(xsm);
@@ -25,8 +25,8 @@
       display: grid;
       grid-template-columns: max-content 2fr max-content max-content;
       align-items: start;
-      column-gap: var(--marker-gap, rem(16));
-      row-gap: rem(2);
+      column-gap: var(--marker-gap, rem-size(16));
+      row-gap: rem-size(2);
 
       &-simple {
         grid-template-columns: max-content auto;
@@ -61,7 +61,7 @@
 
       .sat__disclaimer {
         grid-column: 2;
-        margin-top: rem(12);
+        margin-top: rem-size(12);
         color: $color-white-160;
         @extend %font-ui-text-xsm-oxygen;
         letter-spacing: 0.025em;
@@ -95,8 +95,8 @@
     }
 
     div {
-      padding-right: rem(4);
-      padding-left: rem(4);
+      padding-right: rem-size(4);
+      padding-left: rem-size(4);
       @include font-size(18px);
     }
   }

@@ -1,6 +1,6 @@
 .panel--left {
   height: 100%;
-  padding: rem(56) 0 0;
+  padding: rem-size(56) 0 0;
   color: $color-white-170;
   @extend %font-ui-text-base-oxygen;
   background: $color-slate-600;
@@ -61,10 +61,10 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      width: rem($size__left-panel-tab-width);
-      min-height: rem(56);
-      margin-bottom: rem(41);
-      padding-top: rem(24);
+      width: rem-size($size__left-panel-tab-width);
+      min-height: rem-size(56);
+      margin-bottom: rem-size(41);
+      padding-top: rem-size(24);
       color: $color-white-180;
       background: var(--tab-bg, $color-slate-600);
       border: 0;
@@ -97,17 +97,17 @@
         right: 0;
         left: 0;
         display: block;
-        width: rem(48);
+        width: rem-size(48);
       }
 
       &::before {
         top: calc(100% + 1px);
-        height: rem(40);
+        height: rem-size(40);
       }
 
       &::after {
         top: 100%;
-        height: rem(41);
+        height: rem-size(41);
         background-image: url('~static/tab.svg');
         background-repeat: no-repeat;
         filter: var(--tab-cut-out);
@@ -117,8 +117,8 @@
       // # of Filters Badge
       .badge--pinned {
         position: absolute;
-        top: rem(12);
-        left: rem(24);
+        top: rem-size(12);
+        left: rem-size(24);
       }
     }
 

@@ -1,28 +1,28 @@
 .page--key-events {
   .page__title {
-    margin-bottom: rem(16);
+    margin-bottom: rem-size(16);
   }
 
   .status-types {
-    margin-top: rem(16);
+    margin-top: rem-size(16);
   }
 }
 
 .key-events {
   &__time {
-    margin-top: rem(2);
+    margin-top: rem-size(2);
     color: $color-white-160;
     @extend %font-ui-text-sm-oxygen;
   }
 
   &__filters {
     display: grid;
-    margin-bottom: rem(32);
-    row-gap: rem(24);
+    margin-bottom: rem-size(32);
+    row-gap: rem-size(24);
 
     @include breakpoint('medium') {
       grid-template-columns: 3fr 1fr;
-      column-gap: rem(64);
+      column-gap: rem-size(64);
     }
   }
 
@@ -30,7 +30,7 @@
     &-btns {
       display: flex;
       justify-content: flex-end;
-      margin-top: rem(8);
+      margin-top: rem-size(8);
     }
 
     .vs__actions {
@@ -40,13 +40,13 @@
 
   &__date {
     .form__label {
-      margin-bottom: rem(4);
+      margin-bottom: rem-size(4);
     }
 
     .sd-icon-calendar,
     .sd-icon-clear {
       top: var(--top, 50%);
-      right: rem(8);
+      right: rem-size(8);
       color: $color-white-170;
       font-size: 1.5em;
 
@@ -64,7 +64,7 @@
     }
 
     .datepicker__input {
-      padding-left: rem(16);
+      padding-left: rem-size(16);
     }
   }
 
@@ -76,7 +76,7 @@
     @extend %font-ui-heading-section-sm;
 
     li + li {
-      margin-left: rem(32);
+      margin-left: rem-size(32);
     }
   }
 }
@@ -86,13 +86,13 @@
 
   @include breakpoint('medium') {
     grid-template-columns: 2fr 1fr;
-    column-gap: rem(64);
+    column-gap: rem-size(64);
   }
 
   .status-types {
     color: $color-white-190;
     column-count: 2;
-    column-gap: rem(16);
+    column-gap: rem-size(16);
 
     @include breakpoint('medium') {
       grid-column: 2;
@@ -107,7 +107,7 @@
   }
 
   .sat__actions {
-    gap: rem(8);
+    gap: rem-size(8);
     justify-content: center;
     align-items: baseline;
     margin: 0;
@@ -123,7 +123,7 @@
       position: absolute;
       top: 0;
       left: 100%;
-      margin-left: rem(8);
+      margin-left: rem-size(8);
       font-weight: bold;
       font-style: italic;
     }
@@ -164,22 +164,22 @@
     th,
     td {
       &:first-of-type {
-        padding-left: rem(32);
+        padding-left: rem-size(32);
       }
 
       &:last-of-type {
-        padding-right: rem(32);
+        padding-right: rem-size(32);
       }
 
       /* stylelint-disable-next-line */
       + th,
       + td {
-        padding-left: rem(24) !important;
+        padding-left: rem-size(24) !important;
       }
     }
 
     td {
-      --cell-vertical-padding: #{rem(32)};
+      --cell-vertical-padding: #{rem-size(32)};
     }
 
     /* stylelint-disable-next-line */
@@ -201,7 +201,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: rem(24) 0;
+    padding: rem-size(24) 0;
     background: transparent;
     border: 0;
     border-top: 1px solid $color-white-115;
@@ -234,7 +234,7 @@
 
     /* stylelint-disable-next-line */
     .footer__navigation__page-info {
-      margin-right: rem(24);
+      margin-right: rem-size(24);
     }
 
     /* stylelint-disable-next-line */

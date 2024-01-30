@@ -45,7 +45,7 @@
 // Rem output with px fallback
 @mixin font-size($size) {
   font-size: $size; //Fallback in px
-  font-size: rem($size);
+  font-size: rem-size($size);
 }
 
 @mixin vw100() {

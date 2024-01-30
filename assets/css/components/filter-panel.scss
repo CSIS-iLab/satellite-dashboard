@@ -1,7 +1,7 @@
 #filters-panel {
   /* stylelint-disable-next-line */
   .form > * + * {
-    margin-top: rem(16);
+    margin-top: rem-size(16);
   }
 }
 

@@ -1,6 +1,6 @@
 .close-approaches {
   &__list {
-    margin: rem(16) 0;
+    margin: rem-size(16) 0;
     padding: 0;
   }
 
@@ -9,9 +9,9 @@
     display: grid;
     grid-template-columns: repeat(2, auto);
     justify-content: space-between;
-    padding-top: rem(16);
+    padding-top: rem-size(16);
     color: $color-white-180;
-    column-gap: rem(16);
+    column-gap: rem-size(16);
 
     &::before {
       content: '';
@@ -24,15 +24,15 @@
     }
 
     + .close-approaches__item {
-      margin-top: rem(32);
+      margin-top: rem-size(32);
     }
 
     + .close-approaches__item:last-child {
-      margin-bottom: rem(70);
+      margin-bottom: rem-size(70);
     }
 
     &-title {
-      margin-bottom: rem(4);
+      margin-bottom: rem-size(4);
       color: $color-white-190;
       @extend %font-ui-heading-section-md;
       font-weight: 500;
@@ -48,7 +48,7 @@
       display: flex;
       grid-column: 2;
       grid-row: 1;
-      gap: rem(4);
+      gap: rem-size(4);
       align-items: center;
       justify-self: end;
       color: $color-white-160;
@@ -58,11 +58,11 @@
 
   &__objects {
     grid-column: 1 / -1;
-    margin: rem(16) 0;
+    margin: rem-size(16) 0;
     padding: 0;
 
     li + li {
-      margin-top: rem(12);
+      margin-top: rem-size(12);
     }
 
     .sat__country,
@@ -76,7 +76,7 @@
 
   &__predicted {
     display: inline-block;
-    margin-right: rem(6);
+    margin-right: rem-size(6);
     font-style: italic;
   }
 

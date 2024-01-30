@@ -21,6 +21,7 @@
   "dependencies": {
     "@a11y-kit/vue-tabs": "^1.0.1",
     "@nuxtjs/axios": "^5.13.6",
+    "@nuxtjs/google-analytics": "^2.4.0",
     "@nuxtjs/pwa": "^3.3.5",
     "frontmatter-markdown-loader": "^3.7.0",
     "highcharts": "^11.3.0",
@@ -33,7 +34,7 @@
     "vue-select": "^3.20.2",
     "vue-tippy": "^6.4.1",
     "vue2-datepicker": "^3.11.1",
-    "@nuxtjs/google-analytics": "^2.4.0"
+    "vuex": "^4.0.2"
   },
   "devDependencies": {
     "@nuxt/bridge": "npm:@nuxt/bridge-edge@^3.0.1-28432191.4a04ab0",

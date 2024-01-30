@@ -1,3 +1,6 @@
+@import '../abstracts/variables';
+@import '../abstracts/mixins';
+
 .site-header {
   position: fixed;
   top: 0;
@@ -8,7 +11,7 @@
   justify-content: space-between;
   align-items: center;
   height: $size__header-height;
-  padding: rem(4) rem(12);
+  padding: rem-size(4) rem-size(12);
   pointer-events: none;
 
   .page-layout & {
@@ -25,7 +28,7 @@
 
     > .nuxt-link-active {
       flex: 1 1 auto;
-      margin-left: rem(8);
+      margin-left: rem-size(8);
       opacity: 0.7;
       transition: opacity 0.3s ease-in-out;
 
@@ -55,7 +58,7 @@
 }
 
 .site-nav {
-  --nav-padding-sides: #{rem(32)};
+  --nav-padding-sides: #{rem-size(32)};
   position: fixed;
   top: 0;
   bottom: 0;
@@ -66,7 +69,7 @@
   justify-content: space-between;
   width: 100%;
   max-width: 360px;
-  padding: rem(48) 0 rem(48);
+  padding: rem-size(48) 0 rem-size(48);
   background: $color-slate-690;
   @include shadow(lg);
   transform: translateX(-100%);
@@ -78,8 +81,8 @@
 
   .btn--close {
     position: absolute;
-    top: rem(16);
-    right: rem(20);
+    top: rem-size(16);
+    right: rem-size(20);
     @include font-size(18px);
   }
 

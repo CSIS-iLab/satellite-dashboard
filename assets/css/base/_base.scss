@@ -10,7 +10,7 @@ body {
 }
 
 .container {
-  --container-padding: #{rem(16px)};
+  --container-padding: #{rem-size(16px)};
   max-width: $size__container-max-width;
   margin-right: auto;
   margin-left: auto;
@@ -18,7 +18,7 @@ body {
   padding-left: var(--container-padding);
 
   @include breakpoint('medium') {
-    --container-padding: #{rem(32px)};
+    --container-padding: #{rem-size(32px)};
   }
 
   &--full {

@@ -2,6 +2,9 @@
 =          Placeholders        =
 ==============================*/
 
+@import 'mixins';
+@import 'variables';
+
 %font-ui-heading-page-title-base {
   font-family: $font__good;
   font-weight: 600;
@@ -157,31 +160,31 @@
 }
 
 %page-header {
-  margin-top: rem(32px);
-  margin-bottom: rem(24px);
+  margin-top: rem-size(32px);
+  margin-bottom: rem-size(24px);
 
   @include breakpoint('medium') {
-    margin-top: rem(48px);
-    margin-bottom: rem(32px);
+    margin-top: rem-size(48px);
+    margin-bottom: rem-size(32px);
   }
 
   @include breakpoint('large') {
-    margin-top: rem(54px);
+    margin-top: rem-size(54px);
   }
 }
 
 %page-content {
-  padding-top: rem(32px);
-  padding-bottom: rem(48px);
+  padding-top: rem-size(32px);
+  padding-bottom: rem-size(48px);
 
   @include breakpoint('medium') {
-    padding-top: rem(64px);
-    padding-bottom: rem(64px);
+    padding-top: rem-size(64px);
+    padding-bottom: rem-size(64px);
   }
 
   @include breakpoint('large') {
-    padding-top: rem(80px);
-    padding-bottom: rem(80px);
+    padding-top: rem-size(80px);
+    padding-bottom: rem-size(80px);
   }
 }
 
@@ -209,13 +212,13 @@
 }
 
 %post-component {
-  --margin: #{rem(24px)};
+  --margin: #{rem-size(24px)};
   width: 100%;
-  margin: rem(24px) auto;
+  margin: rem-size(24px) auto;
   margin: var(--margin) auto;
 
   @include breakpoint('small') {
-    --margin: #{rem(32px)};
+    --margin: #{rem-size(32px)};
   }
 }
 
@@ -236,14 +239,14 @@
   @include breakpoint('small') {
     --max-width: 350px;
     --margin-right: 0;
-    --margin-left: #{rem(32px)};
+    --margin-left: #{rem-size(32px)};
     float: right;
     margin-top: 0;
   }
 
   @include breakpoint('medium') {
-    --margin-right: #{rem(32px)};
-    --margin-left: #{rem(40px)};
+    --margin-right: #{rem-size(32px)};
+    --margin-left: #{rem-size(40px)};
   }
 }
 
@@ -252,7 +255,7 @@
 }
 
 %post-component--wide {
-  --padding: #{rem(16px)};
+  --padding: #{rem-size(16px)};
   width: 100%;
   padding-right: var(--padding);
   padding-left: var(--padding);
@@ -263,7 +266,7 @@
   }
 
   @include breakpoint('small') {
-    --padding: #{rem(32px)};
+    --padding: #{rem-size(32px)};
   }
 
   @include breakpoint('medium') {

@@ -16,7 +16,7 @@ $today-color: $color-white-180;
   }
 
   &-main {
-    padding: rem(8);
+    padding: rem-size(8);
     line-height: 1;
     background: $color-slate-700;
     border: 0;
@@ -71,7 +71,7 @@ $today-color: $color-white-180;
   &-popup .#{$namespace}-calendar {
     &-header-label {
       display: inline-block;
-      margin-top: rem(3);
+      margin-top: rem-size(3);
     }
 
     &-header-label button {

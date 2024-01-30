@@ -1,3 +1,6 @@
+@import '../abstracts/variables';
+@import '../abstracts/placeholders';
+
 .tooltip {
   &__container {
     display: inline-block;
@@ -25,14 +28,14 @@
   }
 
   &-theme {
-    padding: rem(16);
+    padding: rem-size(16);
     text-align: left;
     background: $color-slate-700;
     transform: none !important;
   }
 
   &__term {
-    margin-bottom: rem(4);
+    margin-bottom: rem-size(4);
     font-weight: bold;
     letter-spacing: 0.02em;
     text-transform: uppercase;
@@ -45,7 +48,7 @@
   }
 
   &__term-def {
-    margin-bottom: rem(8);
+    margin-bottom: rem-size(8);
   }
 
   &__read-more {

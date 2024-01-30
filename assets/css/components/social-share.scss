@@ -1,7 +1,11 @@
+@import '../abstracts/variables';
+@import '../abstracts/mixins';
+@import '../abstracts/placeholders';
+
 .social-share {
   display: flex;
   align-items: center;
-  margin: 0 rem(8px);
+  margin: 0 rem-size(8px);
   color: $color-white-150;
 
   a:hover {
@@ -23,7 +27,7 @@
   }
 
   &__text {
-    margin-right: rem(8);
+    margin-right: rem-size(8);
     color: $color-ltblue-175;
     @extend %font-ui-text-sm-oxygen;
     font-weight: bold;
@@ -32,8 +36,8 @@
   }
 
   .icon {
-    margin-right: rem(8px);
-    margin-left: rem(8px);
+    margin-right: rem-size(8px);
+    margin-left: rem-size(8px);
   }
 
   .btn--copy {

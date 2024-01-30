@@ -17,4 +17,7 @@ if (typeof Highcharts === 'object') {
 
 import HighchartsVue from 'highcharts-vue'
 Stock(Highcharts)
-Vue.use(HighchartsVue)
+
+export default defineNuxtPlugin((nuxtApp) => {
+  nuxtApp.vueApp.use(HighchartsVue)
+})

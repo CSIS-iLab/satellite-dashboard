@@ -1,3 +1,6 @@
+@import '../abstracts/variables';
+@import '../abstracts/placeholders';
+
 .modal {
   display: flex;
   flex-direction: column;
@@ -35,7 +38,7 @@
 
   &__header {
     justify-content: space-between;
-    padding: rem(16) rem(32);
+    padding: rem-size(16) rem-size(32);
     color: $color-white-160;
     border-bottom: 1px solid $color-white-110;
     @extend %font-ui-text-lg-good;
@@ -47,7 +50,7 @@
 
   &__body {
     position: relative;
-    padding: rem(20) rem(32);
+    padding: rem-size(20) rem-size(32);
     color: $color-white-150;
     @extend %font-ui-text-base-good;
   }
@@ -56,7 +59,7 @@
     bottom: 0;
     justify-content: space-between;
     align-items: center;
-    padding: rem(16) rem(32);
+    padding: rem-size(16) rem-size(32);
     color: $color-white-150;
     background-color: $color-slate-400;
     @extend %font-ui-text-base-good;
@@ -67,7 +70,7 @@
 
       &::before {
         align-items: center;
-        margin-right: rem(16);
+        margin-right: rem-size(16);
         text-transform: uppercase;
         content: 'Download';
       }
@@ -94,8 +97,8 @@
     &-footer {
       display: flex;
       align-items: center;
-      margin: 0 rem(8);
-      padding: rem(6) rem(12);
+      margin: 0 rem-size(8);
+      padding: rem-size(6) rem-size(12);
       color: $color-white-170;
       background: $color-slate-700;
       border-radius: 3px;
